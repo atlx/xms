@@ -1,6 +1,6 @@
 import App from "./core/app";
 import "./styles/global.scss";
 
-const app: App = new App();
+export const app: App = new App();
 
 app.init();

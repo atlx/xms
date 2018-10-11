@@ -7,6 +7,8 @@ import ChatMessage from "./chat-message";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faHashtag} from "@fortawesome/free-solid-svg-icons";
 import Actions from "../store/actions";
+import {app} from "..";
+import {GatewayMessageType, GatewayMessageMessage} from "../net/gateway";
 
 class Chat extends React.Component<any> {
 	private readonly $message: RefObject<any>;
@@ -46,6 +48,16 @@ class Chat extends React.Component<any> {
 
 			Actions.addPartialMessage({
 				text
+			});
+
+			app.gateway.emit({
+				type: GatewayMessageType.Message,
+				// TODO: Get my ID
+				sender: "r",
+
+				payload: {
+					text
+				} as GatewayMessageMessage
 			});
 		}
 	}

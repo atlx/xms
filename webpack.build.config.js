@@ -12,7 +12,7 @@ const OUTPUT_DIR = path.resolve(__dirname, "dist");
 const defaultInclude = [SRC_DIR];
 
 module.exports = {
-	entry: SRC_DIR + "/index.js",
+	entry: SRC_DIR + "/index.ts",
 
 	output: {
 		path: OUTPUT_DIR,
@@ -79,7 +79,7 @@ module.exports = {
 	},
 
 	resolve: {
-		extensions: [".js", ".jsx"]
+		extensions: [".ts", ".tsx", ".js", ".jsx"]
 	},
 
 	mode: "production"

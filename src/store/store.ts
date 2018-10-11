@@ -1,9 +1,10 @@
 import {createStore} from "redux";
-import {Message, RoosterUserModel, UserState, RoosterCategoryModel} from "../types/types";
+import {Message, RoosterUserModel, UserState, RoosterCategoryModel, UniqueId, User} from "../types/types";
 
 export enum ActionType {
     AddMessage = "ADD_MESSAGE",
-    AddPartialMessage = "ADD_PARTIAL_MESSAGE"
+    AddPartialMessage = "ADD_PARTIAL_MESSAGE",
+    AddUser = "ADD_USER"
 }
 
 function defaultReducer(state: AppState, action: any): any {
@@ -43,6 +44,7 @@ function defaultReducer(state: AppState, action: any): any {
 export type AppState = {
     readonly messages: Message[];
     readonly users: RoosterUserModel[];
+    readonly usersMap: Map<UniqueId, User>;
     readonly categories: RoosterCategoryModel[];
 }
 
@@ -74,5 +76,7 @@ export const store: any = createStore(defaultReducer, {
             name: "Developers",
             id: "devs"
         }
-    ]
+    ],
+
+    usersMap: new Map()
 } as any);
