@@ -4,6 +4,7 @@ import {GatewayMessage, GatewayMessageType, GatewayHelloMessage, GatewayMessageM
 import {store, AppState} from "../store/store";
 import Actions from "../store/actions";
 import Utils from "../core/utils";
+import {app} from "..";
 
 export default class BroadcastGateway {
     public readonly groupAdress: string;
@@ -19,7 +20,7 @@ export default class BroadcastGateway {
             type: "udp4",
             reuseAddr: true
         });
-        
+
         this.setupEvents();
     }
 
@@ -40,6 +41,19 @@ export default class BroadcastGateway {
 
             if (messageString[0] === "{" && messageString[messageString.length - 1] === "}") {
                 const message: GatewayMessage = JSON.parse(messageString);
+
+                if (message.sender === app.me.id) {
+                    if (message.type === GatewayMessageType.Message) {
+                        const payload: GatewayMessageMessage = message.payload;
+
+                        Actions.markMessageSent(payload.id);
+                    }
+                    else {
+                        console.log(`[BroadcastGateway:Message] Unknown message type from self: ${message.type}`);
+                    }
+
+                    return;
+                }
 
                 // TODO: Use handlers instead
                 if (message.type === GatewayMessageType.Hello) {
@@ -64,6 +78,7 @@ export default class BroadcastGateway {
                             id: "unknown",
                             systemMessage: false,
                             text: payload.text,
+                            sent: true,
                             
                             // TODO: Time should be provided by sender
                             time: Date.now()
@@ -81,8 +96,13 @@ export default class BroadcastGateway {
         });
     }
 
-    public emit(message: GatewayMessage): void {
-        const data: any = JSON.stringify(message);
+    public emit(type: GatewayMessageType, message: any): void {
+        const data: any = JSON.stringify({
+            type,
+            time: Date.now(),
+            payload: message,
+            sender: app.me.id
+        } as GatewayMessage);
 
         this.socket.send(data, 0, data.length, this.port, this.groupAdress);
 

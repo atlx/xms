@@ -3,7 +3,7 @@ import {Message, RoosterUserModel, UserState, RoosterCategoryModel, UniqueId, Us
 
 export enum ActionType {
     AddMessage = "ADD_MESSAGE",
-    AddPartialMessage = "ADD_PARTIAL_MESSAGE",
+    MarkMessageSent = "MARK_MESSAGE_SENT",
     AddUser = "ADD_USER"
 }
 
@@ -18,19 +18,27 @@ function defaultReducer(state: AppState, action: any): any {
             messages: newMessages
         };
     }
-    else if (action.type === ActionType.AddPartialMessage) {
+    else if (action.type === ActionType.MarkMessageSent) {
         const newMessages: Message[] = [...state.messages];
 
-        const message: Message = {
-            id: Math.random().toString().replace(".", ""),
-            authorAvatarUrl: "",
-            authorName: "John Doe",
-            systemMessage: false,
-            text: action.payload.text,
-            time: Date.now()
-        };
+        let messageFound: boolean = false;
+        
+        for (let i = 0; i < newMessages.length; i++) {
+            if (newMessages[i].id === action.payload && !newMessages[i].sent) {
+                newMessages[i] = {
+                    ...newMessages[i],
+                    sent: true
+                };
 
-        newMessages.push(message);
+                messageFound = true;
+
+                break;
+            }
+        }
+
+        if (!messageFound) {
+            throw new Error(`[Store:MarkMessageSent] Message with id '${action.payload}' was not found`);
+        }
 
         return {
             ...state,

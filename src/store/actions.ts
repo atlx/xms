@@ -1,18 +1,18 @@
-import {PartialMessage, User, Message} from "../types/types";
+import {User, Message, UniqueId} from "../types/types";
 import {store, ActionType} from "./store";
 
 export default abstract class Actions {
-    public static addPartialMessage(partialMessage: PartialMessage): void {
-        store.dispatch({
-            type: ActionType.AddPartialMessage,
-            payload: partialMessage
-        });
-    }
-
     public static addMessage(message: Message): void {
         store.dispatch({
             type: ActionType.AddMessage,
             payload: message
+        });
+    }
+
+    public static markMessageSent(messageId: UniqueId): void {
+        store.dispatch({
+            type: ActionType.MarkMessageSent,
+            payload: messageId
         });
     }
 

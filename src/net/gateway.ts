@@ -12,6 +12,7 @@ export type GatewayMessage = {
     readonly type: GatewayMessageType;
     readonly payload: any;
     readonly sender: UniqueId;
+    readonly time: number;
 }
 
 // Messages
@@ -21,5 +22,6 @@ export type GatewayHelloMessage = {
 }
 
 export type GatewayMessageMessage = {
+    readonly id: UniqueId;
     readonly text: string;
 }

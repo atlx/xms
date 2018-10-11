@@ -7,12 +7,23 @@ interface ChatMessageProps {
     readonly time: number;
     readonly content: string;
     readonly systemMessage: boolean;
+    readonly sent: boolean;
 }
 
 export default class ChatMessage extends React.Component<ChatMessageProps> {
+    public getComponentClass(): string {
+        const classes: string[] = ["chat-message"];
+
+        if (this.props.sent) {
+            classes.push("sent");
+        }
+
+        return classes.join(" ");
+    }
+
 	public render() {
 		return (
-			<div className="chat-message">
+			<div className={this.getComponentClass()}>
                 <div className="header">
                     <div className="author-name">{this.props.authorName}</div>
                 </div>

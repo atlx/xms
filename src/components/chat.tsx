@@ -9,6 +9,7 @@ import {faHashtag} from "@fortawesome/free-solid-svg-icons";
 import Actions from "../store/actions";
 import {app} from "..";
 import {GatewayMessageType, GatewayMessageMessage} from "../net/gateway";
+import Utils from "../core/utils";
 
 class Chat extends React.Component<any> {
 	private readonly $message: RefObject<any>;
@@ -31,6 +32,7 @@ class Chat extends React.Component<any> {
 		return this.props.messages.map((message: Message) => {
 			return <ChatMessage
 				key={message.id}
+				sent={message.sent}
 				authorName={message.authorName}
 				authorAvatarUrl={message.authorAvatarUrl}
 				content={message.text}
@@ -46,19 +48,10 @@ class Chat extends React.Component<any> {
 
 			this.$message.current.value = "";
 
-			Actions.addPartialMessage({
-				text
-			});
+			const message: Message = Utils.generateMessage(text);
 
-			app.gateway.emit({
-				type: GatewayMessageType.Message,
-				// TODO: Get my ID
-				sender: "r",
-
-				payload: {
-					text
-				} as GatewayMessageMessage
-			});
+			Actions.addMessage(message);
+			app.actions.sendMessage(message);
 		}
 	}
 

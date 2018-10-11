@@ -1,13 +1,11 @@
-export interface Message extends PartialMessage {
+export type Message = {
     readonly id: UniqueId;
     readonly authorName: string;
+    readonly text: string;
     readonly time: number;
     readonly authorAvatarUrl: string;
     readonly systemMessage: boolean;
-}
-
-export type PartialMessage = {
-    readonly text: string;
+    readonly sent: boolean;
 }
 
 export enum UserState {

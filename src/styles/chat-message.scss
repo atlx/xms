@@ -5,10 +5,15 @@
         padding: 13px 15px;
         border-radius: 4px;
         background-color: $color-dark-contrast-lighter;
+        opacity: 0.4;
     }
 
     &:not(:first-child) {
         margin-top: 10px;
+    }
+
+    &.sent {
+        opacity: 1;
     }
 
     > .header {

@@ -1,4 +1,6 @@
 import os from "os";
+import {UniqueId, Message} from "../types/types";
+import {app} from "..";
 
 export default abstract class Utils {
     public static getLocalAddresses() {
@@ -32,4 +34,24 @@ export default abstract class Utils {
         return result;
     }
 
+    public static generateId(): UniqueId {
+        // TODO: Use real generator
+        return Math.random().toString().replace(".", "");
+    }
+
+    public static generateMessage(text: string): Message {
+        return {
+            id: Utils.generateId(),
+            
+            // TODO
+            authorAvatarUrl: "",
+            authorName: app.me.username,
+            sent: false,
+
+            // TODO
+            systemMessage: false,
+            text,
+            time: Date.now()
+        };
+    }
 }
