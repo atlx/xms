@@ -1,7 +1,7 @@
 import React, {RefObject} from "react";
 import "../styles/chat.scss";
 import {connect} from "react-redux";
-import {AppState, store} from "../store/store";
+import {AppState} from "../store/store";
 import {Message} from "../types/types";
 import ChatMessage from "./chat-message";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";

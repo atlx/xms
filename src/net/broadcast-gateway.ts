@@ -29,6 +29,9 @@ export default class BroadcastGateway {
         this.socket.on("message", (data: Buffer, sender: AddressInfo) => {
             const messageString: string = data.toString();
 
+            // TODO: Debugging
+            console.log(`[BroadcastGateway.setupEvents] Received message string: ${messageString}`);
+
             if (messageString[0] === "{" && messageString[messageString.length - 1] === "}") {
                 const message: GatewayMessage = JSON.parse(messageString);
 
