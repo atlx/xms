@@ -14,7 +14,12 @@ export default class BroadcastGateway {
     public constructor(groupAddress: string, port: number) {
         this.groupAdress = groupAddress;
         this.port = port;
-        this.socket = dgram.createSocket("udp4");
+
+        this.socket = dgram.createSocket({
+            type: "udp4",
+            reuseAddr: true
+        });
+        
         this.setupEvents();
     }
 
@@ -87,7 +92,7 @@ export default class BroadcastGateway {
     public start(): void {
         const localAddress: string = Utils.getLocalAddresses()[0];
 
-        this.socket.bind(this.port + 2, localAddress);
-        console.log(`[BroadcastGateway.start] Bound to ${localAddress}@${this.port + 2}`);
+        this.socket.bind(this.port, localAddress);
+        console.log(`[BroadcastGateway.start] Bound to ${localAddress}@${this.port}`);
     }
 }
