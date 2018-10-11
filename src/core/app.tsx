@@ -9,7 +9,7 @@ export default class App {
 	public readonly gateway: BroadcastGateway;
 
 	public constructor() {
-		this.gateway = new BroadcastGateway("239.183.91.212", 4546);
+		this.gateway = new BroadcastGateway("239.183.91.212", 45462);
 	}
 
 	public render(): void {

@@ -3,6 +3,7 @@ import {AddressInfo} from "net";
 import {GatewayMessage, GatewayMessageType, GatewayHelloMessage, GatewayMessageMessage} from "./gateway";
 import {store, AppState} from "../store/store";
 import Actions from "../store/actions";
+import Utils from "../core/utils";
 
 export default class BroadcastGateway {
     public readonly groupAdress: string;
@@ -76,10 +77,17 @@ export default class BroadcastGateway {
     }
 
     public emit(message: GatewayMessage): void {
-        this.socket.send(JSON.stringify(message), this.port, this.groupAdress);
+        const data: any = JSON.stringify(message);
+
+        this.socket.send(data, 0, data.length, this.port, this.groupAdress);
+
+        console.log(`[BroadcastGateway.emit] Sent ${data.length} bytes`);
     }
 
     public start(): void {
-        this.socket.bind(this.port, "127.0.0.1");
+        const localAddress: string = Utils.getLocalAddresses()[0];
+
+        this.socket.bind(this.port + 2, localAddress);
+        console.log(`[BroadcastGateway.start] Bound to ${localAddress}@${this.port + 2}`);
     }
 }
