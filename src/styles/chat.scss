@@ -1,0 +1,48 @@
+@import "utils";
+
+.chat {
+    & {
+        display: grid;
+        grid-template-rows: auto 1fr auto;
+        background-color: #343434;
+        color: #fff;
+    }
+
+    > .header {
+        & {
+            border-bottom: 1px solid $color-dark-contrast-dark;
+            padding: 15px 20px;
+        }
+
+        > .channel-title {
+
+        }
+    }
+
+    > .messages {
+        padding: 20px;
+    }
+
+    > .input {
+        & {
+            padding: 20px;
+        }
+
+        > .message {
+            width: 100%;
+            box-sizing: border-box;
+            background: none;
+            border: none;
+            padding: 14px 20px;
+            border-radius: 4px;
+            font-size: 19px;
+            color: #fff;
+            border: 1px solid $color-dark-contrast-dark;
+            transition: border-color 0.3s ease;
+        }
+
+        > .message:focus {
+            border-color: #888;
+        }
+    }
+}

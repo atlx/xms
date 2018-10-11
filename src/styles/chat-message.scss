@@ -1,0 +1,19 @@
+@import "utils";
+
+.chat-message {
+    & {
+        padding: 13px 15px;
+        border-radius: 4px;
+        background-color: $color-dark-contrast-lighter;
+    }
+
+    &:not(:first-child) {
+        margin-top: 10px;
+    }
+
+    > .header {
+        > .author-name {
+            font-weight: bolder;
+        }
+    }
+}

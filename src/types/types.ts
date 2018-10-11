@@ -1,0 +1,38 @@
+export interface Message extends PartialMessage {
+    readonly id: UniqueId;
+    readonly authorName: string;
+    readonly time: number;
+    readonly authorAvatarUrl: string;
+    readonly systemMessage: boolean;
+}
+
+export type PartialMessage = {
+    readonly text: string;
+}
+
+export enum UserState {
+    Online,
+    Away,
+    Busy,
+    Offline
+}
+
+export interface User extends RoosterUserModel {
+    readonly createdTime: number;
+}
+
+export type RoosterUserModel = {
+    readonly id: UniqueId;
+    readonly username: string;
+    readonly status?: string;
+    readonly avatarUrl: string;
+    readonly state: UserState;
+    readonly categoryId: UniqueId;
+}
+
+export type RoosterCategoryModel = {
+    readonly id: UniqueId;
+    readonly name: string;
+}
+
+export type UniqueId = string;

@@ -1,0 +1,9 @@
+.application {
+    display: grid;
+    grid-template-rows: auto 1fr;
+    grid-template-columns: 300px minmax(400px, 1fr) 300px;
+}
+
+.application > div:not(.handle):not(.chat) {
+    padding: 20px;
+}

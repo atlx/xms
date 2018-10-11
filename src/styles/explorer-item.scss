@@ -1,0 +1,51 @@
+@import "utils";
+
+.explorer-item {
+    & {
+        display: grid;
+        grid-template-columns: auto 1fr auto;
+        grid-column-gap: 6px;
+        justify-content: center;
+        align-items: center;
+        padding: 7px 14px;
+        cursor: pointer;
+    }
+
+    &:not(:first-child) {
+        margin-top: 10px;
+    }
+
+    &.indicate {
+        > .name {
+            font-weight: bold;
+        }
+
+        > .indicator {
+            background-color: #afafaf;
+        }
+    }
+
+    &:hover {
+        background-color: $color-dark-contrast-light;
+    }
+
+    &.active {
+        background-color: $color-dark-contrast-lighter;
+    }
+
+    > .icon {
+        opacity: 0.5;
+    }
+
+    > .name {
+        font-size: 17px;
+    }
+
+    > .indicator {
+        & {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+        }
+    }
+}

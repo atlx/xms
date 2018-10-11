@@ -1,0 +1,15 @@
+.rooster-category {
+    &:not(:first-child) {
+        margin-top: 10px;
+    }
+
+    > .title {
+        padding: 0 11px; /* Bound to rooster item */
+        margin-bottom: 10px;
+        text-transform: uppercase;
+        opacity: 0.5;
+        font-weight: bold;
+        font-size: 13px;
+        letter-spacing: 0.5px;
+    }
+}

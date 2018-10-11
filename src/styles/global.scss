@@ -1,0 +1,26 @@
+@import "utils";
+
+@font-face {
+	font-family: "Nunito Regular";
+	src: url("../resources/fonts/Nunito-Regular.ttf");
+}
+
+* {
+	outline: none;
+	text-decoration: none;
+	user-select: none;
+}
+
+html, body, #root, #root > .application {
+	height: 100%;
+	box-sizing: border-box;
+	background-color: $color-dark;
+	color: #fff;
+}
+
+body {
+	font-family: "Nunito Regular", "Segoe UI", sans-serif;
+	margin: 0;
+	padding: 4px;
+	box-sizing: border-box;
+}
