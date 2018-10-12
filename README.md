@@ -1,5 +1,5 @@
-## Core
-A multi-purpose text editor.
+## XMS
+A Server-less LAN messenger application.
 
 
 #### Build and run
