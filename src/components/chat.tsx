@@ -10,6 +10,7 @@ import Actions from "../store/actions";
 import {app} from "..";
 import Utils from "../core/utils";
 import NoticeMessage from "./notice-message";
+import Loader from "./loader";
 
 type ChatProps = {
 	readonly messages: IGenericMessage[];
@@ -19,24 +20,43 @@ type ChatProps = {
 
 class Chat extends React.Component<ChatProps> {
 	private readonly $message: RefObject<any>;
+	private readonly $messages: RefObject<any>;
+	private readonly $loader: RefObject<any>;
 
-	public constructor(props: any) {
+	private offset: number;
+
+	public constructor(props: ChatProps) {
 		super(props);
+
+		this.offset = props.messages.length;
 
 		// Bindings
 		this.handleKeyDown = this.handleKeyDown.bind(this);
+		this.handleScroll = this.handleScroll.bind(this);
+		this.loadOlderMessages = this.loadOlderMessages.bind(this);
 
 		// Refs
 		this.$message = React.createRef();
+		this.$messages = React.createRef();
+		this.$loader = React.createRef();
 	}
 
-	public componentDidMount(): void {
-		this.$message.current.focus();
+	public componentDidUpdate(): void {
+		this.$messages.current.scrollTop = this.$messages.current.scrollHeight;
 	}
 
 	public renderMessages(): JSX.Element[] {
-		return this.props.messages.map((message: IGenericMessage) => {
+		let messages: IGenericMessage[] = this.props.messages;
 
+		console.log(messages);
+
+		if (this.offset !== messages.length) {
+			messages = messages.slice(-this.offset);
+		}
+		
+		console.log(messages);
+
+		return messages.map((message: IGenericMessage) => {
 			if (message.type === MessageType.Text) {
 				const textMessage: IMessage = message as IMessage;
 
@@ -81,6 +101,37 @@ class Chat extends React.Component<ChatProps> {
 		}
 	}
 
+	public handleScroll(): void {
+		// TODO: Hard-coded threshold
+		if (this.props.messages.length < 15) {
+			return;
+		}
+		else if (this.$messages.current.scrollTop === 0) {
+			this.loadOlderMessages();
+		}
+	}
+
+	public loadOlderMessages(): void {
+		// TODO: Hard-coded value
+		// TODO: Timeout for debugging (slower)
+		setTimeout(() => {
+			this.offset += 5;
+			this.forceUpdate();
+		}, 1500);
+	}
+
+	public renderLoader(): JSX.Element | undefined {
+		// TODO: Hard-coded threshold
+		if (this.props.messages.length >= 15) {
+			if (this.$messages.current && this.$messages.current.scrollTop === 0) {
+				this.loadOlderMessages();
+			}
+			else {
+				return <Loader ref={this.$loader} text="Loading messages" />
+			}
+		}
+	}
+
 	public render(): JSX.Element {
 		return (
 			<div className="chat">
@@ -88,7 +139,8 @@ class Chat extends React.Component<ChatProps> {
 					<div className="channel-title"><FontAwesomeIcon icon={faHashtag} /> {this.props.activeChannel.name}</div>
 					<div className="channel-topic">{this.props.activeChannel.topic}</div>
 				</div>
-				<div className="messages">
+				<div ref={this.$messages} onScroll={this.handleScroll} className="messages">
+					{this.renderLoader()}
 					{this.renderMessages()}
 				</div>
 				<div className="input">

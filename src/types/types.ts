@@ -5,6 +5,11 @@ export type Channel = {
     readonly name: string;
 }
 
+export enum Page {
+    Init,
+    Default
+}
+
 export enum ChannelType {
     Public,
     Text

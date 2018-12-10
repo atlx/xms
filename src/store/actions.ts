@@ -1,4 +1,4 @@
-import {User, UniqueId, IGenericMessage} from "../types/types";
+import {User, UniqueId, IGenericMessage, Page} from "../types/types";
 import {store, ActionType} from "./store";
 
 export default abstract class Actions {
@@ -40,6 +40,13 @@ export default abstract class Actions {
         store.dispatch({
             type: ActionType.SetInputLocked,
             payload: locked
+        });
+    }
+
+    public static setPage(page: Page): void {
+        store.dispatch({
+            type: ActionType.SetPage,
+            payload: page
         });
     }
 }

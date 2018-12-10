@@ -1,5 +1,5 @@
 import {createStore, Store} from "redux";
-import {IMessage, RoosterUserModel, UserState, RoosterCategoryModel, UniqueId, User, Channel, ChannelType, IGenericMessage, MessageType, INotice} from "../types/types";
+import {IMessage, RoosterUserModel, UserState, RoosterCategoryModel, UniqueId, User, Channel, ChannelType, IGenericMessage, MessageType, INotice, Page} from "../types/types";
 
 export enum ActionType {
     AddMessage = "ADD_MESSAGE",
@@ -7,7 +7,8 @@ export enum ActionType {
     AddUser = "ADD_USER",
     SetActiveChannel = "SET_ACTIVE_CHANNEL",
     SetGeneralAsActiveChannel = "SET_GENERAL_AS_ACTIVE_CHANNEL",
-    SetInputLocked = "SET_INPUT_LOCKED"
+    SetInputLocked = "SET_INPUT_LOCKED",
+    SetPage = "SET_PAGE"
 }
 
 function defaultReducer(state: AppState, action: any): any {
@@ -79,6 +80,13 @@ function defaultReducer(state: AppState, action: any): any {
             inputLocked: action.payload
         };
     }
+    else if (action.type === ActionType.SetPage) {
+        // TODO: Verify page type is valid
+        return {
+            ...state,
+            page: action.payload
+        };
+    }
 
     return state;
 }
@@ -91,6 +99,7 @@ export type AppState = {
     readonly channels: Map<UniqueId, Channel>;
     readonly inputLocked: boolean;
     readonly activeChannel: Channel;
+    readonly page: Page;
 }
 
 export const store: Store = createStore(defaultReducer, {
@@ -128,5 +137,7 @@ export const store: Store = createStore(defaultReducer, {
 
     activeChannel: null,
 
-    inputLocked: true
+    inputLocked: true,
+
+    page: Page.Init
 } as any);

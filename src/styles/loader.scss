@@ -1,0 +1,30 @@
+@keyframes spin {
+    to {
+        transform-origin: center;
+        transform: rotate(360deg);
+    }
+}
+
+.loader {
+    & {
+        margin: auto;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 30px 0;
+    }
+
+    > .prop {
+        border: 3px solid #555;
+        border-color: #555 transparent #555 transparent;
+        border-radius: 50%;
+        animation: spin infinite 1s ease;
+    }
+
+    > .text {
+        color: #555;
+        font-weight: bold;
+        margin-left: 10px;
+        text-transform: uppercase;
+    }
+}
