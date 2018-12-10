@@ -10,12 +10,22 @@
 
     > .header {
         & {
+            display: grid;
+            grid-template-columns: auto 1fr;
+            grid-column-gap: 10px;
             border-bottom: 1px solid $color-dark-contrast-dark;
             padding: 15px 20px;
+            align-items: center;
+            justify-content: center;
         }
 
         > .channel-title {
             /* TODO */
+        }
+
+        > .channel-topic {
+            opacity: 0.5;
+            font-size: 14px;
         }
     }
 
@@ -60,8 +70,9 @@
         }
 
         > .message:focus {
-            border-color: #555;
+            border-color: #444;
             border-style: solid;
+            box-shadow: 0 5px 16px 0px #2e2e2e;
         }
     }
 }

@@ -66,8 +66,18 @@ export default class BroadcastGateway implements IDisposable {
             this.setInterval(this.heartbeat, this.heartbeatInterval);
         });
 
-        // TODO: Implement
-        // this.socket.on("close")
+        this.socket.on("close", () => {
+            console.log("[BroadcastGateway] Disconnected");
+
+            Actions.addMessage<INotice>({
+                // TODO
+                channelId: "general",
+                id: "disco",
+                text: "Disconnected from the network.",
+                time: Date.now(),
+                type: MessageType.Notice
+            });
+        });
 
         this.socket.on("message", (data: Buffer, sender: AddressInfo) => {
             const messageString: string = data.toString();
@@ -95,7 +105,7 @@ export default class BroadcastGateway implements IDisposable {
                                 // TODO:
                                 channelId: "general",
                                 id: "fefwefwe2",
-                                text: `You're connected to the network. ~${ping}ms`,
+                                text: `Connected to the network @ ${this.groupAdress}. ~${ping}ms`,
                                 time: Date.now(),
                                 type: MessageType.Notice
                             });

@@ -2,7 +2,7 @@ import React, {RefObject} from "react";
 import "../styles/chat.scss";
 import {connect} from "react-redux";
 import {AppState} from "../store/store";
-import {IMessage, UniqueId, IGenericMessage, MessageType} from "../types/types";
+import {IMessage, IGenericMessage, MessageType, Channel} from "../types/types";
 import ChatMessage from "./chat-message";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faHashtag} from "@fortawesome/free-solid-svg-icons";
@@ -13,7 +13,7 @@ import NoticeMessage from "./notice-message";
 
 type ChatProps = {
 	readonly messages: IGenericMessage[];
-	readonly activeChannelId: UniqueId | null;
+	readonly activeChannel: Channel;
 	readonly inputLocked: boolean;
 }
 
@@ -64,7 +64,7 @@ class Chat extends React.Component<ChatProps> {
 	}
 
 	public handleKeyDown(e: any): void {
-		if (this.props.activeChannelId !== null && e.key === "Enter") {
+		if (this.props.activeChannel.id !== null && e.key === "Enter") {
 			const text: string = this.$message.current.value.trim();
 
 			this.$message.current.value = "";
@@ -74,7 +74,7 @@ class Chat extends React.Component<ChatProps> {
 				return;
 			}
 
-			const message: IMessage = Utils.generateMessage(this.props.activeChannelId, text);
+			const message: IMessage = Utils.generateMessage(this.props.activeChannel.id, text);
 
 			Actions.addMessage(message);
 			app.actions.sendMessage(message);
@@ -85,7 +85,8 @@ class Chat extends React.Component<ChatProps> {
 		return (
 			<div className="chat">
 				<div className="header">
-					<div className="channel-title"><FontAwesomeIcon icon={faHashtag} /> General</div>
+					<div className="channel-title"><FontAwesomeIcon icon={faHashtag} /> {this.props.activeChannel.name}</div>
+					<div className="channel-topic">{this.props.activeChannel.topic}</div>
 				</div>
 				<div className="messages">
 					{this.renderMessages()}
@@ -107,7 +108,7 @@ class Chat extends React.Component<ChatProps> {
 const mapStateToProps = (state: AppState): ChatProps => {
 	return {
 		messages: state.messages,
-		activeChannelId: state.activeChannel !== null ? state.activeChannel.id : null,
+		activeChannel: state.activeChannel,
 		inputLocked: state.inputLocked
 	};
 };
