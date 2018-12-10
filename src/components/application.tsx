@@ -6,6 +6,7 @@ import {connect} from "react-redux";
 import {Page} from "../types/types";
 import InitPage from "../pages/init";
 import {CSSTransition} from "react-transition-group";
+import Handle from "./handle";
 
 type ApplicationState = {
 	readonly page: Page;
@@ -28,7 +29,7 @@ class Application extends React.Component<ApplicationState> {
 		}
 	}
 
-	public getApplicationStyle(): CSSProperties | undefined {
+	public getAppContentStyle(): CSSProperties | undefined {
 		if (this.props.page !== Page.Default) {
 			return {
 				display: "initial"
@@ -38,9 +39,12 @@ class Application extends React.Component<ApplicationState> {
 
 	public render(): JSX.Element {
 		return (
-			<div style={this.getApplicationStyle()} className="application">
+			<div className="application">
+				<Handle />
 				<CSSTransition in={this.props.page === Page.Init} classNames="page" timeout={5000} onExiting={() => alert("EXIT!")}>
-					{this.renderPage()}
+					<div style={this.getAppContentStyle()} className="content">
+						{this.renderPage()}
+					</div>
 				</CSSTransition>
 			</div>
 		);
