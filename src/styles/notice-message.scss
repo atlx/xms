@@ -4,9 +4,10 @@
         color: #fff;
         padding: 6px 10px;
         border-radius: 3px;
-        font-size: 17px;
-        background: linear-gradient(to right, #2ecc71, #27ae60);
+        font-size: 16px;
+        background-color: #27ae60;
         box-sizing: border-box;
+        text-align: center;
     }
 
     &:not(:first-child) {

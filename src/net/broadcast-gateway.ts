@@ -8,13 +8,16 @@ import {IDisposable} from "../core/interfaces";
 import {IMessage, INotice, MessageType} from "../types/types";
 
 export default class BroadcastGateway implements IDisposable {
+    public static slowThreshold: number = 100;
+
     public readonly groupAdress: string;
     public readonly port: number;
 
     private readonly socket: Socket;
     private readonly heartbeatInterval: number;
-    private readonly intervals: NodeJS.Timeout[];
+    private readonly intervals: number[];
 
+    private pingStart: number;
     private connectionVerified: boolean;
 
     public constructor(groupAddress: string, port: number, heartbeatInterval: number = 5000) {
@@ -23,6 +26,7 @@ export default class BroadcastGateway implements IDisposable {
         this.heartbeatInterval = heartbeatInterval;
         this.intervals = [];
         this.connectionVerified = false;
+        this.pingStart = 0;
 
         // Create socket
         this.socket = dgram.createSocket({
@@ -33,8 +37,12 @@ export default class BroadcastGateway implements IDisposable {
         this.setupEvents();
     }
 
-    public setInterval(action: any, time: number): this {
-        this.intervals.push(setTimeout(action.bind(this), time));
+    public setInterval(action: any, time: number, call: boolean = true): this {
+        if (call) {
+            action.bind(this)();
+        }
+
+        this.intervals.push(setTimeout(action.bind(this), time) as any);
 
         return this;
     }
@@ -52,6 +60,7 @@ export default class BroadcastGateway implements IDisposable {
             this.socket.addMembership(this.groupAdress);
 
             console.log(`[BroadcastGateway] Listening on ${this.groupAdress}@${this.port}`);
+            this.pingStart = performance.now();
 
             // Start heartbeat loop
             this.setInterval(this.heartbeat, this.heartbeatInterval);
@@ -80,16 +89,29 @@ export default class BroadcastGateway implements IDisposable {
                         if (!this.connectionVerified) {
                             this.connectionVerified = true;
 
+                            const ping: number = Math.round(performance.now() - this.pingStart);
+
                             Actions.addMessage<INotice>({
                                 // TODO:
                                 channelId: "general",
                                 id: "fefwefwe2",
-                                text: "You're connected to the network.",
+                                text: `You're connected to the network. ~${ping}ms`,
                                 time: Date.now(),
                                 type: MessageType.Notice
                             });
 
                             Actions.setInputLocked(false);
+
+                            if (ping >= BroadcastGateway.slowThreshold) {
+                                Actions.addMessage<INotice>({
+                                    // TODO
+                                    channelId: "general",
+                                    id: "fk4k24t",
+                                    text: "Your connection may be slow due to high latency.",
+                                    time: Date.now(),
+                                    type: MessageType.Notice
+                                });   
+                            }
                         }
                     }
                     else {
