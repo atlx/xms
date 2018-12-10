@@ -21,6 +21,7 @@ export default class BroadcastGateway implements IDisposable {
         this.heartbeatInterval = heartbeatInterval;
         this.intervals = [];
 
+        // Create socket
         this.socket = dgram.createSocket({
             type: "udp4",
             reuseAddr: true
@@ -43,7 +44,7 @@ export default class BroadcastGateway implements IDisposable {
         return this;
     }
 
-    private setupEvents(): void {
+    private setupEvents(): this {
         this.socket.on("listening", () => {
             this.socket.setBroadcast(true);
             this.socket.setMulticastTTL(128);
@@ -54,6 +55,9 @@ export default class BroadcastGateway implements IDisposable {
             // Start heartbeat loop
             this.setInterval(this.heartbeat, this.heartbeatInterval);
         });
+
+        // TODO: Implement
+        // this.socket.on("close")
 
         this.socket.on("message", (data: Buffer, sender: AddressInfo) => {
             const messageString: string = data.toString();
@@ -118,6 +122,8 @@ export default class BroadcastGateway implements IDisposable {
         this.socket.on("error", (error: Error) => {
             console.log(`[BroadcastGateway.setupEvents] Socket threw error with message: ${error.message}`);
         });
+
+        return this;
     }
 
     private heartbeat(): this {
@@ -129,16 +135,20 @@ export default class BroadcastGateway implements IDisposable {
     }
 
     public emit<T>(type: GatewayMsgType, payload: T): void {
-        const data: any = JSON.stringify({
+        const data: Buffer = Buffer.from(JSON.stringify({
             type,
             time: Date.now(),
             payload,
             sender: app.me.id
-        } as GatewayMsg<T>);
+        } as GatewayMsg<T>));
 
-        this.socket.send(data, 0, data.length, this.port, this.groupAdress);
+        this.socket.send(data, this.port, 0, data.length, this.groupAdress, (error: Error | null) => {
+            if (error !== null) {
+                console.log(`[BroadcastGateway.emit] Failed to emit message: ${error.message}`);
+            }
 
-        console.log(`[BroadcastGateway.emit] Sent ${data.length} bytes`);
+            console.log(`[BroadcastGateway.emit] Sent ${data.length} bytes`);
+        });
     }
 
     public dispose(): this {
@@ -147,10 +157,12 @@ export default class BroadcastGateway implements IDisposable {
         return this;
     }
 
-    public start(): void {
+    public start(): this {
         const localAddress: string = Utils.getLocalAddresses()[0];
 
         this.socket.bind(this.port, localAddress);
         console.log(`[BroadcastGateway.start] Bound to ${localAddress}@${this.port}`);
+
+        return this;
     }
 }

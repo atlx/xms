@@ -48,9 +48,14 @@ class Chat extends React.Component<ChatProps> {
 
 	public handleKeyDown(e: any): void {
 		if (this.props.activeChannelId !== null && e.key === "Enter") {
-			const text: string = this.$message.current.value;
+			const text: string = this.$message.current.value.trim();
 
 			this.$message.current.value = "";
+
+			// Avoid sending empty messages
+			if (text === "") {
+				return;
+			}
 
 			const message: Message = Utils.generateMessage(this.props.activeChannelId, text);
 

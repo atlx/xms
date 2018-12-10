@@ -23,7 +23,7 @@ export default class App {
 		console.log("[App] Rendering");
 
 		if (document.getElementById("root") == null) {
-			const root = document.createElement("div");
+			const root: any = document.createElement("div");
 
 			root.id = "root";
 			document.body.appendChild(root);
