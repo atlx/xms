@@ -5,23 +5,28 @@ export enum GatewayMsgType {
     Hello,
     HelloAck,
     Goodbye,
-    Message
+    Message,
+    Heartbeat
 }
 
-export type GatewayMessage = {
+export type GatewayMsg<T> = {
     readonly type: GatewayMsgType;
-    readonly payload: any;
+    readonly payload: T;
     readonly sender: UniqueId;
     readonly time: number;
 }
 
 // Messages
-export type GatewayHelloMessage = {
+export type HelloPayload = {
     readonly time: number;
     readonly user: User;
 }
 
-export type GatewayMessageMessage = {
+export type HeartbeatPayload = {
+    //
+}
+
+export type MessagePayload = {
     readonly id: UniqueId;
     readonly text: string;
 }

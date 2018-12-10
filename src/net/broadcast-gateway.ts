@@ -1,20 +1,25 @@
 import dgram, {Socket} from "dgram";
 import {AddressInfo} from "net";
-import {GatewayMessage, GatewayMsgType, GatewayHelloMessage, GatewayMessageMessage} from "./gateway";
+import {GatewayMsg, GatewayMsgType, HelloPayload, MessagePayload, HeartbeatPayload} from "./gateway";
 import {store, AppState} from "../store/store";
 import Actions from "../store/actions";
 import Utils from "../core/utils";
 import {app} from "..";
+import {IDisposable} from "../core/interfaces";
 
-export default class BroadcastGateway {
+export default class BroadcastGateway implements IDisposable {
     public readonly groupAdress: string;
     public readonly port: number;
 
     private readonly socket: Socket;
+    private readonly heartbeatInterval: number;
+    private readonly intervals: NodeJS.Timeout[];
 
-    public constructor(groupAddress: string, port: number) {
+    public constructor(groupAddress: string, port: number, heartbeatInterval: number = 5000) {
         this.groupAdress = groupAddress;
         this.port = port;
+        this.heartbeatInterval = heartbeatInterval;
+        this.intervals = [];
 
         this.socket = dgram.createSocket({
             type: "udp4",
@@ -24,13 +29,30 @@ export default class BroadcastGateway {
         this.setupEvents();
     }
 
+    public setInterval(action: any, time: number): this {
+        this.intervals.push(setTimeout(action.bind(this), time));
+
+        return this;
+    }
+
+    public clearIntervals(): this {
+        for (let i = 0; i < this.intervals.length; i++) {
+            clearInterval(this.intervals[i]);
+        }
+
+        return this;
+    }
+
     private setupEvents(): void {
         this.socket.on("listening", () => {
             this.socket.setBroadcast(true);
             this.socket.setMulticastTTL(128);
             this.socket.addMembership(this.groupAdress);
 
-            console.log(`[BroadcastGateway] Listening on ${this.groupAdress}@${this.port}`)
+            console.log(`[BroadcastGateway] Listening on ${this.groupAdress}@${this.port}`);
+
+            // Start heartbeat loop
+            this.setInterval(this.heartbeat, this.heartbeatInterval);
         });
 
         this.socket.on("message", (data: Buffer, sender: AddressInfo) => {
@@ -40,11 +62,11 @@ export default class BroadcastGateway {
             console.log(`[BroadcastGateway.setupEvents] Received message string: ${messageString}`);
 
             if (messageString.startsWith("{") && messageString.endsWith("}")) {
-                const message: GatewayMessage = JSON.parse(messageString);
+                const message: GatewayMsg<any> = JSON.parse(messageString);
 
                 if (message.sender === app.me.id) {
                     if (message.type === GatewayMsgType.Message) {
-                        const payload: GatewayMessageMessage = message.payload;
+                        const payload: MessagePayload = message.payload;
 
                         Actions.markMessageSent(payload.id);
                     }
@@ -58,14 +80,14 @@ export default class BroadcastGateway {
                 // TODO: Use handlers instead
                 if (message.type === GatewayMsgType.Hello) {
                     // TODO: Make use of the time difference & adjust time proxy for this user
-                    const payload: GatewayHelloMessage = message.payload;
+                    const payload: HelloPayload = message.payload;
 
                     if (!(store.getState() as AppState).usersMap.has(message.sender)) {
                         Actions.addUser(payload.user);
                     }
                 }
                 else if (message.type === GatewayMsgType.Message) {
-                    const payload: GatewayMessageMessage = message.payload;
+                    const payload: MessagePayload = message.payload;
 
                     if ((store.getState() as AppState).usersMap.has(message.sender)) {
                         // TODO
@@ -98,17 +120,31 @@ export default class BroadcastGateway {
         });
     }
 
-    public emit(type: GatewayMsgType, message: any): void {
+    private heartbeat(): this {
+        this.emit<HeartbeatPayload>(GatewayMsgType.Heartbeat, {
+            //
+        });
+
+        return this;
+    }
+
+    public emit<T>(type: GatewayMsgType, payload: T): void {
         const data: any = JSON.stringify({
             type,
             time: Date.now(),
-            payload: message,
+            payload,
             sender: app.me.id
-        } as GatewayMessage);
+        } as GatewayMsg<T>);
 
         this.socket.send(data, 0, data.length, this.port, this.groupAdress);
 
         console.log(`[BroadcastGateway.emit] Sent ${data.length} bytes`);
+    }
+
+    public dispose(): this {
+        this.clearIntervals();
+
+        return this;
     }
 
     public start(): void {

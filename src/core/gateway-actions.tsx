@@ -1,6 +1,6 @@
 import {Message} from "../types/types";
 import BroadcastGateway from "../net/broadcast-gateway";
-import {GatewayMsgType, GatewayMessageMessage} from "../net/gateway";
+import {GatewayMsgType, MessagePayload} from "../net/gateway";
 
 export default class GatewayActions {
     private readonly gateway: BroadcastGateway;
@@ -13,6 +13,6 @@ export default class GatewayActions {
         this.gateway.emit(GatewayMsgType.Message, {
             id: message.id,
             text: message.text
-        } as GatewayMessageMessage);
+        } as MessagePayload);
     }
 }
