@@ -39,7 +39,7 @@ export default abstract class Utils {
         return Math.random().toString().replace(".", "");
     }
 
-    public static generateMessage(text: string): Message {
+    public static generateMessage(channelId: UniqueId, text: string): Message {
         return {
             id: Utils.generateId(),
             
@@ -51,7 +51,8 @@ export default abstract class Utils {
             // TODO
             systemMessage: false,
             text,
-            time: Date.now()
+            time: Date.now(),
+            channelId
         };
     }
 }

@@ -1,7 +1,7 @@
 import {User, UniqueId} from "../types/types";
 
 // Generic
-export enum GatewayMessageType {
+export enum GatewayMsgType {
     Hello,
     HelloAck,
     Goodbye,
@@ -9,7 +9,7 @@ export enum GatewayMessageType {
 }
 
 export type GatewayMessage = {
-    readonly type: GatewayMessageType;
+    readonly type: GatewayMsgType;
     readonly payload: any;
     readonly sender: UniqueId;
     readonly time: number;

@@ -1,6 +1,6 @@
 import dgram, {Socket} from "dgram";
 import {AddressInfo} from "net";
-import {GatewayMessage, GatewayMessageType, GatewayHelloMessage, GatewayMessageMessage} from "./gateway";
+import {GatewayMessage, GatewayMsgType, GatewayHelloMessage, GatewayMessageMessage} from "./gateway";
 import {store, AppState} from "../store/store";
 import Actions from "../store/actions";
 import Utils from "../core/utils";
@@ -39,11 +39,11 @@ export default class BroadcastGateway {
             // TODO: Debugging
             console.log(`[BroadcastGateway.setupEvents] Received message string: ${messageString}`);
 
-            if (messageString[0] === "{" && messageString[messageString.length - 1] === "}") {
+            if (messageString.startsWith("{") && messageString.endsWith("}")) {
                 const message: GatewayMessage = JSON.parse(messageString);
 
                 if (message.sender === app.me.id) {
-                    if (message.type === GatewayMessageType.Message) {
+                    if (message.type === GatewayMsgType.Message) {
                         const payload: GatewayMessageMessage = message.payload;
 
                         Actions.markMessageSent(payload.id);
@@ -56,7 +56,7 @@ export default class BroadcastGateway {
                 }
 
                 // TODO: Use handlers instead
-                if (message.type === GatewayMessageType.Hello) {
+                if (message.type === GatewayMsgType.Hello) {
                     // TODO: Make use of the time difference & adjust time proxy for this user
                     const payload: GatewayHelloMessage = message.payload;
 
@@ -64,13 +64,14 @@ export default class BroadcastGateway {
                         Actions.addUser(payload.user);
                     }
                 }
-                else if (message.type === GatewayMessageType.Message) {
+                else if (message.type === GatewayMsgType.Message) {
                     const payload: GatewayMessageMessage = message.payload;
 
                     if ((store.getState() as AppState).usersMap.has(message.sender)) {
                         // TODO
                     }
                     else {
+                        // TODO: Fix
                         Actions.addMessage({
                             // TODO: A way to safely identify an unknown sender, or is it not required?
                             authorAvatarUrl: "",
@@ -81,7 +82,8 @@ export default class BroadcastGateway {
                             sent: true,
                             
                             // TODO: Time should be provided by sender
-                            time: Date.now()
+                            time: Date.now(),
+                            channelId: ""
                         });
                     }
                 }
@@ -96,7 +98,7 @@ export default class BroadcastGateway {
         });
     }
 
-    public emit(type: GatewayMessageType, message: any): void {
+    public emit(type: GatewayMsgType, message: any): void {
         const data: any = JSON.stringify({
             type,
             time: Date.now(),

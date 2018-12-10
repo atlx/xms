@@ -1,5 +1,17 @@
+export type Channel = {
+    readonly id: UniqueId;
+    readonly type: ChannelType;
+    readonly topic: string;
+    readonly name: string;
+}
+
+export enum ChannelType {
+    Text
+}
+
 export type Message = {
     readonly id: UniqueId;
+    readonly channelId: UniqueId;
     readonly authorName: string;
     readonly text: string;
     readonly time: number;

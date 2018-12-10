@@ -15,7 +15,7 @@
         }
 
         > .channel-title {
-
+            /* TODO */
         }
     }
 
@@ -32,17 +32,17 @@
             width: 100%;
             box-sizing: border-box;
             background: none;
-            border: none;
             padding: 14px 20px;
             border-radius: 4px;
-            font-size: 19px;
-            color: #fff;
-            border: 1px solid $color-dark-contrast-dark;
+            font-size: 18px;
+            color: #aaa;
+            border: 2px dashed $color-dark-contrast-dark;
             transition: border-color 0.3s ease;
         }
 
         > .message:focus {
-            border-color: #888;
+            border-color: #555;
+            border-style: solid;
         }
     }
 }

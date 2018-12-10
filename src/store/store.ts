@@ -1,5 +1,5 @@
 import {createStore} from "redux";
-import {Message, RoosterUserModel, UserState, RoosterCategoryModel, UniqueId, User} from "../types/types";
+import {Message, RoosterUserModel, UserState, RoosterCategoryModel, UniqueId, User, Channel} from "../types/types";
 
 export enum ActionType {
     AddMessage = "ADD_MESSAGE",
@@ -54,12 +54,16 @@ export type AppState = {
     readonly users: RoosterUserModel[];
     readonly usersMap: Map<UniqueId, User>;
     readonly categories: RoosterCategoryModel[];
+    readonly channels: Channel[];
+    
+    activeChannel: Channel;
 }
 
 export const store: any = createStore(defaultReducer, {
     messages: [
         {
             id: "kiwejtwrtiet",
+            channelId: "ff",
             authorName: "John Doe",
             time: 0,
             text: "Hello world",
@@ -86,5 +90,9 @@ export const store: any = createStore(defaultReducer, {
         }
     ],
 
-    usersMap: new Map()
+    usersMap: new Map(),
+
+    channels: [],
+
+    activeChannel: null
 } as any);

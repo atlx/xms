@@ -2,16 +2,20 @@ import React, {RefObject} from "react";
 import "../styles/chat.scss";
 import {connect} from "react-redux";
 import {AppState} from "../store/store";
-import {Message} from "../types/types";
+import {Message, UniqueId} from "../types/types";
 import ChatMessage from "./chat-message";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faHashtag} from "@fortawesome/free-solid-svg-icons";
 import Actions from "../store/actions";
 import {app} from "..";
-import {GatewayMessageType, GatewayMessageMessage} from "../net/gateway";
 import Utils from "../core/utils";
 
-class Chat extends React.Component<any> {
+type ChatProps = {
+	readonly messages: Message[];
+	readonly activeChannelId: UniqueId | null;
+}
+
+class Chat extends React.Component<ChatProps> {
 	private readonly $message: RefObject<any>;
 
 	public constructor(props: any) {
@@ -43,12 +47,12 @@ class Chat extends React.Component<any> {
 	}
 
 	public handleKeyDown(e: any): void {
-		if (e.key === "Enter") {
+		if (this.props.activeChannelId !== null && e.key === "Enter") {
 			const text: string = this.$message.current.value;
 
 			this.$message.current.value = "";
 
-			const message: Message = Utils.generateMessage(text);
+			const message: Message = Utils.generateMessage(this.props.activeChannelId, text);
 
 			Actions.addMessage(message);
 			app.actions.sendMessage(message);
@@ -77,9 +81,10 @@ class Chat extends React.Component<any> {
 	}
 }
 
-const mapStateToProps = (state: AppState): any => {
+const mapStateToProps = (state: AppState): ChatProps => {
     return {
-		messages: state.messages
+		messages: state.messages,
+		activeChannelId: state.activeChannel !== null ? state.activeChannel.id : null
     };
 };
 

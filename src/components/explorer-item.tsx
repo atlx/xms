@@ -3,14 +3,11 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import "../styles/explorer-item.scss";
 import {faQuestionCircle, IconDefinition} from "@fortawesome/free-regular-svg-icons";
 import {faHashtag} from "@fortawesome/free-solid-svg-icons";
-
-export enum ExplorerItemType {
-    TextChannel
-}
+import {ChannelType} from "../types/types";
 
 type ExplorerItemProps = {
     readonly name: string;
-    readonly type: ExplorerItemType;
+    readonly type: ChannelType;
     readonly indicate: boolean;
     readonly active: boolean;
 }
@@ -18,7 +15,7 @@ type ExplorerItemProps = {
 export default class ExplorerItem extends React.Component<ExplorerItemProps> {
     public getIcon(): IconDefinition {
         switch (this.props.type) {
-            case ExplorerItemType.TextChannel: {
+            case ChannelType.Text: {
                 return faHashtag;
             }
         }
