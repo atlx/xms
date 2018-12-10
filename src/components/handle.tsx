@@ -16,7 +16,7 @@ export default class Handle extends React.Component {
 		remote.getCurrentWindow().close();
 	}
 
-	public render() {
+	public render(): JSX.Element {
 		return (
 			<div className="handle">
 				<div className="title">XMS by CloudRex</div>

@@ -6,7 +6,7 @@ import Rooster from "./rooster";
 import Handle from "./handle";
 
 export default class Application extends React.Component {
-	public render() {
+	public render(): JSX.Element {
 		return (
 			<div className="application">
 				<Handle />

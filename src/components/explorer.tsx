@@ -38,7 +38,7 @@ class Explorer extends React.Component<ExplorerProps> {
 		return items;
 	}
 
-	public render() {
+	public render(): JSX.Element {
 		return (
 			<div className="explorer">
 				{this.renderItems()}

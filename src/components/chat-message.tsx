@@ -21,7 +21,7 @@ export default class ChatMessage extends React.Component<ChatMessageProps> {
         return classes.join(" ");
     }
 
-	public render() {
+	public render(): JSX.Element {
 		return (
 			<div className={this.getComponentClass()}>
                 <div className="header">

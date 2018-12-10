@@ -16,7 +16,7 @@ class Rooster extends React.Component<any> {
 		});
 	}
 
-	public render() {
+	public render(): JSX.Element {
 		return (
 			<div className="rooster">
 				{this.renderCategories()}

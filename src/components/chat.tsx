@@ -59,7 +59,7 @@ class Chat extends React.Component<ChatProps> {
 		}
 	}
 
-	public render() {
+	public render(): JSX.Element {
 		return (
 			<div className="chat">
 				<div className="header">

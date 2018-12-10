@@ -35,7 +35,7 @@ export default class ExplorerItem extends React.Component<ExplorerItemProps> {
         return classes.join(" ");
     }
 
-	public render() {
+	public render(): JSX.Element {
 		return (
 			<div className={this.getComponentClass()}>
                 <FontAwesomeIcon className="icon" icon={this.getIcon()} />
