@@ -14,10 +14,8 @@ type ExplorerItemProps = {
 
 export default class ExplorerItem extends React.Component<ExplorerItemProps> {
     public getIcon(): IconDefinition {
-        switch (this.props.type) {
-            case ChannelType.Text: {
-                return faHashtag;
-            }
+        if (this.props.type === ChannelType.Public || this.props.type === ChannelType.Text) {
+            return faHashtag;
         }
 
         return faQuestionCircle;

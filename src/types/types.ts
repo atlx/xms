@@ -6,6 +6,7 @@ export type Channel = {
 }
 
 export enum ChannelType {
+    Public,
     Text
 }
 

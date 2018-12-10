@@ -5,13 +5,13 @@ import {AppState} from "../store/store";
 import {connect} from "react-redux";
 import {Channel, UniqueId} from "../types/types";
 
-type ExplorerState = {
-	readonly channels: Channel[];
+type ExplorerProps = {
+	readonly channels: Map<UniqueId, Channel>;
 	readonly activeChannelId: UniqueId | null;
 }
 
-class Explorer extends React.Component<any, ExplorerState> {
-	public constructor(props: any) {
+class Explorer extends React.Component<ExplorerProps> {
+	public constructor(props: ExplorerProps) {
 		super(props);
 
 		// Bindings
@@ -19,22 +19,23 @@ class Explorer extends React.Component<any, ExplorerState> {
 	}
 
 	public renderItems(): JSX.Element[] {
-		// TODO: Shouldn't be required
-		if (this.state === null) {
-			return [];
+		const items: JSX.Element[] = [];
+
+		for (let [key, value] of this.props.channels) {
+			items.push(
+				<ExplorerItem
+					key={key}
+					type={value.type}
+
+					// TODO
+					indicate={false}
+					active={this.props.activeChannelId === value.id}
+					name={value.name}
+				/>
+			);
 		}
 
-		return this.state.channels.map((channel: Channel) =>
-			<ExplorerItem
-				key={channel.id}
-				type={channel.type}
-
-				// TODO
-				indicate={false}
-				active={this.state.activeChannelId === channel.id}
-				name={channel.name}
-			/>
-		);
+		return items;
 	}
 
 	public render() {
@@ -46,7 +47,7 @@ class Explorer extends React.Component<any, ExplorerState> {
 	}
 }
 
-const mapStateToProps = (state: AppState): ExplorerState => {
+const mapStateToProps = (state: AppState): ExplorerProps => {
 	return {
 		channels: state.channels,
 		activeChannelId: state.activeChannel !== null ? state.activeChannel.id : null

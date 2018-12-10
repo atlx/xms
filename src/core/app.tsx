@@ -6,6 +6,7 @@ import {store} from "../store/store";
 import BroadcastGateway from "../net/broadcast-gateway";
 import {User} from "../types/types";
 import GatewayActions from "./gateway-actions";
+import Actions from "../store/actions";
 
 export default class App {
 	public readonly gateway: BroadcastGateway;
@@ -39,6 +40,7 @@ export default class App {
 
 	public init(): void {
 		this.test();
+		Actions.setGeneralAsActiveChannel();
 		this.render();
 		this.gateway.start();
 	}

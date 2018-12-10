@@ -22,4 +22,17 @@ export default abstract class Actions {
             payload: user
         });
     }
+
+    public static setActiveChannel(channelId: UniqueId): void {
+        store.dispatch({
+            type: ActionType.SetActiveChannel,
+            payload: channelId
+        });
+    }
+
+    public static setGeneralAsActiveChannel(): void {
+        store.dispatch({
+            type: ActionType.SetGeneralAsActiveChannel
+        });
+    }
 }

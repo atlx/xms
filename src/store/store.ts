@@ -1,10 +1,12 @@
-import {createStore} from "redux";
-import {Message, RoosterUserModel, UserState, RoosterCategoryModel, UniqueId, User, Channel} from "../types/types";
+import {createStore, Store} from "redux";
+import {Message, RoosterUserModel, UserState, RoosterCategoryModel, UniqueId, User, Channel, ChannelType} from "../types/types";
 
 export enum ActionType {
     AddMessage = "ADD_MESSAGE",
     MarkMessageSent = "MARK_MESSAGE_SENT",
-    AddUser = "ADD_USER"
+    AddUser = "ADD_USER",
+    SetActiveChannel = "SET_ACTIVE_CHANNEL",
+    SetGeneralAsActiveChannel = "SET_GENERAL_AS_ACTIVE_CHANNEL"
 }
 
 function defaultReducer(state: AppState, action: any): any {
@@ -22,7 +24,7 @@ function defaultReducer(state: AppState, action: any): any {
         const newMessages: Message[] = [...state.messages];
 
         let messageFound: boolean = false;
-        
+
         for (let i = 0; i < newMessages.length; i++) {
             if (newMessages[i].id === action.payload && !newMessages[i].sent) {
                 newMessages[i] = {
@@ -45,6 +47,25 @@ function defaultReducer(state: AppState, action: any): any {
             messages: newMessages
         };
     }
+    else if (action.type === ActionType.SetActiveChannel) {
+        if (!action.payload || typeof (action.payload) !== "string") {
+            throw new Error("Invalid payload");
+        }
+        else if (!state.channels.has(action.payload)) {
+            throw new Error("Attempting to set a channel that does not exist within the application state");
+        }
+
+        return {
+            ...state,
+            activeChannel: state.channels.get(action.payload)
+        };
+    }
+    else if (action.type === ActionType.SetGeneralAsActiveChannel) {
+        return {
+            ...state,
+            activeChannel: state.channels.get("general")
+        };
+    }
 
     return state;
 }
@@ -54,12 +75,12 @@ export type AppState = {
     readonly users: RoosterUserModel[];
     readonly usersMap: Map<UniqueId, User>;
     readonly categories: RoosterCategoryModel[];
-    readonly channels: Channel[];
-    
+    readonly channels: Map<UniqueId, Channel>;
+
     activeChannel: Channel;
 }
 
-export const store: any = createStore(defaultReducer, {
+export const store: Store = createStore(defaultReducer, {
     messages: [
         {
             id: "kiwejtwrtiet",
@@ -92,7 +113,15 @@ export const store: any = createStore(defaultReducer, {
 
     usersMap: new Map(),
 
-    channels: [],
+    // General channel
+    channels: new Map().set("general",
+        {
+            id: "general",
+            name: "General",
+            topic: "A public channel for everyone connected",
+            type: ChannelType.Public
+        }
+    ),
 
     activeChannel: null
 } as any);
