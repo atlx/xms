@@ -3,9 +3,9 @@ import {AddressInfo} from "net";
 import {GatewayMsg, GatewayMsgType, HelloPayload, MessagePayload, HeartbeatPayload} from "./gateway";
 import {store, AppState} from "../store/store";
 import Actions from "../store/actions";
-import Utils from "../core/utils";
 import {app} from "..";
 import {IDisposable} from "../core/interfaces";
+import {IMessage, INotice, MessageType} from "../types/types";
 
 export default class BroadcastGateway implements IDisposable {
     public readonly groupAdress: string;
@@ -15,11 +15,14 @@ export default class BroadcastGateway implements IDisposable {
     private readonly heartbeatInterval: number;
     private readonly intervals: NodeJS.Timeout[];
 
+    private connectionVerified: boolean;
+
     public constructor(groupAddress: string, port: number, heartbeatInterval: number = 5000) {
         this.groupAdress = groupAddress;
         this.port = port;
         this.heartbeatInterval = heartbeatInterval;
         this.intervals = [];
+        this.connectionVerified = false;
 
         // Create socket
         this.socket = dgram.createSocket({
@@ -46,8 +49,6 @@ export default class BroadcastGateway implements IDisposable {
 
     private setupEvents(): this {
         this.socket.on("listening", () => {
-            this.socket.setBroadcast(true);
-            this.socket.setMulticastTTL(128);
             this.socket.addMembership(this.groupAdress);
 
             console.log(`[BroadcastGateway] Listening on ${this.groupAdress}@${this.port}`);
@@ -74,6 +75,23 @@ export default class BroadcastGateway implements IDisposable {
 
                         Actions.markMessageSent(payload.id);
                     }
+                    else if (message.type === GatewayMsgType.Heartbeat) {
+                        // TODO: Also measure ping
+                        if (!this.connectionVerified) {
+                            this.connectionVerified = true;
+
+                            Actions.addMessage<INotice>({
+                                // TODO:
+                                channelId: "general",
+                                id: "fefwefwe2",
+                                text: "You're connected to the network.",
+                                time: Date.now(),
+                                type: MessageType.Notice
+                            });
+
+                            Actions.setInputLocked(false);
+                        }
+                    }
                     else {
                         console.log(`[BroadcastGateway:Message] Unknown message type from self: ${message.type}`);
                     }
@@ -98,6 +116,7 @@ export default class BroadcastGateway implements IDisposable {
                     }
                     else {
                         // TODO: Fix
+                        // TODO: Verify type and data
                         Actions.addMessage({
                             // TODO: A way to safely identify an unknown sender, or is it not required?
                             authorAvatarUrl: "",
@@ -106,11 +125,12 @@ export default class BroadcastGateway implements IDisposable {
                             systemMessage: false,
                             text: payload.text,
                             sent: true,
-                            
+
                             // TODO: Time should be provided by sender
                             time: Date.now(),
-                            channelId: ""
-                        });
+                            channelId: "general",
+                            type: payload.type
+                        } as IMessage);
                     }
                 }
                 else {
@@ -142,7 +162,7 @@ export default class BroadcastGateway implements IDisposable {
             sender: app.me.id
         } as GatewayMsg<T>));
 
-        this.socket.send(data, this.port, 0, data.length, this.groupAdress, (error: Error | null) => {
+        this.socket.send(data, 0, data.length, this.port, this.groupAdress, (error: Error | null) => {
             if (error !== null) {
                 console.log(`[BroadcastGateway.emit] Failed to emit message: ${error.message}`);
             }
@@ -158,10 +178,7 @@ export default class BroadcastGateway implements IDisposable {
     }
 
     public start(): this {
-        const localAddress: string = Utils.getLocalAddresses()[0];
-
-        this.socket.bind(this.port, localAddress);
-        console.log(`[BroadcastGateway.start] Bound to ${localAddress}@${this.port}`);
+        this.socket.bind(this.port);
 
         return this;
     }

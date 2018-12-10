@@ -1,4 +1,4 @@
-import {Message} from "../types/types";
+import {IMessage} from "../types/types";
 import BroadcastGateway from "../net/broadcast-gateway";
 import {GatewayMsgType, MessagePayload} from "../net/gateway";
 
@@ -9,10 +9,11 @@ export default class GatewayActions {
         this.gateway = gateway;
     }
 
-    public sendMessage(message: Message): void {
-        this.gateway.emit(GatewayMsgType.Message, {
+    public sendMessage(message: IMessage): void {
+        this.gateway.emit<MessagePayload>(GatewayMsgType.Message, {
             id: message.id,
-            text: message.text
-        } as MessagePayload);
+            text: message.text,
+            type: message.type
+        });
     }
 }

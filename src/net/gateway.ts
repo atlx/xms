@@ -1,4 +1,4 @@
-import {User, UniqueId} from "../types/types";
+import {User, UniqueId, MessageType} from "../types/types";
 
 // Generic
 export enum GatewayMsgType {
@@ -28,5 +28,6 @@ export type HeartbeatPayload = {
 
 export type MessagePayload = {
     readonly id: UniqueId;
+    readonly type: MessageType;
     readonly text: string;
 }

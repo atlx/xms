@@ -1,0 +1,15 @@
+.notice-message {
+    & {
+        width: 100%;
+        color: #fff;
+        padding: 6px 10px;
+        border-radius: 3px;
+        font-size: 17px;
+        background: linear-gradient(to right, #2ecc71, #27ae60);
+        box-sizing: border-box;
+    }
+
+    &:not(:first-child) {
+        margin-top: 15px;
+    }
+}

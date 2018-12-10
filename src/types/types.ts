@@ -10,15 +10,28 @@ export enum ChannelType {
     Text
 }
 
-export type Message = {
+export enum MessageType {
+    Text,
+    Notice
+}
+
+export interface IGenericMessage {
+    readonly type: MessageType;
     readonly id: UniqueId;
     readonly channelId: UniqueId;
-    readonly authorName: string;
     readonly text: string;
     readonly time: number;
+}
+
+export interface IMessage extends IGenericMessage {
+    readonly authorName: string;
     readonly authorAvatarUrl: string;
     readonly systemMessage: boolean;
     readonly sent: boolean;
+}
+
+export interface INotice extends IGenericMessage {
+    readonly text: string;
 }
 
 export enum UserState {

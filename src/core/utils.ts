@@ -1,5 +1,5 @@
 import os from "os";
-import {UniqueId, Message} from "../types/types";
+import {UniqueId, IMessage, MessageType} from "../types/types";
 import {app} from "..";
 
 export default abstract class Utils {
@@ -39,7 +39,7 @@ export default abstract class Utils {
         return Math.random().toString().replace(".", "");
     }
 
-    public static generateMessage(channelId: UniqueId, text: string): Message {
+    public static generateMessage(channelId: UniqueId, text: string): IMessage {
         return {
             id: Utils.generateId(),
             
@@ -52,7 +52,8 @@ export default abstract class Utils {
             systemMessage: false,
             text,
             time: Date.now(),
-            channelId
+            channelId,
+            type: MessageType.Text
         };
     }
 }

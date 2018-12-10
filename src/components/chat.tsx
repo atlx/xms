@@ -2,17 +2,19 @@ import React, {RefObject} from "react";
 import "../styles/chat.scss";
 import {connect} from "react-redux";
 import {AppState} from "../store/store";
-import {Message, UniqueId} from "../types/types";
+import {IMessage, UniqueId, IGenericMessage, MessageType} from "../types/types";
 import ChatMessage from "./chat-message";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faHashtag} from "@fortawesome/free-solid-svg-icons";
 import Actions from "../store/actions";
 import {app} from "..";
 import Utils from "../core/utils";
+import NoticeMessage from "./notice-message";
 
 type ChatProps = {
-	readonly messages: Message[];
+	readonly messages: IGenericMessage[];
 	readonly activeChannelId: UniqueId | null;
+	readonly inputLocked: boolean;
 }
 
 class Chat extends React.Component<ChatProps> {
@@ -33,16 +35,31 @@ class Chat extends React.Component<ChatProps> {
 	}
 
 	public renderMessages(): JSX.Element[] {
-		return this.props.messages.map((message: Message) => {
-			return <ChatMessage
-				key={message.id}
-				sent={message.sent}
-				authorName={message.authorName}
-				authorAvatarUrl={message.authorAvatarUrl}
-				content={message.text}
-				time={message.time}
-				systemMessage={message.systemMessage}
-			/>
+		return this.props.messages.map((message: IGenericMessage) => {
+
+			if (message.type === MessageType.Text) {
+				const textMessage: IMessage = message as IMessage;
+
+				return <ChatMessage
+					key={message.id}
+					sent={textMessage.sent}
+					authorName={textMessage.authorName}
+					authorAvatarUrl={textMessage.authorAvatarUrl}
+					content={message.text}
+					time={textMessage.time}
+					systemMessage={textMessage.systemMessage}
+				/>;
+			}
+			else if (message.type === MessageType.Notice) {
+				// No need to cast for now
+				return <NoticeMessage
+					key={message.id}
+					text={message.text}
+				/>;
+			}
+			else {
+				throw new Error(`[Chat] Unknown message type: ${message.type}`);
+			}
 		});
 	}
 
@@ -57,7 +74,7 @@ class Chat extends React.Component<ChatProps> {
 				return;
 			}
 
-			const message: Message = Utils.generateMessage(this.props.activeChannelId, text);
+			const message: IMessage = Utils.generateMessage(this.props.activeChannelId, text);
 
 			Actions.addMessage(message);
 			app.actions.sendMessage(message);
@@ -79,6 +96,7 @@ class Chat extends React.Component<ChatProps> {
 						onKeyDown={this.handleKeyDown}
 						placeholder="Type a message"
 						className="message"
+						disabled={this.props.inputLocked}
 					/>
 				</div>
 			</div>
@@ -87,10 +105,11 @@ class Chat extends React.Component<ChatProps> {
 }
 
 const mapStateToProps = (state: AppState): ChatProps => {
-    return {
+	return {
 		messages: state.messages,
-		activeChannelId: state.activeChannel !== null ? state.activeChannel.id : null
-    };
+		activeChannelId: state.activeChannel !== null ? state.activeChannel.id : null,
+		inputLocked: state.inputLocked
+	};
 };
 
 export default connect(mapStateToProps)(Chat);

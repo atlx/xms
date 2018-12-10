@@ -1,17 +1,18 @@
 import {createStore, Store} from "redux";
-import {Message, RoosterUserModel, UserState, RoosterCategoryModel, UniqueId, User, Channel, ChannelType} from "../types/types";
+import {IMessage, RoosterUserModel, UserState, RoosterCategoryModel, UniqueId, User, Channel, ChannelType, IGenericMessage, MessageType, INotice} from "../types/types";
 
 export enum ActionType {
     AddMessage = "ADD_MESSAGE",
     MarkMessageSent = "MARK_MESSAGE_SENT",
     AddUser = "ADD_USER",
     SetActiveChannel = "SET_ACTIVE_CHANNEL",
-    SetGeneralAsActiveChannel = "SET_GENERAL_AS_ACTIVE_CHANNEL"
+    SetGeneralAsActiveChannel = "SET_GENERAL_AS_ACTIVE_CHANNEL",
+    SetInputLocked = "SET_INPUT_LOCKED"
 }
 
 function defaultReducer(state: AppState, action: any): any {
     if (action.type === ActionType.AddMessage) {
-        const newMessages: Message[] = [...state.messages];
+        const newMessages: IGenericMessage[] = [...state.messages];
 
         newMessages.push(action.payload);
 
@@ -21,13 +22,19 @@ function defaultReducer(state: AppState, action: any): any {
         };
     }
     else if (action.type === ActionType.MarkMessageSent) {
-        const newMessages: Message[] = [...state.messages];
+        const newMessages: IGenericMessage[] = [...state.messages];
 
         let messageFound: boolean = false;
 
         for (let i = 0; i < newMessages.length; i++) {
-            if (newMessages[i].id === action.payload && !newMessages[i].sent) {
-                newMessages[i] = {
+            if (newMessages[i].type !== MessageType.Text) {
+                continue;
+            }
+
+            const message: IMessage = newMessages[i] as IMessage;
+
+            if (message.id === action.payload && !message.sent) {
+                (newMessages[i] as any) = {
                     ...newMessages[i],
                     sent: true
                 };
@@ -66,32 +73,28 @@ function defaultReducer(state: AppState, action: any): any {
             activeChannel: state.channels.get("general")
         };
     }
+    else if (action.type === ActionType.SetInputLocked) {
+        return {
+            ...state,
+            inputLocked: action.payload
+        };
+    }
 
     return state;
 }
 
 export type AppState = {
-    readonly messages: Message[];
+    readonly messages: IGenericMessage[];
     readonly users: RoosterUserModel[];
     readonly usersMap: Map<UniqueId, User>;
     readonly categories: RoosterCategoryModel[];
     readonly channels: Map<UniqueId, Channel>;
-
-    activeChannel: Channel;
+    readonly inputLocked: boolean;
+    readonly activeChannel: Channel;
 }
 
 export const store: Store = createStore(defaultReducer, {
-    messages: [
-        {
-            id: "kiwejtwrtiet",
-            channelId: "ff",
-            authorName: "John Doe",
-            time: 0,
-            text: "Hello world",
-            authorAvatarUrl: "",
-            systemMessage: false
-        }
-    ],
+    messages: [],
 
     users: [
         {
@@ -123,5 +126,7 @@ export const store: Store = createStore(defaultReducer, {
         }
     ),
 
-    activeChannel: null
+    activeChannel: null,
+
+    inputLocked: true
 } as any);
