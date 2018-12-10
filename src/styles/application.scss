@@ -4,6 +4,10 @@
     grid-template-columns: 300px minmax(400px, 1fr) 300px;
 }
 
+.page-exit {
+    background-color: red;
+}
+
 .application > div:not(.handle):not(.chat) {
     padding: 20px;
 }
