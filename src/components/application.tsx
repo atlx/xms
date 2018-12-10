@@ -1,4 +1,4 @@
-import React from "react";
+import React, { CSSProperties } from "react";
 import "../styles/application.scss";
 import DefaultPage from "../pages/default";
 import {AppState} from "../store/store";
@@ -27,9 +27,17 @@ class Application extends React.Component<ApplicationState> {
 		}
 	}
 
+	public getApplicationStyle(): CSSProperties | undefined {
+		if (this.props.page !== Page.Default) {
+			return {
+				display: "initial"
+			};
+		}
+	}
+
 	public render(): JSX.Element {
 		return (
-			<div className="application">
+			<div style={this.getApplicationStyle()} className="application">
 				{this.renderPage()}
 			</div>
 		);

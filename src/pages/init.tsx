@@ -24,7 +24,7 @@ export default class InitPage extends React.Component {
 
 	public componentDidMount(): void {
 		// TODO: Debugging
-		const stepBy: number = 10;
+		const stepBy: number = 50;
 		const every: number = 1000;
 		const endOffset: number = 1500;
 
