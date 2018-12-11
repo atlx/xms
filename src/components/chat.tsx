@@ -12,6 +12,7 @@ import Utils from "../core/utils";
 import NoticeMessage from "./notice-message";
 import Loader from "./loader";
 import {CSSTransition} from "react-transition-group";
+import Autocompleter from "./autocompleter";
 
 type ChatProps = {
 	readonly messages: IGenericMessage[];
@@ -157,6 +158,7 @@ class Chat extends React.Component<ChatProps, ChatState> {
 					{this.renderMessages()}
 				</div>
 				<div className="input">
+					<Autocompleter />
 					<CSSTransition in={this.props.inputLocked} classNames="trans" timeout={400}>
 						<input
 							ref={this.$message}

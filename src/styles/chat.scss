@@ -32,6 +32,7 @@
     > .messages {
         & {
             padding: 20px;
+            padding-bottom: 0;
             overflow: auto;
             max-height: -webkit-fill-available;
         }
@@ -69,6 +70,7 @@
     > .input {
         & {
             padding: 20px;
+            position: relative;
         }
 
         > .message {
