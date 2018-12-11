@@ -4,7 +4,7 @@ import ReactDOM from "react-dom";
 import {Provider} from "react-redux";
 import {store} from "../store/store";
 import BroadcastGateway from "../net/broadcast-gateway";
-import {User, INotice, MessageType, Page} from "../types/types";
+import {User, Page} from "../types/types";
 import GatewayActions from "./gateway-actions";
 import Actions from "../store/actions";
 

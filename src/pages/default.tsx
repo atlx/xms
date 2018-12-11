@@ -9,7 +9,8 @@ export default class DefaultPage extends React.Component {
 		return (
 			<React.Fragment>
 				<Explorer />
-				<Chat />
+				{/* TODO: Props */}
+				<Chat offsetMultiplier={10} messages={[]} inputLocked={true} activeChannel={null as any} />
 				<Rooster />
 			</React.Fragment>
 		);

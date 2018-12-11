@@ -8,7 +8,7 @@ import {IDisposable} from "../core/interfaces";
 import {IMessage, INotice, MessageType} from "../types/types";
 
 export default class BroadcastGateway implements IDisposable {
-    public static slowThreshold: number = 100;
+    public static slowThreshold: number = 150;
 
     public readonly groupAdress: string;
     public readonly port: number;

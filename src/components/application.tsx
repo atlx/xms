@@ -41,7 +41,8 @@ class Application extends React.Component<ApplicationState> {
 		return (
 			<div className="application">
 				<Handle />
-				<CSSTransition in={this.props.page === Page.Init} classNames="page" timeout={5000} onExiting={() => alert("EXIT!")}>
+				{/* TODO: Not applying rule to EXITING component, just entering one */}
+				<CSSTransition in={this.props.page !== Page.Init} classNames="page" timeout={600}>
 					<div style={this.getAppContentStyle()} className="content">
 						{this.renderPage()}
 					</div>

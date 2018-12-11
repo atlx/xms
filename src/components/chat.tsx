@@ -11,24 +11,26 @@ import {app} from "..";
 import Utils from "../core/utils";
 import NoticeMessage from "./notice-message";
 import Loader from "./loader";
+import {CSSTransition} from "react-transition-group";
 
 type ChatProps = {
 	readonly messages: IGenericMessage[];
 	readonly activeChannel: Channel;
 	readonly inputLocked: boolean;
+	readonly offsetMultiplier: number;
 }
 
-class Chat extends React.Component<ChatProps> {
+type ChatState = {
+	readonly offset: number;
+}
+
+class Chat extends React.Component<ChatProps, ChatState> {
 	private readonly $message: RefObject<any>;
 	private readonly $messages: RefObject<any>;
 	private readonly $loader: RefObject<any>;
 
-	private offset: number;
-
 	public constructor(props: ChatProps) {
 		super(props);
-
-		this.offset = props.messages.length;
 
 		// Bindings
 		this.handleKeyDown = this.handleKeyDown.bind(this);
@@ -41,6 +43,12 @@ class Chat extends React.Component<ChatProps> {
 		this.$loader = React.createRef();
 	}
 
+	public componentDidMount(): void {
+		this.setState({
+			offset: 0
+		});
+	}
+
 	public componentDidUpdate(): void {
 		this.$messages.current.scrollTop = this.$messages.current.scrollHeight;
 	}
@@ -50,10 +58,11 @@ class Chat extends React.Component<ChatProps> {
 
 		console.log(messages);
 
-		if (this.offset !== messages.length) {
+		// TODO: Debugging commented out
+		/* if (this.offset !== messages.length) {
 			messages = messages.slice(-this.offset);
-		}
-		
+		} */
+
 		console.log(messages);
 
 		return messages.map((message: IGenericMessage) => {
@@ -112,11 +121,11 @@ class Chat extends React.Component<ChatProps> {
 	}
 
 	public loadOlderMessages(): void {
-		// TODO: Hard-coded value
 		// TODO: Timeout for debugging (slower)
 		setTimeout(() => {
-			this.offset += 5;
-			this.forceUpdate();
+			this.setState({
+				offset: this.state.offset + 1
+			});
 		}, 1500);
 	}
 
@@ -124,6 +133,10 @@ class Chat extends React.Component<ChatProps> {
 		// TODO: Hard-coded threshold
 		if (this.props.messages.length >= 15) {
 			if (this.$messages.current && this.$messages.current.scrollTop === 0) {
+				if (this.props.offsetMultiplier * this.state.offset > this.props.messages.length) {
+					return <div className="beginning-of-history">Beginning of history</div>;
+				}
+
 				this.loadOlderMessages();
 			}
 			else {
@@ -144,20 +157,22 @@ class Chat extends React.Component<ChatProps> {
 					{this.renderMessages()}
 				</div>
 				<div className="input">
-					<input
-						ref={this.$message}
-						onKeyDown={this.handleKeyDown}
-						placeholder="Type a message"
-						className="message"
-						disabled={this.props.inputLocked}
-					/>
+					<CSSTransition in={this.props.inputLocked} classNames="trans" timeout={400}>
+						<input
+							ref={this.$message}
+							onKeyDown={this.handleKeyDown}
+							placeholder="Type a message"
+							className="message"
+							disabled={this.props.inputLocked}
+						/>
+					</CSSTransition>
 				</div>
 			</div>
 		);
 	}
 }
 
-const mapStateToProps = (state: AppState): ChatProps => {
+const mapStateToProps = (state: AppState): any => {
 	return {
 		messages: state.messages,
 		activeChannel: state.activeChannel,
