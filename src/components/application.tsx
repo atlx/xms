@@ -37,9 +37,13 @@ class Application extends React.Component<ApplicationState> {
 		}
 	}
 
+	public handleKeyDown(e: any): void {
+		console.log(e);
+	}
+
 	public render(): JSX.Element {
 		return (
-			<div className="application">
+			<div onKeyDown={this.handleKeyDown} className="application">
 				<Handle />
 				{/* TODO: Not applying rule to EXITING component, just entering one */}
 				<CSSTransition in={this.props.page !== Page.Init} classNames="page" timeout={600}>

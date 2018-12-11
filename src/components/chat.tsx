@@ -159,7 +159,7 @@ class Chat extends React.Component<ChatProps, ChatState> {
 				</div>
 				<div className="input">
 					<Autocompleter />
-					<CSSTransition in={this.props.inputLocked} classNames="trans" timeout={400}>
+					<CSSTransition in={this.props.inputLocked} classNames="trans" timeout={300}>
 						<input
 							ref={this.$message}
 							onKeyDown={this.handleKeyDown}
