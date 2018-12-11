@@ -1,8 +1,14 @@
-export type Channel = {
+export interface IChannel {
     readonly id: UniqueId;
     readonly type: ChannelType;
     readonly topic: string;
     readonly name: string;
+}
+
+export interface IAutoCompleteItem {
+    readonly id: string;
+    readonly name: string;
+    readonly subtext?: string;
 }
 
 export enum Page {

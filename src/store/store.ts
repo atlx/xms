@@ -1,5 +1,5 @@
 import {createStore, Store} from "redux";
-import {IMessage, RoosterUserModel, UserState, RoosterCategoryModel, UniqueId, User, Channel, ChannelType, IGenericMessage, MessageType, INotice, Page} from "../types/types";
+import {IMessage, RoosterUserModel, UserState, RoosterCategoryModel, UniqueId, User, IChannel, ChannelType, IGenericMessage, MessageType, INotice, Page} from "../types/types";
 
 export enum ActionType {
     AddMessage = "ADD_MESSAGE",
@@ -8,7 +8,8 @@ export enum ActionType {
     SetActiveChannel = "SET_ACTIVE_CHANNEL",
     SetGeneralAsActiveChannel = "SET_GENERAL_AS_ACTIVE_CHANNEL",
     SetInputLocked = "SET_INPUT_LOCKED",
-    SetPage = "SET_PAGE"
+    SetPage = "SET_PAGE",
+    SetAutoCompleteVisible = "SET_AUTOCOMPLETE_VISIBLE"
 }
 
 function defaultReducer(state: AppState, action: any): any {
@@ -87,6 +88,12 @@ function defaultReducer(state: AppState, action: any): any {
             page: action.payload
         };
     }
+    else if (action.type === ActionType.SetAutoCompleteVisible) {
+        return {
+            ...state,
+            autoCompleteVisible: action.payload
+        };
+    }
 
     return state;
 }
@@ -96,10 +103,11 @@ export type AppState = {
     readonly users: RoosterUserModel[];
     readonly usersMap: Map<UniqueId, User>;
     readonly categories: RoosterCategoryModel[];
-    readonly channels: Map<UniqueId, Channel>;
+    readonly channels: Map<UniqueId, IChannel>;
     readonly inputLocked: boolean;
-    readonly activeChannel: Channel;
+    readonly activeChannel: IChannel;
     readonly page: Page;
+    readonly autoCompleteVisible: boolean;
 }
 
 export const store: Store = createStore(defaultReducer, {
@@ -136,8 +144,7 @@ export const store: Store = createStore(defaultReducer, {
     ),
 
     activeChannel: null,
-
     inputLocked: true,
-
-    page: Page.Init
+    page: Page.Init,
+    autoCompleteVisible: false
 } as any);

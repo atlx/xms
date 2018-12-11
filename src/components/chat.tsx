@@ -2,7 +2,7 @@ import React, {RefObject} from "react";
 import "../styles/chat.scss";
 import {connect} from "react-redux";
 import {AppState} from "../store/store";
-import {IMessage, IGenericMessage, MessageType, Channel} from "../types/types";
+import {IMessage, IGenericMessage, MessageType, IChannel, IAutoCompleteItem} from "../types/types";
 import ChatMessage from "./chat-message";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faHashtag} from "@fortawesome/free-solid-svg-icons";
@@ -16,16 +16,28 @@ import Autocompleter from "./autocompleter";
 
 type ChatProps = {
 	readonly messages: IGenericMessage[];
-	readonly activeChannel: Channel;
+	readonly activeChannel: IChannel;
 	readonly inputLocked: boolean;
 	readonly offsetMultiplier: number;
+	readonly autoCompleteVisible: boolean;
 }
 
 type ChatState = {
 	readonly offset: number;
+	readonly autoCompleteItems: IAutoCompleteItem[];
 }
 
 class Chat extends React.Component<ChatProps, ChatState> {
+	public static getAutoCompleteCommands(): IAutoCompleteItem[] {
+		return [
+			{
+				id: "ping",
+				name: "Ping",
+				subtext: "View the connection latency"
+			}
+		];
+	}
+
 	private readonly $message: RefObject<any>;
 	private readonly $messages: RefObject<any>;
 	private readonly $loader: RefObject<any>;
@@ -37,6 +49,8 @@ class Chat extends React.Component<ChatProps, ChatState> {
 		this.handleKeyDown = this.handleKeyDown.bind(this);
 		this.handleScroll = this.handleScroll.bind(this);
 		this.loadOlderMessages = this.loadOlderMessages.bind(this);
+		this.handleKeyUp = this.handleKeyUp.bind(this);
+		this.getValue = this.getValue.bind(this);
 
 		// Refs
 		this.$message = React.createRef();
@@ -44,9 +58,10 @@ class Chat extends React.Component<ChatProps, ChatState> {
 		this.$loader = React.createRef();
 	}
 
-	public componentDidMount(): void {
+	public componentWillMount(): void {
 		this.setState({
-			offset: 0
+			offset: 0,
+			autoCompleteItems: Chat.getAutoCompleteCommands()
 		});
 	}
 
@@ -93,21 +108,63 @@ class Chat extends React.Component<ChatProps, ChatState> {
 		});
 	}
 
-	public handleKeyDown(e: any): void {
-		if (this.props.activeChannel.id !== null && e.key === "Enter") {
-			const text: string = this.$message.current.value.trim();
+	public getValue(): string {
+		return this.$message.current.value.trim();
+	}
 
+	public getCommand(): string {
+		return this.getValue().substr(1).split(" ")[0];
+	}
+
+	public inCommand(): boolean {
+		return this.getValue()[0] === "/";
+	}
+
+	public filterAutoCompleteItems(): void {
+		const command: string = this.getCommand();
+
+		if (command.length >= 2) {
+			this.setState({
+				autoCompleteItems: this.state.autoCompleteItems.filter((item: IAutoCompleteItem) => item.name.startsWith(command))
+			});
+		}
+	}
+
+	public handleKeyDown(e: any): void {
+		const value: string = this.getValue();
+
+		if (this.props.activeChannel.id !== null && e.key === "Enter") {
 			this.$message.current.value = "";
 
 			// Avoid sending empty messages
-			if (text === "") {
+			if (value === "") {
 				return;
 			}
 
-			const message: IMessage = Utils.generateMessage(this.props.activeChannel.id, text);
+			const message: IMessage = Utils.generateMessage(this.props.activeChannel.id, value);
 
 			Actions.addMessage(message);
 			app.actions.sendMessage(message);
+		}
+		else if (value.length === 0 && e.key === "/") {
+			Actions.setAutoCompleteVisible(true);
+		}
+		else if (this.inCommand()) {
+			// Filter values in auto complete
+		}
+	}
+
+	public handleKeyUp(e: any): void {
+		const value: string = this.getValue();
+
+		if (value[0] !== "/" && this.props.autoCompleteVisible) {
+			Actions.setAutoCompleteVisible(false);
+		}
+		else if (e.key === "Backspace" && this.props.autoCompleteVisible) {
+			alert("bs");
+		}
+		else if (this.props.autoCompleteVisible) {
+			this.filterAutoCompleteItems();
 		}
 	}
 
@@ -158,11 +215,12 @@ class Chat extends React.Component<ChatProps, ChatState> {
 					{this.renderMessages()}
 				</div>
 				<div className="input">
-					<Autocompleter />
+					<Autocompleter visible={this.props.autoCompleteVisible} items={this.state.autoCompleteItems} />
 					<CSSTransition in={this.props.inputLocked} classNames="trans" timeout={300}>
 						<input
 							ref={this.$message}
 							onKeyDown={this.handleKeyDown}
+							onKeyUp={this.handleKeyUp}
 							placeholder="Type a message"
 							className="message"
 							disabled={this.props.inputLocked}
@@ -179,7 +237,8 @@ const mapStateToProps = (state: AppState): any => {
 	return {
 		messages: state.messages,
 		activeChannel: state.activeChannel,
-		inputLocked: state.inputLocked
+		inputLocked: state.inputLocked,
+		autoCompleteVisible: state.autoCompleteVisible
 	};
 };
 

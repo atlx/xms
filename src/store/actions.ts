@@ -49,4 +49,11 @@ export default abstract class Actions {
             payload: page
         });
     }
+
+    public static setAutoCompleteVisible(visible: boolean): void {
+        store.dispatch({
+            type: ActionType.SetAutoCompleteVisible,
+            payload: visible
+        });
+    }
 }

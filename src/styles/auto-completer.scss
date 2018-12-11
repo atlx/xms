@@ -1,5 +1,13 @@
+@keyframes auto-complete-appear {
+    from {
+        transform: translate(0, 10px);
+        opacity: 0;
+    }
+}
+
 .auto-completer {
     & {
+        display: none;
         position: absolute;
         bottom: calc(100% - 10px);
         width: calc(100% - 40px);
@@ -11,6 +19,7 @@
         margin: 0 20px;
         border-radius: 3px;
         color: #aaa;
+        animation: auto-complete-appear 0.3s ease alternate;
     }
 
     > .title {
@@ -55,7 +64,7 @@
             background-color: #333;
         }
 
-        > .text {
+        > .name {
             font-size: 14px;
         }
 

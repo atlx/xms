@@ -1,23 +1,41 @@
-import React from "react";
+import React, {CSSProperties} from "react";
 import "../styles/auto-completer.scss";
+import {IAutoCompleteItem} from "../types/types";
 
-export default class Autocompleter extends React.Component {
-	public render(): JSX.Element {
+type AutocompleterProps = {
+	readonly visible: boolean;
+	readonly items: IAutoCompleteItem[];
+}
+
+export default class Autocompleter extends React.Component<AutocompleterProps> {
+	public getStyle(): CSSProperties | undefined {
+		if (this.props.visible) {
+			return {
+				display: "initial"
+			};
+		}
+	}
+
+	public renderItems(): JSX.Element[] {
+		return this.props.items.map((item: IAutoCompleteItem, index: number) => {
+			return <div key={item.id} tabIndex={index + 1} className="option">
+				<div className="name">{item.name}</div>
+				{item.subtext !== undefined &&
+					<div className="subtext">{item.subtext}</div>
+				}
+			</div>;
+		});
+	}
+
+	public render(): JSX.Element | null {
+		if (this.props.items.length === 0) {
+			return null;
+		}
+
 		return (
-			<div className="auto-completer">
+			<div style={this.getStyle()} className="auto-completer">
 				<div className="title">Autocompleter Title</div>
-                <div className="option" tabIndex={1}>
-					<div className="text">Option 1</div>
-					<div className="subtext">Option 1 subtext</div>
-				</div>
-                <div className="option" tabIndex={2}>
-					<div className="text">Option 2</div>
-					<div className="subtext">Option 2 subtext</div>
-				</div>
-				<div className="option" tabIndex={3}>
-					<div className="text">Option 3</div>
-					<div className="subtext">Option 3 subtext</div>
-				</div>
+				{this.renderItems()}
 			</div>
 		);
 	}

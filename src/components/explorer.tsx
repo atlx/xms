@@ -3,10 +3,10 @@ import "../styles/explorer.scss";
 import ExplorerItem from "./explorer-item";
 import {AppState} from "../store/store";
 import {connect} from "react-redux";
-import {Channel, UniqueId} from "../types/types";
+import {IChannel, UniqueId} from "../types/types";
 
 type ExplorerProps = {
-	readonly channels: Map<UniqueId, Channel>;
+	readonly channels: Map<UniqueId, IChannel>;
 	readonly activeChannelId: UniqueId | null;
 }
 
