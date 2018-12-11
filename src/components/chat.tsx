@@ -164,6 +164,7 @@ class Chat extends React.Component<ChatProps, ChatState> {
 							placeholder="Type a message"
 							className="message"
 							disabled={this.props.inputLocked}
+							maxLength={300}
 						/>
 					</CSSTransition>
 				</div>

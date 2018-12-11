@@ -24,7 +24,7 @@
         > .progress {
             height: 100%;
             width: 0%;
-            background-color: skyblue;
+            background: linear-gradient(to right, skyblue, #aee8ff);
             border-radius: inherit;
             transition: width 0.2s ease;
         }

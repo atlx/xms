@@ -19,6 +19,7 @@
         opacity: 0.4;
         color: #aaa;
         animation: message-appear 0.2s ease;
+        word-wrap: break-word;
     }
 
     &:not(:first-child) {
