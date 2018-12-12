@@ -15,6 +15,7 @@ import {CSSTransition} from "react-transition-group";
 import Autocompleter from "./autocompleter";
 import CommandHandler from "../core/command-handler";
 import Factory from "../core/factory";
+import Tooltip from "./tooltip";
 
 type ChatProps = {
 	readonly messages: IGenericMessage[];
@@ -149,7 +150,7 @@ class Chat extends React.Component<ChatProps, ChatState> {
 
 	public getValue(trim: boolean = true): string {
 		const value: string = this.$input.current.value;
-		
+
 		return trim ? value.trim() : value;
 	}
 
@@ -284,7 +285,7 @@ class Chat extends React.Component<ChatProps, ChatState> {
 	public isEmptyValue(): boolean {
 		return this.getValue().length === 0;
 	}
-	
+
 	public isEmptyCommand(): boolean {
 		console.log("command name", this.getCommandName(), `(${this.getCommandName().length})`);
 
