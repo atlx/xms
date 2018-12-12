@@ -1,64 +1,105 @@
-.modal {
-    & {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        min-width: 450px;
-        background-color: #353535;
-        border-radius: 4px;
-    }
-
-    > div {
-        padding: 20px;
-    }
-
-    > .header {
-        & {
-            padding-bottom: 0;
-        }
-
-        > .title {
-            font-size: 12px;
-            color: #aaa;
-            text-transform: uppercase;
-        }
-    }
-
-    > .content {
-        padding: 40px 20px;
-        text-align: center;
-        color: #eee;
-        font-size: 17px;
-    }
-
-    > .options {
-        & {
-            background-color: #2e2e2e;
-            padding: 25px;
-            text-align: right;
-        }
-
-        > .close {
-            width: 100%;
-            padding: 13px;
-            background-color: #27ae60;
-            color: #fff;
-            border: none;
-            border-bottom: 2px solid #196e3c;
-            border-radius: 3px;
-            cursor: pointer;
-        }
+@keyframes modal-appear {
+    from {
+        opacity: 0;
+        transform: scale(0.75);
     }
 }
 
-.overlay {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: #000;
-    opacity: 0.65;
-    box-sizing: border-box;
+.modal-container {
+    & {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        box-sizing: border-box;
+        z-index: 1;
+        top: 0;
+        left: 0;
+    }
+
+    &.trans-exit {
+        > .modal {
+            opacity: 0;
+            transform: scale(0.75);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+
+        > .overlay {
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+    }
+
+    &.trans-exited {
+        > div {
+            display: none;
+        }
+    }
+
+    > .modal {
+        & {
+            position: absolute;
+            margin: auto;
+            min-width: 450px;
+            background-color: #353535;
+            border-radius: 4px;
+            animation: modal-appear 0.3s ease;
+        }
+    
+        > div {
+            padding: 20px;
+        }
+    
+        > .header {
+            & {
+                padding-bottom: 0;
+            }
+    
+            > .title {
+                font-size: 12px;
+                color: #aaa;
+                text-transform: uppercase;
+            }
+        }
+    
+        > .content {
+            padding: 40px 20px;
+            text-align: center;
+            color: #eee;
+            font-size: 17px;
+        }
+    
+        > .options {
+            & {
+                background-color: #2e2e2e;
+                padding: 25px;
+                text-align: right;
+            }
+    
+            > .close {
+                width: 100%;
+                padding: 13px;
+                background-color: #27ae60;
+                color: #fff;
+                border: none;
+                border-bottom: 2px solid #196e3c;
+                border-radius: 3px;
+                cursor: pointer;
+                font-size: 16px;
+            }
+        }
+    }
+    
+    > .overlay {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: #000;
+        opacity: 0.6;
+        box-sizing: border-box;
+    }
 }

@@ -22,7 +22,14 @@ function createWindow() {
 		width: 1024,
 		height: 768,
 		show: false,
-		frame: false
+		frame: false,
+		center: true,
+		title: "XMS",
+		hasShadow: true
+	});
+
+	mainWindow.on("unresponsive", () => {
+		// TODO: Restart window after timeout + check if still unresponsive?
 	});
 
 	// and load the index.html of the app.

@@ -68,6 +68,12 @@ module.exports = {
 				test: /\.(eot|svg|ttf|woff|woff2)$/,
 				use: [{loader: "file-loader?name=font/[name]__[hash:base64:5].[ext]"}],
 				include: defaultInclude
+			},
+			{
+				test: /\.wav$|\.mp3$/,
+				exclude: /node_modules/,
+				use: [{loader: "file-loader?name=sound/[name]__[hash:base64:5].[ext]"}],
+				include: defaultInclude
 			}
 		]
 	},
@@ -75,7 +81,9 @@ module.exports = {
 	target: "electron-renderer",
 
 	plugins: [
-		new HtmlWebpackPlugin(),
+		new HtmlWebpackPlugin({
+			title: "XMS"
+		}),
 
 		new webpack.DefinePlugin({
 			"process.env.NODE_ENV": JSON.stringify("development")

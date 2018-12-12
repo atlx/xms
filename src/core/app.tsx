@@ -11,7 +11,20 @@ import CommandHandler from "./command-handler";
 import Utils from "./utils";
 import Factory from "./factory";
 
+// TODO: Expression-import not working for some reason
+// require(Paths.resource("notify", ResourceGroup.Sounds, CommonExtensions.MP3))
+
+// Works, returns bundled path
+const f = require("../resources/sounds/notify.mp3");
+
 export default class App {
+	private static notificationSound = new Audio(f);
+
+	public static notify(): void {
+		App.notificationSound.load();
+		App.notificationSound.play();
+	}
+
 	public readonly gateway: BroadcastGateway;
 	public readonly me: User;
 	public readonly actions: GatewayActions;
@@ -49,13 +62,21 @@ export default class App {
 				name: "ping",
 				description: "View the connection's latency",
 
-				handle() {
+				handle(): void {
 					const ping: number = -1;
 
 					Actions.addMessage<INotice>(
 						// TODO: Channel is hard-coded
 						Factory.createNotice("general", `Your ping is ~${ping}ms (${Utils.determinePingState(ping)})`)
 					);
+				}
+			},
+			{
+				name: "notify",
+				description: "Play the notification sound",
+
+				handle(): void {
+					App.notify();
 				}
 			}
 		]);

@@ -4,16 +4,26 @@ import "../styles/modal.scss";
 type ModalProps = {
     readonly title: string;
     readonly text: string;
+    readonly onClose?: () => void;
 }
 
 export default class Modal extends React.Component<ModalProps> {
     public constructor(props: ModalProps) {
         super(props);
+
+        // Bindings
+        this.handleOnClose = this.handleOnClose.bind(this);
+    }
+
+    public handleOnClose(): void {
+        if (this.props.onClose !== undefined) {
+            this.props.onClose();
+        }
     }
 
     public render(): JSX.Element {
         return (
-            <React.Fragment>
+            <div className="modal-container">
                 <div className="overlay"></div>
                 <div className="modal">
                     <div className="header">
@@ -23,10 +33,10 @@ export default class Modal extends React.Component<ModalProps> {
                         {this.props.text}
                     </div>
                     <div className="options">
-                        <button className="close">Okay</button>
+                        <button onClick={this.handleOnClose} className="close">Okay</button>
                     </div>
                 </div>
-            </React.Fragment>
+            </div>
         );
     }
 }
