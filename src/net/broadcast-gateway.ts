@@ -5,7 +5,9 @@ import {store, AppState} from "../store/store";
 import Actions from "../store/actions";
 import {app} from "..";
 import {IDisposable} from "../core/interfaces";
-import {IMessage, INotice, MessageType} from "../types/types";
+import {IMessage, INotice, MessageType, Page} from "../types/types";
+import Factory from "../core/factory";
+import Utils from "../core/utils";
 
 export default class BroadcastGateway implements IDisposable {
     public static slowThreshold: number = 150;
@@ -42,7 +44,7 @@ export default class BroadcastGateway implements IDisposable {
             action.bind(this)();
         }
 
-        this.intervals.push(setTimeout(action.bind(this), time) as any);
+        this.intervals.push(setInterval(action.bind(this), time) as any);
 
         return this;
     }
@@ -64,19 +66,20 @@ export default class BroadcastGateway implements IDisposable {
 
             // Start heartbeat loop
             this.setInterval(this.heartbeat, this.heartbeatInterval);
+
+            // Start network interface availability loop
+            this.setInterval(() => {
+                if (!Utils.isNetworkAvailable()) {
+                    this.close(() => {
+                        Actions.setPage(Page.Init);
+                    });
+                }
+            }, 3000);
         });
 
         this.socket.on("close", () => {
             console.log("[BroadcastGateway] Disconnected");
-
-            Actions.addMessage<INotice>({
-                // TODO
-                channelId: "general",
-                id: "disco",
-                text: "Disconnected from the network.",
-                time: Date.now(),
-                type: MessageType.Notice
-            });
+            Actions.addMessage<INotice>(Factory.createNotice("general", "Disconnected from the network."));
         });
 
         this.socket.on("message", (data: Buffer, sender: AddressInfo) => {
@@ -184,6 +187,23 @@ export default class BroadcastGateway implements IDisposable {
         });
 
         return this;
+    }
+
+    public restart(): void {
+        this.close(() => {
+            // TODO: Shouldn't be sent by message, handled by the init page instead
+            // TODO: Hard-coded channel
+            Actions.addMessage<INotice>(Factory.createNotice("general", "Attempting to reconnect."));
+            this.start();
+        });
+    }
+
+    public close(callback: () => void): void {
+        this.socket.close(() => {
+            this.dispose();
+            Actions.setInputLocked(true);
+            callback();
+        });
     }
 
     public emit<T>(type: GatewayMsgType, payload: T): void {

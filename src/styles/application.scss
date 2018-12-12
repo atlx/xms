@@ -35,7 +35,7 @@
             animation: page-enter 0.3s ease;
         }
 
-        > div:not(.handle):not(.chat) {
+        > div:not(.handle):not(.chat):not(.modal):not(.overlay) {
             padding: 20px;
         }
     }

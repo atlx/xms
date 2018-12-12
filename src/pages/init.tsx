@@ -1,82 +1,132 @@
 import React, {RefObject, CSSProperties} from "react";
 import "../styles/pages/init.scss";
 import Loader from "../components/loader";
+import Utils from "../core/utils";
 import Actions from "../store/actions";
 import {Page} from "../types/types";
 
-export default class InitPage extends React.Component {
+type InitPageState = {
+	readonly progressVisible: boolean;
+	readonly progressText: string;
+	readonly steps: number;
+	readonly maxSteps: number;
+}
+
+export default class InitPage extends React.Component<any, InitPageState> {
 	private readonly $progress: RefObject<any>;
 
-	private progress: number;
-	private progressText: string;
-	private showProgress: boolean;
+	private interfaceCheck: NodeJS.Timeout | null;
 
 	public constructor(props: any) {
 		super(props);
 
-		this.progress = 0;
-		this.progressText = "Connecting";
-		this.showProgress = true;
+		this.interfaceCheck = null;
+
+		// Bindings
+		this.setSteps = this.setSteps.bind(this);
+		this.step = this.step.bind(this);
+		this.incrementSteps = this.incrementSteps.bind(this);
+		this.finish = this.finish.bind(this);
+		this.getLoadingBarStyle = this.getLoadingBarStyle.bind(this);
+		this.getProgressStyle = this.getProgressStyle.bind(this);
 
 		// Refs
 		this.$progress = React.createRef();
 	}
 
+	public componentWillMount(): void {
+		this.setState({
+			progressVisible: false,
+			steps: 0,
+			progressText: "Connecting",
+
+			// The total amount of steps that will be taken
+			maxSteps: 1
+		});
+	}
+
 	public componentDidMount(): void {
-		// TODO: Debugging
-		const stepBy: number = 50;
-		const every: number = 1000;
-		const endOffset: number = 1500;
-
-		const fillup: any = setInterval(() => {
-			this.incrementProgress(stepBy);
-		}, every);
-
-		setTimeout(() => {
-			this.showProgress = false;
-			this.progressText = "Initiating";
-			this.forceUpdate();
-		}, every * (100 / stepBy) + every);
-
-		setTimeout(() => {
-			clearInterval(fillup);
-			Actions.setPage(Page.Default);
-		}, (every * (100 / stepBy)) + every + endOffset);
+		this.attemptInit();
 	}
 
-	public applyProgress(): void {
-		this.setProgress(this.progress);
+	public attemptInit(): void {
+		if (!Utils.isNetworkAvailable()) {
+			this.setState({
+				progressText: "Waiting for a network interface"
+			});
+
+			this.interfaceCheck = setInterval(() => {
+				if (Utils.isNetworkAvailable()) {
+					if (this.interfaceCheck !== null) {
+						clearInterval(this.interfaceCheck);
+					}
+
+					this.attemptInit();
+				}
+			}, 1000);
+			
+			return;
+		}
+
+		this.setState({
+			progressVisible: true,
+			progressText: "Initializing"
+		});
+
+		// TODO: Setup/do some stuff here, then increment steps, then finish
+		this.step();
 	}
 
-	public setProgress(percentage: number): void {
-		percentage = Math.round(percentage);
-
-		this.$progress.current.style.width = percentage + "%";
+	public finish(): void {
+		Actions.setPage(Page.Default);
 	}
 
-	public stepProgress(): void {
-		this.incrementProgress(1);
+	public setSteps(steps: number): void {
+		const finalSteps: number = steps > this.state.maxSteps ? this.state.maxSteps : steps;
+
+		this.setState({
+			steps: finalSteps
+		});
+
+		if (finalSteps >= this.state.maxSteps) {
+			setTimeout(this.finish, 1000);
+		}
 	}
 
-	public incrementProgress(amount: number): void {
-		this.progress += amount;
-		this.applyProgress();
+	public step(): void {
+		this.incrementSteps(1);
 	}
 
-	public getProgressStyle(): CSSProperties | undefined {
-		if (!this.showProgress) {
+	public incrementSteps(amount: number): void {
+		this.setSteps(this.state.steps + amount);
+	}
+
+	public getLoadingBarStyle(): CSSProperties | undefined {
+		if (!this.state.progressVisible) {
 			return {
 				display: "none"
 			};
 		}
 	}
 
+	public getProgressStyle(): CSSProperties {
+		let percentage: number = Math.round(this.state.steps / this.state.maxSteps);
+
+		if (this.state.steps === this.state.maxSteps) {
+			percentage = 100;
+		}
+
+		return {
+			width: percentage + "%"
+		};
+	}
+
 	public render(): JSX.Element {
 		return (
 			<div className="init-page">
-				<Loader size={3} text={this.progressText} />
-				<div style={this.getProgressStyle()} className="loading-bar">
-					<div ref={this.$progress} className="progress"></div>
+				<Loader size={3} text={this.state.progressText} />
+				<div style={this.getLoadingBarStyle()} className="loading-bar">
+					<div style={this.getProgressStyle()} ref={this.$progress} className="progress"></div>
 				</div>
 			</div>
 		);

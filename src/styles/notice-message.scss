@@ -8,6 +8,7 @@
         background-color: #27ae60;
         box-sizing: border-box;
         text-align: center;
+        animation: message-appear 0.2s ease;
     }
 
     &:not(:first-child) {

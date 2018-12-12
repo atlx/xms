@@ -38,7 +38,7 @@ class Application extends React.Component<ApplicationState> {
 	}
 
 	public handleKeyDown(e: any): void {
-		console.log(e);
+		// TODO
 	}
 
 	public render(): JSX.Element {

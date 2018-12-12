@@ -13,6 +13,8 @@ import NoticeMessage from "./notice-message";
 import Loader from "./loader";
 import {CSSTransition} from "react-transition-group";
 import Autocompleter from "./autocompleter";
+import CommandHandler from "../core/command-handler";
+import Factory from "../core/factory";
 
 type ChatProps = {
 	readonly messages: IGenericMessage[];
@@ -20,6 +22,7 @@ type ChatProps = {
 	readonly inputLocked: boolean;
 	readonly offsetMultiplier: number;
 	readonly autoCompleteVisible: boolean;
+	readonly commandHandler: CommandHandler;
 }
 
 type ChatState = {
@@ -28,16 +31,6 @@ type ChatState = {
 }
 
 class Chat extends React.Component<ChatProps, ChatState> {
-	public static getAutoCompleteCommands(): IAutoCompleteItem[] {
-		return [
-			{
-				id: "ping",
-				name: "Ping",
-				subtext: "View the connection latency"
-			}
-		];
-	}
-
 	private readonly $message: RefObject<any>;
 	private readonly $messages: RefObject<any>;
 	private readonly $loader: RefObject<any>;
@@ -47,10 +40,12 @@ class Chat extends React.Component<ChatProps, ChatState> {
 
 		// Bindings
 		this.handleKeyDown = this.handleKeyDown.bind(this);
+		this.getCommandName = this.getCommandName.bind(this);
 		this.handleScroll = this.handleScroll.bind(this);
 		this.loadOlderMessages = this.loadOlderMessages.bind(this);
 		this.handleKeyUp = this.handleKeyUp.bind(this);
 		this.getValue = this.getValue.bind(this);
+		this.handleAutoCompleteItemClick = this.handleAutoCompleteItemClick.bind(this);
 
 		// Refs
 		this.$message = React.createRef();
@@ -60,26 +55,34 @@ class Chat extends React.Component<ChatProps, ChatState> {
 
 	public componentWillMount(): void {
 		this.setState({
-			offset: 0,
-			autoCompleteItems: Chat.getAutoCompleteCommands()
+			offset: 0
 		});
+
+		this.resetAutoCompleteCommands();
 	}
 
+	// TODO: Possibly messing up stuff
 	public componentDidUpdate(): void {
 		this.$messages.current.scrollTop = this.$messages.current.scrollHeight;
+	}
+
+	public resetAutoCompleteCommands(): void {
+		this.setState({
+			autoCompleteItems: this.props.commandHandler.getAllAsAutoCompleteCommands()
+		});
 	}
 
 	public renderMessages(): JSX.Element[] {
 		let messages: IGenericMessage[] = this.props.messages;
 
-		console.log(messages);
+		//console.log(messages);
 
 		// TODO: Debugging commented out
 		/* if (this.offset !== messages.length) {
 			messages = messages.slice(-this.offset);
 		} */
 
-		console.log(messages);
+		//console.log(messages);
 
 		return messages.map((message: IGenericMessage) => {
 			if (message.type === MessageType.Text) {
@@ -112,8 +115,28 @@ class Chat extends React.Component<ChatProps, ChatState> {
 		return this.$message.current.value.trim();
 	}
 
-	public getCommand(): string {
-		return this.getValue().substr(1).split(" ")[0];
+	public setValue(value: string): void {
+		this.$message.current.value = value.trim();
+	}
+
+	public focus(): void {
+		this.$message.current.focus();
+	}
+
+	public clearValue(): string {
+		const value: string = this.getValue();
+
+		this.setValue("");
+
+		return value;
+	}
+
+	public appendValue(value: string): void {
+		this.setValue(this.getValue() + value);
+	}
+
+	public getCommandName(): string {
+		return this.getValue().substr(1).split(" ")[0].toLowerCase();
 	}
 
 	public inCommand(): boolean {
@@ -121,11 +144,12 @@ class Chat extends React.Component<ChatProps, ChatState> {
 	}
 
 	public filterAutoCompleteItems(): void {
-		const command: string = this.getCommand();
+		const command: string = this.getCommandName();
 
-		if (command.length >= 2) {
+		if (command.length >= 1) {
 			this.setState({
-				autoCompleteItems: this.state.autoCompleteItems.filter((item: IAutoCompleteItem) => item.name.startsWith(command))
+				autoCompleteItems: this.state.autoCompleteItems.filter((item: IAutoCompleteItem) =>
+					item.name.toLowerCase().startsWith(command))
 			});
 		}
 	}
@@ -134,15 +158,22 @@ class Chat extends React.Component<ChatProps, ChatState> {
 		const value: string = this.getValue();
 
 		if (this.props.activeChannel.id !== null && e.key === "Enter") {
-			this.$message.current.value = "";
-
 			// Avoid sending empty messages
 			if (value === "") {
 				return;
 			}
+			// Handle command messages internally
+			else if (value.startsWith("/")) {
+				// TODO: Pass in arguments
+				this.props.commandHandler.handle(this.getCommandName());
+				this.clearValue();
 
-			const message: IMessage = Utils.generateMessage(this.props.activeChannel.id, value);
+				return;
+			}
 
+			const message: IMessage = Factory.createMessage(this.props.activeChannel.id, value);
+
+			this.clearValue();
 			Actions.addMessage(message);
 			app.actions.sendMessage(message);
 		}
@@ -161,7 +192,8 @@ class Chat extends React.Component<ChatProps, ChatState> {
 			Actions.setAutoCompleteVisible(false);
 		}
 		else if (e.key === "Backspace" && this.props.autoCompleteVisible) {
-			alert("bs");
+			this.resetAutoCompleteCommands();
+			this.filterAutoCompleteItems();
 		}
 		else if (this.props.autoCompleteVisible) {
 			this.filterAutoCompleteItems();
@@ -203,6 +235,22 @@ class Chat extends React.Component<ChatProps, ChatState> {
 		}
 	}
 
+	public handleAutoCompleteItemClick(item: IAutoCompleteItem): void {
+		const value: string = this.getValue();
+
+		// Append without a space if typing out command
+		if (!value.includes(" ")) {
+			this.appendValue(item.name.toLowerCase());
+		}
+		// Otherwise append with a leading space
+		else {
+			this.appendValue(" " + item.name.toLowerCase());
+		}
+
+		// Focus input after appending data
+		this.focus();
+	}
+
 	public render(): JSX.Element {
 		return (
 			<div className="chat">
@@ -215,7 +263,12 @@ class Chat extends React.Component<ChatProps, ChatState> {
 					{this.renderMessages()}
 				</div>
 				<div className="input">
-					<Autocompleter visible={this.props.autoCompleteVisible} items={this.state.autoCompleteItems} />
+					<Autocompleter
+						onItemClick={this.handleAutoCompleteItemClick}
+						title="Commands"
+						visible={this.props.autoCompleteVisible}
+						items={this.state.autoCompleteItems}
+					/>
 					<CSSTransition in={this.props.inputLocked} classNames="trans" timeout={300}>
 						<input
 							ref={this.$message}
@@ -238,7 +291,8 @@ const mapStateToProps = (state: AppState): any => {
 		messages: state.messages,
 		activeChannel: state.activeChannel,
 		inputLocked: state.inputLocked,
-		autoCompleteVisible: state.autoCompleteVisible
+		autoCompleteVisible: state.autoCompleteVisible,
+		commandHandler: state.commandHandler
 	};
 };
 

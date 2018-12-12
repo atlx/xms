@@ -13,7 +13,7 @@ const me: User = {
     state: UserState.Online,
     createdTime: 0,
     status: undefined,
-    username: "Atlas"//os.userInfo().username
+    username: os.userInfo().username
 };
 
 export const app: App = new App(me);

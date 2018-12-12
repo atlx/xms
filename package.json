@@ -15,6 +15,7 @@
 	"devDependencies": {
 		"@babel/core": "^7.1.2",
 		"@types/react-transition-group": "^2.0.14",
+		"@types/redux-logger": "^3.0.6",
 		"awesome-typescript-loader": "^5.2.1",
 		"babel-loader": "^8.0.4",
 		"babel-preset-react": "^6.24.1",
@@ -47,9 +48,11 @@
 		"@types/react-dom": "^16.0.9",
 		"@types/react-redux": "^6.0.9",
 		"draft-js": "^0.10.5",
+		"immutable": "^4.0.0-rc.12",
 		"react-redux": "^5.0.7",
 		"react-transition-group": "^2.5.1",
 		"redux": "^4.0.0",
+		"redux-logger": "^3.0.6",
 		"typescript": "^3.1.2"
 	}
 }

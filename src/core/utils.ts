@@ -1,6 +1,5 @@
 import os from "os";
-import {UniqueId, IMessage, MessageType} from "../types/types";
-import {app} from "..";
+import {UniqueId} from "../types/types";
 
 export default abstract class Utils {
     public static getLocalAddresses() {
@@ -11,9 +10,8 @@ export default abstract class Utils {
             let alias = 0;
 
             interfaces[ifname].forEach((iface) => {
-                if (iface.family !== "IPv4" || iface.internal !== false)
                 // Skip over internal (i.e. 127.0.0.1) and non-ipv4 addresses
-                {
+                if (iface.family !== "IPv4" || iface.internal !== false) {
                     return;
                 }
 
@@ -39,21 +37,18 @@ export default abstract class Utils {
         return Math.random().toString().replace(".", "");
     }
 
-    public static generateMessage(channelId: UniqueId, text: string): IMessage {
-        return {
-            id: Utils.generateId(),
-            
-            // TODO
-            authorAvatarUrl: "",
-            authorName: app.me.username,
-            sent: false,
+    public static determinePingState(ping: number): string {
+        if (ping <= 50) {
+            return "Excellent";
+        }
+        else if (ping <= 150) {
+            return "Good";
+        }
 
-            // TODO
-            systemMessage: false,
-            text,
-            time: Date.now(),
-            channelId,
-            type: MessageType.Text
-        };
+        return "Poor";
+    }
+
+    public static isNetworkAvailable(): boolean {
+        return Utils.getLocalAddresses().length > 0;
     }
 }

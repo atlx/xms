@@ -1,5 +1,6 @@
 import {User, UniqueId, IGenericMessage, Page} from "../types/types";
 import {store, ActionType} from "./store";
+import {ICommand} from "../core/command";
 
 export default abstract class Actions {
     public static addMessage<T extends IGenericMessage>(message: T): void {
@@ -55,5 +56,18 @@ export default abstract class Actions {
             type: ActionType.SetAutoCompleteVisible,
             payload: visible
         });
+    }
+
+    public static registerCommand(command: ICommand): void {
+        store.dispatch({
+            type: ActionType.RegisterCommand,
+            payload: command
+        });
+    }
+
+    public static registerCommands(commands: ICommand[]): void {
+        for (let i = 0; i < commands.length; i++) {
+            Actions.registerCommand(commands[i]);
+        }
     }
 }

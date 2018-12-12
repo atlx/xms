@@ -5,6 +5,17 @@
     }
 }
 
+@keyframes auto-complete-disappear {
+    from {
+        opacity: 1;
+    }
+
+    to {
+        transform: translate(0, -10px);
+        opacity: 0;
+    }
+}
+
 .auto-completer {
     & {
         display: none;
@@ -19,7 +30,23 @@
         margin: 0 20px;
         border-radius: 3px;
         color: #aaa;
-        animation: auto-complete-appear 0.3s ease alternate;
+        animation: auto-complete-appear 0.3s ease;
+    }
+
+    /* CSS Transitions */
+    &.trans-exit {
+        display: initial;
+        opacity: 0;
+        animation: auto-complete-disappear 0.3s ease;
+    }
+
+    &.trans-exit-done {
+        display: none;
+    }
+
+    &.trans-enter,
+    &.trans-enter-done {
+        display: initial;
     }
 
     > .title {

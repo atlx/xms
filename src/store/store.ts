@@ -1,5 +1,7 @@
-import {createStore, Store} from "redux";
+import {createStore, Store, applyMiddleware} from "redux";
 import {IMessage, RoosterUserModel, UserState, RoosterCategoryModel, UniqueId, User, IChannel, ChannelType, IGenericMessage, MessageType, INotice, Page} from "../types/types";
+import CommandHandler from "../core/command-handler";
+import {createLogger} from "redux-logger";
 
 export enum ActionType {
     AddMessage = "ADD_MESSAGE",
@@ -9,7 +11,8 @@ export enum ActionType {
     SetGeneralAsActiveChannel = "SET_GENERAL_AS_ACTIVE_CHANNEL",
     SetInputLocked = "SET_INPUT_LOCKED",
     SetPage = "SET_PAGE",
-    SetAutoCompleteVisible = "SET_AUTOCOMPLETE_VISIBLE"
+    SetAutoCompleteVisible = "SET_AUTOCOMPLETE_VISIBLE",
+    RegisterCommand = "REGISTER_COMMAND"
 }
 
 function defaultReducer(state: AppState, action: any): any {
@@ -94,6 +97,12 @@ function defaultReducer(state: AppState, action: any): any {
             autoCompleteVisible: action.payload
         };
     }
+    else if (action.type === ActionType.RegisterCommand) {
+        return {
+            ...state,
+            commandHandler: state.commandHandler.register(action.payload)
+        };
+    }
 
     return state;
 }
@@ -108,7 +117,12 @@ export type AppState = {
     readonly activeChannel: IChannel;
     readonly page: Page;
     readonly autoCompleteVisible: boolean;
+    readonly commandHandler: CommandHandler;
 }
+
+const logger = createLogger({
+    //
+});
 
 export const store: Store = createStore(defaultReducer, {
     messages: [],
@@ -146,5 +160,6 @@ export const store: Store = createStore(defaultReducer, {
     activeChannel: null,
     inputLocked: true,
     page: Page.Init,
-    autoCompleteVisible: false
-} as any);
+    autoCompleteVisible: false,
+    commandHandler: new CommandHandler()
+} as any, applyMiddleware(logger));
