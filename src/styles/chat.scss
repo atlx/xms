@@ -6,9 +6,11 @@
         opacity: 0;
         transform: scale(0.9);
     }
+}
 
-    to {
-        opacity: 1;
+@keyframes extra-status-appear {
+    from {
+        opacity: 0;
     }
 }
 
@@ -82,6 +84,7 @@
     > .input {
         & {
             padding: 20px;
+            padding-bottom: 0;
             position: relative;
         }
 
@@ -105,16 +108,37 @@
                 opacity: 0.6;
             }
 
+            &:focus {
+                border-color: #444;
+                border-style: solid;
+                /* box-shadow: 0 5px 16px 0px #2e2e2e; */
+                background-color: #444;
+            }
+
             &.trans-exit-done {
                 opacity: 1;
             }
         }
 
-        > .message:focus {
-            border-color: #444;
-            border-style: solid;
-            box-shadow: 0 5px 16px 0px #2e2e2e;
-            background-color: #444;
+        > .extra {
+            & {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                justify-content: center;
+                align-items: center;
+                font-size: 13px;
+                padding: 13px 5px;
+                color: #777;
+            }
+
+            > .typing {
+                /* TODO */
+            }
+
+            > .status {
+                text-align: right;
+                animation: extra-status-appear 0.2s ease;
+            }
         }
     }
 }

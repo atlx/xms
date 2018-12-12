@@ -29,6 +29,7 @@ type ChatProps = {
 type ChatState = {
 	readonly offset: number;
 	readonly filteredAutoCompleteCommands: IAutoCompleteItem[];
+	readonly status: string | undefined;
 }
 
 class Chat extends React.Component<ChatProps, ChatState> {
@@ -72,16 +73,32 @@ class Chat extends React.Component<ChatProps, ChatState> {
 		};
 	}
 
-	public componentDidUpdate(): void {
+	public scrollMessages(): void {
+		if (!this.isScrolled()) {
+			this.$container.current.scrollTop = this.$container.current.scrollHeight;
+		}
+	}
+
+	public isScrolled(): boolean {
+		return this.$container.current.scrollTop >= this.$container.current.scrollHeight;
+	}
+
+	public componentDidUpdate(prevProps: ChatProps, prevState: ChatState): void {
+		// Scroll messages when messages prop changes, and when status is shown/hidden
+		// TODO: isScrolled() will not work on this position, since it has already been scrolled automatically.
+		if (this.isScrolled() && prevProps.messages && this.props.messages.length !== prevProps.messages.length
+			|| (prevState.status !== this.state.status && (!prevState.status || !this.state.status))) {
+			this.scrollMessages();
+		}
+
 		// TODO: Possibly messing up stuff
 		//this.$messages.current.scrollTop = this.$messages.current.scrollHeight;
 
 		// TODO: componentDidUpdate() may trigger in unwanted situations, such as on receive message
 		//this.focus();
-	}
-
-	public scrollMessages(): void {
-		this.$container.current.scrollTop = this.$container.current.scrollHeight;
+		setTimeout(() => this.setState({
+			status: "Random " + Math.random().toString().replace(".", "").substr(1).substring(0, 2)
+		}), 4000);
 	}
 
 	public renderMessages(): JSX.Element[] {
@@ -95,6 +112,13 @@ class Chat extends React.Component<ChatProps, ChatState> {
 		} */
 
 		//console.log(messages);
+
+		// TODO: Hard-coded cut value
+		const cut: number = 100;
+
+		if (messages.length >= cut) {
+			messages = messages.slice(messages.length - cut, messages.length);
+		}
 
 		return messages.map((message: IGenericMessage) => {
 			if (message.type === MessageType.Text) {
@@ -311,6 +335,10 @@ class Chat extends React.Component<ChatProps, ChatState> {
 							maxLength={300}
 						/>
 					</CSSTransition>
+					<div className="extra">
+						<div className="typing"></div>
+						<div className="status">{this.state.status}</div>
+					</div>
 				</div>
 			</div>
 		);

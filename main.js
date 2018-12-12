@@ -19,13 +19,14 @@ if (process.defaultApp || /[\\/]electron-prebuilt[\\/]/.test(process.execPath) |
 function createWindow() {
 	// Create the browser window.
 	mainWindow = new BrowserWindow({
-		width: 1024,
+		width: 1250,
 		height: 768,
 		show: false,
 		frame: false,
 		center: true,
 		title: "XMS",
-		hasShadow: true
+		hasShadow: true,
+		minWidth: 1024
 	});
 
 	mainWindow.on("unresponsive", () => {
