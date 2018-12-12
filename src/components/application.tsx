@@ -3,13 +3,16 @@ import "../styles/application.scss";
 import DefaultPage from "../pages/default";
 import {AppState} from "../store/store";
 import {connect} from "react-redux";
-import {Page} from "../types/types";
+import {Page, IModal} from "../types/types";
 import InitPage from "../pages/init";
 import {CSSTransition} from "react-transition-group";
 import Handle from "./handle";
+import Modal from "./modal";
+import Actions from "../store/actions";
 
 type ApplicationState = {
 	readonly page: Page;
+	readonly modals: IModal[];
 }
 
 class Application extends React.Component<ApplicationState> {
@@ -41,10 +44,32 @@ class Application extends React.Component<ApplicationState> {
 		// TODO
 	}
 
+	public handleModalClose(modal: IModal): void {
+		Actions.shiftModal();
+		
+		if (modal.onClose) {
+			modal.onClose();
+		}
+	}
+
+	public renderNextModal(): JSX.Element | undefined {
+		if (this.props.modals.length > 0) {
+			const modal: IModal = this.props.modals[0];
+
+			return <Modal
+				key="modal"
+				text={modal.text}
+				title={modal.title}
+				onClose={() => this.handleModalClose(modal)}
+			/>;
+		}
+	}
+
 	public render(): JSX.Element {
 		return (
 			<div onKeyDown={this.handleKeyDown} className="application">
 				<Handle />
+				{this.renderNextModal()}
 				{/* TODO: Not applying rule to EXITING component, just entering one */}
 				<CSSTransition in={this.props.page !== Page.Init} classNames="page" timeout={600}>
 					<div style={this.getAppContentStyle()} className="content">
@@ -58,7 +83,8 @@ class Application extends React.Component<ApplicationState> {
 
 const mapStateToProps = (state: AppState): any => {
 	return {
-		page: state.page
+		page: state.page,
+		modals: state.modals
 	};
 };
 

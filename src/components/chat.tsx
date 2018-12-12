@@ -23,16 +23,17 @@ type ChatProps = {
 	readonly offsetMultiplier: number;
 	readonly autoCompleteVisible: boolean;
 	readonly commandHandler: CommandHandler;
+	readonly autoCompleteCommands: IAutoCompleteItem[];
 }
 
 type ChatState = {
 	readonly offset: number;
-	readonly autoCompleteItems: IAutoCompleteItem[];
+	readonly filteredAutoCompleteCommands: IAutoCompleteItem[];
 }
 
 class Chat extends React.Component<ChatProps, ChatState> {
-	private readonly $message: RefObject<any>;
-	private readonly $messages: RefObject<any>;
+	private readonly $input: RefObject<any>;
+	private readonly $container: RefObject<any>;
 	private readonly $loader: RefObject<any>;
 
 	public constructor(props: ChatProps) {
@@ -43,33 +44,44 @@ class Chat extends React.Component<ChatProps, ChatState> {
 		this.getCommandName = this.getCommandName.bind(this);
 		this.handleScroll = this.handleScroll.bind(this);
 		this.loadOlderMessages = this.loadOlderMessages.bind(this);
-		this.handleKeyUp = this.handleKeyUp.bind(this);
 		this.getValue = this.getValue.bind(this);
 		this.handleAutoCompleteItemClick = this.handleAutoCompleteItemClick.bind(this);
+		this.handleInputChange = this.handleInputChange.bind(this);
 
 		// Refs
-		this.$message = React.createRef();
-		this.$messages = React.createRef();
+		this.$input = React.createRef();
+		this.$container = React.createRef();
 		this.$loader = React.createRef();
 	}
 
 	public componentWillMount(): void {
 		this.setState({
-			offset: 0
+			offset: 0,
+			filteredAutoCompleteCommands: this.props.autoCompleteCommands
 		});
 
-		this.resetAutoCompleteCommands();
+		// TODO: Needs to reset once the component unmounts
+		// Scroll messages when the escape key is pressed
+		window.onkeydown = (e: any) => {
+			if (e.key === "Escape"
+				&& (document.activeElement === document.body
+					|| document.activeElement === this.$input.current)) {
+				this.scrollMessages();
+				this.focus();
+			}
+		};
 	}
 
-	// TODO: Possibly messing up stuff
 	public componentDidUpdate(): void {
-		this.$messages.current.scrollTop = this.$messages.current.scrollHeight;
+		// TODO: Possibly messing up stuff
+		//this.$messages.current.scrollTop = this.$messages.current.scrollHeight;
+
+		// TODO: componentDidUpdate() may trigger in unwanted situations, such as on receive message
+		//this.focus();
 	}
 
-	public resetAutoCompleteCommands(): void {
-		this.setState({
-			autoCompleteItems: this.props.commandHandler.getAllAsAutoCompleteCommands()
-		});
+	public scrollMessages(): void {
+		this.$container.current.scrollTop = this.$container.current.scrollHeight;
 	}
 
 	public renderMessages(): JSX.Element[] {
@@ -111,16 +123,21 @@ class Chat extends React.Component<ChatProps, ChatState> {
 		});
 	}
 
-	public getValue(): string {
-		return this.$message.current.value.trim();
+	public getValue(trim: boolean = true): string {
+		const value: string = this.$input.current.value;
+		
+		return trim ? value.trim() : value;
 	}
 
 	public setValue(value: string): void {
-		this.$message.current.value = value.trim();
+		this.$input.current.value = value;
+
+		// OnChange event won't automatically trigger when manually setting the value
+		this.handleInputChange();
 	}
 
 	public focus(): void {
-		this.$message.current.focus();
+		this.$input.current.focus();
 	}
 
 	public clearValue(): string {
@@ -140,22 +157,35 @@ class Chat extends React.Component<ChatProps, ChatState> {
 	}
 
 	public inCommand(): boolean {
-		return this.getValue()[0] === "/";
+		const value: string = this.getValue(false);
+
+		return value.startsWith("/") && !value.includes(" ");
 	}
 
 	public filterAutoCompleteItems(): void {
+		if (this.isEmptyCommand()) {
+			this.setState({
+				filteredAutoCompleteCommands: this.props.autoCompleteCommands
+			});
+
+			return;
+		}
+
 		const command: string = this.getCommandName();
 
-		if (command.length >= 1) {
-			this.setState({
-				autoCompleteItems: this.state.autoCompleteItems.filter((item: IAutoCompleteItem) =>
-					item.name.toLowerCase().startsWith(command))
-			});
-		}
+		this.setState({
+			filteredAutoCompleteCommands: this.props.autoCompleteCommands.filter((item: IAutoCompleteItem) =>
+				item.name.toLowerCase().startsWith(command))
+		});
 	}
 
 	public handleKeyDown(e: any): void {
 		const value: string = this.getValue();
+
+		// Prevent auto-pressing enter on other appearing components (such as modal open)
+		if (e.key === "Enter") {
+			e.preventDefault();
+		}
 
 		if (this.props.activeChannel.id !== null && e.key === "Enter") {
 			// Avoid sending empty messages
@@ -177,27 +207,12 @@ class Chat extends React.Component<ChatProps, ChatState> {
 			Actions.addMessage(message);
 			app.actions.sendMessage(message);
 		}
-		else if (value.length === 0 && e.key === "/") {
-			Actions.setAutoCompleteVisible(true);
-		}
 		else if (this.inCommand()) {
 			// Filter values in auto complete
 		}
-	}
 
-	public handleKeyUp(e: any): void {
-		const value: string = this.getValue();
-
-		if (value[0] !== "/" && this.props.autoCompleteVisible) {
-			Actions.setAutoCompleteVisible(false);
-		}
-		else if (e.key === "Backspace" && this.props.autoCompleteVisible) {
-			this.resetAutoCompleteCommands();
-			this.filterAutoCompleteItems();
-		}
-		else if (this.props.autoCompleteVisible) {
-			this.filterAutoCompleteItems();
-		}
+		// Change event won't trigger if value is manually cleared
+		//this.handleInputChange();
 	}
 
 	public handleScroll(): void {
@@ -205,7 +220,7 @@ class Chat extends React.Component<ChatProps, ChatState> {
 		if (this.props.messages.length < 15) {
 			return;
 		}
-		else if (this.$messages.current.scrollTop === 0) {
+		else if (this.$container.current.scrollTop === 0) {
 			this.loadOlderMessages();
 		}
 	}
@@ -222,7 +237,7 @@ class Chat extends React.Component<ChatProps, ChatState> {
 	public renderLoader(): JSX.Element | undefined {
 		// TODO: Hard-coded threshold
 		if (this.props.messages.length >= 15) {
-			if (this.$messages.current && this.$messages.current.scrollTop === 0) {
+			if (this.$container.current && this.$container.current.scrollTop === 0) {
 				if (this.props.offsetMultiplier * this.state.offset > this.props.messages.length) {
 					return <div className="beginning-of-history">Beginning of history</div>;
 				}
@@ -236,19 +251,35 @@ class Chat extends React.Component<ChatProps, ChatState> {
 	}
 
 	public handleAutoCompleteItemClick(item: IAutoCompleteItem): void {
-		const value: string = this.getValue();
-
-		// Append without a space if typing out command
-		if (!value.includes(" ")) {
-			this.appendValue(item.name.toLowerCase());
-		}
-		// Otherwise append with a leading space
-		else {
-			this.appendValue(" " + item.name.toLowerCase());
-		}
+		this.setValue(`/${item.name} `);
 
 		// Focus input after appending data
 		this.focus();
+	}
+
+	public isEmptyValue(): boolean {
+		return this.getValue().length === 0;
+	}
+	
+	public isEmptyCommand(): boolean {
+		console.log("command name", this.getCommandName(), `(${this.getCommandName().length})`);
+
+		return this.getCommandName().length === 0;
+	}
+
+	public handleInputChange(): void {
+		console.log(this.getValue(), this.inCommand());
+
+		if (!this.inCommand()) {
+			Actions.setAutoCompleteVisible(false);
+		}
+		else if (this.inCommand() && this.props.autoCompleteVisible) {
+			this.filterAutoCompleteItems();
+		}
+		else if (this.inCommand()) {
+			this.filterAutoCompleteItems();
+			Actions.setAutoCompleteVisible(true);
+		}
 	}
 
 	public render(): JSX.Element {
@@ -258,7 +289,7 @@ class Chat extends React.Component<ChatProps, ChatState> {
 					<div className="channel-title"><FontAwesomeIcon icon={faHashtag} /> {this.props.activeChannel.name}</div>
 					<div className="channel-topic">{this.props.activeChannel.topic}</div>
 				</div>
-				<div ref={this.$messages} onScroll={this.handleScroll} className="messages">
+				<div ref={this.$container} onScroll={this.handleScroll} className="messages">
 					{this.renderLoader()}
 					{this.renderMessages()}
 				</div>
@@ -267,13 +298,13 @@ class Chat extends React.Component<ChatProps, ChatState> {
 						onItemClick={this.handleAutoCompleteItemClick}
 						title="Commands"
 						visible={this.props.autoCompleteVisible}
-						items={this.state.autoCompleteItems}
+						items={this.state.filteredAutoCompleteCommands}
 					/>
 					<CSSTransition in={this.props.inputLocked} classNames="trans" timeout={300}>
 						<input
-							ref={this.$message}
+							onChange={this.handleInputChange}
+							ref={this.$input}
 							onKeyDown={this.handleKeyDown}
-							onKeyUp={this.handleKeyUp}
 							placeholder="Type a message"
 							className="message"
 							disabled={this.props.inputLocked}
@@ -292,6 +323,7 @@ const mapStateToProps = (state: AppState): any => {
 		activeChannel: state.activeChannel,
 		inputLocked: state.inputLocked,
 		autoCompleteVisible: state.autoCompleteVisible,
+		autoCompleteCommands: state.commandHandler.getAllAsAutoCompleteCommands(),
 		commandHandler: state.commandHandler
 	};
 };

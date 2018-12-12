@@ -1,4 +1,4 @@
-import {User, UniqueId, IGenericMessage, Page} from "../types/types";
+import {User, UniqueId, IGenericMessage, Page, IModal} from "../types/types";
 import {store, ActionType} from "./store";
 import {ICommand} from "../core/command";
 
@@ -69,5 +69,24 @@ export default abstract class Actions {
         for (let i = 0; i < commands.length; i++) {
             Actions.registerCommand(commands[i]);
         }
+    }
+
+    public static showModal(modal: IModal): void {
+        store.dispatch({
+            type: ActionType.ShowModal,
+            payload: modal
+        });
+    }
+
+    public static shiftModal(): void {
+        store.dispatch({
+            type: ActionType.ShiftModal
+        });
+    }
+
+    public static clearMessages(): void {
+        store.dispatch({
+            type: ActionType.ClearMessages
+        });
     }
 }

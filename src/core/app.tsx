@@ -78,6 +78,25 @@ export default class App {
 				handle(): void {
 					App.notify();
 				}
+			},
+			{
+				name: "modal",
+				description: "Show a modal",
+
+				handle(): void {
+					Actions.showModal({
+						title: "This is a modal",
+						text: "Requested by user"
+					});
+				}
+			},
+			{
+				name: "clear",
+				description: "Clear all messages",
+
+				handle(): void {
+					Actions.clearMessages();
+				}
 			}
 		]);
 	}

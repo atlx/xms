@@ -1,5 +1,5 @@
 import {createStore, Store, applyMiddleware} from "redux";
-import {IMessage, RoosterUserModel, UserState, RoosterCategoryModel, UniqueId, User, IChannel, ChannelType, IGenericMessage, MessageType, INotice, Page} from "../types/types";
+import {IMessage, RoosterUserModel, UserState, RoosterCategoryModel, UniqueId, User, IChannel, ChannelType, IGenericMessage, MessageType, INotice, Page, IModal} from "../types/types";
 import CommandHandler from "../core/command-handler";
 import {createLogger} from "redux-logger";
 
@@ -12,7 +12,10 @@ export enum ActionType {
     SetInputLocked = "SET_INPUT_LOCKED",
     SetPage = "SET_PAGE",
     SetAutoCompleteVisible = "SET_AUTOCOMPLETE_VISIBLE",
-    RegisterCommand = "REGISTER_COMMAND"
+    RegisterCommand = "REGISTER_COMMAND",
+    ShowModal = "SHOW_MODAL",
+    ShiftModal = "SHIFT_MODAL",
+    ClearMessages = "CLEAR_MESSAGES"
 }
 
 function defaultReducer(state: AppState, action: any): any {
@@ -103,6 +106,28 @@ function defaultReducer(state: AppState, action: any): any {
             commandHandler: state.commandHandler.register(action.payload)
         };
     }
+    else if (action.type === ActionType.ShowModal) {
+        return {
+            ...state,
+            modals: [...state.modals, action.payload]
+        };
+    }
+    else if (action.type === ActionType.ShiftModal) {
+        const modals: IModal[] = [...state.modals];
+
+        modals.shift();
+
+        return {
+            ...state,
+            modals
+        };
+    }
+    else if (action.type === ActionType.ClearMessages) {
+        return {
+            ...state,
+            messages: []
+        };
+    }
 
     return state;
 }
@@ -118,6 +143,7 @@ export type AppState = {
     readonly page: Page;
     readonly autoCompleteVisible: boolean;
     readonly commandHandler: CommandHandler;
+    readonly modals: IModal[];
 }
 
 const logger = createLogger({
@@ -161,5 +187,6 @@ export const store: Store = createStore(defaultReducer, {
     inputLocked: true,
     page: Page.Init,
     autoCompleteVisible: false,
-    commandHandler: new CommandHandler()
+    commandHandler: new CommandHandler(),
+    modals: []
 } as any, applyMiddleware(logger));

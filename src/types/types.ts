@@ -5,6 +5,12 @@ export interface IChannel {
     readonly name: string;
 }
 
+export interface IModal {
+    readonly title: string;
+    readonly text: string;
+    readonly onClose?: () => void;
+}
+
 export interface IAutoCompleteItem {
     readonly id: string;
     readonly name: string;

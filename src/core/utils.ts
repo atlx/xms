@@ -51,4 +51,8 @@ export default abstract class Utils {
     public static isNetworkAvailable(): boolean {
         return Utils.getLocalAddresses().length > 0;
     }
+
+    public static capitalize(string: string): string {
+        return string.charAt(0).toUpperCase() + string.slice(1);;
+    }
 }
