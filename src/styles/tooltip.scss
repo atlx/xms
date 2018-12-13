@@ -22,9 +22,9 @@
             padding: 5px;
             border-radius: 3px;
             text-align: center;
-            bottom: calc(100% + 5px);
+            bottom: calc(100% + 8px);
             max-width: 200px;
-            min-width: 150px;
+            min-width: 100px;
             animation: tooltip-appear 0.15s ease;
         }
 
@@ -40,6 +40,13 @@
 
         &.trans-exit-done {
             display: none;
+        }
+
+        &.pos-left {
+            bottom: initial;
+            left: calc(0% - 8px);
+            top: 50%;
+            transform: translate(-100%, -50%);
         }
     }
 }

@@ -1,7 +1,8 @@
 import {createStore, Store, applyMiddleware} from "redux";
-import {IMessage, RoosterUserModel, UserState, RoosterCategoryModel, UniqueId, User, IChannel, ChannelType, IGenericMessage, MessageType, INotice, Page, IModal} from "../types/types";
+import {IMessage, IRoosterCategory, UniqueId, User, IChannel, ChannelType, IGenericMessage, MessageType, Page, IModal} from "../types/types";
 import CommandHandler from "../core/command-handler";
 import {createLogger} from "redux-logger";
+import {Map as ImmutableMap} from "immutable";
 
 export enum ActionType {
     AddMessage = "ADD_MESSAGE",
@@ -15,7 +16,10 @@ export enum ActionType {
     RegisterCommand = "REGISTER_COMMAND",
     ShowModal = "SHOW_MODAL",
     ShiftModal = "SHIFT_MODAL",
-    ClearMessages = "CLEAR_MESSAGES"
+    ClearMessages = "CLEAR_MESSAGES",
+    UpdateMe = "UPDATE_ME",
+    AddCategory = "ADD_CATEGORY",
+    AddUserToCategory = "ADD_USER_TO_CATEGORY"
 }
 
 function defaultReducer(state: AppState, action: any): any {
@@ -128,15 +132,47 @@ function defaultReducer(state: AppState, action: any): any {
             messages: []
         };
     }
+    else if (action.type === ActionType.UpdateMe) {
+        return {
+            ...state,
+
+            me: {
+                ...action.payload
+            }
+        };
+    }
+    else if (action.type === ActionType.AddUser) {
+        return {
+            ...state,
+            users: [...state.users, action.payload]
+        };
+    }
+    else if (action.type === ActionType.AddCategory) {
+        return {
+            ...state,
+            categories: [...state.categories, action.payload]
+        };
+    }
+    else if (action.type === ActionType.AddUserToCategory) {
+        const categories: IRoosterCategory[] = [...state.categories];
+        const index: number = categories.findIndex((category: IRoosterCategory) => category.id === action.payload.category);
+
+        categories[index].users.push(action.payload.userId);
+
+        return {
+            ...state,
+            categories
+        };
+    }
 
     return state;
 }
 
 export type AppState = {
     readonly messages: IGenericMessage[];
-    readonly users: RoosterUserModel[];
+    readonly users: User[];
     readonly usersMap: Map<UniqueId, User>;
-    readonly categories: RoosterCategoryModel[];
+    readonly categories: IRoosterCategory[];
     readonly channels: Map<UniqueId, IChannel>;
     readonly inputLocked: boolean;
     readonly activeChannel: IChannel;
@@ -144,6 +180,7 @@ export type AppState = {
     readonly autoCompleteVisible: boolean;
     readonly commandHandler: CommandHandler;
     readonly modals: IModal[];
+    readonly me: User | null;
 }
 
 const logger = createLogger({
@@ -152,41 +189,26 @@ const logger = createLogger({
 
 export const store: Store = createStore(defaultReducer, {
     messages: [],
-
-    users: [
-        {
-            id: "giit3i4t3t",
-            username: "John Doe",
-            status: undefined,
-            state: UserState.Online,
-            avatarUrl: "",
-            categoryId: "devs"
-        }
-    ],
-
-    categories: [
-        {
-            name: "Developers",
-            id: "devs"
-        }
-    ],
-
+    users: [],
+    categories: [],
     usersMap: new Map(),
 
     // General channel
-    channels: new Map().set("general",
+    channels: ImmutableMap({
+        general:
         {
             id: "general",
             name: "General",
             topic: "A public channel for everyone connected",
             type: ChannelType.Public
         }
-    ),
+    }),
 
     activeChannel: null,
     inputLocked: true,
     page: Page.Init,
     autoCompleteVisible: false,
     commandHandler: new CommandHandler(),
-    modals: []
+    modals: [],
+    me: null
 } as any, applyMiddleware(logger));

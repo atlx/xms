@@ -1,4 +1,4 @@
-import {User, UniqueId, IGenericMessage, Page, IModal} from "../types/types";
+import {User, UniqueId, IGenericMessage, Page, IModal, IRoosterCategory, SpecialCategories as SpecialCategory} from "../types/types";
 import {store, ActionType} from "./store";
 import {ICommand} from "../core/command";
 
@@ -87,6 +87,31 @@ export default abstract class Actions {
     public static clearMessages(): void {
         store.dispatch({
             type: ActionType.ClearMessages
+        });
+    }
+
+    public static updateMe(me: Partial<User>): void {
+        store.dispatch({
+            type: ActionType.UpdateMe,
+            payload: me
+        });
+    }
+
+    public static addCategory(category: IRoosterCategory): void {
+        store.dispatch({
+            type: ActionType.AddCategory,
+            payload: category
+        });
+    }
+
+    public static addUserToCategory(userId: UniqueId, category: string | SpecialCategory): void {
+        store.dispatch({
+            type: ActionType.AddUserToCategory,
+
+            payload: {
+                userId,
+                category
+            }
         });
     }
 }

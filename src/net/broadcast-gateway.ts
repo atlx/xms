@@ -5,7 +5,7 @@ import {store, AppState} from "../store/store";
 import Actions from "../store/actions";
 import {app} from "..";
 import {IDisposable} from "../core/interfaces";
-import {IMessage, INotice, MessageType, Page} from "../types/types";
+import {IMessage, INotice, MessageType, Page, NoticeStyle} from "../types/types";
 import Factory from "../core/factory";
 import Utils from "../core/utils";
 
@@ -104,26 +104,22 @@ export default class BroadcastGateway implements IDisposable {
 
                             const ping: number = Math.round(performance.now() - this.pingStart);
 
-                            Actions.addMessage<INotice>({
-                                // TODO:
-                                channelId: "general",
-                                id: "fefwefwe2",
-                                text: `Connected to the network @ ${this.groupAdress}. ~${ping}ms`,
-                                time: Date.now(),
-                                type: MessageType.Notice
-                            });
+                            // TODO: Channel
+                            Actions.addMessage<INotice>(
+                                Factory.createNotice("general", `Connected to the network @ ${this.groupAdress}. ~${ping}ms`)
+                            );
 
                             Actions.setInputLocked(false);
 
                             if (ping >= BroadcastGateway.slowThreshold) {
-                                Actions.addMessage<INotice>({
-                                    // TODO
-                                    channelId: "general",
-                                    id: "fk4k24t",
-                                    text: "Your connection may be slow due to high latency.",
-                                    time: Date.now(),
-                                    type: MessageType.Notice
-                                });   
+                                // TODO: channel
+                                Actions.addMessage<INotice>(
+                                    Factory.createNotice(
+                                        "general",
+                                        "Your connection may be slow due to high latency.",
+                                        NoticeStyle.Warning
+                                    )
+                                );
                             }
                         }
                     }

@@ -4,21 +4,34 @@
     & {
         display: grid;
         grid-template-columns: auto 1fr;
-        padding: 9px 11px; /* Bound to rooster category title */
-        font-size: 17px;
+        padding: 6px 11px; /* Bound to rooster category title */
+        font-size: 16px;
         border-radius: 4px;
         cursor: pointer;
+        justify-content: center;
+        align-items: center;
+    }
+
+    &:not(:last-child) {
+        margin-bottom: 5px;
     }
 
     &:hover {
         background-color: $color-dark-contrast-light;
+        color: #fff !important;
     }
 
     &.me {
-        background: linear-gradient(to right, #2ecc71, #27ae60);
+        background: #2ecc71;
+    }
+
+    &:not(.me) {
+        color: #bbb;
     }
 
     > .avatar {
-
+        width: 32px;
+        height: 32px;
+        margin-right: 8px;
     }
 }

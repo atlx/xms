@@ -4,15 +4,11 @@ import {User, UserState} from "./types/types";
 import os from "os";
 import Utils from "./core/utils";
 
-const me: User = {
-    avatarUrl: "",
-    categoryId: "",
-    
+const me: User = {    
     // TODO: Use cached/saved or generate then save
     id: Utils.generateId(),
     state: UserState.Online,
-    createdTime: 0,
-    status: undefined,
+    createdTime: Date.now(),
     username: os.userInfo().username
 };
 

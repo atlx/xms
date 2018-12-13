@@ -1,17 +1,25 @@
 import React from "react";
 import "../styles/rooster-category.scss";
 import RoosterItem from "./rooster-item";
-import {RoosterUserModel, UniqueId} from "../types/types";
+import {User, UniqueId} from "../types/types";
+import {AppState} from "../store/store";
+import {connect} from "react-redux";
 
 type RoosterCategoryProps = {
     readonly title: string;
-    readonly users: RoosterUserModel[];
+    readonly users: User[];
+    readonly meId: UniqueId | null;
 }
 
-export default class RoosterCategory extends React.Component<RoosterCategoryProps> {
+class RoosterCategory extends React.Component<RoosterCategoryProps> {
     public renderUsers(): JSX.Element[] {
-        return this.props.users.map((user: RoosterUserModel) => {
-            return <RoosterItem key={user.id} name={user.username} avatarUrl={user.avatarUrl} status={user.status} />;
+        return this.props.users.map((user: User) => {
+            return <RoosterItem
+                key={user.id}
+                me={this.props.meId !== null && user.id === this.props.meId}
+                name={user.username}
+                avatarUrl={user.avatarUrl}
+                status={user.status} />;
         });
     }
 
@@ -24,5 +32,13 @@ export default class RoosterCategory extends React.Component<RoosterCategoryProp
                 </div>
 			</div>
 		);
-	}
+    }
 }
+
+const mapStateToProps = (state: AppState): any => {
+	return {
+        meId: state.me ? state.me.id : null
+	};
+};
+
+export default connect(mapStateToProps)(RoosterCategory);

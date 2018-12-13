@@ -5,7 +5,6 @@
         padding: 6px 10px;
         border-radius: 3px;
         font-size: 16px;
-        background-color: #27ae60;
         box-sizing: border-box;
         text-align: center;
         animation: message-appear 0.2s ease;
@@ -13,5 +12,17 @@
 
     &:not(:first-child) {
         margin-top: 15px;
+    }
+
+    &.success {
+        background-color: #27ae60;
+    }
+
+    &.warning {
+        background-color: #f39c12;
+    }
+
+    &.error {
+        background-color: #e74c3c;
     }
 }

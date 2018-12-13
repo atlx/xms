@@ -5,6 +5,12 @@ export interface IChannel {
     readonly name: string;
 }
 
+export enum NoticeStyle {
+    Success,
+    Warning,
+    Error
+}
+
 export interface IModal {
     readonly title: string;
     readonly text: string;
@@ -48,7 +54,7 @@ export interface IMessage extends IGenericMessage {
 }
 
 export interface INotice extends IGenericMessage {
-    readonly text: string;
+    readonly style: NoticeStyle;
 }
 
 export enum UserState {
@@ -58,22 +64,24 @@ export enum UserState {
     Offline
 }
 
-export interface User extends RoosterUserModel {
-    readonly createdTime: number;
+export enum SpecialCategories {
+    Connected = "connected",
+    Offline = "offline"
 }
 
-export type RoosterUserModel = {
+export type User = {
     readonly id: UniqueId;
     readonly username: string;
     readonly status?: string;
-    readonly avatarUrl: string;
+    readonly avatarUrl?: string;
     readonly state: UserState;
-    readonly categoryId: UniqueId;
+    readonly createdTime: number;
 }
 
-export type RoosterCategoryModel = {
+export type IRoosterCategory = {
     readonly id: UniqueId;
     readonly name: string;
+    readonly users: UniqueId[];
 }
 
 export type UniqueId = string;

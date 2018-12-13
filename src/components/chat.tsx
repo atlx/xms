@@ -2,20 +2,19 @@ import React, {RefObject} from "react";
 import "../styles/chat.scss";
 import {connect} from "react-redux";
 import {AppState} from "../store/store";
-import {IMessage, IGenericMessage, MessageType, IChannel, IAutoCompleteItem} from "../types/types";
+import {IMessage, IGenericMessage, MessageType, IChannel, IAutoCompleteItem, INotice} from "../types/types";
 import ChatMessage from "./chat-message";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faHashtag} from "@fortawesome/free-solid-svg-icons";
 import Actions from "../store/actions";
 import {app} from "..";
-import Utils from "../core/utils";
 import NoticeMessage from "./notice-message";
 import Loader from "./loader";
 import {CSSTransition} from "react-transition-group";
 import Autocompleter from "./autocompleter";
 import CommandHandler from "../core/command-handler";
 import Factory from "../core/factory";
-import Tooltip from "./tooltip";
+import ContextMenu from "./context-menu";
 
 type ChatProps = {
 	readonly messages: IGenericMessage[];
@@ -136,9 +135,11 @@ class Chat extends React.Component<ChatProps, ChatState> {
 				/>;
 			}
 			else if (message.type === MessageType.Notice) {
-				// No need to cast for now
+				const notice: INotice = message as INotice;
+
 				return <NoticeMessage
 					key={message.id}
+					style={notice.style}
 					text={message.text}
 				/>;
 			}

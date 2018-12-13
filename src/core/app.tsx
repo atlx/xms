@@ -4,7 +4,7 @@ import ReactDOM from "react-dom";
 import {Provider} from "react-redux";
 import {store} from "../store/store";
 import BroadcastGateway from "../net/broadcast-gateway";
-import {User, Page, INotice} from "../types/types";
+import {User, Page, INotice, NoticeStyle, UserState, SpecialCategories} from "../types/types";
 import GatewayActions from "./gateway-actions";
 import Actions from "../store/actions";
 import CommandHandler from "./command-handler";
@@ -49,7 +49,8 @@ export default class App {
 
 		ReactDOM.render(
 			<Provider store={store}>
-				<Application page={Page.Init} />
+				{/* TODO: Hard-coded prop as null (required to pass in) */}
+				<Application modals={null as any} page={Page.Init} />
 			</Provider>,
 
 			document.getElementById("root")
@@ -97,12 +98,67 @@ export default class App {
 				handle(): void {
 					Actions.clearMessages();
 				}
+			},
+			{
+				name: "notice",
+				description: "Show a success notice",
+
+				handle(): void {
+					// TODO: Channel
+					Actions.addMessage<INotice>(Factory.createNotice("general", "This is a success notice", NoticeStyle.Success));
+				}
+			},
+			{
+				name: "n-warn",
+				description: "Show a warning notice",
+
+				handle(): void {
+					// TODO: Channel
+					Actions.addMessage<INotice>(Factory.createNotice("general", "This is a warning notice", NoticeStyle.Warning));
+				}
+			},
+			{
+				name: "n-error",
+				description: "Show an error notice",
+
+				handle(): void {
+					// TODO: Channel
+					Actions.addMessage<INotice>(Factory.createNotice("general", "This is a error notice", NoticeStyle.Error));
+				}
+			},
+			{
+				name: "add-user",
+				description: "Add a dummy user",
+
+				handle(): void {
+					const id: string = "u" + Date.now().toString();
+
+					Actions.addUser({
+						createdTime: Date.now(),
+						username: "Dummy",
+						id,
+						state: UserState.Online
+					});
+
+					Actions.addUserToCategory(id, SpecialCategories.Connected);
+				}
 			}
 		]);
 	}
 
 	public init(): void {
 		this.test();
+		Actions.updateMe(this.me);
+
+		// TODO: State is immutable, therefore once me is updated, it will not be reflected upon the users list
+		Actions.addUser(this.me);
+
+		Actions.addCategory({
+			id: SpecialCategories.Connected,
+			name: "Connected",
+			users: [this.me.id]
+		});
+
 		Actions.setGeneralAsActiveChannel();
 		this.registerCommands();
 		this.render();
