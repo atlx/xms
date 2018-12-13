@@ -88,7 +88,7 @@ export default class Tooltip extends React.Component<TooltipProps, TooltipState>
     public render(): JSX.Element {
         return (
             <div style={this.props.style} onMouseOver={this.show} onMouseLeave={this.hide} className="tooltip-container">
-                <CSSTransition in={this.state.visible} classNames="trans" timeout={150}>
+                <CSSTransition in={this.state.visible} classNames="trans" timeout={200}>
                     <div className={this.getTooltipClasses()}>{this.props.text}</div>
                 </CSSTransition>
                 {this.props.children}

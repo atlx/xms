@@ -1,11 +1,13 @@
 @import "utils";
 
+$bg-color: #2a2a2a;
+
 .handle {
     & {
         padding: 6px 12px;
         -webkit-app-region: drag;
-        background-color: #2a2a2a;
-        color: #eee;
+        background-color: $bg-color;
+        color: #bbb;
         grid-column: 1/4;
         display: grid;
         grid-template-columns: 1fr auto;
@@ -27,11 +29,12 @@
                     cursor: pointer;
                     padding: 6px 12px; /* Same as title */
                     opacity: 0.4;
+                    border-radius: 3px;
                 }
     
                 &:hover {
                     opacity: 1;
-                    background-color: #333;
+                    background-color: lighten($bg-color, 6%);
                 }
             }
         }

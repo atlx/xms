@@ -1,3 +1,7 @@
+$color-success: #27ae60;
+$color-warn: #f39c12;
+$color-error: #e74c3c;
+
 .notice-message {
     & {
         width: 100%;
@@ -15,14 +19,14 @@
     }
 
     &.success {
-        background-color: #27ae60;
+        background-color: $color-success;
     }
 
     &.warning {
-        background-color: #f39c12;
+        background-color: $color-warn;
     }
 
     &.error {
-        background-color: #e74c3c;
+        background-color: $color-error;
     }
 }
