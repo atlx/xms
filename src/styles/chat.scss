@@ -51,21 +51,6 @@
             max-height: -webkit-fill-available;
         }
 
-        &::-webkit-scrollbar {
-            width: 7px;
-        }
-
-        &::-webkit-scrollbar-track {
-            border-radius: 3px;
-            background-color: #2b2b2b;
-        }
-
-        &::-webkit-scrollbar-thumb {
-            width: 100%;
-            border-radius: 3px;
-            background-color: #202020;
-        }
-
         > .loader {
             margin-top: 0;
             margin-bottom: 20px;
