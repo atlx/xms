@@ -20,7 +20,7 @@
 		"babel-loader": "^8.0.4",
 		"babel-preset-react": "^6.24.1",
 		"babili-webpack-plugin": "^0.1.2",
-		"css-loader": "^1.0.0",
+		"css-loader": "^2.0.0",
 		"electron": "^3.0.3",
 		"electron-packager": "^12.2.0",
 		"eslint": "^5.6.1",
