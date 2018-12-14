@@ -61,7 +61,7 @@ class Chat extends React.Component<ChatProps, ChatState> {
 			filteredAutoCompleteCommands: this.props.autoCompleteCommands
 		});
 
-		// TODO: Needs to reset once the component unmounts
+		// TODO: Needs to reset once the component unmounts, use componentWillUnmount or componentDidUnmount for that.
 		// Scroll messages when the escape key is pressed
 		window.onkeydown = (e: any) => {
 			if (e.key === "Escape"

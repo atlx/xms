@@ -1,4 +1,4 @@
-import {User, UniqueId, IGenericMessage, Page, IModal, IRoosterCategory, SpecialCategories as SpecialCategory} from "../types/types";
+import {User, UniqueId, IGenericMessage, Page, IModal, IRoosterCategory, SpecialCategories as SpecialCategory, IContextMenu} from "../types/types";
 import {store, ActionType} from "./store";
 import {ICommand} from "../core/command";
 
@@ -112,6 +112,19 @@ export default abstract class Actions {
                 userId,
                 category
             }
+        });
+    }
+
+    public static showContextMenu(menu: IContextMenu): void {
+        store.dispatch({
+            type: ActionType.ShowContextMenu,
+            payload: menu
+        });
+    }
+
+    public static hideContextMenu(): void {
+        store.dispatch({
+            type: ActionType.HideContextMenu
         });
     }
 }

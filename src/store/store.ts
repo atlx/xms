@@ -1,5 +1,5 @@
 import {createStore, Store, applyMiddleware} from "redux";
-import {IMessage, IRoosterCategory, UniqueId, User, IChannel, ChannelType, IGenericMessage, MessageType, Page, IModal} from "../types/types";
+import {IMessage, IRoosterCategory, UniqueId, User, IChannel, ChannelType, IGenericMessage, MessageType, Page, IModal, IContextMenu} from "../types/types";
 import CommandHandler from "../core/command-handler";
 import {createLogger} from "redux-logger";
 import {Map as ImmutableMap} from "immutable";
@@ -19,7 +19,9 @@ export enum ActionType {
     ClearMessages = "CLEAR_MESSAGES",
     UpdateMe = "UPDATE_ME",
     AddCategory = "ADD_CATEGORY",
-    AddUserToCategory = "ADD_USER_TO_CATEGORY"
+    AddUserToCategory = "ADD_USER_TO_CATEGORY",
+    ShowContextMenu = "SHOW_CONTEXT_MENU",
+    HideContextMenu = "HIDE_CONTEXT_MENU"
 }
 
 function defaultReducer(state: AppState, action: any): any {
@@ -164,6 +166,18 @@ function defaultReducer(state: AppState, action: any): any {
             categories
         };
     }
+    else if (action.type === ActionType.ShowContextMenu) {
+        return {
+            ...state,
+            contextMenu: action.payload
+        };
+    }
+    else if (action.type === ActionType.HideContextMenu) {
+        return {
+            ...state,
+            contextMenu: null
+        };
+    }
 
     return state;
 }
@@ -181,6 +195,7 @@ export type AppState = {
     readonly commandHandler: CommandHandler;
     readonly modals: IModal[];
     readonly me: User | null;
+    readonly contextMenu: IContextMenu | null;
 }
 
 const logger = createLogger({
@@ -210,5 +225,6 @@ export const store: Store = createStore(defaultReducer, {
     autoCompleteVisible: false,
     commandHandler: new CommandHandler(),
     modals: [],
-    me: null
+    me: null,
+    contextMenu: null
 } as any, applyMiddleware(logger));

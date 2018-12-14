@@ -4,7 +4,7 @@ import ReactDOM from "react-dom";
 import {Provider} from "react-redux";
 import {store} from "../store/store";
 import BroadcastGateway from "../net/broadcast-gateway";
-import {User, Page, INotice, NoticeStyle, UserState, SpecialCategories} from "../types/types";
+import {User, Page, INotice, NoticeStyle, UserState, SpecialCategories, ContextMenuOptionType} from "../types/types";
 import GatewayActions from "./gateway-actions";
 import Actions from "../store/actions";
 import CommandHandler from "./command-handler";
@@ -141,6 +141,33 @@ export default class App {
 					});
 
 					Actions.addUserToCategory(id, SpecialCategories.Connected);
+				}
+			},
+			{
+				name: "menu",
+				description: "Display a context menu",
+
+				handle(): void {
+					Actions.showContextMenu({
+						title: "Test context menu",
+
+						position: {
+							x: 50,
+							y: 50
+						},
+
+						options: [
+							{
+								text: "Button",
+								disabled: false,
+								type: ContextMenuOptionType.Button,
+
+								onClick(): void {
+									alert("Context menu option click!");
+								}
+							}
+						]
+					});
 				}
 			}
 		]);

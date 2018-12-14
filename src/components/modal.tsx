@@ -12,18 +12,6 @@ type ModalState = {
     readonly visible: boolean;
 }
 
-// TODO
-{/* <CSSTransition classNames="trans"  unmountOnExit={true} in={this.state.showTestModal} timeout={300}>
-					<Modal
-						text="Hello world"
-						title="Some title here"
-
-						onClose={() => this.setState({
-							showTestModal: false
-						})}
-					/>
-    </CSSTransition> */}
-
 export default class Modal extends React.Component<ModalProps, ModalState> {
     private $okay: RefObject<any>;
 

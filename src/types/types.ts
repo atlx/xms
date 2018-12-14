@@ -11,6 +11,28 @@ export enum NoticeStyle {
     Error
 }
 
+export interface IPosition {
+    readonly x: number;
+    readonly y: number;
+}
+
+export enum ContextMenuOptionType {
+    Button
+}
+
+export interface IContextMenu {
+    readonly title: string;
+    readonly position: IPosition;
+    readonly options: IContextMenuOption[];
+}
+
+export interface IContextMenuOption {
+    readonly text: string;
+    readonly disabled: boolean;
+    readonly type: ContextMenuOptionType;
+    readonly onClick: () => void;
+}
+
 export interface IModal {
     readonly title: string;
     readonly text: string;
