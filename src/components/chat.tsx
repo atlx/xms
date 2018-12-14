@@ -231,7 +231,7 @@ class Chat extends React.Component<ChatProps, ChatState> {
 
 			this.clearValue();
 			Actions.addMessage(message);
-			app.actions.sendMessage(message);
+			app.actions.handleMessage(message);
 		}
 		else if (this.inCommand()) {
 			// Filter values in auto complete

@@ -1,4 +1,4 @@
-import {User, UniqueId, IGenericMessage, Page, IModal, IRoosterCategory, SpecialCategories as SpecialCategory, IContextMenu} from "../types/types";
+import {User, UniqueId, IGenericMessage, Page, IModal, IRoosterCategory, SpecialCategories as SpecialCategory, IContextMenu, IChannel} from "../types/types";
 import {store, ActionType} from "./store";
 import {ICommand} from "../core/command";
 
@@ -125,6 +125,13 @@ export default abstract class Actions {
     public static hideContextMenu(): void {
         store.dispatch({
             type: ActionType.HideContextMenu
+        });
+    }
+
+    public static addChannel(channel: IChannel): void {
+        store.dispatch({
+            type: ActionType.AddChannel,
+            payload: channel
         });
     }
 }

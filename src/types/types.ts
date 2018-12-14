@@ -50,9 +50,15 @@ export enum Page {
     Default
 }
 
+export type IpAddress = string;
+
 export enum ChannelType {
     Public,
     Text
+}
+
+export enum SpecialChannel {
+    General
 }
 
 export enum MessageType {
@@ -63,7 +69,7 @@ export enum MessageType {
 export interface IGenericMessage {
     readonly type: MessageType;
     readonly id: UniqueId;
-    readonly channelId: UniqueId;
+    readonly channelId: UniqueId | SpecialChannel;
     readonly text: string;
     readonly time: number;
 }
@@ -73,6 +79,7 @@ export interface IMessage extends IGenericMessage {
     readonly authorAvatarUrl: string;
     readonly systemMessage: boolean;
     readonly sent: boolean;
+    readonly senderAddress: IpAddress;
 }
 
 export interface INotice extends IGenericMessage {

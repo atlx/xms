@@ -55,4 +55,8 @@ export default abstract class Utils {
     public static capitalize(string: string): string {
         return string.charAt(0).toUpperCase() + string.slice(1);;
     }
+
+    public static isJson(string: string): boolean {
+        return string.startsWith("{") && string.endsWith("}");
+    }
 }

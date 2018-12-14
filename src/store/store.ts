@@ -21,162 +21,188 @@ export enum ActionType {
     AddCategory = "ADD_CATEGORY",
     AddUserToCategory = "ADD_USER_TO_CATEGORY",
     ShowContextMenu = "SHOW_CONTEXT_MENU",
-    HideContextMenu = "HIDE_CONTEXT_MENU"
+    HideContextMenu = "HIDE_CONTEXT_MENU",
+    AddChannel = "ADD_CHANNEL"
 }
 
 function defaultReducer(state: AppState, action: any): any {
-    if (action.type === ActionType.AddMessage) {
-        const newMessages: IGenericMessage[] = [...state.messages];
+    switch (action.type) {
+        case ActionType.AddMessage: {
+            const newMessages: IGenericMessage[] = [...state.messages];
 
-        newMessages.push(action.payload);
+            newMessages.push(action.payload);
 
-        return {
-            ...state,
-            messages: newMessages
-        };
-    }
-    else if (action.type === ActionType.MarkMessageSent) {
-        const newMessages: IGenericMessage[] = [...state.messages];
+            return {
+                ...state,
+                messages: newMessages
+            };
+        }
 
-        let messageFound: boolean = false;
+        case ActionType.MarkMessageSent: {
+            const newMessages: IGenericMessage[] = [...state.messages];
 
-        for (let i = 0; i < newMessages.length; i++) {
-            if (newMessages[i].type !== MessageType.Text) {
-                continue;
+            let messageFound: boolean = false;
+
+            for (let i = 0; i < newMessages.length; i++) {
+                if (newMessages[i].type !== MessageType.Text) {
+                    continue;
+                }
+
+                const message: IMessage = newMessages[i] as IMessage;
+
+                if (message.id === action.payload && !message.sent) {
+                    (newMessages[i] as any) = {
+                        ...newMessages[i],
+                        sent: true
+                    };
+
+                    messageFound = true;
+
+                    break;
+                }
             }
 
-            const message: IMessage = newMessages[i] as IMessage;
-
-            if (message.id === action.payload && !message.sent) {
-                (newMessages[i] as any) = {
-                    ...newMessages[i],
-                    sent: true
-                };
-
-                messageFound = true;
-
-                break;
+            if (!messageFound) {
+                throw new Error(`[Store:MarkMessageSent] Message with id '${action.payload}' was not found`);
             }
+
+            return {
+                ...state,
+                messages: newMessages
+            };
         }
 
-        if (!messageFound) {
-            throw new Error(`[Store:MarkMessageSent] Message with id '${action.payload}' was not found`);
-        }
-
-        return {
-            ...state,
-            messages: newMessages
-        };
-    }
-    else if (action.type === ActionType.SetActiveChannel) {
-        if (!action.payload || typeof (action.payload) !== "string") {
-            throw new Error("Invalid payload");
-        }
-        else if (!state.channels.has(action.payload)) {
-            throw new Error("Attempting to set a channel that does not exist within the application state");
-        }
-
-        return {
-            ...state,
-            activeChannel: state.channels.get(action.payload)
-        };
-    }
-    else if (action.type === ActionType.SetGeneralAsActiveChannel) {
-        return {
-            ...state,
-            activeChannel: state.channels.get("general")
-        };
-    }
-    else if (action.type === ActionType.SetInputLocked) {
-        return {
-            ...state,
-            inputLocked: action.payload
-        };
-    }
-    else if (action.type === ActionType.SetPage) {
-        // TODO: Verify page type is valid
-        return {
-            ...state,
-            page: action.payload
-        };
-    }
-    else if (action.type === ActionType.SetAutoCompleteVisible) {
-        return {
-            ...state,
-            autoCompleteVisible: action.payload
-        };
-    }
-    else if (action.type === ActionType.RegisterCommand) {
-        return {
-            ...state,
-            commandHandler: state.commandHandler.register(action.payload)
-        };
-    }
-    else if (action.type === ActionType.ShowModal) {
-        return {
-            ...state,
-            modals: [...state.modals, action.payload]
-        };
-    }
-    else if (action.type === ActionType.ShiftModal) {
-        const modals: IModal[] = [...state.modals];
-
-        modals.shift();
-
-        return {
-            ...state,
-            modals
-        };
-    }
-    else if (action.type === ActionType.ClearMessages) {
-        return {
-            ...state,
-            messages: []
-        };
-    }
-    else if (action.type === ActionType.UpdateMe) {
-        return {
-            ...state,
-
-            me: {
-                ...action.payload
+        case ActionType.SetActiveChannel: {
+            if (!action.payload || typeof (action.payload) !== "string") {
+                throw new Error("Invalid payload");
             }
-        };
-    }
-    else if (action.type === ActionType.AddUser) {
-        return {
-            ...state,
-            users: [...state.users, action.payload]
-        };
-    }
-    else if (action.type === ActionType.AddCategory) {
-        return {
-            ...state,
-            categories: [...state.categories, action.payload]
-        };
-    }
-    else if (action.type === ActionType.AddUserToCategory) {
-        const categories: IRoosterCategory[] = [...state.categories];
-        const index: number = categories.findIndex((category: IRoosterCategory) => category.id === action.payload.category);
+            else if (!state.channels.has(action.payload)) {
+                throw new Error("Attempting to set a channel that does not exist within the application state");
+            }
 
-        categories[index].users.push(action.payload.userId);
+            return {
+                ...state,
+                activeChannel: state.channels.get(action.payload)
+            };
+        }
 
-        return {
-            ...state,
-            categories
-        };
-    }
-    else if (action.type === ActionType.ShowContextMenu) {
-        return {
-            ...state,
-            contextMenu: action.payload
-        };
-    }
-    else if (action.type === ActionType.HideContextMenu) {
-        return {
-            ...state,
-            contextMenu: null
-        };
+        case ActionType.SetGeneralAsActiveChannel: {
+            return {
+                ...state,
+                activeChannel: state.channels.get("general")
+            };
+        }
+
+        case ActionType.SetInputLocked: {
+            return {
+                ...state,
+                inputLocked: action.payload
+            };
+        }
+
+        case ActionType.SetPage: {
+            // TODO: Verify page type is valid
+            return {
+                ...state,
+                page: action.payload
+            };
+        }
+
+        case ActionType.SetAutoCompleteVisible: {
+            return {
+                ...state,
+                autoCompleteVisible: action.payload
+            };
+        }
+
+        case ActionType.RegisterCommand: {
+            return {
+                ...state,
+                commandHandler: state.commandHandler.register(action.payload)
+            };
+        }
+
+        case ActionType.ShowModal: {
+            return {
+                ...state,
+                modals: [...state.modals, action.payload]
+            };
+        }
+
+        case ActionType.ShiftModal: {
+            const modals: IModal[] = [...state.modals];
+
+            modals.shift();
+
+            return {
+                ...state,
+                modals
+            };
+        }
+
+        case ActionType.ClearMessages: {
+            return {
+                ...state,
+                messages: []
+            };
+        }
+
+        case ActionType.UpdateMe: {
+            return {
+                ...state,
+
+                me: {
+                    ...action.payload
+                }
+            };
+        }
+
+        case ActionType.AddUser: {
+            return {
+                ...state,
+                users: [...state.users, action.payload]
+            };
+        }
+
+        case ActionType.AddCategory: {
+            return {
+                ...state,
+                categories: [...state.categories, action.payload]
+            };
+        }
+
+        case ActionType.AddUserToCategory: {
+            const categories: IRoosterCategory[] = [...state.categories];
+            const index: number = categories.findIndex((category: IRoosterCategory) => category.id === action.payload.category);
+    
+            categories[index].users.push(action.payload.userId);
+    
+            return {
+                ...state,
+                categories
+            };
+        }
+
+        case ActionType.ShowContextMenu: {
+            return {
+                ...state,
+                contextMenu: action.payload
+            };
+        }
+
+        case ActionType.HideContextMenu: {
+            return {
+                ...state,
+                contextMenu: null
+            };
+        }
+
+        case ActionType.AddChannel: {
+            return {
+                ...state,
+                channels: state.channels.set(action.payload.id, action.payload)
+            };
+        }
     }
 
     return state;
