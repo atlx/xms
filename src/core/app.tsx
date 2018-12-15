@@ -11,6 +11,7 @@ import CommandHandler from "./command-handler";
 import Utils from "./utils";
 import Factory from "./factory";
 import {ICommand} from "./command";
+import NetworkHub from "../net/network-hub";
 
 export const DevelopmentMode: boolean = process.env.NODE_ENV === "development";
 
@@ -32,12 +33,14 @@ export default class App {
 	public readonly me: User;
 	public readonly actions: GatewayActions;
 	public readonly commandHandler: CommandHandler;
+	public readonly hub: NetworkHub;
 
 	public constructor(me: User) {
 		this.gateway = new BroadcastGateway("233.183.91.212", 45462);
 		this.me = me;
 		this.actions = new GatewayActions(this.gateway);
 		this.commandHandler = new CommandHandler();
+		this.hub = new NetworkHub(45463);
 	}
 
 	public render(): void {
