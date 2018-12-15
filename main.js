@@ -10,11 +10,9 @@ const url = require("url");
 let mainWindow;
 
 // Keep a reference for dev mode
-let dev = false;
+let dev = process.env.NODE_ENV === "production";
 
-if (process.defaultApp || /[\\/]electron-prebuilt[\\/]/.test(process.execPath) || /[\\/]electron[\\/]/.test(process.execPath)) {
-	dev = true;
-}
+console.log(`Development mode: ${dev}`);
 
 function createWindow() {
 	// Create the browser window.

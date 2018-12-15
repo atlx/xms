@@ -293,18 +293,22 @@ class Chat extends React.Component<ChatProps, ChatState> {
 		return this.getCommandName().length === 0;
 	}
 
-	public handleInputChange(): void {
-		console.log(this.getValue(), this.inCommand());
+	public setAutoCompleteVisible(visible: boolean): void {
+		if (this.props.autoCompleteVisible !== visible) {
+			Actions.setAutoCompleteVisible(visible);
+		}
+	}
 
+	public handleInputChange(): void {
 		if (!this.inCommand()) {
-			Actions.setAutoCompleteVisible(false);
+			this.setAutoCompleteVisible(false);
 		}
 		else if (this.inCommand() && this.props.autoCompleteVisible) {
 			this.filterAutoCompleteItems();
 		}
 		else if (this.inCommand()) {
 			this.filterAutoCompleteItems();
-			Actions.setAutoCompleteVisible(true);
+			this.setAutoCompleteVisible(true);
 		}
 	}
 

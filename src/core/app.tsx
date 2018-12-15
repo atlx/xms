@@ -10,6 +10,9 @@ import Actions from "../store/actions";
 import CommandHandler from "./command-handler";
 import Utils from "./utils";
 import Factory from "./factory";
+import {ICommand} from "./command";
+
+export const DevelopmentMode: boolean = process.env.NODE_ENV === "development";
 
 // TODO: Expression-import not working for some reason
 // require(Paths.resource("notify", ResourceGroup.Sounds, CommonExtensions.MP3))
@@ -58,7 +61,7 @@ export default class App {
 	}
 
 	public registerCommands(): void {
-		Actions.registerCommands([
+		const commands: ICommand[] = [
 			{
 				name: "ping",
 				description: "View the connection's latency",
@@ -80,17 +83,7 @@ export default class App {
 					App.notify();
 				}
 			},
-			{
-				name: "modal",
-				description: "Show a modal",
-
-				handle(): void {
-					Actions.showModal({
-						title: "This is a modal",
-						text: "Requested by user"
-					});
-				}
-			},
+			
 			{
 				name: "clear",
 				description: "Clear all messages",
@@ -98,79 +91,97 @@ export default class App {
 				handle(): void {
 					Actions.clearMessages();
 				}
-			},
-			{
-				name: "notice",
-				description: "Show a success notice",
-
-				handle(): void {
-					// TODO: Channel
-					Actions.addMessage<INotice>(Factory.createNotice("general", "This is a success notice", NoticeStyle.Success));
-				}
-			},
-			{
-				name: "n-warn",
-				description: "Show a warning notice",
-
-				handle(): void {
-					// TODO: Channel
-					Actions.addMessage<INotice>(Factory.createNotice("general", "This is a warning notice", NoticeStyle.Warning));
-				}
-			},
-			{
-				name: "n-error",
-				description: "Show an error notice",
-
-				handle(): void {
-					// TODO: Channel
-					Actions.addMessage<INotice>(Factory.createNotice("general", "This is a error notice", NoticeStyle.Error));
-				}
-			},
-			{
-				name: "add-user",
-				description: "Add a dummy user",
-
-				handle(): void {
-					const id: string = "u" + Date.now().toString();
-
-					Actions.addUser({
-						createdTime: Date.now(),
-						username: "Dummy",
-						id,
-						state: UserState.Online
-					});
-
-					Actions.addUserToCategory(id, SpecialCategories.Connected);
-				}
-			},
-			{
-				name: "menu",
-				description: "Display a context menu",
-
-				handle(): void {
-					Actions.showContextMenu({
-						title: "Test context menu",
-
-						position: {
-							x: 50,
-							y: 50
-						},
-
-						options: [
-							{
-								text: "Button",
-								disabled: false,
-								type: ContextMenuOptionType.Button,
-
-								onClick(): void {
-									alert("Context menu option click!");
-								}
-							}
-						]
-					});
-				}
 			}
-		]);
+		];
+
+		if (DevelopmentMode) {
+			commands.push(...[
+				{
+					name: "modal",
+					description: "Show a modal",
+	
+					handle(): void {
+						Actions.showModal({
+							title: "This is a modal",
+							text: "Requested by user"
+						});
+					}
+				},
+				{
+					name: "notice",
+					description: "Show a success notice",
+	
+					handle(): void {
+						// TODO: Channel
+						Actions.addMessage<INotice>(Factory.createNotice("general", "This is a success notice", NoticeStyle.Success));
+					}
+				},
+				{
+					name: "n-warn",
+					description: "Show a warning notice",
+	
+					handle(): void {
+						// TODO: Channel
+						Actions.addMessage<INotice>(Factory.createNotice("general", "This is a warning notice", NoticeStyle.Warning));
+					}
+				},
+				{
+					name: "n-error",
+					description: "Show an error notice",
+	
+					handle(): void {
+						// TODO: Channel
+						Actions.addMessage<INotice>(Factory.createNotice("general", "This is a error notice", NoticeStyle.Error));
+					}
+				},
+				{
+					name: "add-user",
+					description: "Add a dummy user",
+	
+					handle(): void {
+						const id: string = "u" + Date.now().toString();
+	
+						Actions.addUser({
+							createdTime: Date.now(),
+							username: "Dummy",
+							id,
+							state: UserState.Online
+						});
+	
+						Actions.addUserToCategory(id, SpecialCategories.Connected);
+					}
+				},
+				{
+					name: "menu",
+					description: "Display a context menu",
+	
+					handle(): void {
+						Actions.showContextMenu({
+							title: "Test context menu",
+	
+							position: {
+								x: 50,
+								y: 50
+							},
+	
+							options: [
+								{
+									text: "Button",
+									disabled: false,
+									type: ContextMenuOptionType.Button,
+	
+									onClick(): void {
+										alert("Context menu option click!");
+									}
+								}
+							]
+						});
+					}
+				}
+			]);
+		}
+
+		Actions.registerCommands(commands);
 	}
 
 	public init(): void {

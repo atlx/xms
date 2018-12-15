@@ -4,6 +4,7 @@ import {app} from "..";
 
 export default class Factory {
     public static createMessage(channelId: UniqueId, text: string): IMessage {
+        // TODO: Fix everything (most is hard-coded)
         return {
             id: Utils.generateId(),
             
@@ -17,7 +18,8 @@ export default class Factory {
             text,
             time: Date.now(),
             channelId,
-            type: MessageType.Text
+            type: MessageType.Text,
+            senderAddress: "unknown"
         };
     }
 

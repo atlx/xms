@@ -2,7 +2,7 @@ const webpack = require("webpack");
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const BabiliPlugin = require("babili-webpack-plugin");
-const ExtractTextPlugin = require("extract-text-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 // Config directories
 const SRC_DIR = path.resolve(__dirname, "src");
@@ -34,11 +34,29 @@ module.exports = {
 			},
 			{
 				test: /\.css$/,
-				use: ExtractTextPlugin.extract({
-					fallback: "style-loader",
-					use: "css-loader"
-				}),
+
+				use: [
+					{
+						loader: MiniCssExtractPlugin.loader
+					},
+					{
+						loader: "css-loader",
+
+						options: {
+							sourceMap: true,
+							modules: true,
+							localIdentName: "[local]__[hash:base64:5]"
+						}
+					}
+				],
+
 				include: defaultInclude
+			},
+
+			// Load typescript + typescript/react files
+			{
+				test: /\.tsx?$/,
+				loader: "awesome-typescript-loader"
 			},
 			{
 				test: /\.jsx?$/,
@@ -54,6 +72,14 @@ module.exports = {
 				test: /\.(eot|svg|ttf|woff|woff2)$/,
 				use: [{ loader: "file-loader?name=font/[name]__[hash:base64:5].[ext]" }],
 				include: defaultInclude
+			},
+
+			// Load sound files
+			{
+				test: /\.wav$|\.mp3$/,
+				exclude: /node_modules/,
+				use: [{loader: "file-loader?name=sound/[name]__[hash:base64:5].[ext]"}],
+				include: defaultInclude
 			}
 		]
 	},
@@ -62,7 +88,7 @@ module.exports = {
 
 	plugins: [
 		new HtmlWebpackPlugin(),
-		new ExtractTextPlugin("bundle.css"),
+		new MiniCssExtractPlugin(),
 
 		new webpack.DefinePlugin({
 			"process.env.NODE_ENV": JSON.stringify("production")

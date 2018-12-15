@@ -22,6 +22,7 @@ module.exports = {
 
 	module: {
 		rules: [
+			// Load SCSS files
 			{
 				test: /\.scss$/,
 				use: [
@@ -36,6 +37,8 @@ module.exports = {
 					}
 				]
 			},
+
+			// Load CSS files
 			{
 				test: /\.css$/,
 
@@ -50,25 +53,35 @@ module.exports = {
 
 				include: defaultInclude
 			},
+
+			// Load typescript + typescript/react files
 			{
 				test: /\.tsx?$/,
 				loader: "awesome-typescript-loader"
 			},
+
+			// Load javascript + javascript/react files
 			{
 				test: /\.jsx?$/,
 				use: [{ loader: "babel-loader" }],
 				include: defaultInclude
 			},
+
+			// Load images
 			{
 				test: /\.(jpe?g|png|gif)$/,
 				use: [{loader: "file-loader?name=img/[name]__[hash:base64:5].[ext]"}],
 				include: defaultInclude
 			},
+
+			// Load fonts
 			{
 				test: /\.(eot|svg|ttf|woff|woff2)$/,
 				use: [{loader: "file-loader?name=font/[name]__[hash:base64:5].[ext]"}],
 				include: defaultInclude
 			},
+
+			// Load sound files
 			{
 				test: /\.wav$|\.mp3$/,
 				exclude: /node_modules/,
