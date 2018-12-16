@@ -5,7 +5,7 @@ import {createLogger} from "redux-logger";
 import {Map as ImmutableMap} from "immutable";
 
 export enum ActionType {
-    AddMessage = "ADD_MESSAGE",
+    AddGeneralMessage = "ADD_GENERAL_MESSAGE",
     MarkMessageSent = "MARK_MESSAGE_SENT",
     AddUser = "ADD_USER",
     SetActiveChannel = "SET_ACTIVE_CHANNEL",
@@ -22,12 +22,13 @@ export enum ActionType {
     AddUserToCategory = "ADD_USER_TO_CATEGORY",
     ShowContextMenu = "SHOW_CONTEXT_MENU",
     HideContextMenu = "HIDE_CONTEXT_MENU",
-    AddChannel = "ADD_CHANNEL"
+    AddChannel = "ADD_CHANNEL",
+    AddMessage = "ADD_MESSAGE"
 }
 
 function defaultReducer(state: AppState, action: any): any {
     switch (action.type) {
-        case ActionType.AddMessage: {
+        case ActionType.AddGeneralMessage: {
             const newMessages: IGenericMessage[] = [...state.messages];
 
             newMessages.push(action.payload);

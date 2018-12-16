@@ -3,9 +3,9 @@ import {store, ActionType} from "./store";
 import {ICommand} from "../core/command";
 
 export default abstract class Actions {
-    public static addMessage<T extends IGenericMessage>(message: T): void {
+    public static addGeneralMessage<T extends IGenericMessage>(message: T): void {
         store.dispatch({
-            type: ActionType.AddMessage,
+            type: ActionType.AddGeneralMessage,
             payload: message
         });
     }
@@ -132,6 +132,13 @@ export default abstract class Actions {
         store.dispatch({
             type: ActionType.AddChannel,
             payload: channel
+        });
+    }
+
+    public static addMessage<T extends IGenericMessage>(message: T, channelId: UniqueId): void {
+        store.dispatch({
+            type: ActionType.AddMessage,
+            
         });
     }
 }

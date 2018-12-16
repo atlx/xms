@@ -54,7 +54,7 @@ export type IpAddress = string;
 
 export enum ChannelType {
     Public,
-    Text
+    Private
 }
 
 export enum SpecialChannel {
@@ -76,7 +76,7 @@ export interface IGenericMessage {
 
 export interface IMessage extends IGenericMessage {
     readonly authorName: string;
-    readonly authorAvatarUrl: string;
+    readonly authorAvatarUrl: string | null;
     readonly systemMessage: boolean;
     readonly sent: boolean;
     readonly senderAddress: IpAddress;

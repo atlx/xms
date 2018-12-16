@@ -14,7 +14,6 @@ import {CSSTransition} from "react-transition-group";
 import Autocompleter from "./autocompleter";
 import CommandHandler from "../core/command-handler";
 import Factory from "../core/factory";
-import ContextMenu from "./context-menu";
 
 type ChatProps = {
 	readonly messages: IGenericMessage[];
@@ -230,7 +229,7 @@ class Chat extends React.Component<ChatProps, ChatState> {
 			const message: IMessage = Factory.createMessage(this.props.activeChannel.id, value);
 
 			this.clearValue();
-			Actions.addMessage(message);
+			Actions.addGeneralMessage(message);
 			app.actions.handleMessage(message);
 		}
 		else if (this.inCommand()) {

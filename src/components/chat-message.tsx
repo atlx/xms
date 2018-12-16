@@ -1,9 +1,10 @@
 import React from "react";
 import "../styles/chat-message.scss";
 
+// TODO: Use the GenericMessage/IMessage for this?
 interface ChatMessageProps {
     readonly authorName: string;
-    readonly authorAvatarUrl: string;
+    readonly authorAvatarUrl: string | null;
     readonly time: number;
     readonly content: string;
     readonly systemMessage: boolean;

@@ -72,7 +72,7 @@ export default class App {
 				handle(): void {
 					const ping: number = -1;
 
-					Actions.addMessage<INotice>(
+					Actions.addGeneralMessage<INotice>(
 						// TODO: Channel is hard-coded
 						Factory.createNotice("general", `Your ping is ~${ping}ms (${Utils.determinePingState(ping)})`)
 					);
@@ -116,7 +116,7 @@ export default class App {
 	
 					handle(): void {
 						// TODO: Channel
-						Actions.addMessage<INotice>(Factory.createNotice("general", "This is a success notice", NoticeStyle.Success));
+						Actions.addGeneralMessage<INotice>(Factory.createNotice("general", "This is a success notice", NoticeStyle.Success));
 					}
 				},
 				{
@@ -125,7 +125,7 @@ export default class App {
 	
 					handle(): void {
 						// TODO: Channel
-						Actions.addMessage<INotice>(Factory.createNotice("general", "This is a warning notice", NoticeStyle.Warning));
+						Actions.addGeneralMessage<INotice>(Factory.createNotice("general", "This is a warning notice", NoticeStyle.Warning));
 					}
 				},
 				{
@@ -134,7 +134,7 @@ export default class App {
 	
 					handle(): void {
 						// TODO: Channel
-						Actions.addMessage<INotice>(Factory.createNotice("general", "This is a error notice", NoticeStyle.Error));
+						Actions.addGeneralMessage<INotice>(Factory.createNotice("general", "This is a error notice", NoticeStyle.Error));
 					}
 				},
 				{

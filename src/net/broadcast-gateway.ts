@@ -79,7 +79,7 @@ export default class BroadcastGateway implements IDisposable {
 
         this.socket.on("close", () => {
             console.log("[BroadcastGateway] Disconnected");
-            Actions.addMessage<INotice>(Factory.createNotice("general", "Disconnected from the network."));
+            Actions.addGeneralMessage<INotice>(Factory.createNotice("general", "Disconnected from the network."));
         });
 
         this.socket.on("message", (data: Buffer, sender: AddressInfo) => {
@@ -105,7 +105,7 @@ export default class BroadcastGateway implements IDisposable {
                             const ping: number = Math.round(performance.now() - this.pingStart);
 
                             // TODO: Channel
-                            Actions.addMessage<INotice>(
+                            Actions.addGeneralMessage<INotice>(
                                 Factory.createNotice("general", `Connected to the network @ ${this.groupAdress}. ~${ping}ms`)
                             );
 
@@ -113,7 +113,7 @@ export default class BroadcastGateway implements IDisposable {
 
                             if (ping >= BroadcastGateway.slowThreshold) {
                                 // TODO: channel
-                                Actions.addMessage<INotice>(
+                                Actions.addGeneralMessage<INotice>(
                                     Factory.createNotice(
                                         "general",
                                         "Your connection may be slow due to high latency.",
@@ -148,7 +148,7 @@ export default class BroadcastGateway implements IDisposable {
                     else {
                         // TODO: Fix
                         // TODO: Verify type and data
-                        Actions.addMessage({
+                        Actions.addGeneralMessage({
                             // TODO: A way to safely identify an unknown sender, or is it not required?
                             authorAvatarUrl: "",
                             authorName: "Unknown",
@@ -189,7 +189,7 @@ export default class BroadcastGateway implements IDisposable {
         this.close(() => {
             // TODO: Shouldn't be sent by message, handled by the init page instead
             // TODO: Hard-coded channel
-            Actions.addMessage<INotice>(Factory.createNotice("general", "Attempting to reconnect."));
+            Actions.addGeneralMessage<INotice>(Factory.createNotice("general", "Attempting to reconnect."));
             this.start();
         });
     }

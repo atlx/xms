@@ -4,7 +4,8 @@ import Utils from "../core/utils";
 import Validator from "../core/validator";
 
 export enum NetPacketType {
-    Authenticate
+    Authenticate,
+    Message
 }
 
 export interface IUnsignedNetPacket<T> {
