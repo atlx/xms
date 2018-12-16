@@ -24,14 +24,27 @@ export interface IConnection {
     readonly address: IpAddress;
 }
 
-type PacketHandler<T> = (packet: INetPacket<T>, authenticated: boolean) => void;
+/**
+ * INetPacket => Pass on a modified packet
+ * null       => Do not continue
+ * void       => Continue
+ */
+type PacketHandler<T> = (packet: INetPacket<T>, authenticated: boolean) => INetPacket<T> | null | void;
+
+type HandlerSource<T> = Array<PacketHandler<T>[]>;
+
+export function requireAuth(packet: INetPacket<any>, authenticated: boolean): void | null {
+    if (!authenticated) {
+        return null;
+    }
+}
 
 // TODO: Missing ability to un-register handlers
 export default class NetworkHub {
     private readonly pool: Map<IpAddress, IConnection>;
     private readonly server: Server;
     private readonly port: number;
-    private readonly handlers: Map<NetPacketType, PacketHandler<any>[]>;
+    private readonly handlers: Map<NetPacketType, HandlerSource<any>>;
 
     public constructor(port: number) {
         this.handlers = new Map();
@@ -40,14 +53,43 @@ export default class NetworkHub {
         this.server = net.createServer();
     }
 
-    public handle<T>(type: NetPacketType, handler: PacketHandler<T>): void {
+    public handle<T>(type: NetPacketType, ...handlerStack: PacketHandler<T>[]): void {
         if (this.handlers.has(type)) {
-            const handlers: PacketHandler<any>[] = this.handlers.get(type) as PacketHandler<any>[];
+            const handlers: HandlerSource<T> = this.handlers.get(type) as HandlerSource<T>;
 
-            handlers.push(handler);
+            handlers.push(handlerStack);
         }
         else {
-            this.handlers.set(type, [handler]);
+            this.handlers.set(type, [handlerStack]);
+        }
+    }
+
+    public invoke<T>(type: NetPacketType, payload: INetPacket<T>): void {
+        if (this.handlers.has(type)) {
+            const source: HandlerSource<T> = this.handlers.get(type) as HandlerSource<T>;
+            
+            let latestPayload: INetPacket<T> = Object.assign({}, payload);
+
+            for (let i: number = 0; i < source.length; i++) {
+                const stack: PacketHandler<T>[] = source[i];
+
+                for (let h: number = 0; h < stack.length; h++) {
+                    const result: INetPacket<T> | null | void = stack[h](latestPayload, this.isAuthenticated(latestPayload.sender));
+
+                    if (result === undefined) {
+                        continue;
+                    }
+                    else if (result === null) {
+                        break;
+                    }
+                    else if (typeof result === "object") {
+                        latestPayload = result;
+                    }
+                    else {
+                        throw new Error(`[NetworkHub] Expecting handler result to either be void, null, or a modified payload (object), got ${typeof result} instead`);
+                    }
+                }
+            }
         }
     }
 

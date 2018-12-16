@@ -9,8 +9,8 @@ export default class SystemHandlers {
     }
 
     public setup(): void {
-        this.hub.handle(NetPacketType.Authenticate, (packet: INetPacket<$Auth>) => {
-            
+        this.hub.handle(NetPacketType.Authenticate, (packet: INetPacket<$Auth>): void => {
+            // TODO
         });
     }
 }
