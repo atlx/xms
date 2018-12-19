@@ -2,3 +2,4 @@ node_modules/
 build/
 dist/
 .vscode/
+src/store/reducers/.template.txt

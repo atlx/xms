@@ -1,8 +1,16 @@
-import {createStore, Store, applyMiddleware} from "redux";
+import {createStore, Store, applyMiddleware, combineReducers} from "redux";
 import {IMessage, IRoosterCategory, UniqueId, User, IChannel, ChannelType, IGenericMessage, MessageType, Page, IModal, IContextMenu} from "../types/types";
 import CommandHandler from "../core/command-handler";
 import {createLogger} from "redux-logger";
 import {Map as ImmutableMap} from "immutable";
+import messageReducer from "./reducers/modal";
+import categoryReducer from "./reducers/category";
+import channelReducer from "./reducers/channel";
+import commandReducer from "./reducers/command";
+import contextMenuReducer from "./reducers/context-menu";
+import miscReducer from "./reducers/misc";
+import userReducer from "./reducers/user";
+import modalReducer from "./reducers/modal";
 
 export enum ActionType {
     AddGeneralMessage = "ADD_GENERAL_MESSAGE",
@@ -26,187 +34,11 @@ export enum ActionType {
     AddMessage = "ADD_MESSAGE"
 }
 
-function defaultReducer(state: AppState, action: any): any {
-    switch (action.type) {
-        case ActionType.AddGeneralMessage: {
-            const newMessages: IGenericMessage[] = [...state.messages];
+export type Reducer = (state: AppState | undefined, action: Action<any>) => AppState | undefined;
 
-            newMessages.push(action.payload);
-
-            return {
-                ...state,
-                messages: newMessages
-            };
-        }
-
-        case ActionType.MarkMessageSent: {
-            const newMessages: IGenericMessage[] = [...state.messages];
-
-            let messageFound: boolean = false;
-
-            for (let i = 0; i < newMessages.length; i++) {
-                if (newMessages[i].type !== MessageType.Text) {
-                    continue;
-                }
-
-                const message: IMessage = newMessages[i] as IMessage;
-
-                if (message.id === action.payload && !message.sent) {
-                    (newMessages[i] as any) = {
-                        ...newMessages[i],
-                        sent: true
-                    };
-
-                    messageFound = true;
-
-                    break;
-                }
-            }
-
-            if (!messageFound) {
-                throw new Error(`[Store:MarkMessageSent] Message with id '${action.payload}' was not found`);
-            }
-
-            return {
-                ...state,
-                messages: newMessages
-            };
-        }
-
-        case ActionType.SetActiveChannel: {
-            if (!action.payload || typeof (action.payload) !== "string") {
-                throw new Error("Invalid payload");
-            }
-            else if (!state.channels.has(action.payload)) {
-                throw new Error("Attempting to set a channel that does not exist within the application state");
-            }
-
-            return {
-                ...state,
-                activeChannel: state.channels.get(action.payload)
-            };
-        }
-
-        case ActionType.SetGeneralAsActiveChannel: {
-            return {
-                ...state,
-                activeChannel: state.channels.get("general")
-            };
-        }
-
-        case ActionType.SetInputLocked: {
-            return {
-                ...state,
-                inputLocked: action.payload
-            };
-        }
-
-        case ActionType.SetPage: {
-            // TODO: Verify page type is valid
-            return {
-                ...state,
-                page: action.payload
-            };
-        }
-
-        case ActionType.SetAutoCompleteVisible: {
-            return {
-                ...state,
-                autoCompleteVisible: action.payload
-            };
-        }
-
-        case ActionType.RegisterCommand: {
-            return {
-                ...state,
-                commandHandler: state.commandHandler.register(action.payload)
-            };
-        }
-
-        case ActionType.ShowModal: {
-            return {
-                ...state,
-                modals: [...state.modals, action.payload]
-            };
-        }
-
-        case ActionType.ShiftModal: {
-            const modals: IModal[] = [...state.modals];
-
-            modals.shift();
-
-            return {
-                ...state,
-                modals
-            };
-        }
-
-        case ActionType.ClearMessages: {
-            return {
-                ...state,
-                messages: []
-            };
-        }
-
-        case ActionType.UpdateMe: {
-            return {
-                ...state,
-
-                me: {
-                    ...action.payload
-                }
-            };
-        }
-
-        case ActionType.AddUser: {
-            return {
-                ...state,
-                users: [...state.users, action.payload]
-            };
-        }
-
-        case ActionType.AddCategory: {
-            return {
-                ...state,
-                categories: [...state.categories, action.payload]
-            };
-        }
-
-        case ActionType.AddUserToCategory: {
-            const categories: IRoosterCategory[] = [...state.categories];
-            const index: number = categories.findIndex((category: IRoosterCategory) => category.id === action.payload.category);
-    
-            categories[index].users.push(action.payload.userId);
-    
-            return {
-                ...state,
-                categories
-            };
-        }
-
-        case ActionType.ShowContextMenu: {
-            return {
-                ...state,
-                contextMenu: action.payload
-            };
-        }
-
-        case ActionType.HideContextMenu: {
-            return {
-                ...state,
-                contextMenu: null
-            };
-        }
-
-        case ActionType.AddChannel: {
-            return {
-                ...state,
-                channels: state.channels.set(action.payload.id, action.payload)
-            };
-        }
-    }
-
-    return state;
+export type Action<T extends object> = {
+    readonly type: ActionType;
+    readonly payload?: T;
 }
 
 export type AppState = {
@@ -229,7 +61,16 @@ const logger = createLogger({
     //
 });
 
-export const store: Store = createStore(defaultReducer, {
+export const store: Store = createStore(combineReducers({
+    category: categoryReducer,
+    channel: channelReducer,
+    command: commandReducer,
+    contextMenu: contextMenuReducer,
+    message: messageReducer,
+    misc: miscReducer,
+    modal: modalReducer,
+    user: userReducer
+}), {
     messages: [],
     users: [],
     categories: [],
