@@ -3,7 +3,7 @@ import {connect} from "react-redux";
 import "../styles/rooster.scss";
 import {AppState} from "../store/store";
 import {IRoosterCategory, User} from "../types/types";
-import RoosterCategory from "./rooster-category";
+import RoosterCategory from "./roster-category";
 
 class Rooster extends React.Component<any> {
 	public renderCategories(): JSX.Element[] {
