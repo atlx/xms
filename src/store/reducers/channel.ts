@@ -3,7 +3,7 @@ import {IChannel} from "../../types/types";
 
 const channelReducer: Reducer = (state, action) => {
     if (!state) {
-        return state; // Prankd
+        return state;
     }
 
     switch (action.type) {
@@ -32,6 +32,56 @@ const channelReducer: Reducer = (state, action) => {
             return {
                 ...state,
                 channels: state.channels.set(action.payload.id, action.payload)
+            };
+        }
+
+        case ActionType.RemoveChannel: {
+            return {
+                ...state,
+                channels: state.channels.delete(action.payload)
+            };
+        }
+
+        // TODO: In the future merge next 3 actions into one "ChangeChannelProperty"
+        case ActionType.RenameChannel: {
+            const channel: IChannel = state.channels.get(action.payload.channelId) as IChannel;
+
+            const newChannel: IChannel = {
+                ...channel,
+                name: action.payload.name
+            };
+            
+            return {
+                ...state,
+                channels: state.channels.set(channel.id, newChannel)
+            };
+        }
+
+        case ActionType.SetChannelNotify: {
+            const channel: IChannel = state.channels.get(action.payload.channelId) as IChannel;
+
+            const newChannel: IChannel = {
+                ...channel,
+                notify: action.payload
+            };
+
+            return {
+                ...state,
+                channels: state.channels.set(channel.id, newChannel)
+            };
+        }
+
+        case ActionType.SetChannelTopic: {
+            const channel: IChannel = state.channels.get(action.payload.channelId) as IChannel;
+
+            const newChannel: IChannel = {
+                ...channel,
+                topic: action.payload.topic
+            };
+            
+            return {
+                ...state,
+                channels: state.channels.set(channel.id, newChannel)
             };
         }
     }

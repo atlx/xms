@@ -3,6 +3,7 @@ export interface IChannel {
     readonly type: ChannelType;
     readonly topic: string;
     readonly name: string;
+    readonly notify: boolean;
 }
 
 export enum NoticeStyle {

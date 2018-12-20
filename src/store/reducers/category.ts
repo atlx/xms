@@ -25,6 +25,12 @@ const categoryReducer: Reducer = (state, action) => {
                 categories
             };
         }
+
+        case ActionType.RenameCategory: {
+            // TODO: Can't do this until changing categories from array to map
+
+            throw new Error("Not yet implemented");
+        }
     }
 
     return state;

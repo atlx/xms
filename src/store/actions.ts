@@ -137,8 +137,34 @@ export default abstract class Actions {
 
     public static addMessage<T extends IGenericMessage>(message: T, channelId: UniqueId): void {
         store.dispatch({
-            type: ActionType.AddMessage,
-            
+            type: ActionType.AddMessage
+        });
+    }
+
+    public static renameChannel(channelId: UniqueId, name: string): void {
+        store.dispatch({
+            type: ActionType.RenameChannel,
+            payload: {
+                channelId,
+                name
+            }
+        });
+    }
+
+    public static setChannelTopic(channelId: UniqueId, topic: string): void {
+        store.dispatch({
+            type: ActionType.SetChannelTopic,
+            payload: {
+                channelId,
+                topic
+            }
+        });
+    }
+
+    public static removeChannel(channelId: UniqueId): void {
+        store.dispatch({
+            type: ActionType.RemoveChannel,
+            payload: channelId
         });
     }
 }

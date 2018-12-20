@@ -22,6 +22,11 @@ const userReducer: Reducer = (state, action) => {
                 users: [...state.users, action.payload]
             };
         }
+
+        case ActionType.UpdateUser: {
+            // TODO
+            throw new Error("Not yet implemented");
+        }
     }
 
     return state;

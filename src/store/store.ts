@@ -1,5 +1,5 @@
 import {createStore, Store, applyMiddleware, combineReducers} from "redux";
-import {IMessage, IRoosterCategory, UniqueId, User, IChannel, ChannelType, IGenericMessage, MessageType, Page, IModal, IContextMenu} from "../types/types";
+import {IRoosterCategory, UniqueId, User, IChannel, ChannelType, IGenericMessage, Page, IModal, IContextMenu} from "../types/types";
 import CommandHandler from "../core/command-handler";
 import {createLogger} from "redux-logger";
 import {Map as ImmutableMap} from "immutable";
@@ -31,7 +31,12 @@ export enum ActionType {
     ShowContextMenu = "SHOW_CONTEXT_MENU",
     HideContextMenu = "HIDE_CONTEXT_MENU",
     AddChannel = "ADD_CHANNEL",
-    AddMessage = "ADD_MESSAGE"
+    AddMessage = "ADD_MESSAGE",
+    RemoveChannel = "REMOVE_CHANNEL",
+    RenameChannel = "RENAME_CHANNEL",
+    SetChannelNotify = "SET_CHANNEL_NOTIFY",
+    SetChannelTopic = "SET_CHANNEL_TOPIC",
+    RenameCategory = "RENAME_CATEGORY"
 }
 
 export type Reducer = (state: AppState | undefined, action: Action<any>) => AppState | undefined;
@@ -46,7 +51,7 @@ export type AppState = {
     readonly users: User[];
     readonly usersMap: Map<UniqueId, User>;
     readonly categories: IRoosterCategory[];
-    readonly channels: Map<UniqueId, IChannel>;
+    readonly channels: ImmutableMap<UniqueId, IChannel>;
     readonly inputLocked: boolean;
     readonly activeChannel: IChannel;
     readonly page: Page;
