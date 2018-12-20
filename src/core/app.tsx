@@ -86,7 +86,7 @@ export default class App {
 					App.notify();
 				}
 			},
-			
+
 			{
 				name: "clear",
 				description: "Clear all messages",
@@ -102,7 +102,7 @@ export default class App {
 				{
 					name: "modal",
 					description: "Show a modal",
-	
+
 					handle(): void {
 						Actions.showModal({
 							title: "This is a modal",
@@ -113,7 +113,7 @@ export default class App {
 				{
 					name: "notice",
 					description: "Show a success notice",
-	
+
 					handle(): void {
 						// TODO: Channel
 						Actions.addGeneralMessage<INotice>(Factory.createNotice("general", "This is a success notice", NoticeStyle.Success));
@@ -122,7 +122,7 @@ export default class App {
 				{
 					name: "n-warn",
 					description: "Show a warning notice",
-	
+
 					handle(): void {
 						// TODO: Channel
 						Actions.addGeneralMessage<INotice>(Factory.createNotice("general", "This is a warning notice", NoticeStyle.Warning));
@@ -131,7 +131,7 @@ export default class App {
 				{
 					name: "n-error",
 					description: "Show an error notice",
-	
+
 					handle(): void {
 						// TODO: Channel
 						Actions.addGeneralMessage<INotice>(Factory.createNotice("general", "This is a error notice", NoticeStyle.Error));
@@ -140,39 +140,39 @@ export default class App {
 				{
 					name: "add-user",
 					description: "Add a dummy user",
-	
+
 					handle(): void {
 						const id: string = "u" + Date.now().toString();
-	
+
 						Actions.addUser({
 							createdTime: Date.now(),
 							username: "Dummy",
 							id,
 							state: UserState.Online
 						});
-	
+
 						Actions.addUserToCategory(id, SpecialCategories.Connected);
 					}
 				},
 				{
 					name: "menu",
 					description: "Display a context menu",
-	
+
 					handle(): void {
 						Actions.showContextMenu({
 							title: "Test context menu",
-	
+
 							position: {
 								x: 50,
 								y: 50
 							},
-	
+
 							options: [
 								{
 									text: "Button",
 									disabled: false,
 									type: ContextMenuOptionType.Button,
-	
+
 									onClick(): void {
 										alert("Context menu option click!");
 									}
@@ -188,7 +188,10 @@ export default class App {
 	}
 
 	public init(): void {
-		this.test();
+		if (DevelopmentMode) {
+			this.test();
+		}
+
 		Actions.updateMe(this.me);
 
 		// TODO: State is immutable, therefore once me is updated, it will not be reflected upon the users list
@@ -208,5 +211,7 @@ export default class App {
 
 	public test(): void {
 		//
+		alert("hlelo world");
+		alert(process.env.NODE_ENV + "::" || "no env defined");
 	}
 }

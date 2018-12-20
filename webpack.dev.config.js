@@ -63,7 +63,7 @@ module.exports = {
 			// Load javascript + javascript/react files
 			{
 				test: /\.jsx?$/,
-				use: [{ loader: "babel-loader" }],
+				use: [{loader: "babel-loader"}],
 				include: defaultInclude
 			},
 
@@ -101,29 +101,25 @@ module.exports = {
 		new webpack.DefinePlugin({
 			"process.env.NODE_ENV": JSON.stringify("development")
 		}),
-		
+
 		new CheckerPlugin()
 	],
 
 	devtool: "cheap-source-map",
-	
+
 	devServer: {
 		contentBase: OUTPUT_DIR,
-		
+
 		stats: {
 			colors: true,
 			chunks: false,
 			children: false
 		},
 
-		setup() {
-			spawn(
-				"electron",
-				["."],
-				{
-					shell: true, env: process.env, stdio: "inherit"
-				}
-			).on("close", code => process.exit(0)).on("error", spawnError => console.error(spawnError));
+		before() {
+			spawn("electron", ["."], {
+				shell: true, env: process.env, stdio: "inherit"
+			}).on("close", code => process.exit(code)).on("error", spawnError => console.error(spawnError));
 		}
 	},
 

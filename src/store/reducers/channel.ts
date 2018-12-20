@@ -3,7 +3,7 @@ import {IChannel} from "../../types/types";
 
 const channelReducer: Reducer = (state, action) => {
     if (!state) {
-        return state;
+        return state; // Prankd
     }
 
     switch (action.type) {
