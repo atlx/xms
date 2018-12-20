@@ -211,7 +211,5 @@ export default class App {
 
 	public test(): void {
 		//
-		alert("hlelo world");
-		alert(process.env.NODE_ENV + "::" || "no env defined");
 	}
 }
