@@ -1,20 +1,20 @@
 import React from "react";
-import "../styles/rooster-category.scss";
-import RoosterItem from "./rooster-item";
+import "../styles/roster-category.scss";
+import RosterItem from "./roster-item";
 import {User, UniqueId} from "../types/types";
 import {AppState} from "../store/store";
 import {connect} from "react-redux";
 
-type RoosterCategoryProps = {
+type RosterCategoryProps = {
     readonly title: string;
     readonly users: User[];
     readonly meId: UniqueId | null;
 }
 
-class RoosterCategory extends React.Component<RoosterCategoryProps> {
+class RosterCategory extends React.Component<RosterCategoryProps> {
     public renderUsers(): JSX.Element[] {
         return this.props.users.map((user: User) => {
-            return <RoosterItem
+            return <RosterItem
                 key={user.id}
                 me={this.props.meId !== null && user.id === this.props.meId}
                 name={user.username}
@@ -41,4 +41,4 @@ const mapStateToProps = (state: AppState): any => {
 	};
 };
 
-export default connect(mapStateToProps)(RoosterCategory);
+export default connect(mapStateToProps)(RosterCategory);

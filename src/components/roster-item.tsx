@@ -1,17 +1,17 @@
 import React from "react";
-import "../styles/rooster-item.scss";
+import "../styles/roster-item.scss";
 import Tooltip, {TooltipPosition} from "./tooltip";
 
-type RoosterItemProps = {
+type RosterItemProps = {
     readonly name: string;
     readonly avatarUrl?: string;
     readonly status?: string;
     readonly me?: boolean;
 }
 
-export default class RoosterItem extends React.Component<RoosterItemProps> {
+export default class RosterItem extends React.Component<RosterItemProps> {
     public getComponentStyle(): string {
-        const classes: string[] = ["rooster-item"];
+        const classes: string[] = ["roster-item"];
 
         // TODO: Check here if item is local user (import store, etc)
         if (this.props.me) {

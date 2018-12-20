@@ -2,7 +2,7 @@ import React from "react";
 import "../styles/pages/default.scss";
 import Explorer from "../components/explorer";
 import Chat from "../components/chat";
-import Rooster from "../components/rooster";
+import Roster from "../components/roster";
 
 type DefaultPageState = {
 	readonly showTestModal: boolean;
@@ -29,7 +29,7 @@ export default class DefaultPage extends React.Component<any, DefaultPageState> 
 					inputLocked={true}
 					activeChannel={null as any}
 				/>
-				<Rooster />
+				<Roster />
 			</React.Fragment>
 		);
 	}

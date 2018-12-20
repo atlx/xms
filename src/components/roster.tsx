@@ -1,11 +1,11 @@
 import React from "react";
 import {connect} from "react-redux";
-import "../styles/rooster.scss";
+import "../styles/roster.scss";
 import {AppState} from "../store/store";
 import {IRoosterCategory, User} from "../types/types";
-import RoosterCategory from "./roster-category";
+import RosterCategory from "./roster-category";
 
-class Rooster extends React.Component<any> {
+class Roster extends React.Component<any> {
 	public renderCategories(): JSX.Element[] {
 		return this.props.categories.map((category: IRoosterCategory) => {
 			console.log(category);			
@@ -15,7 +15,7 @@ class Rooster extends React.Component<any> {
 			});
 
 			// TODO: Hard-coded meId for redux connect
-			return <RoosterCategory meId={null as any} key={category.id} title={category.name} users={users} />
+			return <RosterCategory meId={null as any} key={category.id} title={category.name} users={users} />
 		});
 	}
 
@@ -35,4 +35,4 @@ const mapStateToProps = (state: AppState): any => {
     };
 };
 
-export default connect(mapStateToProps)(Rooster);
+export default connect(mapStateToProps)(Roster);

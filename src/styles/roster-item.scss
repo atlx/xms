@@ -1,13 +1,13 @@
 @import "utils";
 
-@keyframes rooster-item-appear {
+@keyframes roster-item-appear {
     from {
         opacity: 0;
         transform: scale(0.8);
     }
 }
 
-.rooster-item {
+.roster-item {
     & {
         display: grid;
         grid-template-columns: auto 1fr;
@@ -17,7 +17,7 @@
         cursor: pointer;
         justify-content: center;
         align-items: center;
-        animation: rooster-item-appear 0.2s ease;
+        animation: roster-item-appear 0.2s ease;
     }
 
     &:not(:last-child) {
