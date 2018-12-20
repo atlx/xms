@@ -3,7 +3,7 @@ import {IModal} from "../../types/types";
 
 const modalReducer: Reducer = (state, action) => {
     if (!state) {
-        return state;
+        return null;
     }
 
     switch (action.type) {

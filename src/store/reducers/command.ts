@@ -2,7 +2,7 @@ import {Reducer, ActionType} from "../store";
 
 const commandReducer: Reducer = (state, action) => {
     if (!state) {
-        return state;
+        return null;
     }
 
     switch (action.type) {

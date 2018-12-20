@@ -1,9 +1,9 @@
-import {Reducer, ActionType} from "../store";
+import {Reducer, ActionType, initialState} from "../store";
 import {IRoosterCategory} from "../../types/types";
 
 const categoryReducer: Reducer = (state, action) => {
     if (!state) {
-        return state;
+        return initialState;
     }
 
     switch (action.type) {

@@ -40,7 +40,7 @@ export enum ActionType {
     UpdateUser = "UPDATE_USER"
 }
 
-export type Reducer = (state: AppState | undefined, action: Action<any>) => AppState | undefined;
+export type Reducer = (state: AppState | null | undefined, action: Action<any>) => AppState | null;
 
 export type Action<T extends object> = {
     readonly type: ActionType;
@@ -54,7 +54,7 @@ export type AppState = {
     readonly categories: IRoosterCategory[];
     readonly channels: ImmutableMap<UniqueId, IChannel>;
     readonly inputLocked: boolean;
-    readonly activeChannel: IChannel;
+    readonly activeChannel: IChannel | null;
     readonly page: Page;
     readonly autoCompleteVisible: boolean;
     readonly commandHandler: CommandHandler;
@@ -67,16 +67,7 @@ const logger = createLogger({
     //
 });
 
-export const store: Store = createStore(combineReducers({
-    category: categoryReducer,
-    channel: channelReducer,
-    command: commandReducer,
-    contextMenu: contextMenuReducer,
-    message: messageReducer,
-    misc: miscReducer,
-    modal: modalReducer,
-    user: userReducer
-}), {
+export const initialState: AppState = {
     messages: [],
     users: [],
     categories: [],
@@ -89,7 +80,8 @@ export const store: Store = createStore(combineReducers({
             id: "general",
             name: "General",
             topic: "A public channel for everyone connected",
-            type: ChannelType.Public
+            type: ChannelType.Public,
+            notify: false
         }
     }),
 
@@ -101,4 +93,15 @@ export const store: Store = createStore(combineReducers({
     modals: [],
     me: null,
     contextMenu: null
-} as any, applyMiddleware(logger));
+};
+
+export const store: Store = createStore(combineReducers({
+    categoryReducer,
+    channelReducer,
+    commandReducer,
+    contextMenuReducer,
+    messageReducer,
+    miscReducer,
+    modalReducer,
+    userReducer
+}), applyMiddleware(logger));

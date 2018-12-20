@@ -3,7 +3,7 @@ import {IGenericMessage, MessageType, IMessage} from "../../types/types";
 
 const messageReducer: Reducer = (state, action) => {
     if (!state) {
-        return state;
+        return null;
     }
 
     switch (action.type) {
