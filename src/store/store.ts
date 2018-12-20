@@ -36,7 +36,8 @@ export enum ActionType {
     RenameChannel = "RENAME_CHANNEL",
     SetChannelNotify = "SET_CHANNEL_NOTIFY",
     SetChannelTopic = "SET_CHANNEL_TOPIC",
-    RenameCategory = "RENAME_CATEGORY"
+    RenameCategory = "RENAME_CATEGORY",
+    UpdateUser = "UPDATE_USER"
 }
 
 export type Reducer = (state: AppState | undefined, action: Action<any>) => AppState | undefined;
