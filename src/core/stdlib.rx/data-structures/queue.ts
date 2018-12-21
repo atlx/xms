@@ -1,4 +1,12 @@
-export default class Queue<T> {
+export interface IQueue<T> {
+    enqueue(item: T): void;
+    dequeue(): T | null;
+    first(): T | null;
+    last(): T | null;
+    size: number;
+}
+
+export default class Queue<T> implements IQueue<T> {
     protected items: T[];
 
     public constructor(items: T[] = []) {
