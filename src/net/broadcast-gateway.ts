@@ -5,7 +5,7 @@ import {store, AppState} from "../store/store";
 import Actions from "../store/actions";
 import {app} from "..";
 import {IDisposable} from "../core/interfaces";
-import {IMessage, INotice, MessageType, Page, NoticeStyle} from "../types/types";
+import {IMessage, INotice, Page, NoticeStyle} from "../types/types";
 import Factory from "../core/factory";
 import Utils from "../core/utils";
 

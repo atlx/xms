@@ -1,4 +1,4 @@
-import NetworkHub, {NetPacketType, INetPacket, requireAuth} from "./network-hub";
+import NetworkHub, {NetPacketType, INetPacket, requireAuth} from "../core/stdlib.rx/core/network-hub";
 import {$Auth, $Message} from "./net-packets";
 import {store, AppState} from "../store/store";
 import {SpecialChannel, IMessage, MessageType, ChannelType} from "../types/types";
@@ -44,7 +44,8 @@ export default class SystemHandlers {
                     id: packet.sender,
                     name: `(DM) User at ${packet.sender}`,
                     topic: "A DM channel",
-                    type: ChannelType.Private
+                    type: ChannelType.Private,
+                    notify: true
                 });
             }
 

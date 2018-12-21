@@ -18,7 +18,7 @@ export default class GatewayActions {
     }
 
     public sendInsecureMessage(message: IMessage, destination: IpAddress): void {
-        
+        // TODO
     }
 
     public handleMessage(message: IMessage): void {

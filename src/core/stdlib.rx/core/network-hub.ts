@@ -1,7 +1,7 @@
-import {IpAddress} from "../types/types";
+import {IpAddress} from "../../../types/types";
 import net, {Socket, Server} from "net";
-import Utils from "../core/utils";
-import Validator from "../core/validator";
+import Utils from "../../utils";
+import Validator from "../../validator";
 
 export enum NetPacketType {
     Authenticate,
