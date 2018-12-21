@@ -11,7 +11,7 @@ import CommandHandler from "./command-handler";
 import Utils from "./utils";
 import Factory from "./factory";
 import {ICommand} from "./command";
-import NetworkHub from "../net/network-hub";
+import NetworkHub from "./stdlib.rx/core/network-hub";
 
 export const DevelopmentMode: boolean = process.env.NODE_ENV === "development";
 

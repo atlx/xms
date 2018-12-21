@@ -1,5 +1,5 @@
 import fs, {Stats} from "fs";
-import {IDisposable} from "../../interfaces";
+import {IDisposable} from "./interfaces";
 
 export class FileHandle implements IDisposable {
     public readonly path: Path;
