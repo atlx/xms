@@ -4,7 +4,7 @@ import {User, UserState} from "./types/types";
 import os from "os";
 import Utils from "./core/utils";
 
-const me: User = {    
+const me: User = {
     // TODO: Use cached/saved or generate then save
     id: Utils.generateId(),
     state: UserState.Online,
@@ -12,6 +12,6 @@ const me: User = {
     username: os.userInfo().username
 };
 
-export const app: App = new App(me);
+export const MainApp: App = new App(me);
 
-app.init();
+MainApp.init();

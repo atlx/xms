@@ -7,7 +7,7 @@ import ChatMessage from "./chat-message";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faHashtag} from "@fortawesome/free-solid-svg-icons";
 import Actions from "../store/actions";
-import {app} from "..";
+import {MainApp} from "..";
 import NoticeMessage from "./notice-message";
 import Loader from "./loader";
 import {CSSTransition} from "react-transition-group";
@@ -230,7 +230,7 @@ class Chat extends React.Component<ChatProps, ChatState> {
 
 			this.clearValue();
 			Actions.addGeneralMessage(message);
-			app.actions.handleMessage(message);
+			MainApp.actions.handleMessage(message);
 		}
 		else if (this.inCommand()) {
 			// Filter values in auto complete

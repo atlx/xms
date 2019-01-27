@@ -3,11 +3,11 @@ import {AddressInfo} from "net";
 import {GatewayMsg, GatewayMsgType, HelloPayload, MessagePayload, HeartbeatPayload} from "./gateway";
 import {store, AppState} from "../store/store";
 import Actions from "../store/actions";
-import {app} from "..";
-import {IDisposable} from "../core/stdlib.rx/core/interfaces";
 import {IMessage, INotice, Page, NoticeStyle} from "../types/types";
 import Factory from "../core/factory";
 import Utils from "../core/utils";
+import {IDisposable} from "../core/app";
+import {MainApp} from "../index";
 
 export default class BroadcastGateway implements IDisposable {
     public static slowThreshold: number = 150;
@@ -91,7 +91,7 @@ export default class BroadcastGateway implements IDisposable {
             if (messageString.startsWith("{") && messageString.endsWith("}")) {
                 const message: GatewayMsg<any> = JSON.parse(messageString);
 
-                if (message.sender === app.me.id) {
+                if (message.sender === MainApp.me.id) {
                     if (message.type === GatewayMsgType.Message) {
                         const payload: MessagePayload = message.payload;
 
@@ -207,7 +207,7 @@ export default class BroadcastGateway implements IDisposable {
             type,
             time: Date.now(),
             payload,
-            sender: app.me.id
+            sender: MainApp.me.id
         } as GatewayMsg<T>));
 
         this.socket.send(data, 0, data.length, this.port, this.groupAdress, (error: Error | null) => {

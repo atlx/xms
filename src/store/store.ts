@@ -67,7 +67,7 @@ const logger = createLogger({
     //
 });
 
-export const initialState: AppState = {
+export const InitialState: AppState = {
     messages: [],
     users: [],
     categories: [],

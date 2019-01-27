@@ -64,7 +64,7 @@ export default class InitPage extends React.Component<any, InitPageState> {
 					this.attemptInit();
 				}
 			}, 1000) as any;
-			
+
 			return;
 		}
 

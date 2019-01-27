@@ -4,9 +4,10 @@ import ExplorerItem from "./explorer-item";
 import {AppState} from "../store/store";
 import {connect} from "react-redux";
 import {IChannel, UniqueId} from "../types/types";
+import {Map as ImmutableMap} from "immutable";
 
 type ExplorerProps = {
-	readonly channels: Map<UniqueId, IChannel>;
+	readonly channels: ImmutableMap<UniqueId, IChannel>;
 	readonly activeChannelId: UniqueId | null;
 }
 

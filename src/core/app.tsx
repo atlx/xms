@@ -13,6 +13,12 @@ import Factory from "./factory";
 import {ICommand} from "./command";
 import NetworkHub from "./network-hub";
 
+export type PromiseOr<T = void> = Promise<T> | T;
+
+export interface IDisposable {
+	dispose(): any;
+}
+
 export const DevelopmentMode: boolean = process.env.NODE_ENV === "development";
 
 // TODO: Expression-import not working for some reason

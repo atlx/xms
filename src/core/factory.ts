@@ -1,6 +1,6 @@
 import {UniqueId, MessageType, IMessage, INotice, NoticeStyle} from "../types/types";
 import Utils from "./utils";
-import {app} from "..";
+import {MainApp} from "..";
 
 export default class Factory {
     public static createMessage(channelId: UniqueId, text: string): IMessage {
@@ -10,7 +10,7 @@ export default class Factory {
             
             // TODO
             authorAvatarUrl: "",
-            authorName: app.me.username,
+            authorName: MainApp.me.username,
             sent: false,
 
             // TODO
