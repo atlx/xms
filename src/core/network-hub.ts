@@ -2,18 +2,19 @@ import {IpAddress} from "../types/types";
 import net, {Socket, Server} from "net";
 import Utils from "./utils";
 import Validator from "./validator";
+import {EventEmitter} from "events";
 
 export enum NetPacketType {
-    Authenticate,
-    Message
+    Authenticate = "auth",
+    Message = "msg"
 }
 
-export interface IUnsignedNetPacket<T> {
-    readonly type: NetPacketType;
+export interface IUnverifiedNetPacket<T = any> {
+    readonly type: string;
     readonly payload: T;
 }
 
-export interface INetPacket<T> extends IUnsignedNetPacket<T> {
+export interface INetPacket<T = any> extends IUnverifiedNetPacket<T> {
     readonly sender: IpAddress;
     readonly time: number;
     readonly size: number;
@@ -25,80 +26,42 @@ export interface IConnection {
     readonly address: IpAddress;
 }
 
-/**
- * INetPacket => Pass on a modified packet
- * null       => Do not continue
- * void       => Continue
- */
-type PacketHandler<T> = (packet: INetPacket<T>, authenticated: boolean) => INetPacket<T> | null | void;
-
-type HandlerSource<T> = Array<PacketHandler<T>[]>;
-
-export function requireAuth(packet: INetPacket<any>, authenticated: boolean): void | null {
-    if (!authenticated) {
-        return null;
-    }
+export enum NetEvent {
+    Connection = "connection",
+    PacketReceived = "packet-received"
 }
 
-// TODO: Missing ability to un-register handlers
-export default class NetworkHub {
+export interface INetworkHub extends EventEmitter {
+    //
+}
+
+export type PacketEventAction<T = any> = (packet: INetPacket<T>) => void;
+
+export default class NetworkHub extends EventEmitter implements INetworkHub {
+    public static localHost: IpAddress = "127.0.0.1";
+
     private readonly pool: Map<IpAddress, IConnection>;
     private readonly server: Server;
     private readonly port: number;
-    private readonly handlers: Map<NetPacketType, HandlerSource<any>>;
 
     public constructor(port: number) {
-        this.handlers = new Map();
+        super();
+
         this.pool = new Map();
         this.port = port;
         this.server = net.createServer();
-    }
 
-    public handle<T>(type: NetPacketType, ...handlerStack: PacketHandler<T>[]): void {
-        if (this.handlers.has(type)) {
-            const handlers: HandlerSource<T> = this.handlers.get(type) as HandlerSource<T>;
-
-            handlers.push(handlerStack);
-        }
-        else {
-            this.handlers.set(type, [handlerStack]);
-        }
-    }
-
-    public invoke<T>(type: NetPacketType, payload: INetPacket<T>): void {
-        if (this.handlers.has(type)) {
-            const source: HandlerSource<T> = this.handlers.get(type) as HandlerSource<T>;
-            
-            let latestPayload: INetPacket<T> = Object.assign({}, payload);
-
-            for (let i: number = 0; i < source.length; i++) {
-                const stack: PacketHandler<T>[] = source[i];
-
-                for (let h: number = 0; h < stack.length; h++) {
-                    const result: INetPacket<T> | null | void = stack[h](latestPayload, this.isAuthenticated(latestPayload.sender));
-
-                    if (result === undefined) {
-                        continue;
-                    }
-                    else if (result === null) {
-                        break;
-                    }
-                    else if (typeof result === "object") {
-                        latestPayload = result;
-                    }
-                    else {
-                        throw new Error(`[NetworkHub] Expecting handler result to either be void, null, or a modified payload (object), got ${typeof result} instead`);
-                    }
-                }
-            }
-        }
+        // Forward all packet received events into their own types.
+        this.on(NetEvent.PacketReceived, (packet: INetPacket): void => {
+            this.emit(packet.type);
+        });
     }
 
     private handleConnection(client: Socket): void {
         if (!client.remoteAddress) {
             return;
         }
-        // Destroy client if already exists
+        // Destroy client if already exists.
         else if (this.pool.has(client.remoteAddress)) {
             const oldSocket: Socket = (this.pool.get(client.remoteAddress) as IConnection).socket;
 
@@ -113,7 +76,7 @@ export default class NetworkHub {
             });
         }
 
-        // Remove client from pool upon being closed/timed out
+        // Remove client from pool upon being closed/timed out.
         client.once("close", () => this.destroyClient(client));
         client.once("timeout", () => this.destroyClient(client));
 
@@ -121,22 +84,23 @@ export default class NetworkHub {
             const data: string = raw.toString();
 
             if (!Utils.isJson(data)) {
-                // Destroy client upon invalid data
+                // Destroy client upon invalid data.
                 this.destroyClient(client);
 
                 return;
             }
 
-            const packet: IUnsignedNetPacket<any> = JSON.parse(data);
+            const packet: IUnverifiedNetPacket<any> = JSON.parse(data);
 
             if (!Validator.netPacket(packet)) {
-                // Also destroy client upon malformed packet
+                // Also destroy client upon malformed packet.
                 this.destroyClient(client);
 
                 return;
             }
 
-            this.dispatch({
+            // Emit the packet received event which will be forwarded.
+            this.emit(NetEvent.PacketReceived, {
                 ...packet,
                 sender: client.remoteAddress as string,
                 time: Date.now(),
@@ -145,14 +109,17 @@ export default class NetworkHub {
         });
     }
 
-    public dispatch<T>(packet: INetPacket<T>): void {
-        if (this.handlers.has(packet.type)) {
-            const handlers: PacketHandler<T>[] = this.handlers.get(packet.type) as PacketHandler<T>[];
-
-            for (let i = 0; i < handlers.length; i++) {
-                handlers[i](packet, this.isAuthenticated(packet.sender));
+    public authOn(event: NetPacketType, ...actions: PacketEventAction[]): this {
+        this.on(event, (packet: INetPacket): void => {
+            // Only forward if sender address is authenticated.
+            if (this.isAuthenticated(packet.sender)) {
+                for (const action of actions) {
+                    action(packet);
+                }
             }
-        }
+        });
+
+        return this;
     }
 
     public isAuthenticated(address: IpAddress): boolean {
@@ -196,7 +163,6 @@ export default class NetworkHub {
         }
 
         this.setupEvents();
-
-        this.server.listen(this.port, "127.0.0.1");
+        this.server.listen(this.port, NetworkHub.localHost);
     }
 }

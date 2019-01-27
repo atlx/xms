@@ -1,23 +1,22 @@
-import NetworkHub, {NetPacketType, INetPacket, requireAuth} from "../core/network-hub";
-import {$Auth, $Message} from "./net-packets";
+import NetworkHub, {NetPacketType, INetPacket} from "../core/network-hub";
 import {store, AppState} from "../store/store";
 import {SpecialChannel, IMessage, MessageType, ChannelType} from "../types/types";
 import Actions from "../store/actions";
 
 export default class SystemHandlers {
-    private readonly hub: NetworkHub;
+    private readonly net: NetworkHub;
 
     public constructor(hub: NetworkHub) {
-        this.hub = hub;
+        this.net = hub;
     }
 
     public setup(): void {
-        this.hub.handle<$Auth>(NetPacketType.Authenticate, (packet: INetPacket<$Auth>): void => {
+        this.net.on(NetPacketType.Authenticate, () => {
             // TODO
         });
 
         // TODO: Validate packet
-        this.hub.handle<$Message>(NetPacketType.Message, requireAuth, (packet: INetPacket<$Message>): void => {
+        this.net.authOn(NetPacketType.Message, (packet: INetPacket): void => {
             if (packet.payload.channelId === SpecialChannel.General) {
                 Actions.addGeneralMessage<IMessage>({
                     // TODO

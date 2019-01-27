@@ -1,7 +1,7 @@
-import {IUnsignedNetPacket, NetPacketType} from "./network-hub";
+import {IUnverifiedNetPacket, NetPacketType} from "./network-hub";
 
 export default class Validator {
-    public static netPacket(packet: IUnsignedNetPacket<any>): boolean {
-        return packet.type === undefined || !NetPacketType[packet.type];
+    public static netPacket(packet: IUnverifiedNetPacket<any>): boolean {
+        return packet.type === undefined || NetPacketType[packet.type as any] === undefined;
     }
 }
