@@ -1,4 +1,4 @@
-import NetworkHub, {NetPacketType, INetPacket, requireAuth} from "../core/stdlib.rx/core/network-hub";
+import NetworkHub, {NetPacketType, INetPacket, requireAuth} from "../core/network-hub";
 import {$Auth, $Message} from "./net-packets";
 import {store, AppState} from "../store/store";
 import {SpecialChannel, IMessage, MessageType, ChannelType} from "../types/types";
