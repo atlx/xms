@@ -1,7 +1,7 @@
 import dgram, {Socket} from "dgram";
 import {AddressInfo} from "net";
 import {GatewayMsg, GatewayMsgType, HelloPayload, MessagePayload, HeartbeatPayload} from "./gateway";
-import {store, AppState} from "../store/store";
+import {store, IAppState} from "../store/store";
 import Actions from "../store/actions";
 import {IMessage, INotice, Page, NoticeStyle} from "../types/types";
 import Factory from "../core/factory";
@@ -135,14 +135,14 @@ export default class BroadcastGateway implements IDisposable {
                     // TODO: Make use of the time difference & adjust time proxy for this user
                     const payload: HelloPayload = message.payload;
 
-                    if (!(store.getState() as AppState).usersMap.has(message.sender)) {
+                    if (!(store.getState() as IAppState).category.usersMap.has(message.sender)) {
                         Actions.addUser(payload.user);
                     }
                 }
                 else if (message.type === GatewayMsgType.Message) {
                     const payload: MessagePayload = message.payload;
 
-                    if ((store.getState() as AppState).usersMap.has(message.sender)) {
+                    if ((store.getState() as IAppState).category.usersMap.has(message.sender)) {
                         // TODO
                     }
                     else {

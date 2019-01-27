@@ -2,7 +2,7 @@ import React from "react";
 import "../styles/roster-category.scss";
 import RosterItem from "./roster-item";
 import {User, UniqueId} from "../types/types";
-import {AppState} from "../store/store";
+import {IAppState} from "../store/store";
 import {connect} from "react-redux";
 
 type RosterCategoryProps = {
@@ -23,22 +23,22 @@ class RosterCategory extends React.Component<RosterCategoryProps> {
         });
     }
 
-	public render(): JSX.Element {
-		return (
-			<div className="rooster-category">
+    public render(): JSX.Element {
+        return (
+            <div className="rooster-category">
                 <div className="title">{this.props.title} &mdash; {this.props.users.length}</div>
                 <div className="users">
                     {this.renderUsers()}
                 </div>
-			</div>
-		);
+            </div>
+        );
     }
 }
 
-const mapStateToProps = (state: AppState): any => {
-	return {
-        meId: state.me ? state.me.id : null
-	};
+const mapStateToProps = (state: IAppState): any => {
+    return {
+        meId: state.category.me ? state.category.me.id : null
+    };
 };
 
 export default connect(mapStateToProps)(RosterCategory);

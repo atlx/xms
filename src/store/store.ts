@@ -40,14 +40,20 @@ export enum ActionType {
     UpdateUser = "UPDATE_USER"
 }
 
-export type Reducer = (state: AppState | null | undefined, action: Action<any>) => AppState | null;
+export type StatePart = IAppStateCategory;
+
+export type Reducer = (state: StatePart | null | undefined, action: Action<any>) => StatePart | null;
 
 export type Action<T extends object> = {
     readonly type: ActionType;
     readonly payload?: T;
 }
 
-export type AppState = {
+export interface IAppState {
+    readonly category: IAppStateCategory;
+}
+
+export interface IAppStateCategory {
     readonly messages: IGenericMessage[];
     readonly users: User[];
     readonly usersMap: Map<UniqueId, User>;
@@ -67,7 +73,7 @@ const logger = createLogger({
     //
 });
 
-export const InitialState: AppState = {
+export const InitialState: IAppStateCategory = {
     messages: [],
     users: [],
     categories: [],
@@ -96,12 +102,12 @@ export const InitialState: AppState = {
 };
 
 export const store: Store = createStore(combineReducers({
-    categoryReducer,
-    channelReducer,
-    commandReducer,
-    contextMenuReducer,
-    messageReducer,
-    miscReducer,
-    modalReducer,
-    userReducer
+    category: categoryReducer,
+    channel: channelReducer,
+    command: commandReducer,
+    contextMenu: contextMenuReducer,
+    message: messageReducer,
+    misc: miscReducer,
+    modal: modalReducer,
+    user: userReducer
 }), applyMiddleware(logger));

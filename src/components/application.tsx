@@ -1,13 +1,12 @@
 import React, {CSSProperties} from "react";
 import "../styles/application.scss";
 import DefaultPage from "../pages/default";
-import {AppState} from "../store/store";
+import {IAppState} from "../store/store";
 import {connect} from "react-redux";
 import {Page, IModal} from "../types/types";
 import InitPage from "../pages/init";
 import {CSSTransition} from "react-transition-group";
 import Handle from "./handle";
-import Modal from "./modal";
 import Actions from "../store/actions";
 
 type ApplicationState = {
@@ -46,14 +45,16 @@ class Application extends React.Component<ApplicationState> {
 
 	public handleModalClose(modal: IModal): void {
 		Actions.shiftModal();
-		
+
 		if (modal.onClose) {
 			modal.onClose();
 		}
 	}
 
 	public renderNextModal(): JSX.Element | undefined {
-		if (this.props.modals.length > 0) {
+		console.log("Modals:", this.props.modals);
+
+		/* if (this.props.modals.length > 0) {
 			const modal: IModal = this.props.modals[0];
 
 			return <Modal
@@ -62,7 +63,9 @@ class Application extends React.Component<ApplicationState> {
 				title={modal.title}
 				onClose={() => this.handleModalClose(modal)}
 			/>;
-		}
+		} */
+
+		return undefined;
 	}
 
 	public render(): JSX.Element {
@@ -81,10 +84,12 @@ class Application extends React.Component<ApplicationState> {
 	}
 }
 
-const mapStateToProps = (state: AppState): any => {
+const mapStateToProps = (state: IAppState): any => {
+	console.log("State is", state);
+
 	return {
-		page: state.page,
-		modals: state.modals
+		page: state.category.page,
+		modals: state.category.modals
 	};
 };
 

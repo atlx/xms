@@ -1,7 +1,7 @@
 import React from "react";
 import "../styles/explorer.scss";
 import ExplorerItem from "./explorer-item";
-import {AppState} from "../store/store";
+import {IAppState} from "../store/store";
 import {connect} from "react-redux";
 import {IChannel, UniqueId} from "../types/types";
 import {Map as ImmutableMap} from "immutable";
@@ -48,10 +48,10 @@ class Explorer extends React.Component<ExplorerProps> {
 	}
 }
 
-const mapStateToProps = (state: AppState): ExplorerProps => {
+const mapStateToProps = (state: IAppState): ExplorerProps => {
 	return {
-		channels: state.channels,
-		activeChannelId: state.activeChannel !== null ? state.activeChannel.id : null
+		channels: state.category.channels,
+		activeChannelId: state.category.activeChannel !== null ? state.category.activeChannel.id : null
 	};
 };
 

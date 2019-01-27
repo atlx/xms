@@ -10,7 +10,9 @@ const url = require("url");
 let mainWindow;
 
 // Keep a reference for dev mode
-let dev = process.env.NODE_ENV === "development";
+
+// TODO: Not working
+const dev = true;//process.env.NODE_ENV === "development";
 
 console.log(`Development mode: ${dev}`);
 

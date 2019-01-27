@@ -1,5 +1,5 @@
 import NetworkHub, {NetPacketType, INetPacket} from "../core/network-hub";
-import {store, AppState} from "../store/store";
+import {store, IAppState} from "../store/store";
 import {SpecialChannel, IMessage, MessageType, ChannelType} from "../types/types";
 import Actions from "../store/actions";
 
@@ -36,9 +36,9 @@ export default class SystemHandlers {
                 return;
             }
 
-            const state: AppState = store.getState();
+            const state: IAppState = store.getState();
 
-            if (!state.channels.has(packet.sender)) {
+            if (!state.category.channels.has(packet.sender)) {
                 Actions.addChannel({
                     id: packet.sender,
                     name: `(DM) User at ${packet.sender}`,

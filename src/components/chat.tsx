@@ -1,7 +1,7 @@
 import React, {RefObject} from "react";
 import "../styles/chat.scss";
 import {connect} from "react-redux";
-import {AppState} from "../store/store";
+import {IAppState} from "../store/store";
 import {IMessage, IGenericMessage, MessageType, IChannel, IAutoCompleteItem, INotice} from "../types/types";
 import ChatMessage from "./chat-message";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
@@ -350,14 +350,14 @@ class Chat extends React.Component<ChatProps, ChatState> {
 	}
 }
 
-const mapStateToProps = (state: AppState): any => {
+const mapStateToProps = (state: IAppState): any => {
 	return {
-		messages: state.messages,
-		activeChannel: state.activeChannel,
-		inputLocked: state.inputLocked,
-		autoCompleteVisible: state.autoCompleteVisible,
-		autoCompleteCommands: state.commandHandler.getAllAsAutoCompleteCommands(),
-		commandHandler: state.commandHandler
+		messages: state.category.messages,
+		activeChannel: state.category.activeChannel,
+		inputLocked: state.category.inputLocked,
+		autoCompleteVisible: state.category.autoCompleteVisible,
+		autoCompleteCommands: state.category.commandHandler.getAllAsAutoCompleteCommands(),
+		commandHandler: state.category.commandHandler
 	};
 };
 
