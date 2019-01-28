@@ -8,6 +8,7 @@ import InitPage from "../pages/init";
 import {CSSTransition} from "react-transition-group";
 import Handle from "./handle";
 import Actions from "../store/actions";
+import Modal from "./modal";
 
 type ApplicationState = {
 	readonly page: Page;
@@ -52,9 +53,7 @@ class Application extends React.Component<ApplicationState> {
 	}
 
 	public renderNextModal(): JSX.Element | undefined {
-		console.log("Modals:", this.props.modals);
-
-		/* if (this.props.modals.length > 0) {
+		if (this.props.modals.length > 0) {
 			const modal: IModal = this.props.modals[0];
 
 			return <Modal
@@ -63,7 +62,7 @@ class Application extends React.Component<ApplicationState> {
 				title={modal.title}
 				onClose={() => this.handleModalClose(modal)}
 			/>;
-		} */
+		}
 
 		return undefined;
 	}
@@ -73,7 +72,7 @@ class Application extends React.Component<ApplicationState> {
 			<div onKeyDown={this.handleKeyDown} className="application">
 				<Handle />
 				{this.renderNextModal()}
-				{/* TODO: Not applying rule to EXITING component, just entering one */}
+				{/* TODO: Not applying rule to EXITING component, just entering one. */}
 				<CSSTransition in={this.props.page !== Page.Init} classNames="page" timeout={600}>
 					<div style={this.getAppContentStyle()} className="content">
 						{this.renderPage()}

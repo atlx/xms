@@ -26,7 +26,7 @@ export default class GatewayActions {
             this.broadcastMessage(message);
         }
         else {
-            // TODO: Insecure
+            // TODO: Insecure.
             this.sendInsecureMessage(message, message.senderAddress);
         }
     }

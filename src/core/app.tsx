@@ -4,7 +4,7 @@ import ReactDOM from "react-dom";
 import {Provider} from "react-redux";
 import {store} from "../store/store";
 import BroadcastGateway from "../net/broadcast-gateway";
-import {User, Page, INotice, NoticeStyle, UserState, SpecialCategories, ContextMenuOptionType} from "../types/types";
+import {User, Page, INotice, NoticeStyle, UserState, SpecialCategories, ContextMenuOptionType, SpecialChannel} from "../types/types";
 import GatewayActions from "./gateway-actions";
 import Actions from "../store/actions";
 import CommandHandler from "./command-handler";
@@ -80,7 +80,7 @@ export default class App {
 
 					Actions.addGeneralMessage<INotice>(
 						// TODO: Channel is hard-coded
-						Factory.createNotice("general", `Your ping is ~${ping}ms (${Utils.determinePingState(ping)})`)
+						Factory.createNotice(SpecialChannel.General, `Your ping is ~${ping}ms (${Utils.determinePingState(ping)})`)
 					);
 				}
 			},
@@ -122,7 +122,7 @@ export default class App {
 
 					handle(): void {
 						// TODO: Channel
-						Actions.addGeneralMessage<INotice>(Factory.createNotice("general", "This is a success notice", NoticeStyle.Success));
+						Actions.addGeneralMessage<INotice>(Factory.createNotice(SpecialChannel.General, "This is a success notice", NoticeStyle.Success));
 					}
 				},
 				{
@@ -131,7 +131,7 @@ export default class App {
 
 					handle(): void {
 						// TODO: Channel
-						Actions.addGeneralMessage<INotice>(Factory.createNotice("general", "This is a warning notice", NoticeStyle.Warning));
+						Actions.addGeneralMessage<INotice>(Factory.createNotice(SpecialChannel.General, "This is a warning notice", NoticeStyle.Warning));
 					}
 				},
 				{
@@ -140,7 +140,7 @@ export default class App {
 
 					handle(): void {
 						// TODO: Channel
-						Actions.addGeneralMessage<INotice>(Factory.createNotice("general", "This is a error notice", NoticeStyle.Error));
+						Actions.addGeneralMessage<INotice>(Factory.createNotice(SpecialChannel.General, "This is a error notice", NoticeStyle.Error));
 					}
 				},
 				{

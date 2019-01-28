@@ -59,7 +59,7 @@ export enum ChannelType {
 }
 
 export enum SpecialChannel {
-    General
+    General = "general"
 }
 
 export enum MessageType {

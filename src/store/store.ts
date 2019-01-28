@@ -1,9 +1,9 @@
 import {createStore, Store, applyMiddleware, combineReducers} from "redux";
-import {IRoosterCategory, UniqueId, User, IChannel, ChannelType, IGenericMessage, Page, IModal, IContextMenu} from "../types/types";
+import {IRoosterCategory, UniqueId, User, IChannel, ChannelType, IGenericMessage, Page, IModal, IContextMenu, SpecialChannel} from "../types/types";
 import CommandHandler from "../core/command-handler";
 import {createLogger} from "redux-logger";
 import {Map as ImmutableMap} from "immutable";
-import messageReducer from "./reducers/modal";
+import messageReducer from "./reducers/message";
 import categoryReducer from "./reducers/category";
 import channelReducer from "./reducers/channel";
 import commandReducer from "./reducers/command";
@@ -40,7 +40,7 @@ export enum ActionType {
     UpdateUser = "UPDATE_USER"
 }
 
-export type StatePart = IAppStateCategory | IAppStateMisc;
+export type StatePart = IAppStateCategory | IAppStateMisc | IAppStateMessage;
 
 export type Reducer<T extends StatePart = any> = (state: T | null | undefined, action: Action<any>) => T | null;
 
@@ -52,10 +52,10 @@ export type Action<T extends object> = {
 export interface IAppState {
     readonly category: IAppStateCategory;
     readonly misc: IAppStateMisc;
+    readonly message: IAppStateMessage;
 }
 
 export interface IAppStateCategory {
-    readonly messages: IGenericMessage[];
     readonly users: User[];
     readonly usersMap: Map<UniqueId, User>;
     readonly categories: IRoosterCategory[];
@@ -73,12 +73,16 @@ export interface IAppStateMisc {
     readonly autoCompleteVisible: boolean;
 }
 
+export interface IAppStateMessage {
+    readonly messages: IGenericMessage[];
+}
+
 const logger = createLogger({
     //
 });
 
 export const GeneralChannel: IChannel = {
-    id: "general",
+    id: SpecialChannel.General,
     name: "General",
     topic: "A public channel for everyone connected",
     type: ChannelType.Public,
@@ -87,7 +91,6 @@ export const GeneralChannel: IChannel = {
 
 export const InitialState: IAppState = {
     category: {
-        messages: [],
         users: [],
         categories: [],
         usersMap: new Map(),
@@ -108,6 +111,10 @@ export const InitialState: IAppState = {
         inputLocked: true,
         page: Page.Init,
         autoCompleteVisible: false,
+    },
+
+    message: {
+        messages: [],
     }
 };
 

@@ -3,7 +3,7 @@ import {AddressInfo} from "net";
 import {GatewayMsg, GatewayMsgType, HelloPayload, MessagePayload, HeartbeatPayload} from "./gateway";
 import {store, IAppState} from "../store/store";
 import Actions from "../store/actions";
-import {IMessage, INotice, Page, NoticeStyle} from "../types/types";
+import {IMessage, INotice, Page, NoticeStyle, SpecialChannel} from "../types/types";
 import Factory from "../core/factory";
 import Utils from "../core/utils";
 import {IDisposable} from "../core/app";
@@ -14,7 +14,6 @@ export default class BroadcastGateway implements IDisposable {
 
     public readonly groupAdress: string;
     public readonly port: number;
-
     private readonly socket: Socket;
     private readonly heartbeatInterval: number;
     private readonly intervals: number[];
@@ -22,7 +21,7 @@ export default class BroadcastGateway implements IDisposable {
     private pingStart: number;
     private connectionVerified: boolean;
 
-    public constructor(groupAddress: string, port: number, heartbeatInterval: number = 5000) {
+    public constructor(groupAddress: string, port: number, heartbeatInterval: number = 10_000) {
         this.groupAdress = groupAddress;
         this.port = port;
         this.heartbeatInterval = heartbeatInterval;
@@ -30,7 +29,7 @@ export default class BroadcastGateway implements IDisposable {
         this.connectionVerified = false;
         this.pingStart = 0;
 
-        // Create socket
+        // Create the socket.
         this.socket = dgram.createSocket({
             type: "udp4",
             reuseAddr: true
@@ -50,8 +49,8 @@ export default class BroadcastGateway implements IDisposable {
     }
 
     public clearIntervals(): this {
-        for (let i = 0; i < this.intervals.length; i++) {
-            clearInterval(this.intervals[i]);
+        for (const interval of this.intervals) {
+            clearInterval(interval);
         }
 
         return this;
@@ -79,7 +78,7 @@ export default class BroadcastGateway implements IDisposable {
 
         this.socket.on("close", () => {
             console.log("[BroadcastGateway] Disconnected");
-            Actions.addGeneralMessage<INotice>(Factory.createNotice("general", "Disconnected from the network."));
+            Actions.addGeneralMessage<INotice>(Factory.createNotice(SpecialChannel.General, "Disconnected from the network."));
         });
 
         this.socket.on("message", (data: Buffer, sender: AddressInfo) => {
@@ -91,6 +90,7 @@ export default class BroadcastGateway implements IDisposable {
             if (messageString.startsWith("{") && messageString.endsWith("}")) {
                 const message: GatewayMsg<any> = JSON.parse(messageString);
 
+                // If the message was sent by the local client.
                 if (message.sender === MainApp.me.id) {
                     if (message.type === GatewayMsgType.Message) {
                         const payload: MessagePayload = message.payload;
@@ -106,7 +106,7 @@ export default class BroadcastGateway implements IDisposable {
 
                             // TODO: Channel
                             Actions.addGeneralMessage<INotice>(
-                                Factory.createNotice("general", `Connected to the network @ ${this.groupAdress}. ~${ping}ms`)
+                                Factory.createNotice(SpecialChannel.General, `Connected to the network @ ${this.groupAdress}. ~${ping}ms`)
                             );
 
                             Actions.setInputLocked(false);
@@ -115,7 +115,7 @@ export default class BroadcastGateway implements IDisposable {
                                 // TODO: channel
                                 Actions.addGeneralMessage<INotice>(
                                     Factory.createNotice(
-                                        "general",
+                                        SpecialChannel.General,
                                         "Your connection may be slow due to high latency.",
                                         NoticeStyle.Warning
                                     )
@@ -159,7 +159,7 @@ export default class BroadcastGateway implements IDisposable {
 
                             // TODO: Time should be provided by sender
                             time: Date.now(),
-                            channelId: "general",
+                            channelId: SpecialChannel.General,
                             type: payload.type
                         } as IMessage);
                     }
@@ -189,7 +189,7 @@ export default class BroadcastGateway implements IDisposable {
         this.close(() => {
             // TODO: Shouldn't be sent by message, handled by the init page instead
             // TODO: Hard-coded channel
-            Actions.addGeneralMessage<INotice>(Factory.createNotice("general", "Attempting to reconnect."));
+            Actions.addGeneralMessage<INotice>(Factory.createNotice(SpecialChannel.General, "Attempting to reconnect."));
             this.start();
         });
     }
@@ -213,6 +213,8 @@ export default class BroadcastGateway implements IDisposable {
         this.socket.send(data, 0, data.length, this.port, this.groupAdress, (error: Error | null) => {
             if (error !== null) {
                 console.log(`[BroadcastGateway.emit] Failed to emit message: ${error.message}`);
+
+                return;
             }
 
             console.log(`[BroadcastGateway.emit] Sent ${data.length} bytes`);

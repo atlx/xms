@@ -35,6 +35,7 @@ class Chat extends React.Component<ChatProps, ChatState> {
 	private readonly $input: RefObject<any>;
 	private readonly $container: RefObject<any>;
 	private readonly $loader: RefObject<any>;
+	private randomInterval?: any;
 
 	public constructor(props: ChatProps) {
 		super(props);
@@ -95,7 +96,9 @@ class Chat extends React.Component<ChatProps, ChatState> {
 
 		// TODO: componentDidUpdate() may trigger in unwanted situations, such as on receive message
 		//this.focus();
-		setTimeout(() => this.setState({
+		clearInterval(this.randomInterval);
+
+		this.randomInterval = setTimeout(() => this.setState({
 			status: "Random " + Math.random().toString().replace(".", "").substr(1).substring(0, 2)
 		}), 4000);
 	}
@@ -207,19 +210,19 @@ class Chat extends React.Component<ChatProps, ChatState> {
 	public handleKeyDown(e: any): void {
 		const value: string = this.getValue();
 
-		// Prevent auto-pressing enter on other appearing components (such as modal open)
+		// Prevent auto-pressing enter on other appearing components (such as modal open).
 		if (e.key === "Enter") {
 			e.preventDefault();
 		}
 
 		if (this.props.activeChannel.id !== null && e.key === "Enter") {
-			// Avoid sending empty messages
+			// Avoid sending empty messages.
 			if (value === "") {
 				return;
 			}
-			// Handle command messages internally
+			// Handle command messages internally.
 			else if (value.startsWith("/")) {
-				// TODO: Pass in arguments
+				// TODO: Pass in arguments.
 				this.props.commandHandler.handle(this.getCommandName());
 				this.clearValue();
 
@@ -352,7 +355,7 @@ class Chat extends React.Component<ChatProps, ChatState> {
 
 const mapStateToProps = (state: IAppState): any => {
 	return {
-		messages: state.category.messages,
+		messages: state.message.messages,
 		activeChannel: state.category.activeChannel,
 		inputLocked: state.misc.inputLocked,
 		autoCompleteVisible: state.misc.autoCompleteVisible,

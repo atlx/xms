@@ -1,9 +1,10 @@
-import {Reducer, ActionType} from "../store";
+import {Reducer, ActionType, IAppStateMessage, InitialState} from "../store";
 import {IGenericMessage, MessageType, IMessage} from "../../types/types";
 
-const messageReducer: Reducer = (state, action) => {
+const messageReducer: Reducer<IAppStateMessage> = (state, action) => {
+    // Return default initial state.
     if (!state) {
-        return null;
+        return InitialState.message;
     }
 
     switch (action.type) {

@@ -1,6 +1,7 @@
 import {Reducer, ActionType, InitialState, IAppStateMisc} from "../store";
 
 const miscReducer: Reducer<IAppStateMisc> = (state, action) => {
+    // Return default initial state.
     if (!state) {
         return InitialState.misc;
     }
