@@ -10,12 +10,12 @@ import Handle from "./handle";
 import Actions from "../store/actions";
 import Modal from "./modal";
 
-type ApplicationState = {
+interface ILocalState {
 	readonly page: Page;
 	readonly modals: IModal[];
 }
 
-class Application extends React.Component<ApplicationState> {
+class Application extends React.Component<ILocalState> {
 	public renderPage(): JSX.Element {
 		switch (this.props.page) {
 			case Page.Default: {

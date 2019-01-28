@@ -1,13 +1,13 @@
 import React, {CSSProperties} from "react";
 import "../styles/loader.scss";
 
-type LoaderProps = {
-    readonly text?: string | undefined;
+interface ILocalProps {
+    readonly text?: string;
     readonly size?: number;
 }
 
-export default class Loader extends React.Component<LoaderProps> {
-    public constructor(props: LoaderProps) {
+export default class Loader extends React.Component<ILocalProps> {
+    public constructor(props: ILocalProps) {
         super(props);
 
         // Bindings
@@ -35,12 +35,12 @@ export default class Loader extends React.Component<LoaderProps> {
         };
     }
 
-	public render(): JSX.Element {
-		return (
-			<div className="loader">
+    public render(): JSX.Element {
+        return (
+            <div className="loader">
                 <div style={this.getPropStyle()} className="prop"></div>
                 {this.renderText()}
-			</div>
-		);
-	}
+            </div>
+        );
+    }
 }

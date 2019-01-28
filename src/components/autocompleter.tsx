@@ -3,15 +3,15 @@ import "../styles/auto-completer.scss";
 import {IAutoCompleteItem} from "../types/types";
 import {CSSTransition} from "react-transition-group";
 
-type AutocompleterProps = {
+interface ILocalProps {
 	readonly visible: boolean;
 	readonly items: IAutoCompleteItem[];
 	readonly title: string;
 	readonly onItemClick?: (item: IAutoCompleteItem) => void;
 }
 
-export default class Autocompleter extends React.Component<AutocompleterProps> {
-	public constructor(props: AutocompleterProps) {
+export default class Autocompleter extends React.Component<ILocalProps> {
+	public constructor(props: ILocalProps) {
 		super(props);
 
 		// Bindings
@@ -30,7 +30,7 @@ export default class Autocompleter extends React.Component<AutocompleterProps> {
 				<div className="empty">No matching results</div>
 			);
 		}
-		
+
 		return this.props.items.map((item: IAutoCompleteItem, index: number) => {
 			return <div onClick={() => this.handleItemClick(item)} key={item.id} tabIndex={index + 1} className="option">
 				<div className="name">{item.name}</div>

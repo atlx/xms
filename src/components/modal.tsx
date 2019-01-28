@@ -2,20 +2,20 @@ import React, {RefObject} from "react";
 import "../styles/modal.scss";
 import {CSSTransition} from "react-transition-group";
 
-type ModalProps = {
+interface ILocalProps {
     readonly title: string;
     readonly text: string;
     readonly onClose?: () => void;
 }
 
-type ModalState = {
+interface ILocalState {
     readonly visible: boolean;
 }
 
-export default class Modal extends React.Component<ModalProps, ModalState> {
+export default class Modal extends React.Component<ILocalProps, ILocalState> {
     private $okay: RefObject<any>;
 
-    public constructor(props: ModalProps) {
+    public constructor(props: ILocalProps) {
         super(props);
 
         // Bindings

@@ -2,14 +2,14 @@ import React from "react";
 import "../styles/roster-item.scss";
 import Tooltip, {TooltipPosition} from "./tooltip";
 
-type RosterItemProps = {
+interface ILocalProps {
     readonly name: string;
     readonly avatarUrl?: string;
     readonly status?: string;
     readonly me?: boolean;
 }
 
-export default class RosterItem extends React.Component<RosterItemProps> {
+export default class RosterItem extends React.Component<ILocalProps> {
     public getComponentStyle(): string {
         const classes: string[] = ["roster-item"];
 

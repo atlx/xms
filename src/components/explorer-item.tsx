@@ -5,14 +5,14 @@ import {faQuestionCircle, IconDefinition} from "@fortawesome/free-regular-svg-ic
 import {faHashtag} from "@fortawesome/free-solid-svg-icons";
 import {ChannelType} from "../types/types";
 
-type ExplorerItemProps = {
+interface ILocalProps {
     readonly name: string;
     readonly type: ChannelType;
     readonly indicate: boolean;
     readonly active: boolean;
 }
 
-export default class ExplorerItem extends React.Component<ExplorerItemProps> {
+export default class ExplorerItem extends React.Component<ILocalProps> {
     public getIcon(): IconDefinition {
         if (this.props.type === ChannelType.Public || this.props.type === ChannelType.Private) {
             return faHashtag;
@@ -35,13 +35,13 @@ export default class ExplorerItem extends React.Component<ExplorerItemProps> {
         return classes.join(" ");
     }
 
-	public render(): JSX.Element {
-		return (
-			<div className={this.getComponentClass()}>
+    public render(): JSX.Element {
+        return (
+            <div className={this.getComponentClass()}>
                 <FontAwesomeIcon className="icon" icon={this.getIcon()} />
                 <div className="name">{this.props.name}</div>
                 <div className="indicator" />
-			</div>
-		);
-	}
+            </div>
+        );
+    }
 }

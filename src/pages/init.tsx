@@ -22,7 +22,7 @@ export default class InitPage extends React.Component<any, InitPageState> {
 
 		this.interfaceCheck = null;
 
-		// Bindings
+		// Bindings.
 		this.setSteps = this.setSteps.bind(this);
 		this.step = this.step.bind(this);
 		this.incrementSteps = this.incrementSteps.bind(this);

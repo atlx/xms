@@ -9,18 +9,18 @@ export enum TooltipPosition {
     Bottom
 }
 
-type TooltipProps = {
+interface ILocalProps {
     readonly text: string;
     readonly style?: CSSProperties;
     readonly position: TooltipPosition;
 }
 
-type TooltipState = {
+interface ILocalState {
     readonly visible: boolean;
 }
 
-export default class Tooltip extends React.Component<TooltipProps, TooltipState> {
-    public constructor(props: TooltipProps) {
+export default class Tooltip extends React.Component<ILocalProps, ILocalState> {
+    public constructor(props: ILocalProps) {
         super(props);
 
         // Bindings

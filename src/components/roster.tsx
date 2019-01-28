@@ -5,7 +5,12 @@ import {IAppState} from "../store/store";
 import {IRoosterCategory, User} from "../types/types";
 import RosterCategory from "./roster-category";
 
-class Roster extends React.Component<any> {
+interface ILocalProps {
+    readonly users: User[];
+    readonly categories: IRoosterCategory[];
+}
+
+class Roster extends React.Component<ILocalProps> {
     public renderCategories(): JSX.Element[] {
         return this.props.categories.map((category: IRoosterCategory) => {
             console.log(category);

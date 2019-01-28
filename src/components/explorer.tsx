@@ -6,13 +6,13 @@ import {connect} from "react-redux";
 import {IChannel, UniqueId} from "../types/types";
 import {Map as ImmutableMap} from "immutable";
 
-type ExplorerProps = {
+interface ILocalProps {
 	readonly channels: ImmutableMap<UniqueId, IChannel>;
 	readonly activeChannelId: UniqueId | null;
 }
 
-class Explorer extends React.Component<ExplorerProps> {
-	public constructor(props: ExplorerProps) {
+class Explorer extends React.Component<ILocalProps> {
+	public constructor(props: ILocalProps) {
 		super(props);
 
 		// Bindings
@@ -48,7 +48,7 @@ class Explorer extends React.Component<ExplorerProps> {
 	}
 }
 
-const mapStateToProps = (state: IAppState): ExplorerProps => {
+const mapStateToProps = (state: IAppState): ILocalProps => {
 	return {
 		channels: state.category.channels,
 		activeChannelId: state.category.activeChannel !== null ? state.category.activeChannel.id : null

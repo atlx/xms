@@ -2,13 +2,13 @@ import React from "react";
 import "../styles/notice-message.scss";
 import {NoticeStyle} from "../types/types";
 
-type NoticeMessageProps = {
+interface ILocalProps {
 	readonly text: string;
 	readonly style: NoticeStyle;
 }
 
 /* TODO: Be able to specify color */
-export default class NoticeMessage extends React.Component<NoticeMessageProps> {
+export default class NoticeMessage extends React.Component<ILocalProps> {
 	public getClasses(): string {
 		const classes = ["notice-message"];
 

@@ -7,7 +7,7 @@ import ChatMessage from "./chat-message";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faHashtag} from "@fortawesome/free-solid-svg-icons";
 import Actions from "../store/actions";
-import {MainApp} from "..";
+import {MainApp} from "../index";
 import NoticeMessage from "./notice-message";
 import Loader from "./loader";
 import {CSSTransition} from "react-transition-group";
@@ -15,7 +15,7 @@ import Autocompleter from "./autocompleter";
 import CommandHandler from "../core/command-handler";
 import Factory from "../core/factory";
 
-type ChatProps = {
+interface ILocalProps {
 	readonly messages: IGenericMessage[];
 	readonly activeChannel: IChannel;
 	readonly inputLocked: boolean;
@@ -25,19 +25,19 @@ type ChatProps = {
 	readonly autoCompleteCommands: IAutoCompleteItem[];
 }
 
-type ChatState = {
+interface ILocalState {
 	readonly offset: number;
 	readonly filteredAutoCompleteCommands: IAutoCompleteItem[];
 	readonly status: string | undefined;
 }
 
-class Chat extends React.Component<ChatProps, ChatState> {
+class Chat extends React.Component<ILocalProps, ILocalState> {
 	private readonly $input: RefObject<any>;
 	private readonly $container: RefObject<any>;
 	private readonly $loader: RefObject<any>;
 	private randomInterval?: any;
 
-	public constructor(props: ChatProps) {
+	public constructor(props: ILocalProps) {
 		super(props);
 
 		// Bindings
@@ -83,7 +83,7 @@ class Chat extends React.Component<ChatProps, ChatState> {
 		return this.$container.current.scrollTop >= this.$container.current.scrollHeight;
 	}
 
-	public componentDidUpdate(prevProps: ChatProps, prevState: ChatState): void {
+	public componentDidUpdate(prevProps: ILocalProps, prevState: ILocalState): void {
 		// Scroll messages when messages prop changes, and when status is shown/hidden
 		// TODO: isScrolled() will not work on this position, since it has already been scrolled automatically.
 		if (this.isScrolled() && prevProps.messages && this.props.messages.length !== prevProps.messages.length
@@ -130,7 +130,7 @@ class Chat extends React.Component<ChatProps, ChatState> {
 					key={message.id}
 					sent={textMessage.sent}
 					authorName={textMessage.authorName}
-					authorAvatarUrl={textMessage.authorAvatarUrl}
+					authorAvatarHash={textMessage.authorAvatarHash}
 					content={message.text}
 					time={textMessage.time}
 					systemMessage={textMessage.systemMessage}

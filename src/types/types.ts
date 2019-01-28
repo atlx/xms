@@ -77,7 +77,7 @@ export interface IGenericMessage {
 
 export interface IMessage extends IGenericMessage {
     readonly authorName: string;
-    readonly authorAvatarUrl: string | null;
+    readonly authorAvatarHash?: string;
     readonly systemMessage: boolean;
     readonly sent: boolean;
     readonly senderAddress: IpAddress;

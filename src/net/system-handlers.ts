@@ -20,7 +20,7 @@ export default class SystemHandlers {
             if (packet.payload.channelId === SpecialChannel.General) {
                 Actions.addGeneralMessage<IMessage>({
                     // TODO
-                    authorAvatarUrl: null,
+                    authorAvatarHash: undefined,
                     authorName: `User at ${packet.sender}`,
 
                     channelId: SpecialChannel.General,
@@ -56,7 +56,7 @@ export default class SystemHandlers {
                 type: MessageType.Text,
 
                 // TODO
-                authorAvatarUrl: null,
+                authorAvatarHash: undefined,
                 authorName: `User at ${packet.sender}`,
                 senderAddress: packet.sender,
                 sent: true,

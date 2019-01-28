@@ -150,7 +150,7 @@ export default class BroadcastGateway implements IDisposable {
                         // TODO: Verify type and data
                         Actions.addGeneralMessage({
                             // TODO: A way to safely identify an unknown sender, or is it not required?
-                            authorAvatarUrl: "",
+                            authorAvatarHash: "",
                             authorName: "Unknown",
                             id: "unknown",
                             systemMessage: false,

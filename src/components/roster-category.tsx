@@ -5,13 +5,13 @@ import {User, UniqueId} from "../types/types";
 import {IAppState} from "../store/store";
 import {connect} from "react-redux";
 
-type RosterCategoryProps = {
+interface ILocalProps {
     readonly title: string;
     readonly users: User[];
     readonly meId: UniqueId | null;
 }
 
-class RosterCategory extends React.Component<RosterCategoryProps> {
+class RosterCategory extends React.Component<ILocalProps> {
     public renderUsers(): JSX.Element[] {
         return this.props.users.map((user: User) => {
             return <RosterItem
