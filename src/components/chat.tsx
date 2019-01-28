@@ -5,7 +5,7 @@ import {IAppState} from "../store/store";
 import {IMessage, IGenericMessage, MessageType, IChannel, IAutoCompleteItem, INotice} from "../types/types";
 import ChatMessage from "./chat-message";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faHashtag} from "@fortawesome/free-solid-svg-icons";
+import {faHashtag, faArrowRight} from "@fortawesome/free-solid-svg-icons";
 import Actions from "../store/actions";
 import {MainApp} from "../index";
 import NoticeMessage from "./notice-message";
@@ -333,15 +333,18 @@ class Chat extends React.Component<ILocalProps, ILocalState> {
 						items={this.state.filteredAutoCompleteCommands}
 					/>
 					<CSSTransition in={this.props.inputLocked} classNames="trans" timeout={300}>
-						<input
-							onChange={this.handleInputChange}
-							ref={this.$input}
-							onKeyDown={this.handleKeyDown}
-							placeholder="Type a message"
-							className="message"
-							disabled={this.props.inputLocked}
-							maxLength={300}
-						/>
+						<div className="message-wrapper">
+							<input
+								onChange={this.handleInputChange}
+								ref={this.$input}
+								onKeyDown={this.handleKeyDown}
+								placeholder="Type a message"
+								className="message"
+								disabled={this.props.inputLocked}
+								maxLength={300}
+							/>
+							<div onClick={() => alert("Send!")} className="send"><FontAwesomeIcon icon={faArrowRight} /></div>
+						</div>
 					</CSSTransition>
 					<div className="extra">
 						<div className="typing"></div>

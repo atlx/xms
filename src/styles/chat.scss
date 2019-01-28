@@ -73,17 +73,32 @@
             position: relative;
         }
 
-        > .message {
+        > .message-wrapper {
             & {
+                display: grid;
+                grid-template-columns: 1fr auto;
+                border: 2px dashed $color-dark-contrast-dark;
                 width: 100%;
                 box-sizing: border-box;
                 background: none;
+                color: #aaa;
                 padding: 14px 20px;
                 border-radius: 4px;
                 font-size: 17px;
-                color: #aaa;
-                border: 2px dashed $color-dark-contrast-dark;
                 transition: border-color 0.2s ease, opacity 0.2s ease, background-color 0.2s ease;
+            }
+
+            &:focus-within {
+                & {
+                    border-color: #444;
+                    border-style: solid;
+                    /* box-shadow: 0 5px 16px 0px #2e2e2e; */
+                    background-color: #444;
+                }
+
+                > .send {
+                    background-color: #333;
+                }
             }
 
             &:disabled {
@@ -93,15 +108,39 @@
                 opacity: 0.6;
             }
 
-            &:focus {
-                border-color: #444;
-                border-style: solid;
-                /* box-shadow: 0 5px 16px 0px #2e2e2e; */
-                background-color: #444;
+            > .message {
+                & {
+                    background: none;
+                    border: none;
+                    font-size: inherit;
+                    color: inherit;
+                }
+
+                &.trans-exit-done {
+                    opacity: 1;
+                }
             }
 
-            &.trans-exit-done {
-                opacity: 1;
+            > .send {
+                & {
+                    cursor: pointer;
+                    background-color: #404040;
+                    padding: 3px 15px;
+                    border-radius: 6px;
+                    font-size: 17px;
+                    color: #999;
+                    opacity: 0.8;
+                    transition: transform 0.15s ease;
+                }
+
+                > svg {
+                    transform: translate(0, 1px);
+                }
+
+                &:hover {
+                    transform: translate(4px);
+                    opacity: 1;
+                }
             }
         }
 
