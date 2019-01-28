@@ -2,17 +2,17 @@ import React from "react";
 import {connect} from "react-redux";
 import "../styles/roster.scss";
 import {IAppState} from "../store/store";
-import {IRoosterCategory, User} from "../types/types";
+import {IRosterCategory, User} from "../types/types";
 import RosterCategory from "./roster-category";
 
 interface ILocalProps {
     readonly users: User[];
-    readonly categories: IRoosterCategory[];
+    readonly categories: IRosterCategory[];
 }
 
 class Roster extends React.Component<ILocalProps> {
     public renderCategories(): JSX.Element[] {
-        return this.props.categories.map((category: IRoosterCategory) => {
+        return this.props.categories.map((category: IRosterCategory) => {
             console.log(category);
 
             const users: User[] = this.props.users.filter((user: User) => {
@@ -26,7 +26,7 @@ class Roster extends React.Component<ILocalProps> {
 
     public render(): JSX.Element {
         return (
-            <div className="rooster">
+            <div className="roster">
                 {this.renderCategories()}
             </div>
         );

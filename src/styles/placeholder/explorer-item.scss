@@ -1,0 +1,16 @@
+.placeholder-explorer-item {
+    & {
+        cursor: default;
+    }
+
+    &:hover {
+        background: none;
+    }
+
+    > .name {
+        height: 14px;
+        margin: 4px 0;
+        background-color: #666;
+        border-radius: 6px;
+    }
+}

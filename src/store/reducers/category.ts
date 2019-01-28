@@ -1,5 +1,5 @@
 import {Reducer, ActionType, InitialState, IAppStateCategory} from "../store";
-import {IRoosterCategory} from "../../types/types";
+import {IRosterCategory} from "../../types/types";
 
 const categoryReducer: Reducer<IAppStateCategory> = (state, action) => {
     // Return default initial state.
@@ -16,8 +16,8 @@ const categoryReducer: Reducer<IAppStateCategory> = (state, action) => {
         }
 
         case ActionType.AddUserToCategory: {
-            const categories: IRoosterCategory[] = [...state.categories];
-            const index: number = categories.findIndex((category: IRoosterCategory) => category.id === action.payload.category);
+            const categories: IRosterCategory[] = [...state.categories];
+            const index: number = categories.findIndex((category: IRosterCategory) => category.id === action.payload.category);
 
             categories[index].users.push(action.payload.userId);
 

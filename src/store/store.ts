@@ -1,5 +1,5 @@
 import {createStore, Store, applyMiddleware, combineReducers} from "redux";
-import {IRoosterCategory, UniqueId, User, IChannel, ChannelType, IGenericMessage, Page, IModal, IContextMenu, SpecialChannel} from "../types/types";
+import {IRosterCategory, UniqueId, User, IChannel, ChannelType, IGenericMessage, Page, IModal, IContextMenu, SpecialChannel} from "../types/types";
 import CommandHandler from "../core/command-handler";
 import {createLogger} from "redux-logger";
 import {Map as ImmutableMap} from "immutable";
@@ -58,7 +58,7 @@ export interface IAppState {
 export interface IAppStateCategory {
     readonly users: User[];
     readonly usersMap: Map<UniqueId, User>;
-    readonly categories: IRoosterCategory[];
+    readonly categories: IRosterCategory[];
     readonly channels: ImmutableMap<UniqueId, IChannel>;
     readonly activeChannel: IChannel | null;
     readonly commandHandler: CommandHandler;

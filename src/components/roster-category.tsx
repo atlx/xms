@@ -4,6 +4,7 @@ import RosterItem from "./roster-item";
 import {User, UniqueId} from "../types/types";
 import {IAppState} from "../store/store";
 import {connect} from "react-redux";
+import PlaceholderRosterItem from "./placeholder/roster-item";
 
 interface ILocalProps {
     readonly title: string;
@@ -25,10 +26,14 @@ class RosterCategory extends React.Component<ILocalProps> {
 
     public render(): JSX.Element {
         return (
-            <div className="rooster-category">
+            <div className="roster-category">
                 <div className="title">{this.props.title} &mdash; {this.props.users.length}</div>
                 <div className="users">
                     {this.renderUsers()}
+                    <PlaceholderRosterItem opacity={1} />
+                    <PlaceholderRosterItem opacity={2} />
+                    <PlaceholderRosterItem opacity={3} />
+                    <PlaceholderRosterItem opacity={4} />
                 </div>
             </div>
         );

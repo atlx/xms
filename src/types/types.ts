@@ -108,7 +108,7 @@ export type User = {
     readonly createdTime: number;
 }
 
-export type IRoosterCategory = {
+export type IRosterCategory = {
     readonly id: UniqueId;
     readonly name: string;
     readonly users: UniqueId[];

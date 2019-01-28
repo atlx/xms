@@ -1,4 +1,4 @@
-import {User, UniqueId, IGenericMessage, Page, IModal, IRoosterCategory, SpecialCategories as SpecialCategory, IContextMenu, IChannel} from "../types/types";
+import {User, UniqueId, IGenericMessage, Page, IModal, IRosterCategory, SpecialCategories as SpecialCategory, IContextMenu, IChannel} from "../types/types";
 import {store, ActionType} from "./store";
 import {ICommand} from "../core/command";
 
@@ -97,7 +97,7 @@ export default abstract class Actions {
         });
     }
 
-    public static addCategory(category: IRoosterCategory): void {
+    public static addCategory(category: IRosterCategory): void {
         store.dispatch({
             type: ActionType.AddCategory,
             payload: category

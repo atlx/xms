@@ -11,7 +11,7 @@
     & {
         display: grid;
         grid-template-columns: auto 1fr;
-        padding: 5px 11px; /* Bound to rooster category title */
+        padding: 5px 11px; /* Bound to roster category title */
         font-size: 16px;
         border-radius: 4px;
         cursor: pointer;
@@ -37,9 +37,16 @@
         color: #bbb;
     }
 
+    > .info-wrapper {
+        & {
+            margin-left: 5px;
+        }
+    }
+
     > .avatar {
         width: 30px;
         height: 30px;
         margin-right: 6px;
+        border-radius: 50%;
     }
 }

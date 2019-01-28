@@ -1,0 +1,21 @@
+.placeholder-roster-item {
+    & {
+        cursor: default;
+    }
+
+    &:hover {
+        background: none;
+    }
+
+    > .info-wrapper {
+        > .name {
+            height: 14px;
+            border-radius: 6px;
+            background-color: #666;
+        }
+    }
+
+    > .avatar {
+        background-color: #666;
+    }
+}

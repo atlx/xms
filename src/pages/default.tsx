@@ -29,7 +29,7 @@ export default class DefaultPage extends React.Component<any, DefaultPageState> 
 					inputLocked={true}
 					activeChannel={null as any}
 				/>
-				<Roster />
+				<Roster categories={null as any} users={null as any} />
 			</React.Fragment>
 		);
 	}

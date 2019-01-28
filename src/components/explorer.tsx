@@ -5,6 +5,7 @@ import {IAppState} from "../store/store";
 import {connect} from "react-redux";
 import {IChannel, UniqueId} from "../types/types";
 import {Map as ImmutableMap} from "immutable";
+import PlaceholderExplorerItem from "./placeholder/explorer-item";
 
 interface ILocalProps {
 	readonly channels: ImmutableMap<UniqueId, IChannel>;
@@ -43,6 +44,10 @@ class Explorer extends React.Component<ILocalProps> {
 		return (
 			<div className="explorer">
 				{this.renderItems()}
+				<PlaceholderExplorerItem opacity={1} />
+				<PlaceholderExplorerItem opacity={2} />
+				<PlaceholderExplorerItem opacity={3} />
+				<PlaceholderExplorerItem opacity={4} />
 			</div>
 		);
 	}

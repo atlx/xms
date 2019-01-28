@@ -1,5 +1,7 @@
 import os from "os";
 import {UniqueId} from "../types/types";
+import {CSSProperties} from "react";
+import Constants from "./constants";
 
 export default abstract class Utils {
     public static getLocalAddresses() {
@@ -58,5 +60,22 @@ export default abstract class Utils {
 
     public static isJson(string: string): boolean {
         return string.startsWith("{") && string.endsWith("}");
+    }
+
+    public static getRandomInt(min: number, max: number): number {
+        min = Math.ceil(min);
+        max = Math.floor(max);
+
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
+    public static getWidthStyle(min: number, max: number): CSSProperties {
+        return {
+            width: `${Utils.getRandomInt(min, max)}px`
+        };
+    }
+
+    public static getRandomPlaceholderStyle(): CSSProperties {
+        return Utils.getWidthStyle(Constants.minPlaceholderNameWidth, Constants.maxPlaceholderNameWidth);
     }
 }
