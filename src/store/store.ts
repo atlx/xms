@@ -40,9 +40,9 @@ export enum ActionType {
     UpdateUser = "UPDATE_USER"
 }
 
-export type StatePart = IAppStateCategory;
+export type StatePart = IAppStateCategory | IAppStateMisc;
 
-export type Reducer = (state: StatePart | null | undefined, action: Action<any>) => StatePart | null;
+export type Reducer<T extends StatePart = any> = (state: T | null | undefined, action: Action<any>) => T | null;
 
 export type Action<T extends object> = {
     readonly type: ActionType;
@@ -51,6 +51,7 @@ export type Action<T extends object> = {
 
 export interface IAppState {
     readonly category: IAppStateCategory;
+    readonly misc: IAppStateMisc;
 }
 
 export interface IAppStateCategory {
@@ -59,46 +60,55 @@ export interface IAppStateCategory {
     readonly usersMap: Map<UniqueId, User>;
     readonly categories: IRoosterCategory[];
     readonly channels: ImmutableMap<UniqueId, IChannel>;
-    readonly inputLocked: boolean;
     readonly activeChannel: IChannel | null;
-    readonly page: Page;
-    readonly autoCompleteVisible: boolean;
     readonly commandHandler: CommandHandler;
     readonly modals: IModal[];
     readonly me: User | null;
     readonly contextMenu: IContextMenu | null;
 }
 
+export interface IAppStateMisc {
+    readonly page: Page;
+    readonly inputLocked: boolean;
+    readonly autoCompleteVisible: boolean;
+}
+
 const logger = createLogger({
     //
 });
 
-export const InitialState: IAppStateCategory = {
-    messages: [],
-    users: [],
-    categories: [],
-    usersMap: new Map(),
+export const GeneralChannel: IChannel = {
+    id: "general",
+    name: "General",
+    topic: "A public channel for everyone connected",
+    type: ChannelType.Public,
+    notify: false
+};
 
-    // General channel
-    channels: ImmutableMap({
-        general:
-        {
-            id: "general",
-            name: "General",
-            topic: "A public channel for everyone connected",
-            type: ChannelType.Public,
-            notify: false
-        }
-    }),
+export const InitialState: IAppState = {
+    category: {
+        messages: [],
+        users: [],
+        categories: [],
+        usersMap: new Map(),
 
-    activeChannel: null,
-    inputLocked: true,
-    page: Page.Init,
-    autoCompleteVisible: false,
-    commandHandler: new CommandHandler(),
-    modals: [],
-    me: null,
-    contextMenu: null
+        // General channel
+        channels: ImmutableMap({
+            general: GeneralChannel
+        }),
+
+        activeChannel: GeneralChannel,
+        commandHandler: new CommandHandler(),
+        modals: [],
+        me: null,
+        contextMenu: null
+    },
+
+    misc: {
+        inputLocked: true,
+        page: Page.Init,
+        autoCompleteVisible: false,
+    }
 };
 
 export const store: Store = createStore(combineReducers({

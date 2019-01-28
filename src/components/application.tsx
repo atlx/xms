@@ -85,10 +85,8 @@ class Application extends React.Component<ApplicationState> {
 }
 
 const mapStateToProps = (state: IAppState): any => {
-	console.log("State is", state);
-
 	return {
-		page: state.category.page,
+		page: state.misc.page,
 		modals: state.category.modals
 	};
 };

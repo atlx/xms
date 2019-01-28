@@ -1,8 +1,8 @@
-import {Reducer, ActionType} from "../store";
+import {Reducer, ActionType, InitialState, IAppStateMisc} from "../store";
 
-const miscReducer: Reducer = (state, action) => {
+const miscReducer: Reducer<IAppStateMisc> = (state, action) => {
     if (!state) {
-        return null;
+        return InitialState.misc;
     }
 
     switch (action.type) {
@@ -14,7 +14,7 @@ const miscReducer: Reducer = (state, action) => {
         }
 
         case ActionType.SetPage: {
-            // TODO: Verify page type is valid
+            // TODO: Verify page type is valid (Should be done in Actions?).
             return {
                 ...state,
                 page: action.payload

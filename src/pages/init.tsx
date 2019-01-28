@@ -30,7 +30,7 @@ export default class InitPage extends React.Component<any, InitPageState> {
 		this.getLoadingBarStyle = this.getLoadingBarStyle.bind(this);
 		this.getProgressStyle = this.getProgressStyle.bind(this);
 
-		// Refs
+		// Refs.
 		this.$progress = React.createRef();
 	}
 
@@ -40,7 +40,7 @@ export default class InitPage extends React.Component<any, InitPageState> {
 			steps: 0,
 			progressText: "Connecting",
 
-			// The total amount of steps that will be taken
+			// The total amount of steps that will be taken.
 			maxSteps: 1
 		});
 	}
@@ -50,6 +50,11 @@ export default class InitPage extends React.Component<any, InitPageState> {
 	}
 
 	public attemptInit(): void {
+		this.setState({
+			progressVisible: true,
+			progressText: "Initializing"
+		});
+
 		if (!Utils.isNetworkAvailable()) {
 			this.setState({
 				progressText: "Waiting for a network interface"
@@ -68,13 +73,11 @@ export default class InitPage extends React.Component<any, InitPageState> {
 			return;
 		}
 
-		this.setState({
-			progressVisible: true,
-			progressText: "Initializing"
-		});
-
-		// TODO: Setup/do some stuff here, then increment steps, then finish
+		// TODO: Setup/do some stuff here, then increment steps, then finish.
 		this.step();
+
+		// Change the page with a delay for effect.
+		setTimeout(() => Actions.setPage(Page.Default), 1000);
 	}
 
 	public finish(): void {

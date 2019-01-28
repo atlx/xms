@@ -354,8 +354,8 @@ const mapStateToProps = (state: IAppState): any => {
 	return {
 		messages: state.category.messages,
 		activeChannel: state.category.activeChannel,
-		inputLocked: state.category.inputLocked,
-		autoCompleteVisible: state.category.autoCompleteVisible,
+		inputLocked: state.misc.inputLocked,
+		autoCompleteVisible: state.misc.autoCompleteVisible,
 		autoCompleteCommands: state.category.commandHandler.getAllAsAutoCompleteCommands(),
 		commandHandler: state.category.commandHandler
 	};

@@ -1,10 +1,10 @@
-import {Reducer, ActionType, InitialState} from "../store";
+import {Reducer, ActionType, InitialState, IAppStateCategory} from "../store";
 import {IRoosterCategory} from "../../types/types";
 
-const categoryReducer: Reducer = (state, action) => {
+const categoryReducer: Reducer<IAppStateCategory> = (state, action) => {
     // Return default initial state.
     if (!state) {
-        return InitialState;
+        return InitialState.category;
     }
 
     switch (action.type) {
