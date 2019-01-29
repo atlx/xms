@@ -3,12 +3,13 @@ import "../styles/pages/default.scss";
 import Explorer from "../components/explorer";
 import Chat from "../components/chat";
 import Roster from "../components/roster";
+import StatusBar from "../components/status-bar";
 
-type DefaultPageState = {
+interface ILocalState {
 	readonly showTestModal: boolean;
 }
 
-export default class DefaultPage extends React.Component<any, DefaultPageState> {
+export default class DefaultPage extends React.Component<any, ILocalState> {
 	public componentWillMount(): void {
 		this.setState({
 			showTestModal: true
@@ -30,6 +31,7 @@ export default class DefaultPage extends React.Component<any, DefaultPageState> 
 					activeChannel={null as any}
 				/>
 				<Roster categories={null as any} users={null as any} />
+				<StatusBar />
 			</React.Fragment>
 		);
 	}

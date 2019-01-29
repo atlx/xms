@@ -6,6 +6,7 @@ import {connect} from "react-redux";
 import {IChannel, UniqueId} from "../types/types";
 import {Map as ImmutableMap} from "immutable";
 import PlaceholderExplorerItem from "./placeholder/explorer-item";
+import UserBar from "./user-bar";
 
 interface ILocalProps {
 	readonly channels: ImmutableMap<UniqueId, IChannel>;
@@ -43,11 +44,14 @@ class Explorer extends React.Component<ILocalProps> {
 	public render(): JSX.Element {
 		return (
 			<div className="explorer">
-				{this.renderItems()}
-				<PlaceholderExplorerItem opacity={1} />
-				<PlaceholderExplorerItem opacity={2} />
-				<PlaceholderExplorerItem opacity={3} />
-				<PlaceholderExplorerItem opacity={4} />
+				<div className="items">
+					{this.renderItems()}
+					<PlaceholderExplorerItem opacity={1} />
+					<PlaceholderExplorerItem opacity={2} />
+					<PlaceholderExplorerItem opacity={3} />
+					<PlaceholderExplorerItem opacity={4} />
+				</div>
+				<UserBar />
 			</div>
 		);
 	}

@@ -1,5 +1,9 @@
 @import "utils";
 
 .explorer {
-    background-color: $color-dark;
+    & {
+        display: grid;
+        grid-template-rows: 1fr auto;
+        background-color: $color-dark;
+    }
 }
