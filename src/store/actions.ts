@@ -1,5 +1,5 @@
 import {User, UniqueId, IGenericMessage, Page, IModal, IRosterCategory, SpecialCategories as SpecialCategory, IContextMenu, IChannel} from "../types/types";
-import {store, ActionType} from "./store";
+import {store, ActionType, ConnectionState} from "./store";
 import {ICommand} from "../core/command";
 
 export default abstract class Actions {
@@ -165,6 +165,20 @@ export default abstract class Actions {
         store.dispatch({
             type: ActionType.RemoveChannel,
             payload: channelId
+        });
+    }
+
+    public static addPing(ping: number): void {
+        store.dispatch({
+            type: ActionType.AddPing,
+            payload: ping
+        });
+    }
+
+    public static setConnectionState(state: ConnectionState): void {
+        store.dispatch({
+            type: ActionType.SetConnectionState,
+            payload: state
         });
     }
 }

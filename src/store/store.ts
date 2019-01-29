@@ -11,6 +11,7 @@ import contextMenuReducer from "./reducers/context-menu";
 import miscReducer from "./reducers/misc";
 import userReducer from "./reducers/user";
 import modalReducer from "./reducers/modal";
+import netReducer from "./reducers/net";
 
 export enum ActionType {
     AddGeneralMessage = "ADD_GENERAL_MESSAGE",
@@ -37,10 +38,12 @@ export enum ActionType {
     SetChannelNotify = "SET_CHANNEL_NOTIFY",
     SetChannelTopic = "SET_CHANNEL_TOPIC",
     RenameCategory = "RENAME_CATEGORY",
-    UpdateUser = "UPDATE_USER"
+    UpdateUser = "UPDATE_USER",
+    AddPing = "ADD_PING",
+    SetConnectionState = "SET_CONNECTION_STATE"
 }
 
-export type StatePart = IAppStateCategory | IAppStateMisc | IAppStateMessage;
+export type StatePart = IAppStateCategory | IAppStateMisc | IAppStateMessage | IAppStateNet;
 
 export type Reducer<T extends StatePart = any> = (state: T | null | undefined, action: Action<any>) => T | null;
 
@@ -53,6 +56,7 @@ export interface IAppState {
     readonly category: IAppStateCategory;
     readonly misc: IAppStateMisc;
     readonly message: IAppStateMessage;
+    readonly net: IAppStateNet;
 }
 
 export interface IAppStateCategory {
@@ -71,6 +75,18 @@ export interface IAppStateMisc {
     readonly page: Page;
     readonly inputLocked: boolean;
     readonly autoCompleteVisible: boolean;
+}
+
+export enum ConnectionState {
+    Connected,
+    Disconnected,
+    Connecting,
+    Reconnecting
+}
+
+export interface IAppStateNet {
+    readonly lastPing: number;
+    readonly connectionState: ConnectionState;
 }
 
 export interface IAppStateMessage {
@@ -110,11 +126,16 @@ export const InitialState: IAppState = {
     misc: {
         inputLocked: true,
         page: Page.Init,
-        autoCompleteVisible: false,
+        autoCompleteVisible: false
     },
 
     message: {
         messages: [],
+    },
+
+    net: {
+        lastPing: -1,
+        connectionState: ConnectionState.Disconnected
     }
 };
 
@@ -126,5 +147,6 @@ export const store: Store = createStore(combineReducers({
     message: messageReducer,
     misc: miscReducer,
     modal: modalReducer,
-    user: userReducer
+    user: userReducer,
+    net: netReducer
 }), applyMiddleware(logger));

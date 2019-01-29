@@ -4,6 +4,7 @@ import Loader from "../components/loader";
 import Utils from "../core/utils";
 import Actions from "../store/actions";
 import {Page} from "../types/types";
+import {ConnectionState} from "../store/store";
 
 type InitPageState = {
 	readonly progressVisible: boolean;
@@ -72,6 +73,8 @@ export default class InitPage extends React.Component<any, InitPageState> {
 
 			return;
 		}
+
+		Actions.setConnectionState(ConnectionState.Connecting);
 
 		// TODO: Setup/do some stuff here, then increment steps, then finish.
 		this.step();

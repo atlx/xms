@@ -3,10 +3,27 @@ import "../styles/status-bar.scss";
 import StatusAction from "./status-action";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faWifi, faSignal} from "@fortawesome/free-solid-svg-icons";
-import {IAppState} from "../store/store";
+import {IAppState, ConnectionState} from "../store/store";
 import {connect} from "react-redux";
 
-class StatusBar extends React.Component {
+interface ILocalProps {
+    readonly ping: number;
+    readonly connectionState: ConnectionState;
+}
+
+class StatusBar extends React.Component<ILocalProps> {
+    public renderPing(): string {
+        if (this.props.ping < 1) {
+            return "<1";
+        }
+
+        return this.props.ping.toString();
+    }
+
+    public renderConnectionState(): string {
+        return ConnectionState[this.props.connectionState];
+    }
+
     public render(): JSX.Element {
         return (
             <div className="status-bar">
@@ -14,8 +31,8 @@ class StatusBar extends React.Component {
                     <StatusAction>Hello world</StatusAction>
                 </div>
                 <div className="right">
-                    <StatusAction><FontAwesomeIcon icon={faSignal} /> {32ms}</StatusAction>
-                    <StatusAction><FontAwesomeIcon icon={faWifi} /> Connected</StatusAction>
+                    <StatusAction tooltip="Connection latency"><FontAwesomeIcon icon={faSignal} /> {this.renderPing()}ms</StatusAction>
+                    <StatusAction><FontAwesomeIcon icon={faWifi} /> {this.renderConnectionState()}</StatusAction>
                 </div>
             </div>
         );
@@ -24,12 +41,8 @@ class StatusBar extends React.Component {
 
 const mapStateToProps = (state: IAppState): any => {
     return {
-        messages: state.message.messages,
-        activeChannel: state.category.activeChannel,
-        inputLocked: state.misc.inputLocked,
-        autoCompleteVisible: state.misc.autoCompleteVisible,
-        autoCompleteCommands: state.category.commandHandler.getAllAsAutoCompleteCommands(),
-        commandHandler: state.category.commandHandler
+        ping: state.net.lastPing,
+        connectionState: state.net.connectionState
     };
 };
 

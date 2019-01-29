@@ -1,7 +1,7 @@
 import dgram, {Socket} from "dgram";
 import {AddressInfo} from "net";
 import {GatewayMsg, GatewayMsgType, HelloPayload, MessagePayload, HeartbeatPayload} from "./gateway";
-import {store, IAppState} from "../store/store";
+import {store, IAppState, ConnectionState} from "../store/store";
 import Actions from "../store/actions";
 import {IMessage, INotice, Page, NoticeStyle, SpecialChannel} from "../types/types";
 import Factory from "../core/factory";
@@ -12,22 +12,24 @@ import {MainApp} from "../index";
 export default class BroadcastGateway implements IDisposable {
     public static slowThreshold: number = 150;
 
-    public readonly groupAdress: string;
+    public readonly groupAddress: string;
     public readonly port: number;
     private readonly socket: Socket;
     private readonly heartbeatInterval: number;
     private readonly intervals: number[];
+    private readonly pingHistory: number[];
 
     private pingStart: number;
     private connectionVerified: boolean;
 
     public constructor(groupAddress: string, port: number, heartbeatInterval: number = 10_000) {
-        this.groupAdress = groupAddress;
+        this.groupAddress = groupAddress;
         this.port = port;
         this.heartbeatInterval = heartbeatInterval;
         this.intervals = [];
         this.connectionVerified = false;
         this.pingStart = 0;
+        this.pingHistory = [];
 
         // Create the socket.
         this.socket = dgram.createSocket({
@@ -56,12 +58,42 @@ export default class BroadcastGateway implements IDisposable {
         return this;
     }
 
+    public get lastPing(): number {
+        return this.pingHistory.length === 0 ? -1 : this.pingHistory[this.pingHistory.length - 1];
+    }
+
+    protected registerPing(ping: number): this {
+        this.pingHistory.push(ping);
+
+        // Update the store.
+        Actions.addPing(ping);
+
+        // Reset time counter.
+        this.pingStart = 0;
+
+        return this;
+    }
+
+    protected startPingTimer(): this {
+        this.pingStart = performance.now();
+
+        return this;
+    }
+
+    protected handleSocketClose(): void {
+        console.log("[BroadcastGateway] Disconnected");
+        Actions.addGeneralMessage<INotice>(Factory.createNotice(SpecialChannel.General, "Disconnected from the network."));
+
+        // TODO: Changing to page init is OKAY since it's meant to handle disconnections, but what about instead setting connection state in UI status bar?
+        //Actions.setPage(Page.Init);
+
+        Actions.setConnectionState(ConnectionState.Disconnected);
+    }
+
     private setupEvents(): this {
         this.socket.on("listening", () => {
-            this.socket.addMembership(this.groupAdress);
-
-            console.log(`[BroadcastGateway] Listening on ${this.groupAdress}@${this.port}`);
-            this.pingStart = performance.now();
+            this.socket.addMembership(this.groupAddress);
+            console.log(`[BroadcastGateway] Listening on ${this.groupAddress}@${this.port}`);
 
             // Start heartbeat loop
             this.setInterval(this.heartbeat, this.heartbeatInterval);
@@ -69,17 +101,14 @@ export default class BroadcastGateway implements IDisposable {
             // Start network interface availability loop
             this.setInterval(() => {
                 if (!Utils.isNetworkAvailable()) {
-                    this.close(() => {
-                        Actions.setPage(Page.Init);
-                    });
+                    this.close(this.handleSocketClose);
                 }
             }, 3000);
+
+            Actions.setConnectionState(ConnectionState.Connected);
         });
 
-        this.socket.on("close", () => {
-            console.log("[BroadcastGateway] Disconnected");
-            Actions.addGeneralMessage<INotice>(Factory.createNotice(SpecialChannel.General, "Disconnected from the network."));
-        });
+        this.socket.on("close", this.handleSocketClose);
 
         this.socket.on("message", (data: Buffer, sender: AddressInfo) => {
             const messageString: string = data.toString();
@@ -98,15 +127,16 @@ export default class BroadcastGateway implements IDisposable {
                         Actions.markMessageSent(payload.id);
                     }
                     else if (message.type === GatewayMsgType.Heartbeat) {
-                        // TODO: Also measure ping
+                        const ping: number = Math.round(performance.now() - this.pingStart);
+
+                        this.registerPing(ping);
+
                         if (!this.connectionVerified) {
                             this.connectionVerified = true;
 
-                            const ping: number = Math.round(performance.now() - this.pingStart);
-
                             // TODO: Channel
                             Actions.addGeneralMessage<INotice>(
-                                Factory.createNotice(SpecialChannel.General, `Connected to the network @ ${this.groupAdress}. ~${ping}ms`)
+                                Factory.createNotice(SpecialChannel.General, `Connected to the network @ ${this.groupAddress}. ~${ping}ms`)
                             );
 
                             Actions.setInputLocked(false);
@@ -178,6 +208,8 @@ export default class BroadcastGateway implements IDisposable {
     }
 
     private heartbeat(): this {
+        this.startPingTimer();
+
         this.emit<HeartbeatPayload>(GatewayMsgType.Heartbeat, {
             //
         });
@@ -210,7 +242,7 @@ export default class BroadcastGateway implements IDisposable {
             sender: MainApp.me.id
         } as GatewayMsg<T>));
 
-        this.socket.send(data, 0, data.length, this.port, this.groupAdress, (error: Error | null) => {
+        this.socket.send(data, 0, data.length, this.port, this.groupAddress, (error: Error | null) => {
             if (error !== null) {
                 console.log(`[BroadcastGateway.emit] Failed to emit message: ${error.message}`);
 
