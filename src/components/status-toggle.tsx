@@ -1,10 +1,10 @@
 import React from "react";
-import "../styles/status-action.scss";
-import StatusItem, {IStatusActionProps} from "./status-item";
+import "../styles/status-item.scss";
+import StatusItem, {IStatusItemProps} from "./status-item";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {IconProp} from "@fortawesome/fontawesome-svg-core";
 
-interface ILocalProps extends IStatusActionProps {
+interface ILocalProps extends IStatusItemProps {
     /**
      * Whether the toggle is toggled. Defaults to true.
      */
@@ -34,7 +34,7 @@ export default class StatusToggle extends React.Component<ILocalProps, ILocalSta
     };
 
     public computeClassNames(): string {
-        const classes: string[] = ["status-action"];
+        const classes: string[] = ["status-item"];
 
         if (this.props.onClick !== undefined) {
             classes.push("clickable");

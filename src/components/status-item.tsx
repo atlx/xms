@@ -1,20 +1,20 @@
 import React from "react";
-import "../styles/status-action.scss";
+import "../styles/status-item.scss";
 import {Callback} from "../core/app";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faCircleNotch} from "@fortawesome/free-solid-svg-icons";
 import {IconProp} from "@fortawesome/fontawesome-svg-core";
 
-export interface IStatusActionProps {
+export interface IStatusItemProps {
     readonly tooltip?: string;
     readonly onClick?: Callback;
     readonly loading?: boolean;
     readonly icon?: IconProp;
 }
 
-export default class StatusItem extends React.Component<IStatusActionProps> {
+export default class StatusItem extends React.Component<IStatusItemProps> {
     public computeClassNames(): string {
-        const classes: string[] = ["status-action"];
+        const classes: string[] = ["status-item"];
 
         if (this.props.onClick !== undefined) {
             classes.push("clickable");

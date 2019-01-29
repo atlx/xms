@@ -1,0 +1,55 @@
+.status-select {
+    & {
+        position: relative;
+    }
+
+    > .select-body {
+        & {
+            position: absolute;
+            background-color: #222;
+            padding: 6px 0;
+            bottom: calc(100% + 25px);
+            min-width: 140px;
+            border: 1px solid #202020;
+            transform: translate(-50%);
+            left: 50%;
+        }
+
+        > .body-wrapper {
+            & {
+                position: relative;
+            }
+
+            > .status-item {
+                & {
+                    padding: 3px 20px;
+                    font-size: 15px;
+                    width: 100%;
+                    box-sizing: border-box;
+                    cursor: pointer;
+                    justify-content: flex-start;
+                }
+
+                &:hover {
+                    background-color: #333;
+                }
+
+                &:not(:last-child) {
+                    margin-bottom: 5px;
+                }
+            }
+
+            > .arrow {
+                position: absolute;
+                border: 15px solid transparent;
+                border-top-color: #222;
+                width: 0;
+                height: 0;
+                left: 50%;
+                box-sizing: border-box;
+                transform: translate(-50%);
+                top: calc(100% + 6px + 1px); /* Include parent's full height-padding and the 1px border */
+            }
+        }
+    }
+}

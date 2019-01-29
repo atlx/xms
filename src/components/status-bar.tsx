@@ -1,12 +1,15 @@
 import React from "react";
 import "../styles/status-bar.scss";
 import StatusItem from "./status-item";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faWifi, faSignal, faBell, faBellSlash} from "@fortawesome/free-solid-svg-icons";
+import {faWifi, faSignal, faBell, faBellSlash, faGlobeAmericas, faAdjust, faWind, faVoteYea} from "@fortawesome/free-solid-svg-icons";
 import {IAppState, ConnectionState} from "../store/store";
 import {connect} from "react-redux";
 import {MainApp} from "..";
 import StatusToggle from "./status-toggle";
+import {Language} from "../core/localisation";
+import StatusSelect from "./status-select";
+import {faDotCircle, faCircle} from "@fortawesome/free-regular-svg-icons";
+import StatusSelectItem from "./status-select-item";
 
 interface ILocalProps {
     readonly ping: number;
@@ -32,10 +35,16 @@ class StatusBar extends React.Component<ILocalProps> {
             <div className="status-bar">
                 <div className="left">
                     <StatusItem>Hello world</StatusItem>
-                    <StatusItem>Loading</StatusItem>
+                    <StatusItem loading>Loading</StatusItem>
                 </div>
                 <div className="right">
                     <StatusToggle onClick={() => MainApp.toggleNotifications()} on={faBell} off={faBellSlash}>Notifications</StatusToggle>
+                    <StatusSelect icon={faGlobeAmericas} text={Language[MainApp.i18n.activeLanguage]}>
+                        <StatusSelectItem selected>English</StatusSelectItem>
+                        <StatusSelectItem>Spanish</StatusSelectItem>
+                        <StatusSelectItem>Japanese</StatusSelectItem>
+                        <StatusSelectItem>Russian</StatusSelectItem>
+                    </StatusSelect>
                     <StatusItem icon={faSignal} tooltip="Connection latency">{this.renderPing()}ms</StatusItem>
                     <StatusItem
                         icon={faWifi}

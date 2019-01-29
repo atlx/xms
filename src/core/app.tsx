@@ -14,6 +14,8 @@ import {ICommand} from "./command";
 import NetworkHub from "./network-hub";
 import {MainApp} from "../index";
 import Sounds from "./sounds";
+import Constants from "./constants";
+import Localisation from "./localisation";
 
 export type PromiseOr<T = void> = Promise<T> | T;
 
@@ -30,16 +32,18 @@ export default class App {
 	public readonly me: User;
 	public readonly actions: GatewayActions;
 	public readonly commandHandler: CommandHandler;
-	public readonly hub: NetworkHub;
+	public readonly net: NetworkHub;
+	public readonly i18n: Localisation;
 
 	public notifications: boolean;
 
 	public constructor(me: User) {
-		this.gateway = new BroadcastGateway("233.183.91.212", 45462);
+		this.gateway = new BroadcastGateway(Constants.primaryGroupAddress, Constants.primaryBroadcastPort);
 		this.me = me;
 		this.actions = new GatewayActions(this.gateway);
 		this.commandHandler = new CommandHandler();
-		this.hub = new NetworkHub(45463);
+		this.net = new NetworkHub(Constants.primaryNetPort);
+		this.i18n = new Localisation();
 		this.notifications = true;
 	}
 

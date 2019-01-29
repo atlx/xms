@@ -31,7 +31,7 @@ export default class DefaultPage extends React.Component<any, ILocalState> {
 					activeChannel={null as any}
 				/>
 				<Roster categories={null as any} users={null as any} />
-				<StatusBar />
+				<StatusBar {...undefined as any} />
 			</React.Fragment>
 		);
 	}

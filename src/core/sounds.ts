@@ -5,7 +5,7 @@ interface ISounds {
 
 const sounds: ISounds = {
     notification: new Audio(require("../resources/sounds/confirm.mp3")),
-    notificationsOn: new Audio(require("../resources/sounds/notifications-on.mp3"))
+    notificationsOn: new Audio(require("../resources/sounds/notification-toggle.mp3"))
 };
 
 export default abstract class Sounds {
