@@ -3,24 +3,27 @@ import {AddressInfo} from "net";
 import {GatewayMsg, GatewayMsgType, HelloPayload, MessagePayload, HeartbeatPayload} from "./gateway";
 import {store, IAppState, ConnectionState} from "../store/store";
 import Actions from "../store/actions";
-import {IMessage, INotice, Page, NoticeStyle, SpecialChannel} from "../types/types";
+import {IMessage, INotice, NoticeStyle, SpecialChannel} from "../types/types";
 import Factory from "../core/factory";
 import Utils from "../core/utils";
 import {IDisposable} from "../core/app";
 import {MainApp} from "../index";
+import SystemMessages from "../core/system-messages";
 
 export default class BroadcastGateway implements IDisposable {
     public static slowThreshold: number = 150;
 
     public readonly groupAddress: string;
     public readonly port: number;
-    private readonly socket: Socket;
+
     private readonly heartbeatInterval: number;
     private readonly intervals: number[];
     private readonly pingHistory: number[];
 
+    private socket!: Socket;
     private pingStart: number;
     private connectionVerified: boolean;
+    private socketConnected: boolean;
 
     public constructor(groupAddress: string, port: number, heartbeatInterval: number = 10_000) {
         this.groupAddress = groupAddress;
@@ -30,14 +33,14 @@ export default class BroadcastGateway implements IDisposable {
         this.connectionVerified = false;
         this.pingStart = 0;
         this.pingHistory = [];
+        this.socketConnected = false;
 
-        // Create the socket.
-        this.socket = dgram.createSocket({
-            type: "udp4",
-            reuseAddr: true
-        });
+        // Bindings.
+        this.handleSocketClose = this.handleSocketClose.bind(this);
+    }
 
-        this.setupEvents();
+    public get connected(): boolean {
+        return this.socketConnected;
     }
 
     public setInterval(action: any, time: number, call: boolean = true): this {
@@ -81,11 +84,17 @@ export default class BroadcastGateway implements IDisposable {
     }
 
     protected handleSocketClose(): void {
+        this.socketConnected = false;
+        Actions.setInputLocked(true);
+        this.dispose();
         console.log("[BroadcastGateway] Disconnected");
-        Actions.addGeneralMessage<INotice>(Factory.createNotice(SpecialChannel.General, "Disconnected from the network."));
+        Actions.addGeneralMessage<INotice>(Factory.createNotice(SpecialChannel.General, SystemMessages.Disconnected, NoticeStyle.Warning));
 
-        // TODO: Changing to page init is OKAY since it's meant to handle disconnections, but what about instead setting connection state in UI status bar?
-        //Actions.setPage(Page.Init);
+        /**
+         * TODO: Changing to page init is OKAY since it's meant to handle
+         * disconnections, but what about instead setting connection state in UI status bar?
+         */
+        // Actions.setPage(Page.Init);
 
         Actions.setConnectionState(ConnectionState.Disconnected);
     }
@@ -93,12 +102,13 @@ export default class BroadcastGateway implements IDisposable {
     private setupEvents(): this {
         this.socket.on("listening", () => {
             this.socket.addMembership(this.groupAddress);
+            this.socketConnected = true;
             console.log(`[BroadcastGateway] Listening on ${this.groupAddress}@${this.port}`);
 
-            // Start heartbeat loop
+            // Start the heartbeat loop.
             this.setInterval(this.heartbeat, this.heartbeatInterval);
 
-            // Start network interface availability loop
+            // Start the network interface availability loop.
             this.setInterval(() => {
                 if (!Utils.isNetworkAvailable()) {
                     this.close(this.handleSocketClose);
@@ -106,6 +116,25 @@ export default class BroadcastGateway implements IDisposable {
             }, 3000);
 
             Actions.setConnectionState(ConnectionState.Connected);
+
+            // TODO: Channel?
+            Actions.addGeneralMessage<INotice>(
+                Factory.createNotice(SpecialChannel.General, SystemMessages.Connected)
+            );
+
+            // TODO: Is last ping set at the starting point?
+            if (this.lastPing >= BroadcastGateway.slowThreshold) {
+                // TODO: channel
+                Actions.addGeneralMessage<INotice>(
+                    Factory.createNotice(
+                        SpecialChannel.General,
+                        SystemMessages.HighLatency,
+                        NoticeStyle.Warning
+                    )
+                );
+            }
+
+            Actions.setInputLocked(false);
         });
 
         this.socket.on("close", this.handleSocketClose);
@@ -133,24 +162,6 @@ export default class BroadcastGateway implements IDisposable {
 
                         if (!this.connectionVerified) {
                             this.connectionVerified = true;
-
-                            // TODO: Channel
-                            Actions.addGeneralMessage<INotice>(
-                                Factory.createNotice(SpecialChannel.General, `Connected to the network @ ${this.groupAddress}. ~${ping}ms`)
-                            );
-
-                            Actions.setInputLocked(false);
-
-                            if (ping >= BroadcastGateway.slowThreshold) {
-                                // TODO: channel
-                                Actions.addGeneralMessage<INotice>(
-                                    Factory.createNotice(
-                                        SpecialChannel.General,
-                                        "Your connection may be slow due to high latency.",
-                                        NoticeStyle.Warning
-                                    )
-                                );
-                            }
                         }
                     }
                     else {
@@ -217,20 +228,37 @@ export default class BroadcastGateway implements IDisposable {
         return this;
     }
 
-    public restart(): void {
-        this.close(() => {
-            // TODO: Shouldn't be sent by message, handled by the init page instead
-            // TODO: Hard-coded channel
-            Actions.addGeneralMessage<INotice>(Factory.createNotice(SpecialChannel.General, "Attempting to reconnect."));
-            this.start();
-        });
+    public toggleConnected(): this {
+        if (this.socketConnected) {
+            this.close();
+        }
+        else {
+            this.connect();
+        }
+
+        return this;
     }
 
-    public close(callback: () => void): void {
+    public restart(): this {
+        this.close(() => {
+            // TODO: Shouldn't be sent by message, handled by the init page instead.
+            // TODO: Hard-coded channel.
+            Actions.addGeneralMessage<INotice>(Factory.createNotice(SpecialChannel.General, "Attempting to reconnect."));
+            this.connect();
+        });
+
+        return this;
+    }
+
+    public close(callback?: () => void): void {
+        /**
+         * No need to invoke handleSocketClose()
+         * since it will be invoked whenever socket is closed.
+         */
         this.socket.close(() => {
-            this.dispose();
-            Actions.setInputLocked(true);
-            callback();
+            if (callback !== undefined) {
+                callback();
+            }
         });
     }
 
@@ -259,7 +287,14 @@ export default class BroadcastGateway implements IDisposable {
         return this;
     }
 
-    public start(): this {
+    public connect(): this {
+        // Create the socket.
+        this.socket = dgram.createSocket({
+            type: "udp4",
+            reuseAddr: true
+        });
+
+        this.setupEvents();
         this.socket.bind(this.port);
 
         return this;

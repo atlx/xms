@@ -5,11 +5,16 @@
         align-items: center;
         width: auto;
         padding: 1px 5px;
-        cursor: pointer;
     }
 
-    &:hover {
-        background-color: #333;
+    &.clickable {
+        & {
+            cursor: pointer;
+        }
+        
+        &:hover {
+            background-color: #333;
+        }
     }
 
     > svg {

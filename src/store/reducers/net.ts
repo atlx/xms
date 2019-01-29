@@ -22,6 +22,13 @@ const netReducer: Reducer<IAppStateNet> = (state, action) => {
                 connectionState: action.payload
             };
         }
+
+        case ActionType.SetGroupAddress: {
+            return {
+                ...state,
+                groupAddress: action.payload
+            };
+        }
     }
 
     return state;

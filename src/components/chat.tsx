@@ -40,7 +40,7 @@ class Chat extends React.Component<ILocalProps, ILocalState> {
 	public constructor(props: ILocalProps) {
 		super(props);
 
-		// Bindings
+		// Bindings.
 		this.handleKeyDown = this.handleKeyDown.bind(this);
 		this.getCommandName = this.getCommandName.bind(this);
 		this.handleScroll = this.handleScroll.bind(this);
@@ -49,13 +49,14 @@ class Chat extends React.Component<ILocalProps, ILocalState> {
 		this.handleAutoCompleteItemClick = this.handleAutoCompleteItemClick.bind(this);
 		this.handleInputChange = this.handleInputChange.bind(this);
 
-		// Refs
+		// Refs.
 		this.$input = React.createRef();
 		this.$container = React.createRef();
 		this.$loader = React.createRef();
 	}
 
 	public componentWillMount(): void {
+		// Initial state.
 		this.setState({
 			offset: 0,
 			filteredAutoCompleteCommands: this.props.autoCompleteCommands

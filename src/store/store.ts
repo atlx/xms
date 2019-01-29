@@ -40,7 +40,8 @@ export enum ActionType {
     RenameCategory = "RENAME_CATEGORY",
     UpdateUser = "UPDATE_USER",
     AddPing = "ADD_PING",
-    SetConnectionState = "SET_CONNECTION_STATE"
+    SetConnectionState = "SET_CONNECTION_STATE",
+    SetGroupAddress = "SET_GROUP_ADDRESS"
 }
 
 export type StatePart = IAppStateCategory | IAppStateMisc | IAppStateMessage | IAppStateNet;
@@ -87,6 +88,7 @@ export enum ConnectionState {
 export interface IAppStateNet {
     readonly lastPing: number;
     readonly connectionState: ConnectionState;
+    readonly groupAddress?: string;
 }
 
 export interface IAppStateMessage {

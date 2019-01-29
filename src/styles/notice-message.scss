@@ -1,12 +1,10 @@
-$color-success: #27ae60;
-$color-warn: #f39c12;
-$color-error: #e74c3c;
+@import "utils";
 
 .notice-message {
     & {
         width: 100%;
         color: #fff;
-        padding: 6px 10px;
+        padding: 8px 10px;
         border-radius: 3px;
         font-size: 16px;
         box-sizing: border-box;

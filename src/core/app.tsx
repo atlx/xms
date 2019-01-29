@@ -19,6 +19,8 @@ export interface IDisposable {
 	dispose(): any;
 }
 
+export type Callback<T = void> = (...args: any[]) => T;
+
 export const DevelopmentMode: boolean = process.env.NODE_ENV === "development";
 
 // TODO: Expression-import not working for some reason
@@ -212,7 +214,7 @@ export default class App {
 		Actions.setGeneralAsActiveChannel();
 		this.registerCommands();
 		this.render();
-		this.gateway.start();
+		this.gateway.connect();
 	}
 
 	public test(): void {
