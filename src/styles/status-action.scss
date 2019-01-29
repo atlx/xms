@@ -1,3 +1,5 @@
+@import "animations";
+
 .status-action {
     & {
         display: inline-flex;
@@ -15,6 +17,11 @@
         &:hover {
             background-color: #333;
         }
+    }
+
+    > .loading {
+        transform-origin: center;
+        animation: spin infinite 1s;
     }
 
     > svg {

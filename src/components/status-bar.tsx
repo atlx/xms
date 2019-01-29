@@ -1,8 +1,8 @@
 import React from "react";
 import "../styles/status-bar.scss";
-import StatusAction from "./status-action";
+import StatusItem from "./status-item";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faWifi, faSignal, faSmile, faFrown, faBell, faBellSlash} from "@fortawesome/free-solid-svg-icons";
+import {faWifi, faSignal, faBell, faBellSlash} from "@fortawesome/free-solid-svg-icons";
 import {IAppState, ConnectionState} from "../store/store";
 import {connect} from "react-redux";
 import {MainApp} from "..";
@@ -31,14 +31,17 @@ class StatusBar extends React.Component<ILocalProps> {
         return (
             <div className="status-bar">
                 <div className="left">
-                    <StatusAction>Hello world</StatusAction>
+                    <StatusItem>Hello world</StatusItem>
+                    <StatusItem>Loading</StatusItem>
                 </div>
                 <div className="right">
-                    <StatusToggle on={faBell} off={faBellSlash}>Notifications</StatusToggle>
-                    <StatusAction tooltip="Connection latency"><FontAwesomeIcon icon={faSignal} /> {this.renderPing()}ms</StatusAction>
-                    <StatusAction
+                    <StatusToggle onClick={() => MainApp.toggleNotifications()} on={faBell} off={faBellSlash}>Notifications</StatusToggle>
+                    <StatusItem icon={faSignal} tooltip="Connection latency">{this.renderPing()}ms</StatusItem>
+                    <StatusItem
+                        icon={faWifi}
+                        loading={this.props.connectionState === ConnectionState.Connecting}
                         tooltip={`Connected to ${MainApp.gateway.groupAddress}`}
-                        onClick={() => MainApp.gateway.toggleConnected()}><FontAwesomeIcon icon={faWifi} /> {this.renderConnectionState()}</StatusAction>
+                        onClick={() => MainApp.gateway.toggleConnected()}>{this.renderConnectionState()}</StatusItem>
                 </div>
             </div>
         );

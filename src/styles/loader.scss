@@ -1,9 +1,4 @@
-@keyframes spin {
-    to {
-        transform-origin: center;
-        transform: rotate(360deg);
-    }
-}
+@import "animations";
 
 .loader {
     & {
@@ -18,6 +13,7 @@
         border: 3px solid #555;
         border-color: #555 transparent #555 transparent;
         border-radius: 50%;
+        transform-origin: center;
         animation: spin infinite 1s ease;
     }
 

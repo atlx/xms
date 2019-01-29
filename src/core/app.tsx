@@ -12,6 +12,8 @@ import Utils from "./utils";
 import Factory from "./factory";
 import {ICommand} from "./command";
 import NetworkHub from "./network-hub";
+import {MainApp} from "../index";
+import Sounds from "./sounds";
 
 export type PromiseOr<T = void> = Promise<T> | T;
 
@@ -23,25 +25,14 @@ export type Callback<T = void> = (...args: any[]) => T;
 
 export const DevelopmentMode: boolean = process.env.NODE_ENV === "development";
 
-// TODO: Expression-import not working for some reason
-// require(Paths.resource("notify", ResourceGroup.Sounds, CommonExtensions.MP3))
-
-// Works, returns bundled path
-const f = require("../resources/sounds/notify.mp3");
-
 export default class App {
-	private static notificationSound = new Audio(f);
-
-	public static notify(): void {
-		App.notificationSound.load();
-		App.notificationSound.play();
-	}
-
 	public readonly gateway: BroadcastGateway;
 	public readonly me: User;
 	public readonly actions: GatewayActions;
 	public readonly commandHandler: CommandHandler;
 	public readonly hub: NetworkHub;
+
+	public notifications: boolean;
 
 	public constructor(me: User) {
 		this.gateway = new BroadcastGateway("233.183.91.212", 45462);
@@ -49,6 +40,27 @@ export default class App {
 		this.actions = new GatewayActions(this.gateway);
 		this.commandHandler = new CommandHandler();
 		this.hub = new NetworkHub(45463);
+		this.notifications = true;
+	}
+
+	public toggleNotifications(): this {
+		this.notifications = !this.notifications;
+
+		if (this.notifications) {
+			this.notify();
+		}
+
+		return this;
+	}
+
+	public notify(): this {
+		if (!this.notifications) {
+			return this;
+		}
+
+		Sounds.notification();
+
+		return this;
 	}
 
 	public render(): void {
@@ -91,7 +103,7 @@ export default class App {
 				description: "Play the notification sound",
 
 				handle(): void {
-					App.notify();
+					MainApp.notify();
 				}
 			},
 

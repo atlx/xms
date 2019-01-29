@@ -1,6 +1,6 @@
 import React from "react";
 import "../styles/status-action.scss";
-import StatusAction, {IStatusActionProps} from "./status-action";
+import StatusItem, {IStatusActionProps} from "./status-item";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {IconProp} from "@fortawesome/fontawesome-svg-core";
 
@@ -63,8 +63,8 @@ export default class StatusToggle extends React.Component<ILocalProps, ILocalSta
 
     public render(): JSX.Element {
         return (
-            <StatusAction {...this.props}
-                onClick={() => this.handleClick()}><FontAwesomeIcon icon={this.getIcon()} /> {this.props.children}</StatusAction>
+            <StatusItem {...this.props}
+                onClick={() => this.handleClick()}><FontAwesomeIcon icon={this.getIcon()} /> {this.props.children}</StatusItem>
         );
     }
 }
