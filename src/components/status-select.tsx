@@ -6,17 +6,33 @@ interface ILocalProps extends IStatusItemProps {
     readonly text: string;
 }
 
-export default class StatusSelect extends React.Component<ILocalProps> {
+interface ILocalState {
+    readonly bodyVisible: boolean;
+}
+
+export default class StatusSelect extends React.Component<ILocalProps, ILocalState> {
+    public readonly state: ILocalState = {
+        bodyVisible: false
+    };
+
+    public toggleBody(): void {
+        this.setState({
+            bodyVisible: !this.state.bodyVisible
+        });
+    }
+
     public render(): JSX.Element {
         return (
             <div className="status-select">
-                <div className="select-body">
-                    <div className="body-wrapper">
-                        {this.props.children}
-                        <div className="arrow" />
+                {this.state.bodyVisible &&
+                    <div className="select-body">
+                        <div className="body-wrapper">
+                            {this.props.children}
+                            <div className="arrow" />
+                        </div>
                     </div>
-                </div>
-                <StatusItem {...this.props}>{this.props.text}</StatusItem>
+                }
+                <StatusItem {...this.props} onClick={() => this.toggleBody()}>{this.props.text}</StatusItem>
             </div>
         );
     }

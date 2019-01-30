@@ -63,7 +63,7 @@ class Chat extends React.Component<ILocalProps, ILocalState> {
 		});
 
 		// TODO: Needs to reset once the component unmounts, use componentWillUnmount or componentDidUnmount for that.
-		// Scroll messages when the escape key is pressed
+		// Scroll messages when the escape key is pressed.
 		window.onkeydown = (e: any) => {
 			if (e.key === "Escape"
 				&& (document.activeElement === document.body
@@ -92,10 +92,10 @@ class Chat extends React.Component<ILocalProps, ILocalState> {
 			this.scrollMessages();
 		}
 
-		// TODO: Possibly messing up stuff
+		// TODO: Possibly messing up stuff.
 		//this.$messages.current.scrollTop = this.$messages.current.scrollHeight;
 
-		// TODO: componentDidUpdate() may trigger in unwanted situations, such as on receive message
+		// TODO: componentDidUpdate() may trigger in unwanted situations, such as on receive message.
 		//this.focus();
 		clearInterval(this.randomInterval);
 
@@ -109,14 +109,14 @@ class Chat extends React.Component<ILocalProps, ILocalState> {
 
 		//console.log(messages);
 
-		// TODO: Debugging commented out
+		// TODO: Debugging commented out.
 		/* if (this.offset !== messages.length) {
 			messages = messages.slice(-this.offset);
 		} */
 
 		//console.log(messages);
 
-		// TODO: Hard-coded cut value
+		// TODO: Hard-coded cut value.
 		const cut: number = 100;
 
 		if (messages.length >= cut) {
@@ -161,7 +161,7 @@ class Chat extends React.Component<ILocalProps, ILocalState> {
 	public setValue(value: string): void {
 		this.$input.current.value = value;
 
-		// OnChange event won't automatically trigger when manually setting the value
+		// OnChange event won't automatically trigger when manually setting the value.
 		this.handleInputChange();
 	}
 
@@ -209,39 +209,49 @@ class Chat extends React.Component<ILocalProps, ILocalState> {
 	}
 
 	public handleKeyDown(e: any): void {
-		const value: string = this.getValue();
-
 		// Prevent auto-pressing enter on other appearing components (such as modal open).
 		if (e.key === "Enter") {
 			e.preventDefault();
 		}
 
-		if (this.props.activeChannel.id !== null && e.key === "Enter") {
-			// Avoid sending empty messages.
-			if (value === "") {
-				return;
-			}
-			// Handle command messages internally.
-			else if (value.startsWith("/")) {
-				// TODO: Pass in arguments.
-				this.props.commandHandler.handle(this.getCommandName());
-				this.clearValue();
-
-				return;
-			}
-
-			const message: IMessage = Factory.createMessage(this.props.activeChannel.id, value);
-
-			this.clearValue();
-			Actions.addGeneralMessage(message);
-			MainApp.actions.handleMessage(message);
+		// Send a message.
+		if (e.key === "Enter") {
+			this.sendMessage();
 		}
 		else if (this.inCommand()) {
-			// Filter values in auto complete
+			// Filter values in auto complete.
 		}
 
 		// Change event won't trigger if value is manually cleared
 		//this.handleInputChange();
+	}
+
+	public sendMessage(): void {
+		// Stop when there is no active channel.
+		if (this.props.activeChannel.id === null) {
+			return;
+		}
+
+		const value: string = this.getValue();
+
+		// Avoid sending empty messages.
+		if (value === "") {
+			return;
+		}
+		// Handle command messages internally.
+		else if (value.startsWith("/")) {
+			// TODO: Pass in arguments.
+			this.props.commandHandler.handle(this.getCommandName());
+			this.clearValue();
+
+			return;
+		}
+
+		const message: IMessage = Factory.createMessage(this.props.activeChannel.id, value);
+
+		this.clearValue();
+		Actions.addGeneralMessage(message);
+		MainApp.actions.handleMessage(message);
 	}
 
 	public handleScroll(): void {
@@ -255,7 +265,7 @@ class Chat extends React.Component<ILocalProps, ILocalState> {
 	}
 
 	public loadOlderMessages(): void {
-		// TODO: Timeout for debugging (slower)
+		// TODO: Timeout for debugging (slower).
 		setTimeout(() => {
 			this.setState({
 				offset: this.state.offset + 1
@@ -282,7 +292,7 @@ class Chat extends React.Component<ILocalProps, ILocalState> {
 	public handleAutoCompleteItemClick(item: IAutoCompleteItem): void {
 		this.setValue(`/${item.name} `);
 
-		// Focus input after appending data
+		// Focus input after appending data.
 		this.focus();
 	}
 
@@ -344,7 +354,7 @@ class Chat extends React.Component<ILocalProps, ILocalState> {
 								disabled={this.props.inputLocked}
 								maxLength={300}
 							/>
-							<div onClick={() => alert("Send!")} className="send"><FontAwesomeIcon icon={faArrowRight} /></div>
+							<div onClick={() => this.sendMessage()} className="send"><FontAwesomeIcon icon={faArrowRight} /></div>
 						</div>
 					</CSSTransition>
 					<div className="extra">

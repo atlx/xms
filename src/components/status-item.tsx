@@ -1,4 +1,4 @@
-import React from "react";
+import React, {CSSProperties} from "react";
 import "../styles/status-item.scss";
 import {Callback} from "../core/app";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
@@ -10,11 +10,22 @@ export interface IStatusItemProps {
     readonly onClick?: Callback;
     readonly loading?: boolean;
     readonly icon?: IconProp;
+    readonly style?: CSSProperties;
+
+    /**
+     * The class name(s) that will be appended.
+     */
+    readonly className?: string;
 }
 
 export default class StatusItem extends React.Component<IStatusItemProps> {
     public computeClassNames(): string {
         const classes: string[] = ["status-item"];
+
+        // Append provided class names.
+        if (this.props.className !== undefined) {
+            classes.push(this.props.className);
+        }
 
         if (this.props.onClick !== undefined) {
             classes.push("clickable");
@@ -34,7 +45,7 @@ export default class StatusItem extends React.Component<IStatusItemProps> {
 
     public render(): JSX.Element {
         return (
-            <div onClick={this.props.onClick} title={this.props.tooltip} className={this.computeClassNames()}>
+            <div style={this.props.style} onClick={this.props.onClick} title={this.props.tooltip} className={this.computeClassNames()}>
                 {this.renderIcon()}
                 {this.props.children}
             </div>

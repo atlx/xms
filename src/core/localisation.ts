@@ -1,6 +1,8 @@
 export enum Language {
-    English,
-    Spanish
+    English = "English",
+    Spanish = "Spanish",
+    MandarinChinese = "Mandarin Chinese",
+    Russian = "Russian"
 }
 
 export default class Localisation {

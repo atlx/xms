@@ -9,6 +9,11 @@ interface ILocalProps {
      * Whether this item is selected. Defaults to false.
      */
     readonly selected?: boolean;
+
+    /**
+     * Whether this item is disabled. Defaults to false.
+     */
+    readonly disabled?: boolean;
 }
 
 export default class StatusSelectItem extends React.Component<ILocalProps> {
@@ -20,9 +25,15 @@ export default class StatusSelectItem extends React.Component<ILocalProps> {
         return faCircle;
     }
 
+    public getClass(): string | undefined {
+        if (this.props.disabled) {
+            return "disabled";
+        }
+    }
+
     public render(): JSX.Element {
         return (
-            <StatusItem icon={this.getIcon()}>{this.props.children}</StatusItem>
+            <StatusItem className={this.getClass()} icon={this.getIcon()}>{this.props.children}</StatusItem>
         );
     }
 }

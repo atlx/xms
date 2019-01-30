@@ -20,7 +20,7 @@ export default class Handle extends React.Component {
 	public render(): JSX.Element {
 		return (
 			<div className="handle">
-				<div className="title">XMS by CloudRex</div>
+				<div className="title">XMS by Atlas</div>
 				<div className="buttons">
 					{DevelopmentMode &&
 						<div className="dev-mode">Dev. Mode</div>
