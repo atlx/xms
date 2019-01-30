@@ -3,10 +3,11 @@ import "../styles/explorer/explorer.scss";
 import ExplorerItem from "./explorer-item";
 import {IAppState} from "../store/store";
 import {connect} from "react-redux";
-import {IChannel, UniqueId} from "../types/types";
+import {IChannel, UniqueId, ChannelType, SpecialChannel} from "../types/types";
 import {Map as ImmutableMap} from "immutable";
 import PlaceholderExplorerItem from "./placeholder/explorer-item";
 import UserBar from "./user-bar";
+import ExplorerBreak from "./explorer/explorer-break";
 
 interface ILocalProps {
 	readonly channels: ImmutableMap<UniqueId, IChannel>;
@@ -32,6 +33,7 @@ class Explorer extends React.Component<ILocalProps> {
 
 					// TODO
 					indicate={false}
+
 					active={this.props.activeChannelId === value.id}
 					name={value.name}
 				/>
@@ -45,6 +47,8 @@ class Explorer extends React.Component<ILocalProps> {
 		return (
 			<div className="explorer">
 				<div className="items">
+					<ExplorerItem active={this.props.activeChannelId === SpecialChannel.General} name="General" type={ChannelType.Public} />
+					<ExplorerBreak />
 					{this.renderItems()}
 					<PlaceholderExplorerItem opacity={1} />
 					<PlaceholderExplorerItem opacity={2} />

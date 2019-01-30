@@ -1,3 +1,5 @@
+@import "../lib/colors";
+
 .user-bar {
     & {
         display: grid;
@@ -6,7 +8,7 @@
         align-items: center;
         padding-top: 20px;
         color: #aaa;
-        border-top: 1px solid #292929;
+        border-top: 1px solid $explorer-separator;
     }
 
     > .avatar {

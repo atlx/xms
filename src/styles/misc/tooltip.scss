@@ -1,19 +1,5 @@
-$anim-time: 0.2s;
-$anim-offset: 5px;
-$offset: 8px;
-
-@keyframes tooltip-appear-top {
-    from {
-        opacity: 0;
-        margin-bottom: $anim-offset;
-    }
-}
-
-@keyframes tooltip-appear-left {
-    from {
-        left: calc(0% - #{$offset} - #{$anim-offset});
-    }
-}
+@import "../lib/colors";
+@import "../lib/animations";
 
 .tooltip-container {
     & {
@@ -34,10 +20,11 @@ $offset: 8px;
             max-width: 250px;
             min-width: 70px;
             transform: translate(-50%, 0);
-            animation: tooltip-appear-top $anim-time ease;
+            animation: appear-top $appear-anim-time ease;
             white-space: nowrap;
             color: #aaa;
             font-size: 14px;
+            border: 1px solid $border-dark;
         }
 
         &.trans-enter,
@@ -46,7 +33,7 @@ $offset: 8px;
         }
 
         &.trans-exit {
-            transition: opacity $anim-time ease;
+            transition: opacity $appear-anim-time ease;
             opacity: 0;
         }
 
@@ -55,9 +42,9 @@ $offset: 8px;
         }
 
         &.pos-left {
-            animation-name: tooltip-appear-left;
+            animation-name: appear-left;
             bottom: initial;
-            left: calc(0% - #{$offset});
+            left: calc(0% - #{$appear-offset});
             top: 50%;
             transform: translate(-100%, -50%);
         }

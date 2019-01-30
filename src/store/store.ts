@@ -112,12 +112,7 @@ export const InitialState: IAppState = {
         users: [],
         categories: [],
         usersMap: new Map(),
-
-        // General channel
-        channels: ImmutableMap({
-            general: GeneralChannel
-        }),
-
+        channels: ImmutableMap(),
         activeChannel: GeneralChannel,
         commandHandler: new CommandHandler(),
         modals: [],

@@ -1,3 +1,5 @@
+@import "../lib/colors";
+
 .status-bar {
     & {
         display: grid;
@@ -8,7 +10,7 @@
         color: #888;
         border-radius: 3px;
         font-size: 14px;
-        border: 1px solid #202020;
+        border: 1px solid $border-dark;
     }
 
     > div {

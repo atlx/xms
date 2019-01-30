@@ -6,10 +6,25 @@ import {faHashtag} from "@fortawesome/free-solid-svg-icons";
 import {ChannelType} from "../types/types";
 
 interface ILocalProps {
+    /**
+     * The name that will represent the item.
+     */
     readonly name: string;
+
+    /**
+     * The type of channel. Affects icon.
+     */
     readonly type: ChannelType;
-    readonly indicate: boolean;
-    readonly active: boolean;
+
+    /**
+     * Whether the item emits notification(s). Defaults to false.
+     */
+    readonly indicate?: boolean;
+
+    /**
+     * Whether the item is active or selected. Defaults to false.
+     */
+    readonly active?: boolean;
 }
 
 export default class ExplorerItem extends React.Component<ILocalProps> {

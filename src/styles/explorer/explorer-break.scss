@@ -1,0 +1,9 @@
+@import "../lib/colors";
+
+.explorer-break {
+    width: 100%;
+    box-sizing: border-box;
+    height: 1px;
+    background-color: $explorer-separator;
+    margin-top: 10px;
+}

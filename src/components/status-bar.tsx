@@ -37,7 +37,7 @@ class StatusBar extends React.Component<ILocalProps> {
                     <StatusItem tooltip="Download meter" icon={faArrowDown}>53 KB</StatusItem>
                 </div>
                 <div className="right">
-                    <StatusSelect icon={faBullseye} text="State">
+                    <StatusSelect icon={faBullseye} text="State" title="Select State">
                         {/* TODO: States */}
                         <StatusSelectItem selected>Online</StatusSelectItem>
                         <StatusSelectItem disabled>Busy</StatusSelectItem>
@@ -45,7 +45,7 @@ class StatusBar extends React.Component<ILocalProps> {
                         <StatusSelectItem disabled>Offline</StatusSelectItem>
                     </StatusSelect>
                     <StatusToggle onClick={() => MainApp.toggleNotifications()} on={faBell} off={faBellSlash}>Notifications</StatusToggle>
-                    <StatusSelect icon={faGlobeAmericas} text={MainApp.i18n.activeLanguage}>
+                    <StatusSelect icon={faGlobeAmericas} text={MainApp.i18n.activeLanguage} title="Select Language">
                         {/* TODO: Languages */}
                         <StatusSelectItem selected>{Language.English}</StatusSelectItem>
                         <StatusSelectItem disabled>{Language.Spanish}</StatusSelectItem>
