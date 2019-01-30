@@ -325,6 +325,16 @@ class Chat extends React.Component<ILocalProps, ILocalState> {
 		}
 	}
 
+	public getWrapperClass(): string {
+		const classes: string[] = ["message-wrapper"];
+
+		if (this.props.inputLocked) {
+			classes.push("disabled");
+		}
+
+		return classes.join(" ");
+	}
+
 	public render(): JSX.Element {
 		return (
 			<div className="chat">
@@ -344,7 +354,7 @@ class Chat extends React.Component<ILocalProps, ILocalState> {
 						items={this.state.filteredAutoCompleteCommands}
 					/>
 					<CSSTransition in={this.props.inputLocked} classNames="trans" timeout={300}>
-						<div className="message-wrapper">
+						<div className={this.getWrapperClass()}>
 							<input
 								onChange={this.handleInputChange}
 								ref={this.$input}

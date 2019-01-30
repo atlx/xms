@@ -101,11 +101,17 @@
                 }
             }
 
-            &:disabled {
-                cursor: not-allowed;
-                background-color: #444;
-                border-style: solid;
-                opacity: 0.6;
+            &.disabled {
+                & {
+                    cursor: not-allowed;
+                    background-color: #444;
+                    border-style: solid;
+                    opacity: 0.6;
+                }
+
+                > * {
+                    cursor: inherit !important;
+                }
             }
 
             > .message {
