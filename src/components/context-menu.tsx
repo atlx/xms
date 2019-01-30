@@ -1,5 +1,5 @@
 import React, {CSSProperties} from "react";
-import "../styles/context-menu.scss";
+import "../styles/misc/context-menu.scss";
 import {IContextMenuOption, ContextMenuOptionType, IContextMenu} from "../types/types";
 
 export default class ContextMenu extends React.Component<IContextMenu> {
@@ -32,10 +32,10 @@ export default class ContextMenu extends React.Component<IContextMenu> {
 	public render(): JSX.Element {
 		return (
 			<div style={this.getStyle()} className="context-menu">
-                <div className="title">{this.props.title}</div>
-                <div className="options">
+				<div className="title">{this.props.title}</div>
+				<div className="options">
 					{this.renderOptions()}
-                </div>
+				</div>
 			</div>
 		);
 	}

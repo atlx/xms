@@ -1,5 +1,5 @@
 import App from "./core/app";
-import "./styles/global.scss";
+import "./styles/lib/global.scss";
 import {User, UserState} from "./types/types";
 import os from "os";
 import Utils from "./core/utils";

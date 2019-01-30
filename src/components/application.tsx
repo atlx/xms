@@ -1,5 +1,5 @@
 import React, {CSSProperties} from "react";
-import "../styles/application.scss";
+import "../styles/misc/application.scss";
 import DefaultPage from "../pages/default";
 import {IAppState} from "../store/store";
 import {connect} from "react-redux";

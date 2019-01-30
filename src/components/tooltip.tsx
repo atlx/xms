@@ -1,7 +1,6 @@
 import React, {CSSProperties} from "react";
-import "../styles/tooltip.scss";
+import "../styles/misc/tooltip.scss";
 import {CSSTransition} from "react-transition-group";
-import $ from "jquery";
 
 export enum TooltipPosition {
     Top,
@@ -46,10 +45,11 @@ export default class Tooltip extends React.Component<ILocalProps, ILocalState> {
     }
 
     public componentDidMount(): void {
+        //this.positionFix();
     }
 
     public componentWillUpdate(): void {
-        //this.applyPositionFix();
+        //this.positionFix();
     }
 
     public setVisibility(visible: boolean): void {
@@ -68,6 +68,7 @@ export default class Tooltip extends React.Component<ILocalProps, ILocalState> {
             return undefined;
         }
 
+        // TODO: Finish implementing.
         let move: number = 0;
 
         console.log(Object.keys(this.$tooltip.current));

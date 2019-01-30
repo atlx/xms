@@ -1,5 +1,5 @@
 import React, {CSSProperties} from "react";
-import "../../styles/roster-item.scss";
+import "../../styles/roster/roster-item.scss";
 import "../../styles/placeholder/roster-item.scss";
 import Utils from "../../core/utils";
 

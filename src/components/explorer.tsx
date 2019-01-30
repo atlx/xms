@@ -1,5 +1,5 @@
 import React from "react";
-import "../styles/explorer.scss";
+import "../styles/explorer/explorer.scss";
 import ExplorerItem from "./explorer-item";
 import {IAppState} from "../store/store";
 import {connect} from "react-redux";

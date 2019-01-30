@@ -1,5 +1,5 @@
 import React, {CSSProperties} from "react";
-import "../styles/loader.scss";
+import "../styles/misc/loader.scss";
 
 interface ILocalProps {
     readonly text?: string;

@@ -1,5 +1,5 @@
 import React, {RefObject} from "react";
-import "../styles/modal.scss";
+import "../styles/misc/modal.scss";
 import {CSSTransition} from "react-transition-group";
 
 interface ILocalProps {

@@ -1,5 +1,5 @@
 import React from "react";
-import "../styles/handle.scss";
+import "../styles/misc/handle.scss";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faTimes} from "@fortawesome/free-solid-svg-icons";
 import {remote} from "electron";

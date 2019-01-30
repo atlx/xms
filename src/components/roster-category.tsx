@@ -1,5 +1,5 @@
 import React from "react";
-import "../styles/roster-category.scss";
+import "../styles/roster/roster-category.scss";
 import RosterItem from "./roster-item";
 import {User, UniqueId} from "../types/types";
 import {IAppState} from "../store/store";

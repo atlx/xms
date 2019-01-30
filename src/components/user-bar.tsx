@@ -1,5 +1,5 @@
 import React from "react";
-import "../styles/user-bar.scss";
+import "../styles/user-bar/user-bar.scss";
 import UserBarAction from "./user-bar-action";
 import {faCog} from "@fortawesome/free-solid-svg-icons";
 

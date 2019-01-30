@@ -1,10 +1,10 @@
 import React from "react";
-import "../styles/status-bar.scss";
+import "../styles/status-bar/status-bar.scss";
 import StatusItem from "./status-item";
 import {faWifi, faSignal, faBell, faBellSlash, faGlobeAmericas, faBullseye, faUpload, faArrowUp, faArrowDown} from "@fortawesome/free-solid-svg-icons";
 import {IAppState, ConnectionState} from "../store/store";
 import {connect} from "react-redux";
-import {MainApp} from "..";
+import {MainApp} from "../index";
 import StatusToggle from "./status-toggle";
 import StatusSelect from "./status-select";
 import StatusSelectItem from "./status-select-item";

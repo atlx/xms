@@ -1,5 +1,5 @@
 import React, {CSSProperties} from "react";
-import "../styles/status-item.scss";
+import "../styles/status-bar/status-item.scss";
 import {Callback} from "../core/app";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faCircleNotch} from "@fortawesome/free-solid-svg-icons";

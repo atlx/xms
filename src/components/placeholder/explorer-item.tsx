@@ -1,10 +1,9 @@
 import React, {CSSProperties} from "react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import "../../styles/explorer-item.scss";
+import "../../styles/explorer/explorer-item.scss";
 import "../../styles/placeholder/explorer-item.scss";
 import {faHashtag} from "@fortawesome/free-solid-svg-icons";
 import Utils from "../../core/utils";
-import Constants from "../../core/constants";
 
 interface ILocalProps {
     readonly opacity: number;

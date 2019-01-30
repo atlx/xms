@@ -1,6 +1,6 @@
 import React from "react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import "../styles/explorer-item.scss";
+import "../styles/explorer/explorer-item.scss";
 import {faQuestionCircle, IconDefinition} from "@fortawesome/free-regular-svg-icons";
 import {faHashtag} from "@fortawesome/free-solid-svg-icons";
 import {ChannelType} from "../types/types";

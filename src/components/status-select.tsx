@@ -1,5 +1,5 @@
 import React from "react";
-import "../styles/status-select.scss";
+import "../styles/status-bar/status-select.scss";
 import StatusItem, {IStatusItemProps} from "./status-item";
 
 interface ILocalProps extends IStatusItemProps {
