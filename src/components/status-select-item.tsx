@@ -17,6 +17,11 @@ interface ILocalProps {
 }
 
 export default class StatusSelectItem extends React.Component<ILocalProps> {
+    public static defaultProps: ILocalProps = {
+        disabled: false,
+        selected: false
+    };
+
     public getIcon(): IconProp {
         if (this.props.selected) {
             return faDotCircle;

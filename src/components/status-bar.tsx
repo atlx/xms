@@ -1,7 +1,7 @@
 import React from "react";
 import "../styles/status-bar/status-bar.scss";
 import StatusItem from "./status-item";
-import {faWifi, faSignal, faBell, faBellSlash, faGlobeAmericas, faBullseye, faUpload, faArrowUp, faArrowDown} from "@fortawesome/free-solid-svg-icons";
+import {faWifi, faSignal, faBell, faBellSlash, faGlobeAmericas, faBullseye, faArrowUp, faArrowDown, faCheck, faToolbox, faComment, faLocationArrow} from "@fortawesome/free-solid-svg-icons";
 import {IAppState, ConnectionState} from "../store/store";
 import {connect} from "react-redux";
 import {MainApp} from "../index";
@@ -9,6 +9,7 @@ import StatusToggle from "./status-toggle";
 import StatusSelect from "./status-select";
 import StatusSelectItem from "./status-select-item";
 import {Language} from "../core/localisation";
+import {DevelopmentMode} from "../core/app";
 
 interface ILocalProps {
     readonly ping: number;
@@ -37,6 +38,12 @@ class StatusBar extends React.Component<ILocalProps> {
                     <StatusItem tooltip="Download meter" icon={faArrowDown}>53 KB</StatusItem>
                 </div>
                 <div className="right">
+                    {DevelopmentMode &&
+                        <StatusSelect icon={faToolbox} text="Developer Tools" title="Select Action">
+                            <StatusItem icon={faComment}>General message</StatusItem>
+                            <StatusItem icon={faLocationArrow}>Direct message</StatusItem>
+                        </StatusSelect>
+                    }
                     <StatusSelect icon={faBullseye} text="State" title="Select State">
                         {/* TODO: States */}
                         <StatusSelectItem selected>Online</StatusSelectItem>

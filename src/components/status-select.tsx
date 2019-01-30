@@ -1,9 +1,11 @@
-import React from "react";
+import React, {CSSProperties} from "react";
 import "../styles/status-bar/status-select.scss";
-import StatusItem, {IStatusItemProps} from "./status-item";
+import StatusItem from "./status-item";
 import $ from "jquery";
+import {Callback} from "../core/app";
+import {IconProp} from "@fortawesome/fontawesome-svg-core";
 
-interface ILocalProps extends IStatusItemProps {
+interface ILocalProps {
     /**
      * The title that will be displayed on top of the options list.
      */
@@ -13,6 +15,31 @@ interface ILocalProps extends IStatusItemProps {
      * The text that will be displayed in the toggle button item.
      */
     readonly text: string;
+
+    /**
+     * The callback action to fired upon the toggle button being clicked.
+     */
+    readonly onClick?: Callback;
+
+    /**
+     * Whether the icon should be displayed as loading.
+     */
+    readonly loading?: boolean;
+
+    /**
+     * The icon of the toggle button.
+     */
+    readonly icon?: IconProp;
+
+    /**
+     * The style to be applied to the component.
+     */
+    readonly style?: CSSProperties;
+
+    /**
+     * The class name(s) that will be appended.
+     */
+    readonly className?: string;
 }
 
 interface ILocalState {
@@ -69,9 +96,19 @@ export default class StatusSelect extends React.Component<ILocalProps, ILocalSta
         }
     }
 
+    public getClass(): string {
+        const classes: string[] = ["status-select"];
+
+        if (this.props.className !== undefined) {
+            classes.push(this.props.className);
+        }
+
+        return classes.join(" ");
+    }
+
     public render(): JSX.Element {
         return (
-            <div ref={this.$statusSelect} className="status-select">
+            <div ref={this.$statusSelect} style={this.props.style} className={this.getClass()}>
                 {this.state.bodyVisible &&
                     <div className="select-body">
                         <div className="body-wrapper">
@@ -81,7 +118,7 @@ export default class StatusSelect extends React.Component<ILocalProps, ILocalSta
                         </div>
                     </div>
                 }
-                <StatusItem {...this.props} onClick={() => this.toggleBody()}>{this.props.text}</StatusItem>
+                <StatusItem icon={this.props.icon} onClick={() => this.toggleBody()}>{this.props.text}</StatusItem>
             </div>
         );
     }
