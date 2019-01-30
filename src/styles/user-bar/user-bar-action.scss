@@ -1,0 +1,14 @@
+.user-bar-action {
+    & {
+        color: #666;
+        transition: color 0.1s ease;
+        cursor: pointer;
+        padding: 5px 8px;
+        border-radius: 3px;
+    }
+
+    &:hover {
+        color: #aaa;
+        background-color: #383838;
+    }
+}

@@ -1,5 +1,7 @@
 import React from "react";
 import "../styles/user-bar.scss";
+import UserBarAction from "./user-bar-action";
+import {faCog} from "@fortawesome/free-solid-svg-icons";
 
 export default class UserBar extends React.Component {
     public render(): JSX.Element {
@@ -9,6 +11,9 @@ export default class UserBar extends React.Component {
                 <div className="info">
                     <div className="name">An User</div>
                     <div className="status"></div>
+                </div>
+                <div className="actions">
+                    <UserBarAction tooltip="Settings" icon={faCog} />
                 </div>
             </div>
         );

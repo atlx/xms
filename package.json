@@ -14,6 +14,7 @@
 	},
 	"devDependencies": {
 		"@babel/core": "^7.2.2",
+		"@types/jquery": "^3.3.29",
 		"@types/node": "^10.12.18",
 		"@types/react-transition-group": "^2.0.15",
 		"@types/redux-logger": "^3.0.6",
@@ -52,6 +53,7 @@
 		"@types/react-redux": "^6.0.9",
 		"draft-js": "^0.10.5",
 		"immutable": "^4.0.0-rc.12",
+		"jquery": "^3.3.1",
 		"pouchdb-browser": "^7.0.0",
 		"react-redux": "^6.0.0",
 		"react-router-dom": "^4.3.1",

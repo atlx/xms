@@ -4,6 +4,7 @@ import {Callback} from "../core/app";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faCircleNotch} from "@fortawesome/free-solid-svg-icons";
 import {IconProp} from "@fortawesome/fontawesome-svg-core";
+import Tooltip from "./tooltip";
 
 export interface IStatusItemProps {
     readonly tooltip?: string;
@@ -44,11 +45,21 @@ export default class StatusItem extends React.Component<IStatusItemProps> {
     }
 
     public render(): JSX.Element {
-        return (
-            <div style={this.props.style} onClick={this.props.onClick} title={this.props.tooltip} className={this.computeClassNames()}>
+        const content: JSX.Element = (
+            <div style={this.props.style} onClick={this.props.onClick} className={this.computeClassNames()}>
                 {this.renderIcon()}
                 {this.props.children}
             </div>
         );
+
+        if (this.props.tooltip !== undefined) {
+            return (
+                <Tooltip text={this.props.tooltip}>
+                    {content}
+                </Tooltip>
+            );
+        }
+
+        return content;
     }
 }

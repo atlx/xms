@@ -1,7 +1,7 @@
 import React from "react";
 import "../styles/status-bar.scss";
 import StatusItem from "./status-item";
-import {faWifi, faSignal, faBell, faBellSlash, faGlobeAmericas} from "@fortawesome/free-solid-svg-icons";
+import {faWifi, faSignal, faBell, faBellSlash, faGlobeAmericas, faBullseye, faUpload, faArrowUp, faArrowDown} from "@fortawesome/free-solid-svg-icons";
 import {IAppState, ConnectionState} from "../store/store";
 import {connect} from "react-redux";
 import {MainApp} from "..";
@@ -33,10 +33,17 @@ class StatusBar extends React.Component<ILocalProps> {
         return (
             <div className="status-bar">
                 <div className="left">
-                    <StatusItem>Hello world</StatusItem>
-                    <StatusItem loading>Loading</StatusItem>
+                    <StatusItem tooltip="Upload meter" icon={faArrowUp}>12 KB</StatusItem>
+                    <StatusItem tooltip="Download meter" icon={faArrowDown}>53 KB</StatusItem>
                 </div>
                 <div className="right">
+                    <StatusSelect icon={faBullseye} text="State">
+                        {/* TODO: States */}
+                        <StatusSelectItem selected>Online</StatusSelectItem>
+                        <StatusSelectItem disabled>Busy</StatusSelectItem>
+                        <StatusSelectItem disabled>Away</StatusSelectItem>
+                        <StatusSelectItem disabled>Offline</StatusSelectItem>
+                    </StatusSelect>
                     <StatusToggle onClick={() => MainApp.toggleNotifications()} on={faBell} off={faBellSlash}>Notifications</StatusToggle>
                     <StatusSelect icon={faGlobeAmericas} text={MainApp.i18n.activeLanguage}>
                         {/* TODO: Languages */}
