@@ -146,16 +146,16 @@ export default class BroadcastGateway implements IDisposable {
             console.log(`[BroadcastGateway.setupEvents] Received message string: ${messageString}`);
 
             if (messageString.startsWith("{") && messageString.endsWith("}")) {
-                const message: GatewayMsg<any> = JSON.parse(messageString);
+                const msg: GatewayMsg<any> = JSON.parse(messageString);
 
                 // If the message was sent by the local client.
-                if (message.sender === MainApp.me.id) {
-                    if (message.type === GatewayMsgType.Message) {
-                        const payload: MessagePayload = message.payload;
+                if (msg.sender === MainApp.me.id) {
+                    if (msg.type === GatewayMsgType.Message) {
+                        const payload: MessagePayload = msg.payload;
 
                         Actions.markMessageSent(payload.id);
                     }
-                    else if (message.type === GatewayMsgType.Heartbeat) {
+                    else if (msg.type === GatewayMsgType.Heartbeat) {
                         const ping: number = Math.round(performance.now() - this.pingStart);
 
                         this.registerPing(ping);
@@ -165,25 +165,26 @@ export default class BroadcastGateway implements IDisposable {
                         }
                     }
                     else {
-                        console.log(`[BroadcastGateway:Message] Unknown message type from self: ${message.type}`);
+                        console.log(`[BroadcastGateway:Message] Unknown message type from self: ${msg.type}`);
                     }
 
                     return;
                 }
 
                 // TODO: Use handlers instead
-                if (message.type === GatewayMsgType.Hello) {
+                if (msg.type === GatewayMsgType.Hello) {
                     // TODO: Make use of the time difference & adjust time proxy for this user
-                    const payload: HelloPayload = message.payload;
+                    const payload: HelloPayload = msg.payload;
 
-                    if (!(store.getState() as IAppState).category.usersMap.has(message.sender)) {
+                    if (!(store.getState() as IAppState).category.usersMap.has(msg.sender)) {
                         Actions.addUser(payload.user);
                     }
                 }
-                else if (message.type === GatewayMsgType.Message) {
-                    const payload: MessagePayload = message.payload;
+                // Handle incoming message.
+                else if (msg.type === GatewayMsgType.Message) {
+                    const payload: MessagePayload = msg.payload;
 
-                    if ((store.getState() as IAppState).category.usersMap.has(message.sender)) {
+                    if ((store.getState() as IAppState).category.usersMap.has(msg.sender)) {
                         // TODO
                     }
                     else {
@@ -206,7 +207,7 @@ export default class BroadcastGateway implements IDisposable {
                     }
                 }
                 else {
-                    console.log(`[BroadcastGateway] Received an invalid message from '${sender.address}' with type '${message.type}'`)
+                    console.log(`[BroadcastGateway] Received an invalid message from '${sender.address}' with type '${msg.type}'`)
                 }
             }
         });
@@ -221,7 +222,7 @@ export default class BroadcastGateway implements IDisposable {
     private heartbeat(): this {
         this.startPingTimer();
 
-        this.emit<HeartbeatPayload>(GatewayMsgType.Heartbeat, {
+        this.broadcast<HeartbeatPayload>(GatewayMsgType.Heartbeat, {
             //
         });
 
@@ -262,7 +263,7 @@ export default class BroadcastGateway implements IDisposable {
         });
     }
 
-    public emit<T>(type: GatewayMsgType, payload: T): void {
+    public broadcast<T>(type: GatewayMsgType, payload: T): void {
         const data: Buffer = Buffer.from(JSON.stringify({
             type,
             time: Date.now(),

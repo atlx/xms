@@ -10,7 +10,6 @@ import commandReducer from "./reducers/command";
 import contextMenuReducer from "./reducers/context-menu";
 import miscReducer from "./reducers/misc";
 import userReducer from "./reducers/user";
-import modalReducer from "./reducers/modal";
 import netReducer from "./reducers/net";
 
 export enum ActionType {
@@ -67,12 +66,12 @@ export interface IAppStateCategory {
     readonly channels: ImmutableMap<UniqueId, IChannel>;
     readonly activeChannel: IChannel | null;
     readonly commandHandler: CommandHandler;
-    readonly modals: IModal[];
     readonly me: User | null;
     readonly contextMenu: IContextMenu | null;
 }
 
 export interface IAppStateMisc {
+    readonly modals: IModal[];
     readonly page: Page;
     readonly inputLocked: boolean;
     readonly autoCompleteVisible: boolean;
@@ -115,12 +114,12 @@ export const InitialState: IAppState = {
         channels: ImmutableMap(),
         activeChannel: GeneralChannel,
         commandHandler: new CommandHandler(),
-        modals: [],
         me: null,
         contextMenu: null
     },
 
     misc: {
+        modals: [],
         inputLocked: true,
         page: Page.Init,
         autoCompleteVisible: false
@@ -143,7 +142,6 @@ export const store: Store = createStore(combineReducers({
     contextMenu: contextMenuReducer,
     message: messageReducer,
     misc: miscReducer,
-    modal: modalReducer,
     user: userReducer,
     net: netReducer
 }), applyMiddleware(logger));

@@ -13,17 +13,17 @@ interface ILocalState {
 }
 
 export default class Modal extends React.Component<ILocalProps, ILocalState> {
-    private $okay: RefObject<any>;
+    private $okayBtn: RefObject<any>;
 
     public constructor(props: ILocalProps) {
         super(props);
 
-        // Bindings
+        // Bindings.
         this.handleOnClose = this.handleOnClose.bind(this);
         this.handleOnExited = this.handleOnExited.bind(this);
 
-        // Refs
-        this.$okay = React.createRef();
+        // Refs.
+        this.$okayBtn = React.createRef();
     }
 
     public componentWillMount(): void {
@@ -33,7 +33,7 @@ export default class Modal extends React.Component<ILocalProps, ILocalState> {
     }
 
     public componentDidMount(): void {
-        this.$okay.current.focus();
+        this.$okayBtn.current.focus();
     }
 
     public handleOnClose(): void {
@@ -61,7 +61,7 @@ export default class Modal extends React.Component<ILocalProps, ILocalState> {
                             {this.props.text}
                         </div>
                         <div className="options">
-                            <button ref={this.$okay} onClick={this.handleOnClose} tabIndex={1} className="close">Okay</button>
+                            <button ref={this.$okayBtn} onClick={this.handleOnClose} tabIndex={1} className="close">Okay</button>
                         </div>
                     </div>
                 </div>

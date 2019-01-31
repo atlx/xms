@@ -10,7 +10,7 @@ export default class GatewayActions {
     }
 
     public broadcastMessage(message: IMessage): void {
-        this.gateway.emit<MessagePayload>(GatewayMsgType.Message, {
+        this.gateway.broadcast<MessagePayload>(GatewayMsgType.Message, {
             id: message.id,
             text: message.text,
             type: message.type

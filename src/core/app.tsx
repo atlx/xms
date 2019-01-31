@@ -4,7 +4,7 @@ import ReactDOM from "react-dom";
 import {Provider} from "react-redux";
 import {store} from "../store/store";
 import BroadcastGateway from "../net/broadcast-gateway";
-import {User, Page, INotice, NoticeStyle, UserState, SpecialCategories, ContextMenuOptionType, SpecialChannel} from "../types/types";
+import {User, Page, INotice, NoticeStyle, UserState, SpecialCategory, ContextMenuOptionType, SpecialChannel} from "../types/types";
 import GatewayActions from "./gateway-actions";
 import Actions from "../store/actions";
 import CommandHandler from "./command-handler";
@@ -16,6 +16,7 @@ import {MainApp} from "../index";
 import Sounds from "./sounds";
 import Constants from "./constants";
 import Localisation from "./localisation";
+import DeveloperToolbox from "./developer-toolbox";
 
 export type PromiseOr<T = void> = Promise<T> | T;
 
@@ -34,6 +35,7 @@ export default class App {
 	public readonly commandHandler: CommandHandler;
 	public readonly net: NetworkHub;
 	public readonly i18n: Localisation;
+	public readonly dev: DeveloperToolbox;
 
 	public notifications: boolean;
 
@@ -45,6 +47,7 @@ export default class App {
 		this.net = new NetworkHub(Constants.primaryNetPort);
 		this.i18n = new Localisation();
 		this.notifications = true;
+		this.dev = new DeveloperToolbox(this);
 	}
 
 	public toggleNotifications(): this {
@@ -80,7 +83,7 @@ export default class App {
 		ReactDOM.render(
 			<Provider store={store}>
 				{/* TODO: Hard-coded prop as null (required to pass in) */}
-				<Application modals={null as any} page={Page.Init} />
+				<Application modals={[] as any} page={Page.Init} />
 			</Provider>,
 
 			document.getElementById("root")
@@ -89,28 +92,6 @@ export default class App {
 
 	public registerCommands(): void {
 		const commands: ICommand[] = [
-			{
-				name: "ping",
-				description: "View the connection's latency",
-
-				handle(): void {
-					const ping: number = -1;
-
-					Actions.addGeneralMessage<INotice>(
-						// TODO: Channel is hard-coded
-						Factory.createNotice(SpecialChannel.General, `Your ping is ~${ping}ms (${Utils.determinePingState(ping)})`)
-					);
-				}
-			},
-			{
-				name: "notify",
-				description: "Play the notification sound",
-
-				handle(): void {
-					MainApp.notify();
-				}
-			},
-
 			{
 				name: "clear",
 				description: "Clear all messages",
@@ -123,17 +104,6 @@ export default class App {
 
 		if (DevelopmentMode) {
 			commands.push(...[
-				{
-					name: "modal",
-					description: "Show a modal",
-
-					handle(): void {
-						Actions.showModal({
-							title: "This is a modal",
-							text: "Requested by user"
-						});
-					}
-				},
 				{
 					name: "notice",
 					description: "Show a success notice",
@@ -159,23 +129,6 @@ export default class App {
 					handle(): void {
 						// TODO: Channel
 						Actions.addGeneralMessage<INotice>(Factory.createNotice(SpecialChannel.General, "This is a error notice", NoticeStyle.Error));
-					}
-				},
-				{
-					name: "add-user",
-					description: "Add a dummy user",
-
-					handle(): void {
-						const id: string = "u" + Date.now().toString();
-
-						Actions.addUser({
-							createdTime: Date.now(),
-							username: "Dummy",
-							id,
-							state: UserState.Online
-						});
-
-						Actions.addUserToCategory(id, SpecialCategories.Connected);
 					}
 				},
 				{
@@ -218,12 +171,12 @@ export default class App {
 
 		Actions.updateMe(this.me);
 
-		// TODO: State is immutable, therefore once me is updated, it will not be reflected upon the users list
+		// TODO: State is immutable, therefore once me is updated, it will not be reflected upon the users list?
 		Actions.addUser(this.me);
 
 		Actions.addCategory({
-			id: SpecialCategories.Connected,
-			name: "Connected",
+			id: SpecialCategory.Connected,
+			name: SpecialCategory.Connected,
 			users: [this.me.id]
 		});
 

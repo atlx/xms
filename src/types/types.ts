@@ -94,9 +94,9 @@ export enum UserState {
     Offline
 }
 
-export enum SpecialCategories {
-    Connected = "connected",
-    Offline = "offline"
+export enum SpecialCategory {
+    Connected = "Connected",
+    Offline = "Offline"
 }
 
 export type User = {

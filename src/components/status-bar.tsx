@@ -1,7 +1,7 @@
 import React from "react";
 import "../styles/status-bar/status-bar.scss";
 import StatusItem from "./status-item";
-import {faWifi, faSignal, faBell, faBellSlash, faGlobeAmericas, faBullseye, faArrowUp, faArrowDown, faCheck, faToolbox, faComment, faLocationArrow} from "@fortawesome/free-solid-svg-icons";
+import {faWifi, faSignal, faBell, faBellSlash, faGlobeAmericas, faBullseye, faArrowUp, faArrowDown, faCheck, faToolbox, faComment, faLocationArrow, faTimesCircle, faBookOpen, faUserCircle} from "@fortawesome/free-solid-svg-icons";
 import {IAppState, ConnectionState} from "../store/store";
 import {connect} from "react-redux";
 import {MainApp} from "../index";
@@ -10,6 +10,7 @@ import StatusSelect from "./status-select";
 import StatusSelectItem from "./status-select-item";
 import {Language} from "../core/localisation";
 import {DevelopmentMode} from "../core/app";
+import Actions from "../store/actions";
 
 interface ILocalProps {
     readonly ping: number;
@@ -40,8 +41,15 @@ class StatusBar extends React.Component<ILocalProps> {
                 <div className="right">
                     {DevelopmentMode &&
                         <StatusSelect icon={faToolbox} text="Developer Tools" title="Select Action">
-                            <StatusItem icon={faComment}>General message</StatusItem>
+                            <StatusItem onClick={() => MainApp.dev.emulatePublicMessage()} icon={faComment}>General message</StatusItem>
                             <StatusItem icon={faLocationArrow}>Direct message</StatusItem>
+                            <StatusItem icon={faBookOpen} onClick={() => Actions.showModal({
+                                title: "This is a modal",
+                                text: "Requested by user"
+                            })}>Show a modal</StatusItem>
+                            <StatusItem icon={faBell} onClick={() => MainApp.notify()}>Notify</StatusItem>
+                            <StatusItem icon={faTimesCircle} onClick={() => Actions.clearMessages()}>Clear messages</StatusItem>
+                            <StatusItem icon={faUserCircle} onClick={() => MainApp.dev.addDummyUser()}>Dummy user</StatusItem>
                         </StatusSelect>
                     }
                     <StatusSelect icon={faBullseye} text="State" title="Select State">

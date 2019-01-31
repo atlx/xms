@@ -56,12 +56,14 @@ class Application extends React.Component<ILocalState> {
 		if (this.props.modals.length > 0) {
 			const modal: IModal = this.props.modals[0];
 
-			return <Modal
-				key="modal"
-				text={modal.text}
-				title={modal.title}
-				onClose={() => this.handleModalClose(modal)}
-			/>;
+			return (
+				<Modal
+					key="modal"
+					text={modal.text}
+					title={modal.title}
+					onClose={() => this.handleModalClose(modal)}
+				/>
+			);
 		}
 
 		return undefined;
@@ -85,8 +87,8 @@ class Application extends React.Component<ILocalState> {
 
 const mapStateToProps = (state: IAppState): any => {
 	return {
-		page: state.misc.page,
-		modals: state.category.modals
+	page: state.misc.page,
+		modals: state.misc.modals
 	};
 };
 
