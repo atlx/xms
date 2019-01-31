@@ -44,7 +44,7 @@ class StatusBar extends React.Component<ILocalProps> {
                 </div>
                 <div className="right">
                     {DevelopmentMode &&
-                        <StatusSelect icon={faToolbox} text="Developer Tools" title="Select Action">
+                        <StatusSelect notify icon={faToolbox} text="Developer Tools" title="Select Action">
                             <StatusItem onClick={() => MainApp.dev.emulatePublicMessage()} icon={faComment}>General message</StatusItem>
                             <StatusItem icon={faLocationArrow}>Direct message</StatusItem>
                             <StatusItem icon={faBookOpen} onClick={() => Actions.showModal({

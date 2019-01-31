@@ -14,6 +14,11 @@ export interface IStatusItemProps {
     readonly style?: CSSProperties;
 
     /**
+     * Whether the item displays the notification indicator. Defaults to false.
+     */
+    readonly notify?: boolean;
+
+    /**
      * The class name(s) that will be appended.
      */
     readonly className?: string;
@@ -44,11 +49,20 @@ export default class StatusItem extends React.Component<IStatusItemProps> {
         }
     }
 
+    public renderIndicator(): JSX.Element | undefined {
+        if (this.props.notify) {
+            return (
+                <div className="indicator" />
+            );
+        }
+    }
+
     public render(): JSX.Element {
         const content: JSX.Element = (
             <div style={this.props.style} onClick={this.props.onClick} className={this.computeClassNames()}>
                 {this.renderIcon()}
                 {this.props.children}
+                {this.renderIndicator()}
             </div>
         );
 

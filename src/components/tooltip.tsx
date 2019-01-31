@@ -24,6 +24,10 @@ interface ILocalState {
 }
 
 export default class Tooltip extends React.Component<ILocalProps, ILocalState> {
+    public static readonly defaultProps: Partial<ILocalProps> = {
+        position: TooltipPosition.Top
+    };
+
     protected readonly $tooltip: React.RefObject<any>;
 
     public constructor(props: ILocalProps) {
@@ -87,8 +91,7 @@ export default class Tooltip extends React.Component<ILocalProps, ILocalState> {
     public getTooltipClasses(): string {
         const classes: string[] = ["tooltip"];
 
-        // Skip default (top) if possible.
-        if (this.props.position !== undefined && this.props.position !== TooltipPosition.Top) {
+        if (this.props.position !== TooltipPosition.Top) {
             switch (this.props.position) {
                 case TooltipPosition.Left: {
                     classes.push("pos-left");

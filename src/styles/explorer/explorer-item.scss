@@ -26,6 +26,12 @@
         }
     }
 
+    &.mention {
+        > .indicator {
+            background-color: $color-notify-red;
+        }
+    }
+
     &:hover {
         background-color: $color-dark-contrast-light;
     }

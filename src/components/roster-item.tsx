@@ -40,13 +40,12 @@ export default class RosterItem extends React.Component<ILocalProps> {
         }
         else {
             return (
-                <Tooltip
-                    position={TooltipPosition.Left}
-                    style={{
-                        width: "100%",
-                        marginBottom: "5px"
-                    }}
-                    text="That's you!">
+                <Tooltip position={TooltipPosition.Left} style={{
+                    display: "block",
+
+                    // TODO: Should be :not(:last-child).
+                    marginBottom: "5px"
+                }} text="That's you!">
                     {this.renderContent()}
                 </Tooltip>
             );

@@ -40,6 +40,11 @@ interface ILocalProps {
      * The class name(s) that will be appended.
      */
     readonly className?: string;
+
+    /**
+     * Whether the item displays the notification indicator. Defaults to false.
+     */
+    readonly notify?: boolean;
 }
 
 interface ILocalState {
@@ -50,6 +55,11 @@ interface ILocalState {
 }
 
 export default class StatusSelect extends React.Component<ILocalProps, ILocalState> {
+    public static readonly defaultProps: Partial<ILocalProps> = {
+        notify: false,
+        loading: false
+    };
+
     public readonly state: ILocalState = {
         bodyVisible: false
     };
@@ -118,7 +128,7 @@ export default class StatusSelect extends React.Component<ILocalProps, ILocalSta
                         </div>
                     </div>
                 }
-                <StatusItem icon={this.props.icon} onClick={() => this.toggleBody()}>{this.props.text}</StatusItem>
+                <StatusItem notify={this.props.notify} icon={this.props.icon} onClick={() => this.toggleBody()}>{this.props.text}</StatusItem>
             </div>
         );
     }

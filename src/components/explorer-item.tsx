@@ -19,12 +19,17 @@ interface ILocalProps {
     /**
      * Whether the item emits notification(s). Defaults to false.
      */
-    readonly indicate?: boolean;
+    readonly notify?: boolean;
 
     /**
      * Whether the item is active or selected. Defaults to false.
      */
     readonly active?: boolean;
+
+    /**
+     * Whether the item emits important notification(s). Defaults to false.
+     */
+    readonly mention?: boolean;
 }
 
 export default class ExplorerItem extends React.Component<ILocalProps> {
@@ -39,8 +44,12 @@ export default class ExplorerItem extends React.Component<ILocalProps> {
     public getComponentClass(): string {
         const classes: string[] = ["explorer-item"];
 
-        if (this.props.indicate) {
+        if (this.props.notify || this.props.mention) {
             classes.push("indicate");
+        }
+
+        if (this.props.mention) {
+            classes.push("mention");
         }
 
         if (this.props.active) {

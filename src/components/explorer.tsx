@@ -32,7 +32,7 @@ class Explorer extends React.Component<ILocalProps> {
 					type={value.type}
 
 					// TODO
-					indicate={false}
+					notify={false}
 
 					active={this.props.activeChannelId === value.id}
 					name={value.name}
@@ -47,7 +47,7 @@ class Explorer extends React.Component<ILocalProps> {
 		return (
 			<div className="explorer">
 				<div className="items">
-					<ExplorerItem active={this.props.activeChannelId === SpecialChannel.General} name="General" type={ChannelType.Public} />
+					<ExplorerItem notify active={this.props.activeChannelId === SpecialChannel.General} name="General" type={ChannelType.Public} />
 					<ExplorerBreak />
 					{this.renderItems()}
 					<PlaceholderExplorerItem opacity={1} />
