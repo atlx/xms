@@ -45,7 +45,8 @@ export default class RosterItem extends React.Component<ILocalProps> {
                     style={{
                         width: "100%",
                         marginBottom: "5px"
-                    }} text="That's you!">
+                    }}
+                    text="That's you!">
                     {this.renderContent()}
                 </Tooltip>
             );

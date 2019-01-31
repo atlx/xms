@@ -26,6 +26,8 @@ export type Callback<T = void> = (...args: any[]) => T;
 
 export const DevelopmentMode: boolean = process.env.NODE_ENV === "development";
 
+export const ValidMessagePattern: RegExp = /^[a-z0-9!"#$%&'()*+,.\/:;<=>?@\[\] ^_`{|}~-]*$/i;
+
 export default class App {
 	public readonly gateway: BroadcastGateway;
 	public readonly me: User;

@@ -25,6 +25,7 @@
             color: #aaa;
             font-size: 14px;
             border: 1px solid $border-dark;
+            z-index: 99;
         }
 
         &.trans-enter,

@@ -1,4 +1,4 @@
-import React, {RefObject} from "react";
+import React, {RefObject, CSSProperties} from "react";
 import "../styles/chat/chat.scss";
 import {connect} from "react-redux";
 import {IAppState} from "../store/store";
@@ -14,6 +14,7 @@ import {CSSTransition} from "react-transition-group";
 import Autocompleter from "./autocompleter";
 import CommandHandler from "../core/command-handler";
 import Factory from "../core/factory";
+import {ValidMessagePattern} from "../core/app";
 
 interface ILocalProps {
 	readonly messages: IGenericMessage[];
@@ -29,13 +30,16 @@ interface ILocalState {
 	readonly offset: number;
 	readonly filteredAutoCompleteCommands: IAutoCompleteItem[];
 	readonly status: string | undefined;
+	readonly shaking: boolean;
 }
 
 class Chat extends React.Component<ILocalProps, ILocalState> {
 	private readonly $input: RefObject<any>;
 	private readonly $container: RefObject<any>;
 	private readonly $loader: RefObject<any>;
+
 	private randomInterval?: any;
+	private shakeTimeout?: NodeJS.Timeout;
 
 	public constructor(props: ILocalProps) {
 		super(props);
@@ -59,7 +63,8 @@ class Chat extends React.Component<ILocalProps, ILocalState> {
 		// Initial state.
 		this.setState({
 			offset: 0,
-			filteredAutoCompleteCommands: this.props.autoCompleteCommands
+			filteredAutoCompleteCommands: this.props.autoCompleteCommands,
+			shaking: false
 		});
 
 		// TODO: Needs to reset once the component unmounts, use componentWillUnmount or componentDidUnmount for that.
@@ -102,6 +107,23 @@ class Chat extends React.Component<ILocalProps, ILocalState> {
 		this.randomInterval = setTimeout(() => this.setState({
 			status: "Random " + Math.random().toString().replace(".", "").substr(1).substring(0, 2)
 		}), 4000);
+
+		// Set the pending done timeout if it is not already set. Override if already exists.
+		if (this.state.shaking) {
+			clearTimeout(this.shakeTimeout as any);
+
+			// TODO: Timeout is bound to CSS time value.
+			this.shakeTimeout = setTimeout(() => {
+				this.setState({
+					shaking: false
+				})
+			}, 90);
+		}
+	}
+
+	public componentWillUnmount(): void {
+		// Clear shake timeout once the component unmounts to prevent leaving garbage behind.
+		clearTimeout(this.shakeTimeout as any);
 	}
 
 	public renderMessages(): JSX.Element[] {
@@ -208,6 +230,12 @@ class Chat extends React.Component<ILocalProps, ILocalState> {
 		});
 	}
 
+	public shakeInput(): void {
+		this.setState({
+			shaking: true
+		});
+	}
+
 	public handleKeyDown(e: any): void {
 		// Prevent auto-pressing enter on other appearing components (such as modal open).
 		if (e.key === "Enter") {
@@ -233,6 +261,13 @@ class Chat extends React.Component<ILocalProps, ILocalState> {
 		}
 
 		const value: string = this.getValue();
+
+		// Stop if the input is invalid/disallowed. Shake the input element.
+		if (!ValidMessagePattern.test(value)) {
+			this.shakeInput();
+
+			return;
+		}
 
 		// Avoid sending empty messages.
 		if (value === "") {
@@ -330,6 +365,11 @@ class Chat extends React.Component<ILocalProps, ILocalState> {
 
 		if (this.props.inputLocked) {
 			classes.push("disabled");
+		}
+
+		// Add the shaking animation class.
+		if (this.state.shaking) {
+			classes.push("shaking");
 		}
 
 		return classes.join(" ");
