@@ -2,7 +2,7 @@ import {Reducer, ActionType, InitialState, IAppStateMisc} from "../store";
 import {IModal} from "../../types/types";
 
 const miscReducer: Reducer<IAppStateMisc> = (state, action) => {
-    // Return default initial state.
+    // Return default initial state for this reducer.
     if (!state) {
         return InitialState.misc;
     }
@@ -45,6 +45,13 @@ const miscReducer: Reducer<IAppStateMisc> = (state, action) => {
             return {
                 ...state,
                 modals
+            };
+        }
+
+        case ActionType.SetLeftPanelVisible: {
+            return {
+                ...state,
+                leftPanelVisible: action.payload
             };
         }
     }

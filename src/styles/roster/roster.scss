@@ -1,5 +1,11 @@
 @import "../lib/colors";
 
 .roster {
+    // Override global of 20px.
+    padding: 10px;
+    
+    margin: 10px;
     background-color: $color-dark;
+    max-height: -webkit-fill-available;
+    overflow-y: auto;
 }

@@ -2,6 +2,7 @@ import {Reducer, ActionType} from "../store";
 import {IChannel} from "../../types/types";
 
 const channelReducer: Reducer = (state, action) => {
+    // Return default initial state for this reducer.
     if (!state) {
         return null;
     }
@@ -50,7 +51,7 @@ const channelReducer: Reducer = (state, action) => {
                 ...channel,
                 name: action.payload.name
             };
-            
+
             return {
                 ...state,
                 channels: state.channels.set(channel.id, newChannel)
@@ -78,7 +79,7 @@ const channelReducer: Reducer = (state, action) => {
                 ...channel,
                 topic: action.payload.topic
             };
-            
+
             return {
                 ...state,
                 channels: state.channels.set(channel.id, newChannel)

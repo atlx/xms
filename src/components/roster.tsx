@@ -13,8 +13,6 @@ interface ILocalProps {
 class Roster extends React.Component<ILocalProps> {
     public renderCategories(): JSX.Element[] {
         return this.props.categories.map((category: IRosterCategory) => {
-            console.log(category);
-
             const users: User[] = this.props.users.filter((user: User) => {
                 return category.users.includes(user.id);
             });
@@ -35,7 +33,7 @@ class Roster extends React.Component<ILocalProps> {
 
 const mapStateToProps = (state: IAppState): any => {
     return {
-        users: state.category.users,
+        users: state.user.users,
         categories: state.category.categories
     };
 };

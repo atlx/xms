@@ -10,12 +10,13 @@ import Handle from "./handle";
 import Actions from "../store/actions";
 import Modal from "./modal";
 
-interface ILocalState {
+interface ILocalProps {
 	readonly page: Page;
 	readonly modals: IModal[];
+	readonly leftPanelVisible?: boolean;
 }
 
-class Application extends React.Component<ILocalState> {
+class Application extends React.Component<ILocalProps> {
 	public renderPage(): JSX.Element {
 		switch (this.props.page) {
 			case Page.Default: {
@@ -32,12 +33,20 @@ class Application extends React.Component<ILocalState> {
 		}
 	}
 
-	public getAppContentStyle(): CSSProperties | undefined {
+	public getAppContentStyle(): CSSProperties {
+		const properties: CSSProperties = {};
+
 		if (this.props.page !== Page.Default) {
-			return {
-				display: "initial"
-			};
+			properties.display = "initial";
 		}
+
+		// Change grid columns when left panel is not visible.
+		if (!this.props.leftPanelVisible) {
+			// TODO: Value is hard coded, based from application.scss, which is not good.
+			properties.gridTemplateColumns = "minmax(400px, 1fr) 300px";
+		}
+
+		return properties;
 	}
 
 	public handleKeyDown(e: any): void {
@@ -85,11 +94,10 @@ class Application extends React.Component<ILocalState> {
 	}
 }
 
-const mapStateToProps = (state: IAppState): any => {
+export default connect((state: IAppState): any => {
 	return {
-	page: state.misc.page,
-		modals: state.misc.modals
+		page: state.misc.page,
+		modals: state.misc.modals,
+		leftPanelVisible: state.misc.leftPanelVisible
 	};
-};
-
-export default connect(mapStateToProps)(Application);
+})(Application);

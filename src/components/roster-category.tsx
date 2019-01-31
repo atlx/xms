@@ -42,7 +42,7 @@ class RosterCategory extends React.Component<ILocalProps> {
 
 const mapStateToProps = (state: IAppState): any => {
     return {
-        meId: state.category.me ? state.category.me.id : null
+        meId: state.user.me ? state.user.me.id : null
     };
 };
 

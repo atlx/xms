@@ -2,7 +2,7 @@ import {Reducer, ActionType, InitialState, IAppStateCategory} from "../store";
 import {IRosterCategory} from "../../types/types";
 
 const categoryReducer: Reducer<IAppStateCategory> = (state, action) => {
-    // Return default initial state.
+    // Return default initial state for this reducer.
     if (!state) {
         return InitialState.category;
     }

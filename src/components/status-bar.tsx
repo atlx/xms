@@ -1,7 +1,7 @@
 import React from "react";
 import "../styles/status-bar/status-bar.scss";
 import StatusItem from "./status-item";
-import {faWifi, faSignal, faBell, faBellSlash, faGlobeAmericas, faBullseye, faArrowUp, faArrowDown, faCheck, faToolbox, faComment, faLocationArrow, faTimesCircle, faBookOpen, faUserCircle} from "@fortawesome/free-solid-svg-icons";
+import {faWifi, faSignal, faBell, faBellSlash, faGlobeAmericas, faBullseye, faArrowUp, faArrowDown, faCheck, faToolbox, faComment, faLocationArrow, faTimesCircle, faBookOpen, faUserCircle, faArrowRight} from "@fortawesome/free-solid-svg-icons";
 import {IAppState, ConnectionState} from "../store/store";
 import {connect} from "react-redux";
 import {MainApp} from "../index";
@@ -16,6 +16,7 @@ interface ILocalProps {
     readonly ping: number;
     readonly connectionState: ConnectionState;
     readonly groupAddress?: string;
+    readonly leftPanelVisible?: boolean;
 }
 
 class StatusBar extends React.Component<ILocalProps> {
@@ -35,6 +36,9 @@ class StatusBar extends React.Component<ILocalProps> {
         return (
             <div className="status-bar">
                 <div className="left">
+                    {!this.props.leftPanelVisible &&
+                        <StatusItem onClick={() => Actions.setLeftPanelVisible(true)} icon={faArrowRight}>Show explorer</StatusItem>
+                    }
                     <StatusItem tooltip="Upload meter" icon={faArrowUp}>12 KB</StatusItem>
                     <StatusItem tooltip="Download meter" icon={faArrowDown}>53 KB</StatusItem>
                 </div>
@@ -79,12 +83,11 @@ class StatusBar extends React.Component<ILocalProps> {
     }
 }
 
-const mapStateToProps = (state: IAppState): any => {
+export default connect((state: IAppState): any => {
     return {
         ping: state.net.lastPing,
         connectionState: state.net.connectionState,
-        groupAddress: state.net.groupAddress
+        groupAddress: state.net.groupAddress,
+        leftPanelVisible: state.misc.leftPanelVisible
     };
-};
-
-export default connect(mapStateToProps)(StatusBar);
+})(StatusBar);

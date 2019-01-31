@@ -1,4 +1,4 @@
-import {User, UniqueId, IGenericMessage, Page, IModal, IRosterCategory, SpecialCategory as SpecialCategory, IContextMenu, IChannel} from "../types/types";
+import {User, UniqueId, IGenericMessage, Page, IModal, IRosterCategory, IContextMenu, IChannel, SpecialCategory} from "../types/types";
 import {store, ActionType, ConnectionState} from "./store";
 import {ICommand} from "../core/command";
 
@@ -179,6 +179,13 @@ export default abstract class Actions {
         store.dispatch({
             type: ActionType.SetConnectionState,
             payload: state
+        });
+    }
+
+    public static setLeftPanelVisible(visible: boolean): void {
+        store.dispatch({
+            type: ActionType.SetLeftPanelVisible,
+            payload: visible
         });
     }
 }

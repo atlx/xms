@@ -4,12 +4,18 @@ import Explorer from "../components/explorer";
 import Chat from "../components/chat";
 import Roster from "../components/roster";
 import StatusBar from "../components/status-bar";
+import {connect} from "react-redux";
+import {IAppState} from "../store/store";
+
+interface ILocalProps {
+	readonly leftPanelVisible?: boolean;
+}
 
 interface ILocalState {
 	readonly showTestModal: boolean;
 }
 
-export default class DefaultPage extends React.Component<any, ILocalState> {
+class DefaultPage extends React.Component<ILocalProps, ILocalState> {
 	public componentWillMount(): void {
 		this.setState({
 			showTestModal: true
@@ -19,7 +25,9 @@ export default class DefaultPage extends React.Component<any, ILocalState> {
 	public render(): JSX.Element {
 		return (
 			<React.Fragment>
-				<Explorer />
+				{this.props.leftPanelVisible &&
+					<Explorer />
+				}
 				{/* TODO: Props are hard-coded */}
 				<Chat
 					autoCompleteCommands={null as any}
@@ -36,3 +44,9 @@ export default class DefaultPage extends React.Component<any, ILocalState> {
 		);
 	}
 }
+
+export default connect((state: IAppState): any => {
+	return {
+		leftPanelVisible: state.misc.leftPanelVisible
+	};
+})(DefaultPage);

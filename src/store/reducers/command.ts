@@ -1,6 +1,7 @@
 import {Reducer, ActionType} from "../store";
 
 const commandReducer: Reducer = (state, action) => {
+    // Return default initial state for this reducer.
     if (!state) {
         return null;
     }

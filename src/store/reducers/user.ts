@@ -1,8 +1,9 @@
-import {Reducer, ActionType} from "../store";
+import {Reducer, ActionType, IAppStateUser, InitialState} from "../store";
 
-const userReducer: Reducer = (state, action) => {
+const userReducer: Reducer<IAppStateUser> = (state, action) => {
+    // Return default initial state for this reducer.
     if (!state) {
-        return null;
+        return InitialState.user;
     }
 
     switch (action.type) {

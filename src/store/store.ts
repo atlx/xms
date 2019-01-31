@@ -40,10 +40,11 @@ export enum ActionType {
     UpdateUser = "UPDATE_USER",
     AddPing = "ADD_PING",
     SetConnectionState = "SET_CONNECTION_STATE",
-    SetGroupAddress = "SET_GROUP_ADDRESS"
+    SetGroupAddress = "SET_GROUP_ADDRESS",
+    SetLeftPanelVisible = "SET_LEFT_PANEL_VISIBLE"
 }
 
-export type StatePart = IAppStateCategory | IAppStateMisc | IAppStateMessage | IAppStateNet;
+export type StatePart = IAppStateCategory | IAppStateMisc | IAppStateMessage | IAppStateNet | IAppStateUser;
 
 export type Reducer<T extends StatePart = any> = (state: T | null | undefined, action: Action<any>) => T | null;
 
@@ -57,16 +58,15 @@ export interface IAppState {
     readonly misc: IAppStateMisc;
     readonly message: IAppStateMessage;
     readonly net: IAppStateNet;
+    readonly user: IAppStateUser;
 }
 
 export interface IAppStateCategory {
-    readonly users: User[];
     readonly usersMap: Map<UniqueId, User>;
     readonly categories: IRosterCategory[];
     readonly channels: ImmutableMap<UniqueId, IChannel>;
     readonly activeChannel: IChannel | null;
     readonly commandHandler: CommandHandler;
-    readonly me: User | null;
     readonly contextMenu: IContextMenu | null;
 }
 
@@ -75,6 +75,12 @@ export interface IAppStateMisc {
     readonly page: Page;
     readonly inputLocked: boolean;
     readonly autoCompleteVisible: boolean;
+    readonly leftPanelVisible: boolean;
+}
+
+export interface IAppStateUser {
+    readonly users: User[];
+    readonly me: User | null;
 }
 
 export enum ConnectionState {
@@ -108,13 +114,11 @@ export const GeneralChannel: IChannel = {
 
 export const InitialState: IAppState = {
     category: {
-        users: [],
         categories: [],
         usersMap: new Map(),
         channels: ImmutableMap(),
         activeChannel: GeneralChannel,
         commandHandler: new CommandHandler(),
-        me: null,
         contextMenu: null
     },
 
@@ -122,7 +126,8 @@ export const InitialState: IAppState = {
         modals: [],
         inputLocked: true,
         page: Page.Init,
-        autoCompleteVisible: false
+        autoCompleteVisible: false,
+        leftPanelVisible: true
     },
 
     message: {
@@ -132,6 +137,11 @@ export const InitialState: IAppState = {
     net: {
         lastPing: -1,
         connectionState: ConnectionState.Disconnected
+    },
+
+    user: {
+        me: null,
+        users: []
     }
 };
 

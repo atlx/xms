@@ -2,7 +2,7 @@ import {Reducer, ActionType, IAppStateMessage, InitialState} from "../store";
 import {IGenericMessage, MessageType, IMessage} from "../../types/types";
 
 const messageReducer: Reducer<IAppStateMessage> = (state, action) => {
-    // Return default initial state.
+    // Return default initial state for this reducer.
     if (!state) {
         return InitialState.message;
     }

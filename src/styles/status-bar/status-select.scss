@@ -11,22 +11,36 @@
             background-color: #222;
             padding: 6px 0;
             bottom: calc(100% + 23px);
-            min-width: 160px;
+            min-width: 180px;
             border: 1px solid $border-dark;
             transform: translate(-50%);
             left: 50%;
         }
 
+        > .title {
+            text-align: center;
+            margin-bottom: 6px;
+            font-size: 13px;
+            opacity: 0.6;
+        }
+
         > .body-wrapper {
             & {
+                max-height: 200px;
+
+                // TODO: Causes the arrow the freak out and be contained within parent.
+                /*min-height: auto;
+                overflow-y: auto;*/
+                
                 position: relative;
             }
 
-            > .title {
-                text-align: center;
-                margin-bottom: 6px;
-                font-size: 13px;
-                opacity: 0.6;
+            &::-webkit-scrollbar-thumb {
+                background-color: #2b2b2b;
+            }
+            
+            &::-webkit-scrollbar-track {
+                background: none;
             }
 
             > .status-item {

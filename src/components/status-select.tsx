@@ -111,8 +111,8 @@ export default class StatusSelect extends React.Component<ILocalProps, ILocalSta
             <div ref={this.$statusSelect} style={this.props.style} className={this.getClass()}>
                 {this.state.bodyVisible &&
                     <div className="select-body">
+                        {this.renderTitle()}
                         <div className="body-wrapper">
-                            {this.renderTitle()}
                             {this.props.children}
                             <div className="arrow" />
                         </div>
