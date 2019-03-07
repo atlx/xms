@@ -3,3 +3,4 @@ build/
 dist/
 .vscode/
 src/store/reducers/.template.txt
+.TuskCache.json
