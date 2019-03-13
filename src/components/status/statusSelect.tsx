@@ -1,5 +1,5 @@
 import React, {CSSProperties} from "react";
-import "../styles/status-bar/status-select.scss";
+import "../styles/status-bar/statusSelect.scss";
 import StatusItem from "./statusItem";
 import $ from "jquery";
 import {Callback} from "../../core/app";

@@ -1,5 +1,5 @@
 import React from "react";
-import "../../styles/explorer/explorer-break.scss";
+import "../../styles/explorer/explorerBreak.scss";
 
 export default class ExplorerBreak extends React.Component {
     public render(): JSX.Element {

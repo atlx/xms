@@ -1,5 +1,5 @@
 import React from "react";
-import "../styles/chat/auto-completer.scss";
+import "../styles/chat/autoCompleter.scss";
 import {IAutoCompleteItem} from "../../types/types";
 import {CSSTransition} from "react-transition-group";
 

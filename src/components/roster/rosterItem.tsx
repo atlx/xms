@@ -1,5 +1,5 @@
 import React from "react";
-import "../styles/roster/roster-item.scss";
+import "../styles/roster/rosterItem.scss";
 import Tooltip, {TooltipPosition} from "../tooltip";
 
 interface ILocalProps {

@@ -1,4 +1,4 @@
-import React, {RefObject, CSSProperties} from "react";
+import React, {RefObject} from "react";
 import "../styles/chat/chat.scss";
 import {connect} from "react-redux";
 import {IAppState} from "../../store/store";

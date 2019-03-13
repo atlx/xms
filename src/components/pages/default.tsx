@@ -1,11 +1,11 @@
 import React from "react";
 import "../styles/pages/default.scss";
-import Explorer from "../components/explorer";
-import Chat from "../components/chat";
-import Roster from "../components/roster";
-import StatusBar from "../components/status-bar";
+import Explorer from "../explorer/explorer";
+import Chat from "../chat/chat";
+import Roster from "../roster/roster";
+import StatusBar from "../status/statusBar";
 import {connect} from "react-redux";
-import {IAppState} from "../store/store";
+import {IAppState} from "../../store/store";
 
 interface ILocalProps {
 	readonly leftPanelVisible?: boolean;

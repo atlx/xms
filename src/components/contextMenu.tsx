@@ -1,5 +1,5 @@
 import React, {CSSProperties} from "react";
-import "../styles/misc/context-menu.scss";
+import "../styles/misc/contextMenu.scss";
 import {IContextMenuOption, ContextMenuOptionType, IContextMenu} from "../types/types";
 
 export default class ContextMenu extends React.Component<IContextMenu> {

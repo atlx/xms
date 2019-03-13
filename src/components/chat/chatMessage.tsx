@@ -1,5 +1,5 @@
 import React from "react";
-import "../styles/chat/chat-message.scss";
+import "../styles/chat/chatMessage.scss";
 
 // TODO: Use the GenericMessage/IMessage for this?
 interface ILocalProps {

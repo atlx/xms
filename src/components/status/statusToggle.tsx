@@ -1,5 +1,5 @@
 import React from "react";
-import "../styles//status-bar/status-item.scss";
+import "../styles//status-bar/statusItem.scss";
 import StatusItem, {IStatusItemProps} from "./statusItem";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {IconProp} from "@fortawesome/fontawesome-svg-core";
