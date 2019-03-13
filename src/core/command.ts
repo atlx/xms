@@ -1,4 +1,4 @@
-import {CommandHandle} from "./command-handler";
+import {CommandHandle} from "./commandHandler";
 
 export interface ICommand {
     readonly name: string;

@@ -8,7 +8,7 @@ import Factory from "../core/factory";
 import Utils from "../core/utils";
 import {IDisposable} from "../core/app";
 import {MainApp} from "../index";
-import SystemMessages from "../core/system-messages";
+import SystemMessages from "../core/systemMessages";
 
 export default class BroadcastGateway implements IDisposable {
     public static slowThreshold: number = 150;

@@ -1,6 +1,6 @@
 import {createStore, Store, applyMiddleware, combineReducers} from "redux";
 import {IRosterCategory, UniqueId, User, IChannel, ChannelType, IGenericMessage, Page, IModal, IContextMenu, SpecialChannel} from "../types/types";
-import CommandHandler from "../core/command-handler";
+import CommandHandler from "../core/commandHandler";
 import {createLogger} from "redux-logger";
 import {Map as ImmutableMap} from "immutable";
 import messageReducer from "./reducers/message";

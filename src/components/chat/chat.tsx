@@ -12,7 +12,7 @@ import NoticeMessage from "./noticeMessage";
 import Loader from "../loader";
 import {CSSTransition} from "react-transition-group";
 import Autocompleter from "./autocompleter";
-import CommandHandler from "../../core/command-handler";
+import CommandHandler from "../../core/commandHandler";
 import Factory from "../../core/factory";
 import {ValidMessagePattern} from "../../core/app";
 

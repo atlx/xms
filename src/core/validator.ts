@@ -1,4 +1,4 @@
-import {IUnverifiedNetPacket, NetPacketType} from "./network-hub";
+import {IUnverifiedNetPacket, NetPacketType} from "./networkHub";
 
 export default class Validator {
     public static netPacket(packet: IUnverifiedNetPacket<any>): boolean {

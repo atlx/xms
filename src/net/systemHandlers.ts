@@ -1,4 +1,4 @@
-import NetworkHub, {NetPacketType, INetPacket} from "../core/network-hub";
+import NetworkHub, {NetPacketType, INetPacket} from "../core/networkHub";
 import {store, IAppState} from "../store/store";
 import {SpecialChannel, IMessage, MessageType, ChannelType} from "../types/types";
 import Actions from "../store/actions";

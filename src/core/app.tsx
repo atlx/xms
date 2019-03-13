@@ -3,18 +3,18 @@ import Application from "../components/application";
 import ReactDOM from "react-dom";
 import {Provider} from "react-redux";
 import {store} from "../store/store";
-import BroadcastGateway from "../net/broadcast-gateway";
+import BroadcastGateway from "../net/broadcastGateway";
 import {User, Page, INotice, NoticeStyle, SpecialCategory, ContextMenuOptionType, SpecialChannel} from "../types/types";
-import GatewayActions from "./gateway-actions";
+import GatewayActions from "./gatewayActions";
 import Actions from "../store/actions";
-import CommandHandler from "./command-handler";
+import CommandHandler from "./commandHandler";
 import Factory from "./factory";
 import {ICommand} from "./command";
-import NetworkHub from "./network-hub";
+import NetworkHub from "./networkHub";
 import Sounds from "./sounds";
 import Constants from "./constants";
 import Localisation from "./localisation";
-import DeveloperToolbox from "./developer-toolbox";
+import DeveloperToolbox from "./developerToolbox";
 
 export type PromiseOr<T = void> = Promise<T> | T;
 

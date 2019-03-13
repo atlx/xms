@@ -1,5 +1,5 @@
 import {IMessage, SpecialChannel, IpAddress} from "../types/types";
-import BroadcastGateway from "../net/broadcast-gateway";
+import BroadcastGateway from "../net/broadcastGateway";
 import {GatewayMsgType, MessagePayload} from "../net/gateway";
 
 export default class GatewayActions {
