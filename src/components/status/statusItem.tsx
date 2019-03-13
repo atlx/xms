@@ -1,10 +1,10 @@
 import React, {CSSProperties} from "react";
 import "../styles/status-bar/status-item.scss";
-import {Callback} from "../core/app";
+import {Callback} from "../../core/app";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faCircleNotch} from "@fortawesome/free-solid-svg-icons";
 import {IconProp} from "@fortawesome/fontawesome-svg-core";
-import Tooltip from "./tooltip";
+import Tooltip from "../tooltip";
 
 export interface IStatusItemProps {
     readonly tooltip?: string;

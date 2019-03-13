@@ -1,10 +1,10 @@
 import React, {CSSProperties} from "react";
 import "../styles/misc/application.scss";
-import DefaultPage from "../pages/default";
+import DefaultPage from "./pages/default";
 import {IAppState} from "../store/store";
 import {connect} from "react-redux";
 import {Page, IModal} from "../types/types";
-import InitPage from "../pages/init";
+import InitPage from "./pages/init";
 import {CSSTransition} from "react-transition-group";
 import Handle from "./handle";
 import Actions from "../store/actions";

@@ -1,12 +1,12 @@
 import React from "react";
 import "../styles/status-bar/status-bar.scss";
-import StatusItem from "../status-item";
+import StatusItem from "../status/statusItem";
 import {faWifi, faSignal, faBell, faBellSlash, faGlobeAmericas, faBullseye, faArrowUp, faArrowDown, faCheck, faToolbox, faComment, faLocationArrow, faTimesCircle, faBookOpen, faUserCircle, faArrowRight} from "@fortawesome/free-solid-svg-icons";
 import {IAppState, ConnectionState} from "../../store/store";
 import {connect} from "react-redux";
 import {MainApp} from "../../index";
-import StatusToggle from "./statusToggle";
-import StatusSelect from "../status-select";
+import StatusToggle from "../status/statusToggle";
+import StatusSelect from "../status/statusSelect";
 import StatusSelectItem from "./statusSelectItem";
 import {Language} from "../../core/localisation";
 import {DevelopmentMode} from "../../core/app";
