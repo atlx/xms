@@ -1,13 +1,13 @@
 import React from "react";
 import "../styles/explorer/explorer.scss";
-import ExplorerItem from "./explorer-item";
-import {IAppState} from "../store/store";
+import ExplorerItem from "./explorerItem";
+import {IAppState} from "../../store/store";
 import {connect} from "react-redux";
-import {IChannel, UniqueId, ChannelType, SpecialChannel} from "../types/types";
+import {IChannel, UniqueId, ChannelType, SpecialChannel} from "../../types/types";
 import {Map as ImmutableMap} from "immutable";
-import PlaceholderExplorerItem from "./placeholder/explorer-item";
-import UserBar from "./user-bar";
-import ExplorerBreak from "./explorer/explorer-break";
+import PlaceholderExplorerItem from "../placeholder/explorerItem";
+import UserBar from "../user-bar/userBar";
+import ExplorerBreak from "./explorerBreak";
 
 interface ILocalProps {
 	readonly channels: ImmutableMap<UniqueId, IChannel>;

@@ -1,6 +1,6 @@
 import React from "react";
 import "../styles/roster/roster-item.scss";
-import Tooltip, {TooltipPosition} from "./tooltip";
+import Tooltip, {TooltipPosition} from "../tooltip";
 
 interface ILocalProps {
     readonly name: string;

@@ -1,9 +1,9 @@
 import React from "react";
 import "../styles/user-bar/user-bar.scss";
-import UserBarAction from "./user-bar-action";
+import UserBarAction from "./userBarAction";
 import {faCog, faArrowLeft} from "@fortawesome/free-solid-svg-icons";
-import {MainApp} from "..";
-import Actions from "../store/actions";
+import {MainApp} from "../..";
+import Actions from "../../store/actions";
 
 export default class UserBar extends React.Component {
     public render(): JSX.Element {

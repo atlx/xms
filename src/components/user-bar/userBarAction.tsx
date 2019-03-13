@@ -2,8 +2,8 @@ import React from "react";
 import "../styles/user-bar/user-bar-action.scss";
 import {IconProp} from "@fortawesome/fontawesome-svg-core";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import Tooltip from "./tooltip";
-import {Callback} from "../core/app";
+import Tooltip from "../tooltip";
+import {Callback} from "../../core/app";
 
 interface ILocalProps {
     readonly icon: IconProp;

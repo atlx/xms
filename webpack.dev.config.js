@@ -12,7 +12,7 @@ const OUTPUT_DIR = path.resolve(__dirname, "dist");
 const defaultInclude = [SRC_DIR];
 
 module.exports = {
-	entry: SRC_DIR + "/index.ts",
+	entry: SRC_DIR + "/index.tsx",
 
 	output: {
 		path: OUTPUT_DIR,

@@ -1,6 +1,6 @@
 import React from "react";
 import "../styles/chat/notice-message.scss";
-import {NoticeStyle} from "../types/types";
+import {NoticeStyle} from "../../types/types";
 
 interface ILocalProps {
 	readonly text: string;

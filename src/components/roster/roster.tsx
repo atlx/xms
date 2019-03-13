@@ -1,9 +1,9 @@
 import React from "react";
 import {connect} from "react-redux";
 import "../styles/roster/roster.scss";
-import {IAppState} from "../store/store";
-import {IRosterCategory, User} from "../types/types";
-import RosterCategory from "./roster-category";
+import {IAppState} from "../../store/store";
+import {IRosterCategory, User} from "../../types/types";
+import RosterCategory from "./rosterCategory";
 
 interface ILocalProps {
     readonly users: User[];

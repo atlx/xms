@@ -1,10 +1,10 @@
 import React from "react";
 import "../styles/roster/roster-category.scss";
-import RosterItem from "./roster-item";
-import {User, UniqueId} from "../types/types";
-import {IAppState} from "../store/store";
+import RosterItem from "./rosterItem";
+import {User, UniqueId} from "../../types/types";
+import {IAppState} from "../../store/store";
 import {connect} from "react-redux";
-import PlaceholderRosterItem from "./placeholder/roster-item";
+import PlaceholderRosterItem from "../placeholder/rosterItem";
 
 interface ILocalProps {
     readonly title: string;

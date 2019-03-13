@@ -1,20 +1,20 @@
 import React, {RefObject, CSSProperties} from "react";
 import "../styles/chat/chat.scss";
 import {connect} from "react-redux";
-import {IAppState} from "../store/store";
-import {IMessage, IGenericMessage, MessageType, IChannel, IAutoCompleteItem, INotice} from "../types/types";
-import ChatMessage from "./chat-message";
+import {IAppState} from "../../store/store";
+import {IMessage, IGenericMessage, MessageType, IChannel, IAutoCompleteItem, INotice} from "../../types/types";
+import ChatMessage from "./chatMessage";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faHashtag, faArrowRight} from "@fortawesome/free-solid-svg-icons";
-import Actions from "../store/actions";
-import {MainApp} from "../index";
-import NoticeMessage from "./notice-message";
-import Loader from "./loader";
+import Actions from "../../store/actions";
+import {MainApp} from "../../index";
+import NoticeMessage from "./noticeMessage";
+import Loader from "../loader";
 import {CSSTransition} from "react-transition-group";
 import Autocompleter from "./autocompleter";
-import CommandHandler from "../core/command-handler";
-import Factory from "../core/factory";
-import {ValidMessagePattern} from "../core/app";
+import CommandHandler from "../../core/command-handler";
+import Factory from "../../core/factory";
+import {ValidMessagePattern} from "../../core/app";
 
 interface ILocalProps {
 	readonly messages: IGenericMessage[];

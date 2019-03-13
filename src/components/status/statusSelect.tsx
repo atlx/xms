@@ -1,6 +1,6 @@
 import React, {CSSProperties} from "react";
 import "../styles/status-bar/status-select.scss";
-import StatusItem from "./status-item";
+import StatusItem from "./statusItem";
 import $ from "jquery";
 import {Callback} from "../core/app";
 import {IconProp} from "@fortawesome/fontawesome-svg-core";

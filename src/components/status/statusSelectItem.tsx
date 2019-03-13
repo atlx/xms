@@ -1,6 +1,6 @@
 import React from "react";
 import "../styles/status-bar/status-item.scss";
-import StatusItem from "./status-item";
+import StatusItem from "./statusItem";
 import {IconProp} from "@fortawesome/fontawesome-svg-core";
 import {faDotCircle, faCircle} from "@fortawesome/free-regular-svg-icons";
 
