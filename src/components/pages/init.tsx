@@ -1,5 +1,5 @@
 import React, {RefObject, CSSProperties} from "react";
-import "../styles/pages/init.scss";
+import "../../styles/pages/init.scss";
 import Loader from "../loader";
 import Utils from "../../core/utils";
 import Actions from "../../store/actions";

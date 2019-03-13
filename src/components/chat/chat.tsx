@@ -1,5 +1,5 @@
 import React, {RefObject} from "react";
-import "../styles/chat/chat.scss";
+import "../../styles/chat/chat.scss";
 import {connect} from "react-redux";
 import {IAppState} from "../../store/store";
 import {IMessage, IGenericMessage, MessageType, IChannel, IAutoCompleteItem, INotice} from "../../types/types";

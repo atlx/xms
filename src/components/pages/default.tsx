@@ -1,5 +1,5 @@
 import React from "react";
-import "../styles/pages/default.scss";
+import "../../styles/pages/default.scss";
 import Explorer from "../explorer/explorer";
 import Chat from "../chat/chat";
 import Roster from "../roster/roster";

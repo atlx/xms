@@ -1,5 +1,5 @@
 import React from "react";
-import "../styles/status-bar/statusBar.scss";
+import "../../styles/statusBar/statusBar.scss";
 import StatusItem from "../status/statusItem";
 import {faWifi, faSignal, faBell, faBellSlash, faGlobeAmericas, faBullseye, faArrowUp, faArrowDown, faCheck, faToolbox, faComment, faLocationArrow, faTimesCircle, faBookOpen, faUserCircle, faArrowRight} from "@fortawesome/free-solid-svg-icons";
 import {IAppState, ConnectionState} from "../../store/store";

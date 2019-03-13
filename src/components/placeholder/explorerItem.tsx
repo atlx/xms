@@ -1,7 +1,7 @@
 import React, {CSSProperties} from "react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import "../../styles/explorer/explorer-item.scss";
-import "../../styles/placeholder/explorer-item.scss";
+import "../../styles/explorer/explorerItem.scss";
+import "../../styles/placeholder/explorerItem.scss";
 import {faHashtag} from "@fortawesome/free-solid-svg-icons";
 import Utils from "../../core/utils";
 

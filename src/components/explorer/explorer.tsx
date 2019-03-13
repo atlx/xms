@@ -1,12 +1,12 @@
 import React from "react";
-import "../styles/explorer/explorer.scss";
+import "../../styles/explorer/explorer.scss";
 import ExplorerItem from "./explorerItem";
 import {IAppState} from "../../store/store";
 import {connect} from "react-redux";
 import {IChannel, UniqueId, ChannelType, SpecialChannel} from "../../types/types";
 import {Map as ImmutableMap} from "immutable";
 import PlaceholderExplorerItem from "../placeholder/explorerItem";
-import UserBar from "../user-bar/userBar";
+import UserBar from "../userBar/userBar";
 import ExplorerBreak from "./explorerBreak";
 
 interface ILocalProps {
