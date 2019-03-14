@@ -109,6 +109,7 @@ module.exports = {
 
 	devServer: {
 		contentBase: OUTPUT_DIR,
+		port: 7070,
 
 		stats: {
 			colors: true,

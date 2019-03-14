@@ -28,6 +28,11 @@ function createWindow() {
 		hasShadow: true,
 		minWidth: 1024,
 
+		webPreferences: {
+			// Explicitly set node integration.
+			nodeIntegration: true
+		}
+
 		// TODO: Prevents loading from SCSS style sheets via @import (which translates to 'require()' under the hood).
 		/* webPreferences: {
 			nodeIntegration: false,
@@ -45,7 +50,9 @@ function createWindow() {
 	if (dev && process.argv.indexOf("--noDevServer") === -1) {
 		indexPath = url.format({
 			protocol: "http:",
-			host: "localhost:8080",
+
+			// Use port 7070 to avoid conflicts with other apps.
+			host: "localhost:7070",
 			pathname: "index.html",
 			slashes: true
 		});

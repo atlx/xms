@@ -149,11 +149,16 @@ export default abstract class Actions {
     public static appendMessage<T extends IGenericMessage>(message: T): void {
         // A separator message indicating time may come before a normal message.
         if (message.type === MessageType.Text) {
-            const lastMessage: IGenericMessage = getState().message.messages[getState().message.messages.length - 1];
+            const messages: IGenericMessage[] = getState().message.messages;
 
-            // Append separator message beforehand if applicable.
-            if (Time.isOld(message.)) {
-                this.appendMessage(Factory.createBreakMessage(message.channelId, "Today at 4:31 PM"));
+            // Ensure a message has been previously sent.
+            if (messages.length > 0) {
+                const lastMessage: IGenericMessage = messages[getState().message.messages.length - 1];
+
+                // Append separator message beforehand if applicable.
+                if (Time.isDayOlder(lastMessage.time, message.time)) {
+                    this.appendMessage(Factory.createBreakMessage(message.channelId, Time.timeAgo(lastMessage.time)));
+                }
             }
         }
 
