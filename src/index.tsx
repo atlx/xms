@@ -1,6 +1,6 @@
 import App from "./core/app";
 import "./styles/lib/global.scss";
-import {User, UserState} from "./types/types";
+import {User, UserState} from "./models/models";
 import os from "os";
 import Utils from "./core/utils";
 
