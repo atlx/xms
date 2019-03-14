@@ -1,6 +1,8 @@
-import {User, UniqueId, IGenericMessage, Page, IModal, IRosterCategory, IContextMenu, IChannel, SpecialCategory} from "../models/models";
-import {store, ActionType, ConnectionState, GeneralChannel} from "./store";
+import {User, UniqueId, IGenericMessage, Page, IModal, IRosterCategory, IContextMenu, IChannel, SpecialCategory, MessageType} from "../models/models";
+import {store, ActionType, ConnectionState, GeneralChannel, getState} from "./store";
 import {ICommand} from "../core/command";
+import Factory from "../core/factory";
+import Time from "../core/time";
 
 export default abstract class Actions {
     public static markMessageSent(messageId: UniqueId): void {
@@ -145,6 +147,16 @@ export default abstract class Actions {
      * Append a message to its corresponding channel.
      */
     public static appendMessage<T extends IGenericMessage>(message: T): void {
+        // A separator message indicating time may come before a normal message.
+        if (message.type === MessageType.Text) {
+            const lastMessage: IGenericMessage = getState().message.messages[getState().message.messages.length - 1];
+
+            // Append separator message beforehand if applicable.
+            if (Time.isOld(message.)) {
+                this.appendMessage(Factory.createBreakMessage(message.channelId, "Today at 4:31 PM"));
+            }
+        }
+
         store.dispatch({
             type: ActionType.AddMessage,
             payload: message
@@ -157,6 +169,7 @@ export default abstract class Actions {
     public static renameChannel(channelId: UniqueId, name: string): void {
         store.dispatch({
             type: ActionType.RenameChannel,
+
             payload: {
                 channelId,
                 name
@@ -167,6 +180,7 @@ export default abstract class Actions {
     public static setChannelTopic(channelId: UniqueId, topic: string): void {
         store.dispatch({
             type: ActionType.SetChannelTopic,
+
             payload: {
                 channelId,
                 topic

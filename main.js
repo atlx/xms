@@ -26,7 +26,13 @@ function createWindow() {
 		center: true,
 		title: "XMS",
 		hasShadow: true,
-		minWidth: 1024
+		minWidth: 1024,
+
+		// TODO: Prevents loading from SCSS style sheets via @import (which translates to 'require()' under the hood).
+		/* webPreferences: {
+			nodeIntegration: false,
+			preload: "./preload.js"
+		} */
 	});
 
 	mainWindow.on("unresponsive", () => {

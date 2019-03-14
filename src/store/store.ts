@@ -103,6 +103,10 @@ const logger = createLogger({
     //
 });
 
+export function getState(): IAppState {
+    return store.getState();
+}
+
 export const GeneralChannel: IChannel = {
     id: SpecialChannel.General,
     name: "General",

@@ -92,6 +92,10 @@ export interface INotice extends IGenericMessage {
     readonly style: NoticeStyle;
 }
 
+export interface IBreakMessage extends IGenericMessage {
+    readonly important: boolean;
+}
+
 export enum UserState {
     Online,
     Away,

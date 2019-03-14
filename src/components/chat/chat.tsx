@@ -2,7 +2,7 @@ import React, {RefObject} from "react";
 import "../../styles/chat/chat.scss";
 import {connect} from "react-redux";
 import {IAppState} from "../../store/store";
-import {IMessage, IGenericMessage, MessageType, IChannel, IAutoCompleteItem, INotice} from "../../models/models";
+import {IMessage, IGenericMessage, MessageType, IChannel, IAutoCompleteItem, INotice, IBreakMessage} from "../../models/models";
 import ChatMessage from "./chatMessage";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faHashtag, faArrowRight} from "@fortawesome/free-solid-svg-icons";
@@ -15,6 +15,7 @@ import Autocompleter from "./autocompleter";
 import CommandHandler from "../../core/commandHandler";
 import Factory from "../../core/factory";
 import {ValidMessagePattern} from "../../core/app";
+import BreakMessage from "./breakMessage";
 
 interface ILocalProps {
 	readonly messages: IGenericMessage[];
@@ -146,6 +147,7 @@ class Chat extends React.Component<ILocalProps, ILocalState> {
 		}
 
 		return messages.map((message: IGenericMessage) => {
+			// Normal text message.
 			if (message.type === MessageType.Text) {
 				const textMessage: IMessage = message as IMessage;
 
@@ -159,6 +161,7 @@ class Chat extends React.Component<ILocalProps, ILocalState> {
 					systemMessage={textMessage.systemMessage}
 				/>;
 			}
+			// Notice message.
 			else if (message.type === MessageType.Notice) {
 				const notice: INotice = message as INotice;
 
@@ -168,8 +171,19 @@ class Chat extends React.Component<ILocalProps, ILocalState> {
 					text={message.text}
 				/>;
 			}
+			// Break message.
+			else if (message.type === MessageType.Break) {
+				const breakMessage: IBreakMessage = message as IBreakMessage;
+
+				return <BreakMessage
+					key={message.id}
+					important={breakMessage.important}
+					content={breakMessage.text}
+				/>;
+			}
+			// Otherwise, the message type is invalid.
 			else {
-				throw new Error(`[Chat] Unknown message type: ${message.type}`);
+				throw new Error(`Unknown message type: ${message.type}`);
 			}
 		});
 	}
