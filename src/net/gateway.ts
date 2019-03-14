@@ -1,4 +1,4 @@
-import {User, UniqueId, MessageType} from "../types/types";
+import {User, UniqueId, MessageType} from "../models/models";
 
 // Generic
 export enum GatewayMsgType {

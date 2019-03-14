@@ -1,4 +1,4 @@
-import {User, UniqueId, IGenericMessage, Page, IModal, IRosterCategory, IContextMenu, IChannel, SpecialCategory} from "../types/types";
+import {User, UniqueId, IGenericMessage, Page, IModal, IRosterCategory, IContextMenu, IChannel, SpecialCategory} from "../models/models";
 import {store, ActionType, ConnectionState} from "./store";
 import {ICommand} from "../core/command";
 

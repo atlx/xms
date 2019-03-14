@@ -1,4 +1,4 @@
-import {UniqueId, MessageType, IMessage, INotice, NoticeStyle} from "../types/types";
+import {UniqueId, MessageType, IMessage, INotice, NoticeStyle} from "../models/models";
 import Utils from "./utils";
 import {MainApp} from "../index";
 

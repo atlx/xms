@@ -1,4 +1,4 @@
-import {IpAddress} from "../types/types";
+import {IpAddress} from "../models/models";
 import net, {Socket, Server} from "net";
 import Utils from "../core/utils";
 
