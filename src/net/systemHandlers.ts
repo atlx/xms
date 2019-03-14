@@ -15,10 +15,10 @@ export default class SystemHandlers {
             // TODO
         });
 
-        // TODO: Validate packet
+        // TODO: Validate packet.
         this.net.authOn(NetPacketType.Message, (packet: INetPacket): void => {
             if (packet.payload.channelId === SpecialChannel.General) {
-                Actions.addGeneralMessage<IMessage>({
+                Actions.appendMessageToGeneral<IMessage>({
                     // TODO
                     authorAvatarHash: undefined,
                     authorName: `User at ${packet.sender}`,
@@ -48,7 +48,7 @@ export default class SystemHandlers {
                 });
             }
 
-            Actions.addMessage<IMessage>({
+            Actions.appendMessage<IMessage>({
                 channelId: packet.sender,
                 id: packet.payload.id,
                 text: packet.payload.content,
@@ -61,7 +61,7 @@ export default class SystemHandlers {
                 senderAddress: packet.sender,
                 sent: true,
                 systemMessage: false
-            }, packet.sender);
+            });
         });
     }
 }

@@ -110,7 +110,7 @@ export default class App {
 
 					handle(): void {
 						// TODO: Channel
-						Actions.addGeneralMessage<INotice>(Factory.createNotice(SpecialChannel.General, "This is a success notice", NoticeStyle.Success));
+						Actions.appendMessageToGeneral<INotice>(Factory.createNotice(SpecialChannel.General, "This is a success notice", NoticeStyle.Success));
 					}
 				},
 				{
@@ -119,7 +119,7 @@ export default class App {
 
 					handle(): void {
 						// TODO: Channel
-						Actions.addGeneralMessage<INotice>(Factory.createNotice(SpecialChannel.General, "This is a warning notice", NoticeStyle.Warning));
+						Actions.appendMessageToGeneral<INotice>(Factory.createNotice(SpecialChannel.General, "This is a warning notice", NoticeStyle.Warning));
 					}
 				},
 				{
@@ -128,7 +128,7 @@ export default class App {
 
 					handle(): void {
 						// TODO: Channel
-						Actions.addGeneralMessage<INotice>(Factory.createNotice(SpecialChannel.General, "This is a error notice", NoticeStyle.Error));
+						Actions.appendMessageToGeneral<INotice>(Factory.createNotice(SpecialChannel.General, "This is a error notice", NoticeStyle.Error));
 					}
 				},
 				{

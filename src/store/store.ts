@@ -13,7 +13,6 @@ import userReducer from "./reducers/user";
 import netReducer from "./reducers/net";
 
 export enum ActionType {
-    AddGeneralMessage = "ADD_GENERAL_MESSAGE",
     MarkMessageSent = "MARK_MESSAGE_SENT",
     AddUser = "ADD_USER",
     SetActiveChannel = "SET_ACTIVE_CHANNEL",

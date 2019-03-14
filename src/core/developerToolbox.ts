@@ -1,6 +1,8 @@
 import App from "./app";
 import Actions from "../store/actions";
-import {UserState, SpecialCategory} from "../models/models";
+import {UserState, SpecialCategory, MessageType} from "../models/models";
+import {GeneralChannel} from "../store/store";
+import Factory from "./factory";
 
 export default class DeveloperToolbox {
     protected app: App;
@@ -11,6 +13,12 @@ export default class DeveloperToolbox {
 
     public emulatePublicMessage(): this {
         // TODO
+
+        return this;
+    }
+
+    public emulateBreakMessage(): this {
+        Actions.appendMessageToGeneral(Factory.createBreakMessage(GeneralChannel.id, "Requested by user"));
 
         return this;
     }

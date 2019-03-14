@@ -1,7 +1,7 @@
 import React from "react";
 import "../../styles/statusBar/statusBar.scss";
 import StatusItem from "../status/statusItem";
-import {faWifi, faSignal, faBell, faBellSlash, faGlobeAmericas, faBullseye, faArrowUp, faArrowDown, faCheck, faToolbox, faComment, faLocationArrow, faTimesCircle, faBookOpen, faUserCircle, faArrowRight} from "@fortawesome/free-solid-svg-icons";
+import {faWifi, faSignal, faBell, faBellSlash, faGlobeAmericas, faBullseye, faArrowUp, faArrowDown, faCheck, faToolbox, faComment, faLocationArrow, faTimesCircle, faBookOpen, faUserCircle, faArrowRight, faGripLines} from "@fortawesome/free-solid-svg-icons";
 import {IAppState, ConnectionState} from "../../store/store";
 import {connect} from "react-redux";
 import {MainApp} from "../../index";
@@ -47,6 +47,7 @@ class StatusBar extends React.Component<ILocalProps> {
                         <StatusSelect notify icon={faToolbox} text="Developer Tools" title="Select Action">
                             <StatusItem onClick={() => MainApp.dev.emulatePublicMessage()} icon={faComment}>General message</StatusItem>
                             <StatusItem icon={faLocationArrow}>Direct message</StatusItem>
+                            <StatusItem onClick={() => MainApp.dev.emulateBreakMessage()} icon={faGripLines}>Break Message</StatusItem>
                             <StatusItem icon={faBookOpen} onClick={() => Actions.showModal({
                                 title: "This is a modal",
                                 text: "Requested by user"

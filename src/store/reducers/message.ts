@@ -1,5 +1,5 @@
 import {Reducer, ActionType, IAppStateMessage, InitialState} from "../store";
-import {IGenericMessage, MessageType, IMessage} from "../../models/models";
+import {IGenericMessage, MessageType, IMessage, Writeable} from "../../models/models";
 
 const messageReducer: Reducer<IAppStateMessage> = (state, action) => {
     // Return default initial state for this reducer.
@@ -8,48 +8,50 @@ const messageReducer: Reducer<IAppStateMessage> = (state, action) => {
     }
 
     switch (action.type) {
-        case ActionType.AddGeneralMessage: {
-            const newMessages: IGenericMessage[] = [...state.messages];
+        case ActionType.AddMessage: {
+            // Clone existing messages.
+            const messages: IGenericMessage[] = [...state.messages];
 
-            newMessages.push(action.payload);
+            // Append the new message.
+            messages.push(action.payload);
 
             return {
                 ...state,
-                messages: newMessages
+                messages
             };
         }
 
         case ActionType.MarkMessageSent: {
-            const newMessages: IGenericMessage[] = [...state.messages];
+            // Clone existing messages. Force cast for type support.
+            const messages: Array<Writeable<IMessage>> = [...state.messages] as Array<Writeable<IMessage>>;
 
             let messageFound: boolean = false;
 
-            for (let i = 0; i < newMessages.length; i++) {
-                if (newMessages[i].type !== MessageType.Text) {
+            for (let message of messages) {
+                // Only text messages may be marked as sent.
+                if (message.type !== MessageType.Text) {
                     continue;
                 }
 
-                const message: IMessage = newMessages[i] as IMessage;
-
                 if (message.id === action.payload && !message.sent) {
-                    (newMessages[i] as any) = {
-                        ...newMessages[i],
-                        sent: true
-                    };
+                    // Mark the message as sent.
+                    message.sent = true;
 
+                    // Activate the found flag.
                     messageFound = true;
 
                     break;
                 }
             }
 
+            // The message does not exist.
             if (!messageFound) {
-                throw new Error(`[Store:MarkMessageSent] Message with id '${action.payload}' was not found`);
+                throw new Error(`Message with ID '${action.payload}' was not found`);
             }
 
             return {
                 ...state,
-                messages: newMessages
+                messages
             };
         }
 

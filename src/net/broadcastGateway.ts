@@ -88,7 +88,7 @@ export default class BroadcastGateway implements IDisposable {
         Actions.setInputLocked(true);
         this.dispose();
         console.log("[BroadcastGateway] Disconnected");
-        Actions.addGeneralMessage<INotice>(Factory.createNotice(SpecialChannel.General, SystemMessages.Disconnected, NoticeStyle.Warning));
+        Actions.appendMessageToGeneral<INotice>(Factory.createNotice(SpecialChannel.General, SystemMessages.Disconnected, NoticeStyle.Warning));
 
         /**
          * TODO: Changing to page init is OKAY since it's meant to handle
@@ -117,15 +117,13 @@ export default class BroadcastGateway implements IDisposable {
 
             Actions.setConnectionState(ConnectionState.Connected);
 
-            // TODO: Channel?
-            Actions.addGeneralMessage<INotice>(
+            Actions.appendMessageToGeneral<INotice>(
                 Factory.createNotice(SpecialChannel.General, SystemMessages.Connected)
             );
 
             // TODO: Is last ping set at the starting point?
             if (this.lastPing >= BroadcastGateway.slowThreshold) {
-                // TODO: channel
-                Actions.addGeneralMessage<INotice>(
+                Actions.appendMessageToGeneral<INotice>(
                     Factory.createNotice(
                         SpecialChannel.General,
                         SystemMessages.HighLatency,
@@ -142,7 +140,7 @@ export default class BroadcastGateway implements IDisposable {
         this.socket.on("message", (data: Buffer, sender: AddressInfo) => {
             const messageString: string = data.toString();
 
-            // TODO: Debugging
+            // TODO: Debugging.
             console.log(`[BroadcastGateway.setupEvents] Received message string: ${messageString}`);
 
             if (messageString.startsWith("{") && messageString.endsWith("}")) {
@@ -171,9 +169,9 @@ export default class BroadcastGateway implements IDisposable {
                     return;
                 }
 
-                // TODO: Use handlers instead
+                // TODO: Use handlers instead.
                 if (msg.type === GatewayMsgType.Hello) {
-                    // TODO: Make use of the time difference & adjust time proxy for this user
+                    // TODO: Make use of the time difference & adjust time proxy for this user.
                     const payload: HelloPayload = msg.payload;
 
                     if (!(store.getState() as IAppState).category.usersMap.has(msg.sender)) {
@@ -188,9 +186,9 @@ export default class BroadcastGateway implements IDisposable {
                         // TODO
                     }
                     else {
-                        // TODO: Fix
-                        // TODO: Verify type and data
-                        Actions.addGeneralMessage({
+                        // TODO: Fix.
+                        // TODO: Verify type and data.
+                        Actions.appendMessageToGeneral({
                             // TODO: A way to safely identify an unknown sender, or is it not required?
                             authorAvatarHash: "",
                             authorName: "Unknown",
@@ -199,7 +197,7 @@ export default class BroadcastGateway implements IDisposable {
                             text: payload.text,
                             sent: true,
 
-                            // TODO: Time should be provided by sender
+                            // TODO: Time should be provided by sender.
                             time: Date.now(),
                             channelId: SpecialChannel.General,
                             type: payload.type
@@ -244,7 +242,7 @@ export default class BroadcastGateway implements IDisposable {
         this.close(() => {
             // TODO: Shouldn't be sent by message, handled by the init page instead.
             // TODO: Hard-coded channel.
-            Actions.addGeneralMessage<INotice>(Factory.createNotice(SpecialChannel.General, "Attempting to reconnect."));
+            Actions.appendMessageToGeneral<INotice>(Factory.createNotice(SpecialChannel.General, "Attempting to reconnect."));
             this.connect();
         });
 

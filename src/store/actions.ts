@@ -1,15 +1,8 @@
 import {User, UniqueId, IGenericMessage, Page, IModal, IRosterCategory, IContextMenu, IChannel, SpecialCategory} from "../models/models";
-import {store, ActionType, ConnectionState} from "./store";
+import {store, ActionType, ConnectionState, GeneralChannel} from "./store";
 import {ICommand} from "../core/command";
 
 export default abstract class Actions {
-    public static addGeneralMessage<T extends IGenericMessage>(message: T): void {
-        store.dispatch({
-            type: ActionType.AddGeneralMessage,
-            payload: message
-        });
-    }
-
     public static markMessageSent(messageId: UniqueId): void {
         store.dispatch({
             type: ActionType.MarkMessageSent,
@@ -122,6 +115,9 @@ export default abstract class Actions {
         });
     }
 
+    /**
+     * Hide visible context menu if applicable.
+     */
     public static hideContextMenu(): void {
         store.dispatch({
             type: ActionType.HideContextMenu
@@ -135,12 +131,29 @@ export default abstract class Actions {
         });
     }
 
-    public static addMessage<T extends IGenericMessage>(message: T, channelId: UniqueId): void {
-        store.dispatch({
-            type: ActionType.AddMessage
+    /**
+     * Append a message to the general channel.
+     */
+    public static appendMessageToGeneral<T extends IGenericMessage>(message: T): void {
+        Actions.appendMessage({
+            channelId: GeneralChannel.id,
+            ...message
         });
     }
 
+    /**
+     * Append a message to its corresponding channel.
+     */
+    public static appendMessage<T extends IGenericMessage>(message: T): void {
+        store.dispatch({
+            type: ActionType.AddMessage,
+            payload: message
+        });
+    }
+
+    /**
+     * Rename a private channel.
+     */
     public static renameChannel(channelId: UniqueId, name: string): void {
         store.dispatch({
             type: ActionType.RenameChannel,

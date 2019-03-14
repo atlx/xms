@@ -1,4 +1,4 @@
-import {UniqueId, MessageType, IMessage, INotice, NoticeStyle} from "../models/models";
+import {UniqueId, MessageType, IMessage, INotice, NoticeStyle, IGenericMessage} from "../models/models";
 import Utils from "./utils";
 import {MainApp} from "../index";
 
@@ -31,6 +31,16 @@ export default class Factory {
             time: Date.now(),
             type: MessageType.Notice,
             style
+        };
+    }
+
+    public static createBreakMessage(channelId: UniqueId, text: string): IGenericMessage {
+        return {
+            channelId,
+            id: Utils.generateId(),
+            text,
+            type: MessageType.Break,
+            time: Date.now()
         };
     }
 }

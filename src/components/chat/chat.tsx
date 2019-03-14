@@ -39,7 +39,7 @@ class Chat extends React.Component<ILocalProps, ILocalState> {
 	private readonly $loader: RefObject<any>;
 
 	private randomInterval?: any;
-	private shakeTimeout?: NodeJS.Timeout;
+	private shakeTimeout?: number;
 
 	public constructor(props: ILocalProps) {
 		super(props);
@@ -110,10 +110,10 @@ class Chat extends React.Component<ILocalProps, ILocalState> {
 
 		// Set the pending done timeout if it is not already set. Override if already exists.
 		if (this.state.shaking) {
-			clearTimeout(this.shakeTimeout as any);
+			clearTimeout(this.shakeTimeout);
 
 			// TODO: Timeout is bound to CSS time value.
-			this.shakeTimeout = setTimeout(() => {
+			(this.shakeTimeout as any) = setTimeout(() => {
 				this.setState({
 					shaking: false
 				})
@@ -285,7 +285,7 @@ class Chat extends React.Component<ILocalProps, ILocalState> {
 		const message: IMessage = Factory.createMessage(this.props.activeChannel.id, value);
 
 		this.clearValue();
-		Actions.addGeneralMessage(message);
+		Actions.appendMessageToGeneral(message);
 		MainApp.actions.handleMessage(message);
 	}
 
