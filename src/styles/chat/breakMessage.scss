@@ -1,0 +1,17 @@
+.break-message {
+    & {
+        font-size: 12px;
+        opacity: 0.3;
+        text-transform: uppercase;
+    }
+
+    & > .line {
+        width: 100%;
+        margin-left: 5px;
+        border-top: 2px solid #fff;
+    }
+
+    &:not(:first-child) {
+        margin-top: 10px;
+    }
+}

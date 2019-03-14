@@ -1,5 +1,5 @@
 import os from "os";
-import {UniqueId} from "../types/types";
+import {UniqueId} from "../models/models";
 import {CSSProperties} from "react";
 import Constants from "./constants";
 

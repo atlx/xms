@@ -64,7 +64,8 @@ export enum SpecialChannel {
 
 export enum MessageType {
     Text,
-    Notice
+    Notice,
+    Break
 }
 
 export interface IGenericMessage {

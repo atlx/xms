@@ -1,6 +1,6 @@
 import App from "./app";
 import Actions from "../store/actions";
-import {UserState, SpecialCategory} from "../types/types";
+import {UserState, SpecialCategory} from "../models/models";
 
 export default class DeveloperToolbox {
     protected app: App;

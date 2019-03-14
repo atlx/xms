@@ -2,7 +2,7 @@ import React, {RefObject} from "react";
 import "../../styles/chat/chat.scss";
 import {connect} from "react-redux";
 import {IAppState} from "../../store/store";
-import {IMessage, IGenericMessage, MessageType, IChannel, IAutoCompleteItem, INotice} from "../../types/types";
+import {IMessage, IGenericMessage, MessageType, IChannel, IAutoCompleteItem, INotice} from "../../models/models";
 import ChatMessage from "./chatMessage";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faHashtag, faArrowRight} from "@fortawesome/free-solid-svg-icons";

@@ -1,6 +1,6 @@
 import React from "react";
 import "../../styles/chat/autoCompleter.scss";
-import {IAutoCompleteItem} from "../../types/types";
+import {IAutoCompleteItem} from "../../models/models";
 import {CSSTransition} from "react-transition-group";
 
 interface ILocalProps {

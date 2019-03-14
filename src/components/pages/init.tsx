@@ -3,7 +3,7 @@ import "../../styles/pages/init.scss";
 import Loader from "../loader";
 import Utils from "../../core/utils";
 import Actions from "../../store/actions";
-import {Page} from "../../types/types";
+import {Page} from "../../models/models";
 import {ConnectionState} from "../../store/store";
 
 type InitPageState = {

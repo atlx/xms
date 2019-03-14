@@ -3,7 +3,7 @@ import "../../styles/explorer/explorer.scss";
 import ExplorerItem from "./explorerItem";
 import {IAppState} from "../../store/store";
 import {connect} from "react-redux";
-import {IChannel, UniqueId, ChannelType, SpecialChannel} from "../../types/types";
+import {IChannel, UniqueId, ChannelType, SpecialChannel} from "../../models/models";
 import {Map as ImmutableMap} from "immutable";
 import PlaceholderExplorerItem from "../placeholder/explorerItem";
 import UserBar from "../userBar/userBar";

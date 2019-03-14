@@ -1,7 +1,7 @@
 import React from "react";
 import "../../styles/roster/rosterCategory.scss";
 import RosterItem from "./rosterItem";
-import {User, UniqueId} from "../../types/types";
+import {User, UniqueId} from "../../models/models";
 import {IAppState} from "../../store/store";
 import {connect} from "react-redux";
 import PlaceholderRosterItem from "../placeholder/rosterItem";

@@ -2,7 +2,7 @@ import React from "react";
 import {connect} from "react-redux";
 import "../../styles/roster/roster.scss";
 import {IAppState} from "../../store/store";
-import {IRosterCategory, User} from "../../types/types";
+import {IRosterCategory, User} from "../../models/models";
 import RosterCategory from "./rosterCategory";
 
 interface ILocalProps {

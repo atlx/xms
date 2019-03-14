@@ -1,4 +1,4 @@
-import {IMessage, SpecialChannel, IpAddress} from "../types/types";
+import {IMessage, SpecialChannel, IpAddress} from "../models/models";
 import BroadcastGateway from "../net/broadcastGateway";
 import {GatewayMsgType, MessagePayload} from "../net/gateway";
 

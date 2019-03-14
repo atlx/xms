@@ -4,7 +4,7 @@ import ReactDOM from "react-dom";
 import {Provider} from "react-redux";
 import {store} from "../store/store";
 import BroadcastGateway from "../net/broadcastGateway";
-import {User, Page, INotice, NoticeStyle, SpecialCategory, ContextMenuOptionType, SpecialChannel} from "../types/types";
+import {User, Page, INotice, NoticeStyle, SpecialCategory, ContextMenuOptionType, SpecialChannel} from "../models/models";
 import GatewayActions from "./gatewayActions";
 import Actions from "../store/actions";
 import CommandHandler from "./commandHandler";
