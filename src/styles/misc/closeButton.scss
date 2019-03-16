@@ -1,0 +1,17 @@
+.close-button {
+    & {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        -webkit-app-region: no-drag;
+        cursor: pointer;
+        padding: 6px 12px; /* Same as title */
+        opacity: 0.4;
+        border-radius: 3px;
+    }
+
+    &:hover {
+        opacity: 1;
+        background-color: lighten(#2a2a2a, 6%);
+    }
+}
