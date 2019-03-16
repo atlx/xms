@@ -35,7 +35,7 @@ class RosterCategory extends React.Component<ILocalProps> {
     public render(): JSX.Element {
         return (
             <div className="roster-category">
-                <div className="title">{this.props.title} &mdash; {this.props.users.length}</div>
+                <div className="title">{this.props.title} &mdash; {this.props.users.size}</div>
                 <div className="users">
                     {this.renderUsers()}
                     <PlaceholderRosterItem opacity={1} />
