@@ -14,7 +14,7 @@ export default class Handle extends React.Component {
 					}
 					<div className="button-wrapper">
 						<CloseButton className="button" />
-					</div>>
+					</div>
 				</div>
 			</div>
 		);
