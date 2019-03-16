@@ -22,16 +22,20 @@ module.exports = {
 
 	module: {
 		rules: [
+			// Load SCSS + Sass.
 			{
 				test: /\.scss$/,
+				
 				use: [{
-					loader: "style-loader" // creates style nodes from JS strings
+					loader: "style-loader" // creates style nodes from JS strings.
 				}, {
-					loader: "css-loader" // translates CSS into CommonJS
+					loader: "css-loader" // translates CSS into CommonJS.
 				}, {
-					loader: "sass-loader" // compiles Sass to CSS
+					loader: "sass-loader" // Compiles Sass to CSS.
 				}]
 			},
+			
+			// Load CSS.
 			{
 				test: /\.css$/,
 
@@ -53,28 +57,34 @@ module.exports = {
 				include: defaultInclude
 			},
 
-			// Load typescript + typescript/react files
+			// Load TypeScript + TypeScript/React files.
 			{
 				test: /\.tsx?$/,
 				loader: "awesome-typescript-loader"
 			},
+
+			// Load JavaScript/React files.
 			{
 				test: /\.jsx?$/,
 				use: [{ loader: "babel-loader" }],
 				include: defaultInclude
 			},
+
+			// Load image files.
 			{
 				test: /\.(jpe?g|png|gif)$/,
 				use: [{ loader: "file-loader?name=img/[name]__[hash:base64:5].[ext]" }],
 				include: defaultInclude
 			},
+
+			// Load fonts.
 			{
 				test: /\.(eot|svg|ttf|woff|woff2)$/,
 				use: [{ loader: "file-loader?name=font/[name]__[hash:base64:5].[ext]" }],
 				include: defaultInclude
 			},
 
-			// Load sound files
+			// Load sound files.
 			{
 				test: /\.wav$|\.mp3$/,
 				exclude: /node_modules/,

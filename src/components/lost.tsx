@@ -9,7 +9,7 @@ export default class Lost extends Component {
         return (
             <div className="lost">
                 <div className="header">
-                        <img className="image" src="https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/160/facebook/92/thinking-face_1f914.png" />
+                        <img className="image" src={require("../resources/img/think.png")} />
                         <div className="title">Something's not right</div>
                         <div className="sub-title">Hmm.. You shouldn't be here!</div>
                         <div
