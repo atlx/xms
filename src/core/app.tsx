@@ -86,7 +86,7 @@ export default class App {
 			<Provider store={store}>
 				<HashRouter>
 					{/* TODO: Hard-coded prop as null (required to pass in) */}
-					<Route render={() =>
+					<Route path="/" exact render={() =>
 						<Application modals={[] as any} page={Page.Init} />
 					} />
 					<Route component={Lost} />
