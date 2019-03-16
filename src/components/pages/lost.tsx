@@ -1,10 +1,10 @@
 import {Component} from "react";
-import "../styles/misc/lost.scss";
+import "../../styles/misc/lost.scss";
 import React from "react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faSyncAlt} from "@fortawesome/free-solid-svg-icons";
-import CloseButton from "./closeButton";
-import Tooltip, {TooltipPosition} from "./tooltip";
+import CloseButton from "../closeButton";
+import Tooltip, {TooltipPosition} from "../tooltip";
 
 export default class Lost extends Component {
     public render(): JSX.Element {
@@ -14,7 +14,7 @@ export default class Lost extends Component {
                     <CloseButton />
                 </Tooltip>
                 <div className="header">
-                    <img className="image" src={require("../resources/img/think.png")} />
+                    <img className="image" src={require("../../resources/img/think.png")} />
                     <div className="title">Something's not right</div>
                     <div className="sub-title">Might be missing a bolt or two</div>
                     <div

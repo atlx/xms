@@ -16,7 +16,7 @@ import Constants from "./constants";
 import Localisation from "./localisation";
 import DeveloperToolbox from "./developerToolbox";
 import {HashRouter, Route, Switch} from "react-router-dom";
-import Lost from "../components/lost";
+import Lost from "../components/pages/lost";
 
 export type PromiseOr<T = void> = Promise<T> | T;
 

@@ -17,7 +17,7 @@ import Factory from "../../core/factory";
 import {ValidMessagePattern} from "../../core/app";
 import BreakMessage from "./breakMessage";
 import Pattern from "../../core/pattern";
-import {Map as ImmutableMap} from "immutable";
+import {Map as ImmutableMap, List} from "immutable";
 
 interface ILocalProps {
 	readonly messages: IGenericMessage[];
@@ -153,9 +153,12 @@ class Chat extends React.Component<ILocalProps, ILocalState> {
 					sent={textMessage.sent}
 					authorName={textMessage.authorName}
 					authorAvatarHash={textMessage.authorAvatarHash}
-					content={message.text}
+					text={message.text}
 					time={textMessage.time}
 					systemMessage={textMessage.systemMessage}
+
+					// TODO: Add & use a 'mentions' property, calculated when the message is sent?
+					notify={true}
 				/>;
 			}
 			// Notice message.
@@ -308,8 +311,13 @@ class Chat extends React.Component<ILocalProps, ILocalState> {
 			for (const match of Pattern.partialMention.exec(value)!) {
 				const name: string = match.substring(1);
 
-				if (this.props.users.has(name)) {
-					value = value.replace(match, `<@${name}>`);
+				const users: List<User> = this.props.users.filter((user: User) => {
+					return user.username === name;
+				}).toList();
+
+				// TODO: Need to choose between multiple possible matches.
+				if (users.size > 0) {
+					value = value.replace(match, `<@${users.get(0)!.id}>`);
 				}
 			}
 		}

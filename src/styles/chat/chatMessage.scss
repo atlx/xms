@@ -9,6 +9,7 @@
         color: #aaa;
         animation: message-appear 0.2s ease;
         word-wrap: break-word;
+        position: relative;
     }
 
     &:not(:first-child) {
@@ -19,6 +20,16 @@
         opacity: 1;
     }
 
+    > .indicator {
+        width: 10px;
+        height: 10px;
+        background-color: red;
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        border-radius: 50%;
+    }
+
     > .header {
         > .author-name {
             font-weight: bolder;
@@ -26,6 +37,26 @@
             margin-bottom: 3px;
             opacity: 0.5;
             text-transform: uppercase;
+        }
+    }
+
+    > .text {
+        & {
+            display: flex;
+        }
+
+        > * {
+            & {
+                margin: 0 2px;
+            }
+
+            &:first-child {
+                margin-left: 0;
+            }
+
+            &:last-child {
+                margin-right: 0;
+            }
         }
     }
 }

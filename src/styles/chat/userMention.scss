@@ -1,0 +1,13 @@
+.user-mention {
+    & {
+        background-color: #6161c9cc;
+        color: #fff;
+        padding: 0 4px;
+        cursor: pointer;
+        border-radius: 3px;
+    }
+
+    &:hover {
+        background-color: #6161c9;
+    }
+}
