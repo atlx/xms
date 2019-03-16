@@ -78,7 +78,7 @@ export interface IAppStateMisc {
 }
 
 export interface IAppStateUser {
-    readonly users: User[];
+    readonly users: ImmutableMap<UniqueId, User>;
     readonly me: User | null;
 }
 
@@ -144,7 +144,7 @@ export const InitialState: IAppState = {
 
     user: {
         me: null,
-        users: []
+        users: ImmutableMap()
     }
 };
 

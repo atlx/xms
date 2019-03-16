@@ -1,4 +1,5 @@
 import {Reducer, ActionType, IAppStateUser, InitialState} from "../store";
+import {User} from "../../models/models";
 
 const userReducer: Reducer<IAppStateUser> = (state, action) => {
     // Return default initial state for this reducer.
@@ -18,9 +19,11 @@ const userReducer: Reducer<IAppStateUser> = (state, action) => {
         }
 
         case ActionType.AddUser: {
+            const user: User = action.payload;
+
             return {
                 ...state,
-                users: [...state.users, action.payload]
+                users: state.users.set(user.id, user)
             };
         }
 

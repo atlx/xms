@@ -5,16 +5,24 @@ import {User, UniqueId} from "../../models/models";
 import {IAppState} from "../../store/store";
 import {connect} from "react-redux";
 import PlaceholderRosterItem from "../placeholder/rosterItem";
+import {Map as ImmutableMap} from "immutable";
 
 interface ILocalProps {
     readonly title: string;
-    readonly users: User[];
+    readonly users: ImmutableMap<UniqueId, User>;
     readonly meId: UniqueId | null;
 }
 
 class RosterCategory extends React.Component<ILocalProps> {
     public renderUsers(): JSX.Element[] {
-        return this.props.users.map((user: User) => {
+        const users: User[] = [];
+
+        // Populate users array from source map.
+        for (const user of this.props.users.values()) {
+            users.push(user);
+        }
+
+        return users.map((user: User) => {
             return <RosterItem
                 key={user.id}
                 me={this.props.meId !== null && user.id === this.props.meId}

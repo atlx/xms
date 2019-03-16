@@ -2,7 +2,7 @@ import React, {RefObject} from "react";
 import "../../styles/chat/chat.scss";
 import {connect} from "react-redux";
 import {IAppState} from "../../store/store";
-import {IMessage, IGenericMessage, MessageType, IChannel, IAutoCompleteItem, INotice, IBreakMessage} from "../../models/models";
+import {IMessage, IGenericMessage, MessageType, IChannel, IAutoCompleteItem, INotice, IBreakMessage, User, UniqueId} from "../../models/models";
 import ChatMessage from "./chatMessage";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faHashtag, faArrowRight} from "@fortawesome/free-solid-svg-icons";
@@ -16,6 +16,8 @@ import CommandHandler from "../../core/commandHandler";
 import Factory from "../../core/factory";
 import {ValidMessagePattern} from "../../core/app";
 import BreakMessage from "./breakMessage";
+import Pattern from "../../core/pattern";
+import {Map as ImmutableMap} from "immutable";
 
 interface ILocalProps {
 	readonly messages: IGenericMessage[];
@@ -25,6 +27,7 @@ interface ILocalProps {
 	readonly autoCompleteVisible: boolean;
 	readonly commandHandler: CommandHandler;
 	readonly autoCompleteCommands: IAutoCompleteItem[];
+	readonly users: ImmutableMap<UniqueId, User>;
 }
 
 interface ILocalState {
@@ -278,7 +281,7 @@ class Chat extends React.Component<ILocalProps, ILocalState> {
 			return;
 		}
 
-		const value: string = this.getValue();
+		let value: string = this.getValue();
 
 		// Stop if the input is invalid/disallowed. Shake the input element.
 		if (!ValidMessagePattern.test(value)) {
@@ -298,6 +301,17 @@ class Chat extends React.Component<ILocalProps, ILocalState> {
 			this.clearValue();
 
 			return;
+		}
+		// Otherwise, attempt to handle partial mentions if applicable.
+		else if (Pattern.partialMention.test(value)) {
+			// Convert each match to absolute mention, if user(s) exist.
+			for (const match of Pattern.partialMention.exec(value)!) {
+				const name: string = match.substring(1);
+
+				if (this.props.users.has(name)) {
+					value = value.replace(match, `<@${name}>`);
+				}
+			}
 		}
 
 		const message: IMessage = Factory.createMessage(this.props.activeChannel.id, value);
@@ -461,7 +475,8 @@ const mapStateToProps = (state: IAppState): any => {
 		inputLocked: state.misc.inputLocked,
 		autoCompleteVisible: state.misc.autoCompleteVisible,
 		autoCompleteCommands: state.category.commandHandler.getAllAsAutoCompleteCommands(),
-		commandHandler: state.category.commandHandler
+		commandHandler: state.category.commandHandler,
+		users: state.user.users
 	};
 };
 
