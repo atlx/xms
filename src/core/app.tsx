@@ -15,6 +15,8 @@ import Sounds from "./sounds";
 import Constants from "./constants";
 import Localisation from "./localisation";
 import DeveloperToolbox from "./developerToolbox";
+import {HashRouter, Route} from "react-router-dom";
+import Lost from "../components/lost";
 
 export type PromiseOr<T = void> = Promise<T> | T;
 
@@ -82,8 +84,13 @@ export default class App {
 
 		ReactDOM.render(
 			<Provider store={store}>
-				{/* TODO: Hard-coded prop as null (required to pass in) */}
-				<Application modals={[] as any} page={Page.Init} />
+				<HashRouter>
+					{/* TODO: Hard-coded prop as null (required to pass in) */}
+					<Route path="/index.html" exact render={() =>
+						<Application modals={[] as any} page={Page.Init} />
+					} />
+					<Route component={Lost} />
+				</HashRouter>
 			</Provider>,
 
 			document.getElementById("root")

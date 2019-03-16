@@ -35,11 +35,10 @@ interface ILocalState {
 }
 
 class Chat extends React.Component<ILocalProps, ILocalState> {
-	private readonly $input: RefObject<any>;
+	private readonly $input: RefObject<HTMLInputElement>;
 	private readonly $container: RefObject<any>;
 	private readonly $loader: RefObject<any>;
 
-	private randomInterval?: any;
 	private shakeTimeout?: number;
 
 	public constructor(props: ILocalProps) {
@@ -103,11 +102,6 @@ class Chat extends React.Component<ILocalProps, ILocalState> {
 
 		// TODO: componentDidUpdate() may trigger in unwanted situations, such as on receive message.
 		//this.focus();
-		clearInterval(this.randomInterval);
-
-		this.randomInterval = setTimeout(() => this.setState({
-			status: "Random " + Math.random().toString().replace(".", "").substr(1).substring(0, 2)
-		}), 4000);
 
 		// Set the pending done timeout if it is not already set. Override if already exists.
 		if (this.state.shaking) {
@@ -189,20 +183,20 @@ class Chat extends React.Component<ILocalProps, ILocalState> {
 	}
 
 	public getValue(trim: boolean = true): string {
-		const value: string = this.$input.current.value;
+		const value: string = this.$input.current!.value;
 
 		return trim ? value.trim() : value;
 	}
 
 	public setValue(value: string): void {
-		this.$input.current.value = value;
+		this.$input.current!.value = value;
 
 		// OnChange event won't automatically trigger when manually setting the value.
 		this.handleInputChange();
 	}
 
 	public focus(): void {
-		this.$input.current.focus();
+		this.$input.current!.focus();
 	}
 
 	public clearValue(): string {
@@ -264,8 +258,17 @@ class Chat extends React.Component<ILocalProps, ILocalState> {
 			// Filter values in auto complete.
 		}
 
-		// Change event won't trigger if value is manually cleared
+		// Change event won't trigger if value is manually cleared.
 		//this.handleInputChange();
+
+		// Update message length counter if applicable.
+		const valueLength: number = this.$input.current!.value.length;
+
+		if (valueLength > 0) {
+			this.setState({
+				status: `${this.$input.current!.maxLength - valueLength} characters left`
+			});
+		}
 	}
 
 	public sendMessage(): void {
