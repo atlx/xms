@@ -261,13 +261,14 @@ class Chat extends React.Component<ILocalProps, ILocalState> {
 		// Change event won't trigger if value is manually cleared.
 		//this.handleInputChange();
 
-		// Update message length counter if applicable.
+		// Create length variables for conviniency.
 		const valueLength: number = this.$input.current!.value.length;
+		const maxLength: number = this.$input.current!.maxLength;
 
-		if (valueLength > 0) {
-			this.setState({
-				status: `${this.$input.current!.maxLength - valueLength} characters left`
-			});
+		// TODO: Prevent triggering on "non-value" keys (such as CTRL/SHIFT/ARROWS).
+		// Max input length reached. Shake input for feedback.
+		if (valueLength === maxLength) {
+			this.shakeInput();
 		}
 	}
 
@@ -374,6 +375,24 @@ class Chat extends React.Component<ILocalProps, ILocalState> {
 		else if (this.inCommand()) {
 			this.filterAutoCompleteItems();
 			this.setAutoCompleteVisible(true);
+		}
+
+		// Create length variables for conviniency.
+		const valueLength: number = this.$input.current!.value.length;
+		const maxLength: number = this.$input.current!.maxLength;
+		const threshold: number = Math.round(maxLength / 5);
+
+		// Update character counter if threshold is met, and is not at max length.
+		if (valueLength > threshold && valueLength <= maxLength) {
+			this.setState({
+				status: `${maxLength - valueLength} characters left`
+			});
+		}
+		// Length does not exceed threshold, hide counter.
+		else {
+			this.setState({
+				status: undefined
+			});
 		}
 	}
 
