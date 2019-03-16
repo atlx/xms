@@ -12,6 +12,7 @@ interface ILocalProps {
     readonly text: string;
     readonly systemMessage: boolean;
     readonly sent: boolean;
+    readonly className?: string;
 
     /**
      * This message indicates a signal to the user. Defaults to false.
@@ -20,36 +21,52 @@ interface ILocalProps {
 }
 
 export default class ChatMessage extends React.Component<ILocalProps> {
-    public getComponentClass(): string {
+    public getClass(): string {
         const classes: string[] = ["chat-message"];
 
-        if (this.props.sent) {
+        if (this.props.sent === true) {
             classes.push("sent");
+        }
+
+        if (this.props.className !== undefined) {
+            classes.push(this.props.className);
         }
 
         return classes.join(" ");
     }
 
-    public renderContent(): JSX.Element[] {
-        const content: JSX.Element[] = [<div key="text">{this.props.text}</div>];
+    public renderContent(): Array<JSX.Element | string> {
+        const content: Array<JSX.Element | string> = [];
+
+        let text: string = this.props.text;
 
         // Test text for absolute mentions.
-        if (Pattern.absoluteMention.test(this.props.text)) {
+        if (Pattern.absoluteMention.test(text)) {
             // Convert absolute mentions to elements.
-            for (const match of Pattern.absoluteMention.exec(this.props.text)!) {
+            for (const match of Pattern.absoluteMention.exec(text)!) {
+                const index: number = text.indexOf(match);
+
+                content.push(text.substring(0, index));
+
+                
                 // TODO
                 content.push(
-                    <UserMention key={"f"} id="someid" />
+                    <UserMention key={"f"} id="atlas" />
                 );
+
+                text = text.substring(index + match.length);
             }
         }
+        
+        // Always append remaining text.
+        content.push(text);
 
         return content;
     }
 
     public render(): JSX.Element {
         return (
-            <div className={this.getComponentClass()}>
+            <div className={this.getClass()}>
                 <Indicator visible={this.props.notify} color={IndicatorColor.Red} />
                 <div className="header">
                     <div className="author-name">{this.props.authorName}</div>

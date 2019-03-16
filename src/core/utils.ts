@@ -2,6 +2,7 @@ import os from "os";
 import {UniqueId} from "../models/models";
 import {CSSProperties} from "react";
 import Constants from "./constants";
+import {remote} from "electron";
 
 export default abstract class Utils {
     public static getLocalAddresses() {

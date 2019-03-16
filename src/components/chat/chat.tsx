@@ -14,10 +14,10 @@ import {CSSTransition} from "react-transition-group";
 import Autocompleter from "./autocompleter";
 import CommandHandler from "../../core/commandHandler";
 import Factory from "../../core/factory";
-import {ValidMessagePattern} from "../../core/app";
 import BreakMessage from "./breakMessage";
 import Pattern from "../../core/pattern";
 import {Map as ImmutableMap, List} from "immutable";
+import HiddenMessage from "./hiddenMessage";
 
 interface ILocalProps {
 	readonly messages: IGenericMessage[];
@@ -287,7 +287,7 @@ class Chat extends React.Component<ILocalProps, ILocalState> {
 		let value: string = this.getValue();
 
 		// Stop if the input is invalid/disallowed. Shake the input element.
-		if (!ValidMessagePattern.test(value)) {
+		if (!Pattern.message.test(value)) {
 			this.shakeInput();
 
 			return;
@@ -443,6 +443,7 @@ class Chat extends React.Component<ILocalProps, ILocalState> {
 				</div>
 				<div ref={this.$container} onScroll={this.handleScroll} className="messages">
 					{this.renderLoader()}
+					<HiddenMessage />
 					{this.renderMessages()}
 				</div>
 				<div className="input">

@@ -1,10 +1,9 @@
 import React from "react";
-import Application from "../components/application";
-import ReactDOM from "react-dom";
+import ReactDOM, {render} from "react-dom";
 import {Provider} from "react-redux";
 import {store} from "../store/store";
 import BroadcastGateway from "../net/broadcastGateway";
-import {User, Page, INotice, NoticeStyle, SpecialCategory, ContextMenuOptionType, SpecialChannel} from "../models/models";
+import {User, INotice, NoticeStyle, SpecialCategory, ContextMenuOptionType, SpecialChannel, Page} from "../models/models";
 import GatewayActions from "./gatewayActions";
 import Actions from "../store/actions";
 import CommandHandler from "./commandHandler";
@@ -16,7 +15,12 @@ import Constants from "./constants";
 import Localisation from "./localisation";
 import DeveloperToolbox from "./developerToolbox";
 import {HashRouter, Route, Switch} from "react-router-dom";
-import Lost from "../components/pages/lost";
+import ErrorPage from "../components/pages/error";
+import AuthPage from "../components/pages/auth";
+import Config from "./config";
+import {remote} from "electron";
+import Application from "../components/application";
+import HandleBar from "../components/handle";
 
 export type PromiseOr<T = void> = Promise<T> | T;
 
@@ -26,11 +30,22 @@ export interface IDisposable {
 
 export type Callback<T = void> = (...args: any[]) => T;
 
-export const DevelopmentMode: boolean = process.env.NODE_ENV === "development";
-
-export const ValidMessagePattern: RegExp = /^[a-z0-9!"#$%&'()*+,.\/:;<=>?@\[\] ^_`{|}~-]*$/i;
+export type AppRenderer = () => JSX.Element;
 
 export default class App {
+	/**
+	 * Whether the application is in development mode.
+	 */
+	public static devMode: boolean = process.env.NODE_ENV === "development";
+
+	/**
+	 * Save config and close application.
+	 */
+	public static close(): void {
+		Config.save();
+		remote.getCurrentWindow().close();
+	}
+
 	public readonly gateway: BroadcastGateway;
 	public readonly me: User;
 	public readonly actions: GatewayActions;
@@ -41,7 +56,10 @@ export default class App {
 
 	public notifications: boolean;
 
-	public constructor(me: User) {
+	protected readonly renderer: AppRenderer;
+
+	public constructor(me: User, renderer: AppRenderer) {
+		this.renderer = renderer;
 		this.gateway = new BroadcastGateway(Constants.primaryGroupAddress, Constants.primaryBroadcastPort);
 		this.me = me;
 		this.actions = new GatewayActions(this.gateway);
@@ -82,21 +100,7 @@ export default class App {
 			document.body.appendChild(root);
 		}
 
-		ReactDOM.render(
-			<Provider store={store}>
-				<HashRouter>
-					<Switch>
-						{/* TODO: Hard-coded prop as null (required to pass in) */}
-						<Route path="/" exact render={() =>
-							<Application modals={[] as any} page={Page.Init} />
-						} />
-						<Route component={Lost} />
-					</Switch>
-				</HashRouter>
-			</Provider>,
-
-			document.getElementById("root")
-		);
+		ReactDOM.render(this.renderer(), document.getElementById("root"));
 	}
 
 	public registerCommands(): void {
@@ -111,7 +115,7 @@ export default class App {
 			}
 		];
 
-		if (DevelopmentMode) {
+		if (App.devMode) {
 			commands.push(...[
 				{
 					name: "notice",
@@ -174,7 +178,7 @@ export default class App {
 	}
 
 	public init(): void {
-		if (DevelopmentMode) {
+		if (App.devMode) {
 			this.test();
 		}
 

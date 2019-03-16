@@ -9,8 +9,8 @@ import StatusToggle from "../status/statusToggle";
 import StatusSelect from "../status/statusSelect";
 import StatusSelectItem from "./statusSelectItem";
 import {Language} from "../../core/localisation";
-import {DevelopmentMode} from "../../core/app";
 import Actions from "../../store/actions";
+import App from "../../core/app";
 
 interface ILocalProps {
     readonly ping: number;
@@ -43,7 +43,7 @@ class StatusBar extends React.Component<ILocalProps> {
                     <StatusItem tooltip="Download meter" icon={faArrowDown}>53 KB</StatusItem>
                 </div>
                 <div className="right">
-                    {DevelopmentMode &&
+                    {App.devMode &&
                         <StatusSelect notify icon={faToolbox} text="Developer Tools" title="Select Action">
                             <StatusItem onClick={() => MainApp.dev.emulatePublicMessage()} icon={faComment}>General message</StatusItem>
                             <StatusItem icon={faLocationArrow}>Direct message</StatusItem>

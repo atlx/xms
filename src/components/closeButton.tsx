@@ -1,17 +1,26 @@
 import React, {Component} from "react";
-import {remote} from "electron";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faTimes} from "@fortawesome/free-solid-svg-icons";
+import App from "../core/app";
 import "../styles/misc/closeButton.scss";
 
-export interface ILocalProps {
+interface ILocalProps {
     readonly className?: string;
+
+    /**
+     * Callback to invoke once the button is pressed.
+     * Defaults to closing the application.
+     */
+    readonly onClick?: () => void;
 }
 
 export default class CloseButton extends Component<ILocalProps> {
-    public closeApp(): void {
-		remote.getCurrentWindow().close();
-    }
+    public static defaultProps: Partial<ILocalProps> = {
+        // TODO: Doesn't want to accept directly.
+        onClick: () => {
+            App.close()
+        }
+    };
 
     public getClass(): string {
         const classes: string[] = ["close-button"];
@@ -22,10 +31,16 @@ export default class CloseButton extends Component<ILocalProps> {
 
         return classes.join(" ");
     }
+
+    public invokeCallback(): void {
+        if (this.props.onClick !== undefined) {
+            this.props.onClick();
+        }
+    }
     
     public render(): JSX.Element {
         return (
-            <div onClick={() => this.closeApp()} className={this.getClass()}>
+            <div onClick={() => this.invokeCallback()} className={this.getClass()}>
                 <FontAwesomeIcon icon={faTimes} className="button" />
             </div>
         );

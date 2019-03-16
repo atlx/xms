@@ -37,6 +37,7 @@ class DefaultPage extends React.Component<ILocalProps, ILocalState> {
 					messages={[]}
 					inputLocked={true}
 					activeChannel={null as any}
+					users={undefined as any}
 				/>
 				<Roster categories={null as any} users={null as any} />
 				<StatusBar {...undefined as any} />

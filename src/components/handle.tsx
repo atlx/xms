@@ -1,7 +1,7 @@
 import React from "react";
 import "../styles/misc/handle.scss";
-import {DevelopmentMode} from "../core/app";
 import CloseButton from "./closeButton";
+import App from "../core/app";
 
 export default class Handle extends React.Component {
 	public render(): JSX.Element {
@@ -9,7 +9,7 @@ export default class Handle extends React.Component {
 			<div className="handle">
 				<div className="title">XMS by Atlas</div>
 				<div className="buttons">
-					{DevelopmentMode &&
+					{App.devMode &&
 						<div className="dev-mode">Dev. Mode</div>
 					}
 					<div className="button-wrapper">

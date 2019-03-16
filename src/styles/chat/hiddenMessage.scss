@@ -1,0 +1,32 @@
+.hidden-message {
+    & {
+        // Use relative position to center text over message.
+        position: relative;
+    }
+
+    &:hover {
+        > .chat-message {
+            // Unblur message on hover.
+            filter: none;
+        }
+
+        > .text {
+            // Hide text on hover.
+            opacity: 0;
+        }
+    }
+
+    // The encapsulated message.
+    > .chat-message {
+        filter: blur(2px);
+    }
+
+    > .text {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        transition: opacity 0.2s ease;
+        color: #aaa;
+    }
+}

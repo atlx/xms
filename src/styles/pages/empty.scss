@@ -1,0 +1,29 @@
+.empty-page {
+    & {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        white-space: nowrap;
+        padding: 0 150px;
+        text-align: center;
+        height: 100%;
+    }
+
+    > .tooltip-container {
+        & {
+            position: absolute;
+            top: 0;
+            right: 0;
+            margin-top: 15px;
+            margin-right: 15px;
+        }
+
+        > .close-button {
+            border-radius: 4px;
+            padding-top: 8px;
+            padding-bottom: 8px;
+            font-size: 20px;
+        }
+    }
+}

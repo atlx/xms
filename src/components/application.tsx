@@ -49,10 +49,6 @@ class Application extends React.Component<ILocalProps> {
 		return properties;
 	}
 
-	public handleKeyDown(e: any): void {
-		// TODO
-	}
-
 	public handleModalClose(modal: IModal): void {
 		Actions.shiftModal();
 
@@ -80,8 +76,7 @@ class Application extends React.Component<ILocalProps> {
 
 	public render(): JSX.Element {
 		return (
-			<div onKeyDown={this.handleKeyDown} className="application">
-				<Handle />
+			<div className="application">
 				{this.renderNextModal()}
 				{/* TODO: Not applying rule to EXITING component, just entering one. */}
 				<CSSTransition in={this.props.page !== Page.Init} classNames="page" timeout={600}>

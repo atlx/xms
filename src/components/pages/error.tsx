@@ -1,16 +1,16 @@
 import {Component} from "react";
-import "../../styles/misc/lost.scss";
+import "../../styles/pages/error.scss";
 import React from "react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faSyncAlt} from "@fortawesome/free-solid-svg-icons";
 import CloseButton from "../closeButton";
 import Tooltip, {TooltipPosition} from "../tooltip";
 
-export default class Lost extends Component {
+export default class ErrorPage extends Component {
     public render(): JSX.Element {
         return (
-            <div className="lost">
-                <Tooltip text="Close Application" position={TooltipPosition.Left}>
+            <div className="error-page">
+                <Tooltip text="Close application" position={TooltipPosition.Left}>
                     <CloseButton />
                 </Tooltip>
                 <div className="header">

@@ -1,0 +1,18 @@
+.passcode {
+    > .box {
+        & {
+            padding: 10px;
+            border: none;
+            border-radius: 3px;
+            background-color: #222;
+            color: #aaa;
+            width: 30px;
+            font-size: 25px;
+            text-align: center;
+        }
+
+        &:not(:last-child) {
+            margin-right: 5px;
+        }
+    }
+}
