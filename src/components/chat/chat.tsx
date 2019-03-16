@@ -308,7 +308,7 @@ class Chat extends React.Component<ILocalProps, ILocalState> {
 	}
 
 	public handleScroll(): void {
-		// TODO: Hard-coded threshold
+		// TODO: Hard-coded threshold.
 		if (this.props.messages.length < 15) {
 			return;
 		}
@@ -354,6 +354,7 @@ class Chat extends React.Component<ILocalProps, ILocalState> {
 	}
 
 	public isEmptyCommand(): boolean {
+		// TODO: Debugging.
 		console.log("command name", this.getCommandName(), `(${this.getCommandName().length})`);
 
 		return this.getCommandName().length === 0;
