@@ -27,10 +27,13 @@
             top: 10px;
             right: 10px;
             padding: 5px;
+            
+            // Allows triggering of hover on tooltip.
+            z-index: 1;
         }
 
         > .indicator {
-            pointer-events: none;
+            //
         }
     }
 

@@ -47,14 +47,15 @@ export default class ChatMessage extends React.Component<ILocalProps> {
             for (const match of Pattern.absoluteMention.exec(text)!) {
                 const index: number = text.indexOf(match);
 
+                // Append the text from start to matched index.
                 content.push(text.substring(0, index));
 
-
-                // TODO
+                // Append the user mention.
                 content.push(
                     <UserMention key={"f"} id="atlas" />
                 );
 
+                // Set the text to start after skipping user mention, and continue.
                 text = text.substring(index + match.length);
             }
         }

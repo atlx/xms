@@ -306,18 +306,24 @@ class Chat extends React.Component<ILocalProps, ILocalState> {
 			return;
 		}
 		// Otherwise, attempt to handle partial mentions if applicable.
-		else if (Pattern.partialMention.test(value)) {
-			// Convert each match to absolute mention, if user(s) exist.
-			for (const match of Pattern.partialMention.exec(value)!) {
-				const name: string = match.substring(1);
+		else {
+			while (Pattern.partialMention.test(value)) {
+				// Convert each match to absolute mention, if user(s) exist.
+				for (const match of Pattern.partialMention.exec(value)!) {
+					const name: string = match.substring(1);
 
-				const users: List<User> = this.props.users.filter((user: User) => {
-					return user.username === name;
-				}).toList();
+					const users: List<User> = this.props.users.filter((user: User) => {
+						return user.username === name;
+					}).toList();
 
-				// TODO: Need to choose between multiple possible matches.
-				if (users.size > 0) {
-					value = value.replace(match, `<@${users.get(0)!.id}>`);
+					// TODO: Need to choose between multiple possible matches.
+					if (users.size > 0) {
+						value = value.replace(match, `<@:${users.get(0)!.id}>`);
+					}
+					// No user found.
+					else {
+						value = value.replace(match, `<@:${name}>`);
+					}
 				}
 			}
 		}
