@@ -17,11 +17,11 @@
         &.right,
         &.left {
             display: flex;
+            align-items: center;
         }
 
         &.right {
             justify-content: flex-end;
-            align-items: center;
         }
     }
 }

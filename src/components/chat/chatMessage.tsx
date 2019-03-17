@@ -3,6 +3,7 @@ import "../../styles/chat/chatMessage.scss";
 import Pattern from "../../core/pattern";
 import UserMention from "./userMention";
 import Indicator, {IndicatorColor} from "../indicator";
+import Tooltip from "../tooltip";
 
 // TODO: Use the GenericMessage/IMessage for this?
 interface ILocalProps {
@@ -48,7 +49,7 @@ export default class ChatMessage extends React.Component<ILocalProps> {
 
                 content.push(text.substring(0, index));
 
-                
+
                 // TODO
                 content.push(
                     <UserMention key={"f"} id="atlas" />
@@ -57,7 +58,7 @@ export default class ChatMessage extends React.Component<ILocalProps> {
                 text = text.substring(index + match.length);
             }
         }
-        
+
         // Always append remaining text.
         content.push(text);
 
@@ -67,7 +68,9 @@ export default class ChatMessage extends React.Component<ILocalProps> {
     public render(): JSX.Element {
         return (
             <div className={this.getClass()}>
-                <Indicator visible={this.props.notify} color={IndicatorColor.Red} />
+                <Tooltip text="You were mentioned">
+                    <Indicator visible={this.props.notify} color={IndicatorColor.Red} />
+                </Tooltip>
                 <div className="header">
                     <div className="author-name">{this.props.authorName}</div>
                 </div>

@@ -20,25 +20,11 @@ interface ILocalProps {
 }
 
 export default class EmptyPage extends Component<ILocalProps> {
-    public renderCloseButton(): JSX.Element {
-        const closeButton: JSX.Element = <CloseButton onClick={this.props.onClose} />;
-
-        if (this.props.closeTooltip !== undefined) {
-            return (
-                <Tooltip text={this.props.closeTooltip} position={TooltipPosition.Left}>
-                    {closeButton}
-                </Tooltip>
-            );
-        }
-
-        return closeButton;
-    }
-
     public getClass(): string {
         const classes: string[] = ["empty-page"];
 
         if (this.props.className !== undefined) {
-            classes.push(this.props.className);
+            classes.unshift(this.props.className);
         }
 
         return classes.join(" ");
@@ -47,7 +33,6 @@ export default class EmptyPage extends Component<ILocalProps> {
     public render(): JSX.Element {
         return (
             <div className={this.getClass()}>
-                {this.renderCloseButton()}
                 {this.props.children}
             </div>
         );

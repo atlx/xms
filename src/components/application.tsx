@@ -6,9 +6,10 @@ import {connect} from "react-redux";
 import {Page, IModal} from "../models/models";
 import InitPage from "./pages/init";
 import {CSSTransition} from "react-transition-group";
-import Handle from "./handle";
 import Actions from "../store/actions";
 import Modal from "./modal";
+import Tooltip from "./tooltip";
+import Handle from "./handle";
 
 interface ILocalProps {
 	readonly page: Page;
@@ -77,6 +78,7 @@ class Application extends React.Component<ILocalProps> {
 	public render(): JSX.Element {
 		return (
 			<div className="application">
+				
 				{this.renderNextModal()}
 				{/* TODO: Not applying rule to EXITING component, just entering one. */}
 				<CSSTransition in={this.props.page !== Page.Init} classNames="page" timeout={600}>

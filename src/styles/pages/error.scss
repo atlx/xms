@@ -1,13 +1,7 @@
 .error-page {
     & {
-        display: grid;
-        justify-content: center;
-        align-items: center;
+        display: grid !important;
         grid-template-rows: 1fr auto;
-        white-space: nowrap;
-        padding: 0 150px;
-        text-align: center;
-        height: 100%;
     }
 
     > .tooltip-container {
@@ -77,7 +71,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            margin-bottom: 40px;
+            margin-bottom: 80px;
             background-color: #383838;
             border-radius: 20px;
             padding: 8px 20px;
@@ -85,7 +79,7 @@
 
         > .title {
             opacity: 0.3;
-            margin-right: 8px;
+            margin-right: 5px;
         }
 
         > .id {

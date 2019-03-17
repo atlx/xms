@@ -5,14 +5,12 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faSyncAlt} from "@fortawesome/free-solid-svg-icons";
 import CloseButton from "../closeButton";
 import Tooltip, {TooltipPosition} from "../tooltip";
+import EmptyPage from "./empty";
 
 export default class ErrorPage extends Component {
     public render(): JSX.Element {
         return (
-            <div className="error-page">
-                <Tooltip text="Close application" position={TooltipPosition.Left}>
-                    <CloseButton />
-                </Tooltip>
+            <EmptyPage className="error-page">
                 <div className="header">
                     <img className="image" src={require("../../resources/img/think.png")} />
                     <div className="title">Something's not right</div>
@@ -27,7 +25,7 @@ export default class ErrorPage extends Component {
                     <div className="title">User ID</div>
                     <div className="id">2aae6c35c94fcfb415</div>
                 </div>
-            </div>
+            </EmptyPage>
         );
     }
 }
