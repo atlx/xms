@@ -1,5 +1,5 @@
 import {ICommand} from "./command";
-import {IAutoCompleteItem} from "../models/models";
+import {IAutoCompleteItem} from "../models/misc";
 import {Map as ImmutableMap} from "immutable";
 
 export type CommandHandle = (args: string[]) => void;

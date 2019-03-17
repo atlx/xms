@@ -1,8 +1,9 @@
 import App from "./app";
 import Actions from "../store/actions";
-import {UserState, SpecialCategory, MessageType} from "../models/models";
+import {SpecialCategory} from "../models/misc";
 import {GeneralChannel} from "../store/store";
 import Factory from "./factory";
+import {UserState} from "../models/user";
 
 export default class DeveloperToolbox {
     protected app: App;

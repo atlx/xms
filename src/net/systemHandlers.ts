@@ -1,7 +1,8 @@
 import NetworkHub, {NetPacketType, INetPacket} from "../core/networkHub";
 import {store, IAppState} from "../store/store";
-import {SpecialChannel, IMessage, MessageType, ChannelType} from "../models/models";
 import Actions from "../store/actions";
+import {SpecialChannel, ChannelType} from "../models/channel";
+import {IMessage, MessageType} from "../models/message";
 
 export default class SystemHandlers {
     private readonly net: NetworkHub;
@@ -18,6 +19,7 @@ export default class SystemHandlers {
         // TODO: Validate packet.
         this.net.authOn(NetPacketType.Message, (packet: INetPacket): void => {
             if (packet.payload.channelId === SpecialChannel.General) {
+                // TODO: Use factory for message creation.
                 Actions.appendMessageToGeneral<IMessage>({
                     // TODO
                     authorAvatarHash: undefined,
@@ -30,7 +32,10 @@ export default class SystemHandlers {
                     systemMessage: false,
                     text: packet.payload.content,
                     time: packet.payload.time,
-                    type: MessageType.Text
+                    type: MessageType.Text,
+                    
+                    // TODO
+                    mentions: []
                 });
 
                 return;
@@ -48,6 +53,7 @@ export default class SystemHandlers {
                 });
             }
 
+            // TODO: Use factory for message creation.
             Actions.appendMessage<IMessage>({
                 channelId: packet.sender,
                 id: packet.payload.id,
@@ -60,7 +66,10 @@ export default class SystemHandlers {
                 authorName: `User at ${packet.sender}`,
                 senderAddress: packet.sender,
                 sent: true,
-                systemMessage: false
+                systemMessage: false,
+
+                // TODO
+                mentions: []
             });
         });
     }

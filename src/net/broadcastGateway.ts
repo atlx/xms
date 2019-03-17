@@ -3,12 +3,13 @@ import {AddressInfo} from "net";
 import {GatewayMsg, GatewayMsgType, HelloPayload, MessagePayload, HeartbeatPayload} from "./gateway";
 import {store, IAppState, ConnectionState} from "../store/store";
 import Actions from "../store/actions";
-import {IMessage, INotice, NoticeStyle, SpecialChannel} from "../models/models";
 import Factory from "../core/factory";
 import Utils from "../core/utils";
 import {IDisposable} from "../core/app";
 import {MainApp} from "../index";
 import SystemMessages from "../core/systemMessages";
+import {INotice, NoticeStyle, IMessage} from "../models/message";
+import {SpecialChannel} from "../models/channel";
 
 export default class BroadcastGateway implements IDisposable {
     public static slowThreshold: number = 150;

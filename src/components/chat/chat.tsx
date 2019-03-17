@@ -2,7 +2,6 @@ import React, {RefObject} from "react";
 import "../../styles/chat/chat.scss";
 import {connect} from "react-redux";
 import {IAppState} from "../../store/store";
-import {IMessage, IGenericMessage, MessageType, IChannel, IAutoCompleteItem, INotice, IBreakMessage, User, UniqueId} from "../../models/models";
 import ChatMessage from "./chatMessage";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faHashtag, faArrowRight} from "@fortawesome/free-solid-svg-icons";
@@ -18,6 +17,10 @@ import BreakMessage from "./breakMessage";
 import Pattern from "../../core/pattern";
 import {Map as ImmutableMap, List} from "immutable";
 import $ from "jquery";
+import {IGenericMessage, MessageType, IMessage, INotice, IBreakMessage} from "../../models/message";
+import {IChannel} from "../../models/channel";
+import {IAutoCompleteItem, UniqueId} from "../../models/misc";
+import {User} from "../../models/user";
 
 interface ILocalProps {
 	readonly messages: IGenericMessage[];

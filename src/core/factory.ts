@@ -1,6 +1,7 @@
-import {UniqueId, MessageType, IMessage, INotice, NoticeStyle, IGenericMessage} from "../models/models";
 import Utils from "./utils";
 import {MainApp} from "../index";
+import {UniqueId} from "../models/misc";
+import {IMessage, MessageType, NoticeStyle, INotice, IGenericMessage} from "../models/message";
 
 export default class Factory {
     public static createMessage(channelId: UniqueId, text: string): IMessage {

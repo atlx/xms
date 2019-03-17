@@ -1,8 +1,11 @@
-import {User, UniqueId, IGenericMessage, Page, IModal, IRosterCategory, IContextMenu, IChannel, SpecialCategory, MessageType} from "../models/models";
+import {UniqueId, Page, IModal, IRosterCategory, IContextMenu, SpecialCategory} from "../models/misc";
 import {store, ActionType, ConnectionState, GeneralChannel, getState} from "./store";
 import {ICommand} from "../core/command";
 import Factory from "../core/factory";
 import Time from "../core/time";
+import {User} from "../models/user";
+import {IChannel} from "../models/channel";
+import {IGenericMessage, MessageType} from "../models/message";
 
 export default abstract class Actions {
     public static markMessageSent(messageId: UniqueId): void {

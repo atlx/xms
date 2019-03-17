@@ -3,7 +3,7 @@ import "../styles/misc/application.scss";
 import DefaultPage from "./pages/default";
 import {IAppState} from "../store/store";
 import {connect} from "react-redux";
-import {Page, IModal} from "../models/models";
+import {Page, IModal} from "../models/misc";
 import InitPage from "./pages/init";
 import {CSSTransition} from "react-transition-group";
 import Actions from "../store/actions";

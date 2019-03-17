@@ -1,6 +1,8 @@
-import {IMessage, SpecialChannel, IpAddress} from "../models/models";
 import BroadcastGateway from "../net/broadcastGateway";
 import {GatewayMsgType, MessagePayload} from "../net/gateway";
+import {IMessage} from "../models/message";
+import {IpAddress} from "../models/misc";
+import {SpecialChannel} from "../models/channel";
 
 export default class GatewayActions {
     private readonly gateway: BroadcastGateway;

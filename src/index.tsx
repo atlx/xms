@@ -1,6 +1,6 @@
 import App from "./core/app";
 import "./styles/lib/global.scss";
-import {User, Page} from "./models/models";
+import {Page} from "./models/misc";
 import Config, {IConfig} from "./core/config";
 import {Provider} from "react-redux";
 import React from "react";
@@ -10,6 +10,7 @@ import ErrorPage from "./components/pages/error";
 import AuthPage from "./components/pages/auth";
 import HandleBar from "./components/handle";
 import Application from "./components/application";
+import {User} from "./models/user";
 
 // Prepare config.
 const config: IConfig = Config.loadOrCreate();

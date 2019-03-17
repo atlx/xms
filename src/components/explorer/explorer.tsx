@@ -3,11 +3,12 @@ import "../../styles/explorer/explorer.scss";
 import ExplorerItem from "./explorerItem";
 import {IAppState} from "../../store/store";
 import {connect} from "react-redux";
-import {IChannel, UniqueId, ChannelType, SpecialChannel} from "../../models/models";
+import {UniqueId} from "../../models/misc";
 import {Map as ImmutableMap} from "immutable";
 import PlaceholderExplorerItem from "../placeholder/explorerItem";
 import UserBar from "../userBar/userBar";
 import ExplorerBreak from "./explorerBreak";
+import {IChannel, SpecialChannel, ChannelType} from "../../models/channel";
 
 interface ILocalProps {
 	readonly channels: ImmutableMap<UniqueId, IChannel>;

@@ -1,5 +1,5 @@
 import {Reducer, ActionType} from "../store";
-import {IChannel} from "../../models/models";
+import {IChannel} from "../../models/channel";
 
 const channelReducer: Reducer = (state, action) => {
     // Return default initial state for this reducer.

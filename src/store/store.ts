@@ -1,5 +1,5 @@
 import {createStore, Store, applyMiddleware, combineReducers} from "redux";
-import {IRosterCategory, UniqueId, User, IChannel, ChannelType, IGenericMessage, Page, IModal, IContextMenu, SpecialChannel} from "../models/models";
+import {IRosterCategory, UniqueId, Page, IModal, IContextMenu} from "../models/misc";
 import CommandHandler from "../core/commandHandler";
 import {createLogger} from "redux-logger";
 import {Map as ImmutableMap} from "immutable";
@@ -11,6 +11,9 @@ import contextMenuReducer from "./reducers/context-menu";
 import miscReducer from "./reducers/misc";
 import userReducer from "./reducers/user";
 import netReducer from "./reducers/net";
+import {User} from "../models/user";
+import {IChannel, SpecialChannel, ChannelType} from "../models/channel";
+import {IGenericMessage} from "../models/message";
 
 export enum ActionType {
     MarkMessageSent = "MARK_MESSAGE_SENT",

@@ -1,4 +1,5 @@
-import {UniqueId, SpecialChannel} from "../models/models";
+import {UniqueId} from "../models/misc";
+import {SpecialChannel} from "../models/channel";
 
 export type AuthToken = string;
 

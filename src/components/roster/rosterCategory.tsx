@@ -1,11 +1,12 @@
 import React from "react";
 import "../../styles/roster/rosterCategory.scss";
 import RosterItem from "./rosterItem";
-import {User, UniqueId} from "../../models/models";
+import {UniqueId} from "../../models/misc";
 import {IAppState} from "../../store/store";
 import {connect} from "react-redux";
 import PlaceholderRosterItem from "../placeholder/rosterItem";
 import {Map as ImmutableMap} from "immutable";
+import {User} from "../../models/user";
 
 interface ILocalProps {
     readonly title: string;

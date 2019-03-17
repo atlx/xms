@@ -2,9 +2,10 @@ import React from "react";
 import {connect} from "react-redux";
 import "../../styles/roster/roster.scss";
 import {IAppState} from "../../store/store";
-import {IRosterCategory, User, UniqueId} from "../../models/models";
+import {IRosterCategory, UniqueId} from "../../models/misc";
 import RosterCategory from "./rosterCategory";
 import {Map as ImmutableMap} from "immutable";
+import {User} from "../../models/user";
 
 interface ILocalProps {
     readonly users: ImmutableMap<UniqueId, User>;

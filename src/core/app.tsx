@@ -1,9 +1,5 @@
-import React from "react";
-import ReactDOM, {render} from "react-dom";
-import {Provider} from "react-redux";
-import {store} from "../store/store";
+import ReactDOM from "react-dom";
 import BroadcastGateway from "../net/broadcastGateway";
-import {User, INotice, NoticeStyle, SpecialCategory, ContextMenuOptionType, SpecialChannel, Page} from "../models/models";
 import GatewayActions from "./gatewayActions";
 import Actions from "../store/actions";
 import CommandHandler from "./commandHandler";
@@ -14,13 +10,12 @@ import Sounds from "./sounds";
 import Constants from "./constants";
 import Localisation from "./localisation";
 import DeveloperToolbox from "./developerToolbox";
-import {HashRouter, Route, Switch} from "react-router-dom";
-import ErrorPage from "../components/pages/error";
-import AuthPage from "../components/pages/auth";
 import Config from "./config";
 import {remote} from "electron";
-import Application from "../components/application";
-import HandleBar from "../components/handle";
+import {User} from "../models/user";
+import {INotice, NoticeStyle} from "../models/message";
+import {SpecialChannel} from "../models/channel";
+import {ContextMenuOptionType, SpecialCategory} from "../models/misc";
 
 export type PromiseOr<T = void> = Promise<T> | T;
 

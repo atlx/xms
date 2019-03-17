@@ -1,5 +1,5 @@
 import {Reducer, ActionType, InitialState, IAppStateCategory} from "../store";
-import {IRosterCategory} from "../../models/models";
+import {IRosterCategory} from "../../models/misc";
 
 const categoryReducer: Reducer<IAppStateCategory> = (state, action) => {
     // Return default initial state for this reducer.

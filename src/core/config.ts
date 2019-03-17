@@ -1,8 +1,9 @@
 import fs from "fs";
 import os from "os";
 import Auth, {IKeyPair} from "./auth";
-import {UniqueId, UserState} from "../models/models";
+import {UniqueId} from "../models/misc";
 import Utils from "./utils";
+import {UserState} from "../models/user";
 
 export interface IConfig {
     /**

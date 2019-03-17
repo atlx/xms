@@ -1,4 +1,4 @@
-import {IpAddress} from "../models/models";
+import {IpAddress} from "../models/misc";
 import net, {Socket, Server} from "net";
 import Utils from "./utils";
 import Validator from "./validator";
