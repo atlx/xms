@@ -9,7 +9,7 @@ import {CSSTransition} from "react-transition-group";
 import Actions from "../store/actions";
 import Modal from "./modal";
 import Tooltip from "./tooltip";
-import Handle from "./handle";
+import Handle from "./handleBar";
 
 interface ILocalProps {
 	readonly page: Page;

@@ -1,14 +1,13 @@
 import {getState} from "../store/store";
-import {IUserMention} from "./misc";
+import {ModelBased, UniqueId} from "./misc";
 import {User} from "./user";
 
-export default class UserMention {
-    protected readonly model: IUserMention;
+export interface IUserMention {
+    readonly id: UniqueId;
+    readonly position: number;
+}
 
-    public constructor(model: IUserMention) {
-        this.model = model;
-    }
-
+export default class UserMention extends ModelBased<IUserMention> {
     public get user(): User {
         return getState().user.users.get(this.model.id)!;
     }

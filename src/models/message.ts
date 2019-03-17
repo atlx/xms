@@ -1,6 +1,6 @@
 import DbEntity from "../database/dbEntity";
-import {UniqueId, IpAddress, IUserMention} from "./misc";
-import UserMention from "./userMention";
+import {UniqueId, IpAddress} from "./misc";
+import UserMention, {IUserMention} from "./userMention";
 import {SpecialChannel} from "./channel";
 
 /**

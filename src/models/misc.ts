@@ -1,3 +1,14 @@
+/**
+ * Represents an extension/abstraction class over a model.
+ */
+export abstract class ModelBased<T> {
+    protected model: T;
+
+    public constructor(model: T) {
+        this.model = model;
+    }
+}
+
 export interface IPosition {
     readonly x: number;
     readonly y: number;
@@ -41,11 +52,6 @@ export type IpAddress = string;
 
 export type Writeable<T> = {
     -readonly [P in keyof T]-?: T[P];
-};
-
-export interface IUserMention {
-    readonly id: UniqueId;
-    readonly position: number;
 }
 
 export enum SpecialCategory {
