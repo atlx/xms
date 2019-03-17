@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import "../../styles/pages/empty.scss";
 import Tooltip, {TooltipPosition} from "../tooltip";
-import CloseButton from "../closeButton";
+import HandleButton from "../handleBar/handleButton";
 
 interface ILocalProps {
     readonly className?: string;

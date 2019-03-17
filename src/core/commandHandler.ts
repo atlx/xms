@@ -1,5 +1,5 @@
 import {ICommand} from "./command";
-import {IAutoCompleteItem} from "../models/misc";
+import {IGuideItem} from "../models/misc";
 import {Map as ImmutableMap} from "immutable";
 
 export type CommandHandle = (args: string[]) => void;
@@ -32,8 +32,8 @@ export default class CommandHandler {
         }
     }
 
-    public getAllAsAutoCompleteCommands(): IAutoCompleteItem[] {
-        const result: IAutoCompleteItem[] = [];
+    public getAllAsAutoCompleteCommands(): IGuideItem[] {
+        const result: IGuideItem[] = [];
 
         for (let [key, value] of this.commands) {
             result.push({

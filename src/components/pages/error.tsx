@@ -3,7 +3,7 @@ import "../../styles/pages/error.scss";
 import React from "react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faSyncAlt} from "@fortawesome/free-solid-svg-icons";
-import CloseButton from "../closeButton";
+import HandleButton from "../handleBar/handleButton";
 import Tooltip, {TooltipPosition} from "../tooltip";
 import EmptyPage from "./empty";
 

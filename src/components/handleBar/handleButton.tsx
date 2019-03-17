@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faTimes} from "@fortawesome/free-solid-svg-icons";
-import App from "../core/app";
+import App from "../../core/app";
 import "../styles/misc/closeButton.scss";
 
 interface ILocalProps {
@@ -14,7 +14,7 @@ interface ILocalProps {
     readonly onClick?: () => void;
 }
 
-export default class CloseButton extends Component<ILocalProps> {
+export default class HandleButton extends Component<ILocalProps> {
     public static defaultProps: Partial<ILocalProps> = {
         // TODO: Doesn't want to accept directly.
         onClick: () => {
@@ -23,7 +23,7 @@ export default class CloseButton extends Component<ILocalProps> {
     };
 
     public getClass(): string {
-        const classes: string[] = ["close-button"];
+        const classes: string[] = ["handle-button"];
 
         if (this.props.className !== undefined) {
             classes.push(this.props.className);

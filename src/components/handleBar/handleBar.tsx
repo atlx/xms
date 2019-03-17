@@ -1,7 +1,7 @@
 import React from "react";
 import "../styles/misc/handle.scss";
-import CloseButton from "./closeButton";
-import App from "../core/app";
+import HandleButton from "./handleButton";
+import App from "../../core/app";
 
 export default class Handle extends React.Component {
 	public render(): JSX.Element {
@@ -13,7 +13,7 @@ export default class Handle extends React.Component {
 						<div className="dev-mode">Dev. Mode</div>
 					}
 					<div className="button-wrapper">
-						<CloseButton className="button" />
+						<HandleButton className="button" />
 					</div>
 				</div>
 			</div>

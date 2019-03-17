@@ -8,7 +8,7 @@ import {store} from "./store/store";
 import {HashRouter, Switch, Route} from "react-router-dom";
 import ErrorPage from "./components/pages/error";
 import AuthPage from "./components/pages/auth";
-import HandleBar from "./components/handleBar";
+import HandleBar from "./components/handleBar/handleBar";
 import Application from "./components/application";
 import {User} from "./models/user";
 

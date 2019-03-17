@@ -37,7 +37,7 @@ export interface IModal {
     readonly onClose?: () => void;
 }
 
-export interface IAutoCompleteItem {
+export interface IGuideItem {
     readonly id: string;
     readonly name: string;
     readonly subtext?: string;

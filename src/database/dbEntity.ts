@@ -1,6 +1,5 @@
 import Db from "./db";
-import {UniqueId} from "../../models/models";
-import {Remote} from "electron";
+import {UniqueId} from "../models/misc";
 
 export interface IDbModel {
     /**

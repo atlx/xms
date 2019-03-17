@@ -1,3 +1,5 @@
+import {UniqueId} from "./misc";
+
 export enum UserState {
     Online,
     Away,
