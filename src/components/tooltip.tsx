@@ -10,8 +10,12 @@ export enum TooltipPosition {
 }
 
 interface ILocalProps {
-    readonly text: string;
     readonly style?: CSSProperties;
+
+    /**
+     * The text to display upon hover.
+     */
+    readonly text: string;
 
     /**
      * The position in which the tooltip will be displayed. Default to top.
@@ -20,6 +24,9 @@ interface ILocalProps {
 }
 
 interface ILocalState {
+    /**
+     * Whether the tooltip is currently visible.
+     */
     readonly visible: boolean;
 }
 
@@ -48,10 +55,12 @@ export default class Tooltip extends React.Component<ILocalProps, ILocalState> {
         });
     }
 
+    // TODO
     public componentDidMount(): void {
         //this.positionFix();
     }
 
+    // TODO
     public componentWillUpdate(): void {
         //this.positionFix();
     }

@@ -47,7 +47,7 @@ export default class Indicator extends Component<ILocalProps> {
 
     public getStyle(): CSSProperties {
         return {
-            display: this.props.visible === true ? "initial" : "none",
+            display: this.props.visible === true ? "block" : "none",
             backgroundColor: this.props.color,
             height: `${this.props.size}px`,
             width: `${this.props.size}px`

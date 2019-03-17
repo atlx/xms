@@ -3,7 +3,7 @@ import "../../styles/chat/chatMessage.scss";
 import Pattern from "../../core/pattern";
 import UserMention from "./userMention";
 import Indicator, {IndicatorColor} from "../indicator";
-import Tooltip from "../tooltip";
+import Tooltip, {TooltipPosition} from "../tooltip";
 
 // TODO: Use the GenericMessage/IMessage for this?
 interface ILocalProps {
@@ -68,7 +68,7 @@ export default class ChatMessage extends React.Component<ILocalProps> {
     public render(): JSX.Element {
         return (
             <div className={this.getClass()}>
-                <Tooltip text="You were mentioned">
+                <Tooltip position={TooltipPosition.Left} text="You were mentioned">
                     <Indicator visible={this.props.notify} color={IndicatorColor.Red} />
                 </Tooltip>
                 <div className="header">

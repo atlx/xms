@@ -29,10 +29,10 @@ export const MainApp: App = new App(me, () => (
         <HashRouter>
             <Switch>
                 {/* TODO: Hard-coded prop as null (required to pass in). */}
-                {/* <Route path="/" exact render={() =>
+                <Route path="/" exact render={() =>
                     <Application modals={[] as any} page={Page.Init} />
-                } /> */}
-                {/* <Route path="/" exact component={AuthPage} /> */}
+                } />
+                <Route path="/" exact component={AuthPage} />
                 <Route component={ErrorPage} />
             </Switch>
         </HashRouter>

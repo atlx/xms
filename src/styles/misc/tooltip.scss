@@ -27,6 +27,10 @@
             border: 1px solid $border-dark;
         }
 
+        > * {
+            z-index: 99 !important;
+        }
+
         &.trans-enter,
         &.trans-enter-done {
             opacity: 1;
