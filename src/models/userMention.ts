@@ -1,4 +1,6 @@
 import {getState} from "../store/store";
+import {IUserMention} from "./misc";
+import {User} from "./user";
 
 export default class UserMention {
     protected readonly model: IUserMention;
@@ -8,6 +10,6 @@ export default class UserMention {
     }
 
     public get user(): User {
-        return getState().user.users.get(this.model.id);
+        return getState().user.users.get(this.model.id)!;
     }
 }

@@ -3,12 +3,18 @@ import {UniqueId, IpAddress, IUserMention} from "./misc";
 import UserMention from "./userMention";
 import {SpecialChannel} from "./channel";
 
+/**
+ * Used to identify a generic message.
+ */
 export enum MessageType {
     Text,
     Notice,
     Break
 }
 
+/**
+ * Defines the skeleton of all messages.
+ */
 export interface IGenericMessage {
     readonly type: MessageType;
     readonly id: UniqueId;
@@ -17,6 +23,9 @@ export interface IGenericMessage {
     readonly time: number;
 }
 
+/**
+ * The standard text message sent in channels by users.
+ */
 export interface IMessage extends IGenericMessage {
     readonly authorName: string;
     readonly authorAvatarHash?: string;
@@ -26,6 +35,9 @@ export interface IMessage extends IGenericMessage {
     readonly mentions: IUserMention[];
 }
 
+/**
+ * A simple message serving as a local announcement.
+ */
 export interface INotice extends IGenericMessage {
     readonly style: NoticeStyle;
 }
@@ -35,14 +47,26 @@ export interface IBreakMessage extends IGenericMessage {
 }
 
 export enum NoticeStyle {
+    /**
+     * A success notice, colored green.
+     */
     Success,
+
+    /**
+     * A warning notice, colored yellow.
+     */
     Warning,
+
+    /**
+     * An error notice, colored red.
+     */
     Error
 }
 
-export default class Message extends DbEntity<IGenericMessage> {
-    public get mentions(): UserMention {
-        // TODO
-        return {} as any;
+export default class Message extends DbEntity<IMessage> {
+    public get mentions(): UserMention[] {
+        return this.model.mentions.map((model: IUserMention) => {
+            return new UserMention(model);
+        });
     }
 }
