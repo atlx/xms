@@ -70,7 +70,7 @@ export default class ChatMessage extends React.Component<ILocalProps> {
         return (
             <div className={this.getClass()}>
                 <Tooltip visible={this.props.notify} position={TooltipPosition.Left} text="You were mentioned">
-                    <Indicator color={IndicatorColor.Red} />
+                    <Indicator visible color={IndicatorColor.Red} />
                 </Tooltip>
                 <div className="header">
                     <div className="author-name">{this.props.authorName}</div>
