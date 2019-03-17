@@ -44,10 +44,11 @@
             margin-bottom: 3px;
             opacity: 0.5;
             text-transform: uppercase;
+            user-select: text;
         }
     }
 
     > .text {
-        //
+        user-select: text;
     }
 }
