@@ -18,6 +18,13 @@ html, body, #root, #root > .application {
 	color: #fff;
 }
 
+#root {
+	display: grid;
+
+	// HandleBar | Page.
+	grid-template-rows: auto 1fr;
+}
+
 body {
 	font-family: "Nunito Regular", "Segoe UI", sans-serif;
 	margin: 0;
