@@ -14,7 +14,7 @@ interface ILocalProps {
     readonly className?: string;
 
     /**
-     * Whether the indicator is visible.
+     * Whether the indicator is visible. Defaults to false.
      */
     readonly visible?: boolean;
 
@@ -32,7 +32,8 @@ interface ILocalProps {
 export default class Indicator extends Component<ILocalProps> {
     public static defaultProps: Partial<ILocalProps> = {
         color: IndicatorColor.Gray,
-        size: 10
+        size: 10,
+        visible: false
     };
 
     public getClass(): string {
@@ -47,7 +48,6 @@ export default class Indicator extends Component<ILocalProps> {
 
     public getStyle(): CSSProperties {
         return {
-            display: this.props.visible === true ? "block" : "none",
             backgroundColor: this.props.color,
             height: `${this.props.size}px`,
             width: `${this.props.size}px`
@@ -56,7 +56,7 @@ export default class Indicator extends Component<ILocalProps> {
 
     public render(): JSX.Element {
         return (
-            <div style={this.getStyle()} className={this.getClass()} />
+            <div hidden={!this.props.visible} style={this.getStyle()} className={this.getClass()} />
         );
     }
 }

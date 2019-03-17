@@ -21,6 +21,11 @@ interface ILocalProps {
      * The position in which the tooltip will be displayed. Default to top.
      */
     readonly position?: TooltipPosition;
+
+    /**
+     * Whether the tooltip element is visible. Defaults to true.
+     */
+    readonly visible?: boolean;
 }
 
 interface ILocalState {
@@ -32,7 +37,8 @@ interface ILocalState {
 
 export default class Tooltip extends React.Component<ILocalProps, ILocalState> {
     public static readonly defaultProps: Partial<ILocalProps> = {
-        position: TooltipPosition.Top
+        position: TooltipPosition.Top,
+        visible: true
     };
 
     protected readonly $tooltip: React.RefObject<any>;
@@ -129,9 +135,16 @@ export default class Tooltip extends React.Component<ILocalProps, ILocalState> {
         return classes.join(" ");
     }
 
+    public getStyle(): CSSProperties {
+        return {
+            display: this.props.visible === true ? "block" : "none",
+            ...this.props.style
+        };
+    }
+
     public render(): JSX.Element {
         return (
-            <div style={this.props.style} onMouseOver={this.show} onMouseLeave={this.hide} className="tooltip-container">
+            <div style={this.getStyle()} onMouseOver={this.show} onMouseLeave={this.hide} className="tooltip-container">
                 <CSSTransition in={this.state.visible} classNames="trans" timeout={200}>
                     <div ref={this.$tooltip} style={this.positionFix()} className={this.getTooltipClasses()}>{this.props.text}</div>
                 </CSSTransition>

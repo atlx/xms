@@ -449,7 +449,6 @@ class Chat extends React.Component<ILocalProps, ILocalState> {
 				</div>
 				<div ref={this.$container} onScroll={this.handleScroll} className="messages">
 					{this.renderLoader()}
-					<HiddenMessage />
 					{this.renderMessages()}
 				</div>
 				<div className="input">

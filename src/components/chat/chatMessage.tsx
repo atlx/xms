@@ -69,8 +69,8 @@ export default class ChatMessage extends React.Component<ILocalProps> {
     public render(): JSX.Element {
         return (
             <div className={this.getClass()}>
-                <Tooltip position={TooltipPosition.Left} text="You were mentioned">
-                    <Indicator visible={this.props.notify} color={IndicatorColor.Red} />
+                <Tooltip visible={this.props.notify} position={TooltipPosition.Left} text="You were mentioned">
+                    <Indicator color={IndicatorColor.Red} />
                 </Tooltip>
                 <div className="header">
                     <div className="author-name">{this.props.authorName}</div>
