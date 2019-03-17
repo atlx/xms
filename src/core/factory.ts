@@ -19,7 +19,10 @@ export default class Factory {
             time: Date.now(),
             channelId,
             type: MessageType.Text,
-            senderAddress: "unknown"
+            senderAddress: "unknown",
+            
+            // TODO: Computed from text.
+            mentions: []
         };
     }
 

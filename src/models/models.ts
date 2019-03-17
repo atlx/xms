@@ -72,6 +72,11 @@ export type Writeable<T> = {
     -readonly [P in keyof T]-?: T[P];
 };
 
+export interface IUserMention {
+    readonly id: UniqueId;
+    readonly position: number;
+}
+
 export interface IGenericMessage {
     readonly type: MessageType;
     readonly id: UniqueId;
@@ -86,6 +91,7 @@ export interface IMessage extends IGenericMessage {
     readonly systemMessage: boolean;
     readonly sent: boolean;
     readonly senderAddress: IpAddress;
+    readonly mentions: IUserMention[];
 }
 
 export interface INotice extends IGenericMessage {

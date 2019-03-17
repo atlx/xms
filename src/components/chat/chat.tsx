@@ -17,7 +17,7 @@ import Factory from "../../core/factory";
 import BreakMessage from "./breakMessage";
 import Pattern from "../../core/pattern";
 import {Map as ImmutableMap, List} from "immutable";
-import HiddenMessage from "./hiddenMessage";
+import $ from "jquery";
 
 interface ILocalProps {
 	readonly messages: IGenericMessage[];
@@ -35,10 +35,15 @@ interface ILocalState {
 	readonly filteredAutoCompleteCommands: IAutoCompleteItem[];
 	readonly status: string | undefined;
 	readonly shaking: boolean;
+	
+	/**
+	 * The number of lines present in the input textarea. Defaults to 1.
+	 */
+	readonly inputLines: number;
 }
 
 class Chat extends React.Component<ILocalProps, ILocalState> {
-	private readonly $input: RefObject<HTMLInputElement>;
+	private readonly $input: RefObject<HTMLTextAreaElement>;
 	private readonly $container: RefObject<any>;
 	private readonly $loader: RefObject<any>;
 
@@ -67,7 +72,8 @@ class Chat extends React.Component<ILocalProps, ILocalState> {
 		this.setState({
 			offset: 0,
 			filteredAutoCompleteCommands: this.props.autoCompleteCommands,
-			shaking: false
+			shaking: false,
+			inputLines: 1
 		});
 
 		// TODO: Needs to reset once the component unmounts, use componentWillUnmount or componentDidUnmount for that.
@@ -250,14 +256,24 @@ class Chat extends React.Component<ILocalProps, ILocalState> {
 		});
 	}
 
+	public setInputLines(lines: number): void {
+		$(this.$input.current!).height((lines * 22) + "px");
+	}
+
 	public handleKeyDown(e: any): void {
 		// Prevent auto-pressing enter on other appearing components (such as modal open).
-		if (e.key === "Enter") {
+		if (e.key === "Enter" && !e.shiftKey) {
 			e.preventDefault();
 		}
 
+		// Expand the input.
+		if (e.key === "Enter" && e.shiftKey) {
+			this.setState({
+				inputLines: this.state.inputLines + 1
+			});
+		}
 		// Send a message.
-		if (e.key === "Enter") {
+		else if (e.key === "Enter") {
 			this.sendMessage();
 		}
 		else if (this.inCommand()) {
@@ -460,7 +476,8 @@ class Chat extends React.Component<ILocalProps, ILocalState> {
 					/>
 					<CSSTransition in={this.props.inputLocked} classNames="trans" timeout={300}>
 						<div className={this.getWrapperClass()}>
-							<input
+							<textarea
+								rows={this.state.inputLines}
 								onChange={this.handleInputChange}
 								ref={this.$input}
 								onKeyDown={this.handleKeyDown}

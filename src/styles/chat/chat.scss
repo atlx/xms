@@ -35,12 +35,13 @@
         }
 
         > .channel-title {
-            /* TODO */
+            user-select: text;
         }
 
         > .channel-topic {
             opacity: 0.5;
             font-size: 14px;
+            user-select: text;
         }
     }
 
@@ -80,6 +81,8 @@
             & {
                 display: grid;
                 grid-template-columns: 1fr auto;
+                justify-content: center;
+                align-items: flex-start;
                 border: 2px dashed $color-dark-contrast-dark;
                 width: 100%;
                 box-sizing: border-box;
@@ -123,11 +126,20 @@
 
             > .message {
                 & {
+                    // Hard-code starting height for textarea (must match send arrow's height).
+                    height: 25px;
+
+                    // Disable resize, as will be handled by JS.
+                    resize: none;
+
+                    max-height: 100px;
+                    margin: 0;
                     background: none;
                     border: none;
                     font-size: inherit;
                     color: inherit;
                     margin-right: 20px;
+                    font-family: inherit !important;
                 }
 
                 &.trans-exit-done {
@@ -147,13 +159,13 @@
                     transition: transform 0.15s ease;
                 }
 
-                > svg {
-                    transform: translate(0, 1px);
-                }
-
                 &:hover {
                     transform: translate(4px);
                     opacity: 1;
+                }
+
+                > svg {
+                    transform: translate(0, 1px);
                 }
             }
         }
