@@ -158,7 +158,7 @@ class Chat extends React.Component<ILocalProps, ILocalState> {
 					systemMessage={textMessage.systemMessage}
 
 					// TODO: Add & use a 'mentions' property, calculated when the message is sent?
-					notify={true}
+					notify={false}
 				/>;
 			}
 			// Notice message.
