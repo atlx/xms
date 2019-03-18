@@ -50,10 +50,17 @@ export default abstract class MessageActions {
         });
     }
 
-    public static markSent(messageId: UniqueId): void {
+    public static markSent(id: UniqueId): void {
         store.dispatch({
             type: ActionType.MarkMessageSent,
-            payload: messageId
+            payload: id
         });
+    }
+
+    public static delete(id: UniqueId): void {
+        store.dispatch({
+            type: ActionType.DeleteMessage,
+            payload: id
+        })
     }
 }

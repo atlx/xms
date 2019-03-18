@@ -18,6 +18,17 @@ const messageReducer: Reducer<IAppStateMessage> = (state, action) => {
             };
         }
 
+        case ActionType.DeleteMessage: {
+            if (!state.messages.has(action.payload!)) {
+                throw new Error("Cannot delete message that does not exist");
+            }
+
+            return {
+                ...state,
+                messages: state.messages.delete(action.payload)
+            };
+        }
+
         case ActionType.MarkMessageSent: {
             if (!state.messages.has(action.payload!)) {
                 throw new Error("Cannot mark message that does not exist");

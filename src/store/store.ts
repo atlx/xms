@@ -7,17 +7,18 @@ import {User} from "../models/user";
 import {IChannel, SpecialChannel, ChannelType} from "../models/channel";
 import {IGenericMessage} from "../models/message";
 import {BasicMap} from "../core/helpers";
-import categoryReducer from "../reducers/category";
-import channelReducer from "../reducers/channel";
-import commandReducer from "../reducers/command";
-import contextMenuReducer from "../reducers/contextMenu";
-import messageReducer from "../reducers/message";
-import miscReducer from "../reducers/misc";
-import userReducer from "../reducers/user";
-import netReducer from "../reducers/net";
+import categoryReducer from "../reducers/categoryReducer";
+import channelReducer from "../reducers/channelReducer";
+import commandReducer from "../reducers/commandReducer";
+import contextMenuReducer from "../reducers/contextMenuReducer";
+import messageReducer from "../reducers/messageReducer";
+import miscReducer from "../reducers/miscReducer";
+import userReducer from "../reducers/userReducer";
+import netReducer from "../reducers/netReducer";
 
 export enum ActionType {
     MarkMessageSent = "MARK_MESSAGE_SENT",
+    DeleteMessage = "DELETE_MESSAGE",
     AddUser = "ADD_USER",
     SetActiveChannel = "SET_ACTIVE_CHANNEL",
     SetGeneralAsActiveChannel = "SET_GENERAL_AS_ACTIVE_CHANNEL",

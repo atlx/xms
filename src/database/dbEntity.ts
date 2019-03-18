@@ -30,6 +30,20 @@ export default abstract class DbEntity<T extends IDbModel> {
     }
 
     /**
+     * The unique ID of the entity's model.
+     */
+    public get id(): UniqueId {
+        return this.model.id;
+    }
+
+    /**
+     * Retrieve the entity's model.
+     */
+    public get(): Readonly<T> {
+        return this.model;
+    }
+
+    /**
      * Create a document model from the entity's model.
      */
     public buildDocModel(): IDocModel {

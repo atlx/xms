@@ -2,6 +2,7 @@ import DbEntity from "../database/dbEntity";
 import {UniqueId, IpAddress} from "./misc";
 import UserMention, {IUserMention} from "./userMention";
 import {SpecialChannel} from "./channel";
+import MessageActions from "../actions/message";
 
 /**
  * Used to identify a generic message.
@@ -64,6 +65,20 @@ export enum NoticeStyle {
 }
 
 export default class Message extends DbEntity<ITextMessage> {
+    /**
+     * Mark the message as sent.
+     */
+    public markSent(): void {
+        MessageActions.markSent(this.id);
+    }
+
+    /**
+     * Delete the message.
+     */
+    public delete(): void {
+        MessageActions.delete(this.id);
+    }
+
     public get mentions(): UserMention[] {
         return this.model.mentions.map((model: IUserMention) => {
             return new UserMention(model);
