@@ -13,6 +13,7 @@ import {IMessage} from "../../models/message";
 import Factory from "../../core/factory";
 import Actions from "../../store/actions";
 import {MainApp} from "../..";
+import "../../styles/chat/chatComposer.scss";
 
 interface IProps {
 	/**
@@ -278,7 +279,7 @@ class ChatComposer extends Component<IProps, IState> {
     
     public render(): JSX.Element {
         return (
-            <div className="input">
+            <div className="chat-composer">
                 <ComposerGuide
                     onItemClick={this.handleAutoCompleteItemClick}
                     title="Commands"
@@ -294,7 +295,7 @@ class ChatComposer extends Component<IProps, IState> {
                             ref={this.$input}
                             onKeyDown={(e) => this.handleKeyDown(e)}
                             placeholder="Type a message"
-                            className="message"
+                            className="input"
                             disabled={this.props.locked}
                             maxLength={this.props.maxLength}
                         />

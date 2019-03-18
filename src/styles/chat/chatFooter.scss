@@ -1,0 +1,26 @@
+@keyframes chat-footer-appear {
+    from {
+        opacity: 0;
+    }
+}
+
+.chat-footer {
+    & {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        justify-content: center;
+        align-items: center;
+        font-size: 13px;
+        padding: 13px 5px;
+        color: #777;
+    }
+
+    > .typing {
+        // TODO
+    }
+
+    > .status {
+        text-align: right;
+        animation: chat-footer-appear 0.2s ease;
+    }
+}

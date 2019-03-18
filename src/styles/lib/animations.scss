@@ -1,5 +1,13 @@
 $shake-magnitude: 8px;
 
+// Used by Message and Notice.
+@keyframes message-appear {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+}
+
 @keyframes shake {
     from {
         transform: translate(-$shake-magnitude);

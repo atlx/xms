@@ -6,6 +6,7 @@ import BreakMessage from "./breakMessage";
 import Loader from "../loader";
 import {connect} from "react-redux";
 import {IAppState} from "../../store/store";
+import "../../styles/chat/chatContainer.scss";
 
 interface IProps {
     readonly messages: IGenericMessage[];
@@ -147,7 +148,7 @@ class ChatContainer extends Component<IProps, IState> {
 
     public render(): JSX.Element {
         return (
-            <div ref={this.$container} onScroll={this.handleScroll} className="messages">
+            <div ref={this.$container} onScroll={this.handleScroll} className="chat-container">
                 {this.renderLoader()}
                 {this.renderMessages()}
             </div>

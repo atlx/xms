@@ -1,0 +1,100 @@
+> .chat-composer {
+    & {
+        padding: 20px;
+        padding-bottom: 0;
+        position: relative;
+    }
+
+    > .message-wrapper {
+        & {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            justify-content: center;
+            align-items: flex-start;
+            border: 2px dashed $color-dark-contrast-dark;
+            width: 100%;
+            box-sizing: border-box;
+            background: none;
+            color: #aaa;
+            padding: 14px 20px;
+            border-radius: 4px;
+            font-size: 17px;
+            transition: border-color 0.2s ease, opacity 0.2s ease, background-color 0.2s ease;
+        }
+
+        &:focus-within {
+            & {
+                border-color: #444;
+                border-style: solid;
+                /* box-shadow: 0 5px 16px 0px #2e2e2e; */
+                background-color: #444;
+            }
+
+            > .send {
+                background-color: #333;
+            }
+        }
+
+        &.shaking {
+            animation: shake 2 0.09s ease;
+        }
+
+        &.disabled {
+            & {
+                cursor: not-allowed;
+                background-color: #444;
+                border-style: solid;
+                opacity: 0.6;
+            }
+
+            > * {
+                cursor: inherit !important;
+            }
+        }
+
+        > .input {
+            & {
+                // Hard-code starting height for textarea (must match send arrow's height).
+                height: 25px;
+
+                // Disable resize, as will be handled by JS.
+                resize: none;
+
+                max-height: 100px;
+                margin: 0;
+                background: none;
+                border: none;
+                font-size: inherit;
+                color: inherit;
+                margin-right: 20px;
+                font-family: inherit !important;
+            }
+
+            &.trans-exit-done {
+                opacity: 1;
+            }
+        }
+
+        > .send {
+            & {
+                cursor: pointer;
+                background-color: #404040;
+                padding: 3px 15px;
+                border-radius: 6px;
+                font-size: 17px;
+                color: #999;
+                opacity: 0.8;
+                transition: transform 0.15s ease;
+            }
+
+            &:hover {
+                transform: translate(4px);
+                opacity: 1;
+            }
+
+            > svg {
+                transform: translate(0, 1px);
+            }
+        }
+    }
+}

@@ -1,0 +1,21 @@
+.chat-header {
+    & {
+        display: grid;
+        grid-template-columns: auto 1fr;
+        grid-column-gap: 10px;
+        border-bottom: 1px solid $color-dark-contrast-dark;
+        padding: 15px 20px;
+        align-items: center;
+        justify-content: center;
+    }
+
+    > .channel-title {
+        user-select: text;
+    }
+
+    > .channel-topic {
+        opacity: 0.5;
+        font-size: 14px;
+        user-select: text;
+    }
+}
