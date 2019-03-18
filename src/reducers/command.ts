@@ -1,4 +1,4 @@
-import {Reducer, ActionType} from "../store";
+import {Reducer, ActionType} from "../store/store";
 
 const commandReducer: Reducer = (state, action) => {
     // Return default initial state for this reducer.

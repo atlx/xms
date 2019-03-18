@@ -1,5 +1,5 @@
-import {Reducer, ActionType, IAppStateUser, InitialState} from "../store";
-import {User} from "../../models/user";
+import {Reducer, ActionType, IAppStateUser, InitialState} from "../store/store";
+import {User} from "../models/user";
 
 const userReducer: Reducer<IAppStateUser> = (state, action) => {
     // Return default initial state for this reducer.
