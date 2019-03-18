@@ -7,7 +7,7 @@ interface ILocalProps {
 	readonly style: NoticeStyle;
 }
 
-/* TODO: Be able to specify color */
+// TODO: Be able to specify color.
 export default class NoticeMessage extends React.Component<ILocalProps> {
 	public getClasses(): string {
 		const classes = ["notice-message"];

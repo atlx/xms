@@ -9,7 +9,7 @@ interface ILocalProps {
 }
 
 export default class UserMention extends Component<ILocalProps> {
-    public renderContent(): string {
+    protected renderContent(): string {
         return this.props.username || this.props.id;
     }
 

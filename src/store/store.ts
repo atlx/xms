@@ -13,7 +13,7 @@ import userReducer from "./reducers/user";
 import netReducer from "./reducers/net";
 import {User} from "../models/user";
 import {IChannel, SpecialChannel, ChannelType} from "../models/channel";
-import {IGenericMessage} from "../models/message";
+import Message from "../models/message";
 
 export enum ActionType {
     MarkMessageSent = "MARK_MESSAGE_SENT",
@@ -99,7 +99,7 @@ export interface IAppStateNet {
 }
 
 export interface IAppStateMessage {
-    readonly messages: IGenericMessage[];
+    readonly messages: ImmutableMap<UniqueId, Message>;
 }
 
 const logger = createLogger({
@@ -137,7 +137,7 @@ export const InitialState: IAppState = {
     },
 
     message: {
-        messages: [],
+        messages: ImmutableMap(),
     },
 
     net: {

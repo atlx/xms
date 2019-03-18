@@ -20,13 +20,13 @@ export default class ComposerGuide extends React.Component<ILocalProps> {
 		this.handleItemClick = this.handleItemClick.bind(this);
 	}
 
-	public handleItemClick(item: IGuideItem): void {
+	protected handleItemClick(item: IGuideItem): void {
 		if (this.props.onItemClick) {
 			this.props.onItemClick(item);
 		}
 	}
 
-	public renderItems(): JSX.Element[] | JSX.Element {
+	protected renderItems(): JSX.Element[] | JSX.Element {
 		if (this.props.items.length === 0) {
 			return (
 				<div className="empty">No matching results</div>
@@ -43,20 +43,20 @@ export default class ComposerGuide extends React.Component<ILocalProps> {
 		});
 	}
 
-	public setGuideVisible(visible: boolean): void {
+	protected setGuideVisible(visible: boolean): void {
 		if (this.props.autoCompleteVisible !== visible) {
 			Actions.setAutoCompleteVisible(visible);
 		}
 	}
 
-	public isEmptyCommand(): boolean {
+	protected isEmptyCommand(): boolean {
 		// TODO: Debugging.
 		console.log("command name", this.getCommandName(), `(${this.getCommandName().length})`);
 
 		return this.getCommandName().length === 0;
 	}
 
-	public filterAutoCompleteItems(): void {
+	protected filterAutoCompleteItems(): void {
 		if (this.isEmptyCommand()) {
 			this.setState({
 				filteredAutoCompleteCommands: this.props.autoCompleteCommands
@@ -73,11 +73,11 @@ export default class ComposerGuide extends React.Component<ILocalProps> {
 		});
 	}
 
-	public getCommandName(): string {
+	protected getCommandName(): string {
 		return this.props.getValue().substr(1).split(" ")[0].toLowerCase();
 	}
 
-	public inCommand(): boolean {
+	protected inCommand(): boolean {
 		const value: string = this.props.getValue(false);
 
 		return value.startsWith("/") && !value.includes(" ");

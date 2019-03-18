@@ -14,8 +14,8 @@ import Factory from "../../core/factory";
 import Actions from "../../store/actions";
 import {MainApp} from "../..";
 
-interface ILocalProps {
-    //
+interface IProps {
+    readonly autoCompleteVisible: boolean;
 }
 
 interface ILocalState {
@@ -33,7 +33,7 @@ interface ILocalState {
 	readonly inputLines: number;
 }
 
-class ChatComposer extends Component<ILocalProps, ILocalState> {
+class ChatComposer extends Component<IProps, ILocalState> {
     public state: ILocalState = {
         filteredAutoCompleteCommands: this.props.autoCompleteCommands,
         shaking: false,
@@ -74,17 +74,26 @@ class ChatComposer extends Component<ILocalProps, ILocalState> {
 		}
 	}
 
-    public setInputLines(lines: number): void {
+    protected setInputLines(lines: number): void {
 		$(this.$input.current!).height((lines * 22) + "px");
 	}
 
-    public getValue(trim: boolean = true): string {
-		const value: string = this.$input.current!.value;
+	protected getWrapperClass(): string {
+		const classes: string[] = ["message-wrapper"];
 
-		return trim ? value.trim() : value;
+		if (this.props.inputLocked) {
+			classes.push("disabled");
+		}
+
+		// Add the shaking animation class.
+		if (this.state.shaking) {
+			classes.push("shaking");
+		}
+
+		return classes.join(" ");
 	}
 
-	public setValue(value: string): void {
+	protected setValue(value: string): void {
 		this.$input.current!.value = value;
 
 		// OnChange event won't automatically trigger when manually setting the value.
@@ -95,7 +104,10 @@ class ChatComposer extends Component<ILocalProps, ILocalState> {
 		this.$input.current!.focus();
 	}
 
-	public clearValue(): string {
+	/**
+	 * Retrieve and clear the input value.
+	 */
+	protected clearValue(): string {
 		const value: string = this.getValue();
 
 		this.setValue("");
@@ -103,24 +115,27 @@ class ChatComposer extends Component<ILocalProps, ILocalState> {
 		return value;
 	}
 
-	public appendValue(value: string): void {
+	/**
+	 * Append text to the input's value.
+	 */
+	protected appendValue(value: string): void {
 		this.setValue(this.getValue() + value);
 	}
 
-    public handleAutoCompleteItemClick(item: IGuideItem): void {
+    protected handleAutoCompleteItemClick(item: IGuideItem): void {
 		this.setValue(`/${item.name} `);
 
 		// Focus input after appending data.
         this.focus();
     }
 
-    public shakeInput(): void {
+    protected shakeInput(): void {
 		this.setState({
 			shaking: true
 		});
 	}
 
-    public handleKeyDown(e: any): void {
+    protected handleKeyDown(e: any): void {
 		// Prevent auto-pressing enter on other appearing components (such as modal open).
 		if (e.key === "Enter" && !e.shiftKey) {
 			e.preventDefault();
@@ -154,11 +169,11 @@ class ChatComposer extends Component<ILocalProps, ILocalState> {
 		}
     }
     
-    public isEmptyValue(): boolean {
+    protected isEmptyValue(): boolean {
 		return this.getValue().length === 0;
     }
     
-    public sendMessage(): void {
+    protected sendMessage(): void {
 		// Stop when there is no active channel.
 		if (this.props.activeChannel.id === null) {
 			return;
@@ -214,6 +229,12 @@ class ChatComposer extends Component<ILocalProps, ILocalState> {
 		Actions.appendMessageToGeneral(message);
 		MainApp.actions.handleMessage(message);
 	}
+
+	public getValue(trim: boolean = true): string {
+		const value: string = this.$input.current!.value;
+
+		return trim ? value : value.trim();
+	}
     
     public render(): JSX.Element {
         return (
@@ -222,7 +243,8 @@ class ChatComposer extends Component<ILocalProps, ILocalState> {
                     onItemClick={this.handleAutoCompleteItemClick}
                     title="Commands"
                     visible={this.props.autoCompleteVisible}
-                    items={this.state.filteredAutoCompleteCommands}
+					items={this.state.filteredAutoCompleteCommands}
+					getValue={this.getValue}
                 />
                 <CSSTransition in={this.props.inputLocked} classNames="trans" timeout={300}>
                     <div className={this.getWrapperClass()}>
@@ -249,5 +271,7 @@ class ChatComposer extends Component<ILocalProps, ILocalState> {
 }
 
 export default connect((state: IAppState): any => {
-    // TODO
+    return {
+		autoCompleteVisible: state.misc.autoCompleteVisible
+	};
 })(ChatComposer);
