@@ -7,15 +7,15 @@ import StatusBar from "../status/statusBar";
 import {connect} from "react-redux";
 import {IAppState} from "../../store/store";
 
-interface ILocalProps {
+interface IProps {
 	readonly leftPanelVisible?: boolean;
 }
 
-interface ILocalState {
+interface IState {
 	readonly showTestModal: boolean;
 }
 
-class DefaultPage extends React.Component<ILocalProps, ILocalState> {
+class DefaultPage extends React.Component<IProps, IState> {
 	public componentWillMount(): void {
 		this.setState({
 			showTestModal: true

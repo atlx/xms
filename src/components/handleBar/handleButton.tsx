@@ -4,7 +4,7 @@ import {faTimes} from "@fortawesome/free-solid-svg-icons";
 import App from "../../core/app";
 import "../styles/misc/closeButton.scss";
 
-interface ILocalProps {
+interface IProps {
     readonly className?: string;
 
     /**
@@ -14,8 +14,8 @@ interface ILocalProps {
     readonly onClick?: () => void;
 }
 
-export default class HandleButton extends Component<ILocalProps> {
-    public static defaultProps: Partial<ILocalProps> = {
+export default class HandleButton extends Component<IProps> {
+    public static defaultProps: Partial<IProps> = {
         // TODO: Doesn't want to accept directly.
         onClick: () => {
             App.close()

@@ -3,17 +3,24 @@ import "../../styles/chat/autoCompleter.scss";
 import {IGuideItem} from "../../models/misc";
 import {CSSTransition} from "react-transition-group";
 import Actions from "../../store/actions";
+import {connect} from "react-redux";
+import {IAppState} from "../../store/store";
 
-interface ILocalProps {
-	readonly getValue: (trim?: boolean) => string;
+interface IProps {
+	readonly value: string;
 	readonly visible: boolean;
 	readonly items: IGuideItem[];
 	readonly title: string;
 	readonly onItemClick?: (item: IGuideItem) => void;
+
+	/**
+	 * Provided by Redux.
+	 */
+	readonly autoCompleteCommands?: IGuideItem[];
 }
 
-export default class ComposerGuide extends React.Component<ILocalProps> {
-	public constructor(props: ILocalProps) {
+class ComposerGuide extends React.Component<IProps> {
+	public constructor(props: IProps) {
 		super(props);
 
 		// Bindings
@@ -43,12 +50,18 @@ export default class ComposerGuide extends React.Component<ILocalProps> {
 		});
 	}
 
-	protected setGuideVisible(visible: boolean): void {
-		if (this.props.autoCompleteVisible !== visible) {
+	/**
+	 * Change visibility state.
+	 */
+	protected setVisible(visible: boolean): void {
+		if (this.props.visible !== visible) {
 			Actions.setAutoCompleteVisible(visible);
 		}
 	}
 
+	/**
+	 * Whether the command name is empty, with no characters.
+	 */
 	protected isEmptyCommand(): boolean {
 		// TODO: Debugging.
 		console.log("command name", this.getCommandName(), `(${this.getCommandName().length})`);
@@ -68,17 +81,23 @@ export default class ComposerGuide extends React.Component<ILocalProps> {
 		const command: string = this.getCommandName();
 
 		this.setState({
-			filteredAutoCompleteCommands: this.props.autoCompleteCommands.filter((item: IGuideItem) =>
+			filteredAutoCompleteCommands: this.props.autoCompleteCommands!.filter((item: IGuideItem) =>
 				item.name.toLowerCase().startsWith(command))
 		});
 	}
 
+	/**
+	 * Extract the command name from the current input value.
+	 */
 	protected getCommandName(): string {
-		return this.props.getValue().substr(1).split(" ")[0].toLowerCase();
+		return this.props.value.substr(1).split(" ")[0].toLowerCase();
 	}
 
+	/**
+	 * Whether the input is currently in command format.
+	 */
 	protected inCommand(): boolean {
-		const value: string = this.props.getValue(false);
+		const value: string = this.props.value;
 
 		return value.startsWith("/") && !value.includes(" ");
 	}
@@ -94,3 +113,9 @@ export default class ComposerGuide extends React.Component<ILocalProps> {
 		);
 	}
 }
+
+export default connect((state: IAppState): any => {
+	return {
+		autoCompleteCommands: state.category.commandHandler.getAllAsAutoCompleteCommands()
+	};
+})(ComposerGuide);

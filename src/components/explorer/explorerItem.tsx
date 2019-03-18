@@ -5,7 +5,7 @@ import {faQuestionCircle, IconDefinition} from "@fortawesome/free-regular-svg-ic
 import {faHashtag} from "@fortawesome/free-solid-svg-icons";
 import {ChannelType} from "../../models/channel";
 
-interface ILocalProps {
+interface IProps {
     /**
      * The name that will represent the item.
      */
@@ -32,7 +32,7 @@ interface ILocalProps {
     readonly mention?: boolean;
 }
 
-export default class ExplorerItem extends React.Component<ILocalProps> {
+export default class ExplorerItem extends React.Component<IProps> {
     public getIcon(): IconDefinition {
         if (this.props.type === ChannelType.Public || this.props.type === ChannelType.Private) {
             return faHashtag;

@@ -6,7 +6,7 @@ import Indicator, {IndicatorColor} from "../indicator";
 import Tooltip, {TooltipPosition} from "../tooltip";
 
 // TODO: Use the GenericMessage/IMessage for this?
-interface ILocalProps {
+interface IProps {
     readonly authorName: string;
     readonly authorAvatarHash?: string;
     readonly time: number;
@@ -21,7 +21,7 @@ interface ILocalProps {
     readonly notify?: boolean;
 }
 
-export default class ChatMessage extends React.Component<ILocalProps> {
+export default class ChatMessage extends React.Component<IProps> {
     public getClass(): string {
         const classes: string[] = ["chat-message"];
 

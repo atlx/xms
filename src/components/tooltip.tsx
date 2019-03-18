@@ -9,7 +9,7 @@ export enum TooltipPosition {
     Bottom
 }
 
-interface ILocalProps {
+interface IProps {
     readonly style?: CSSProperties;
 
     /**
@@ -28,22 +28,22 @@ interface ILocalProps {
     readonly visible?: boolean;
 }
 
-interface ILocalState {
+interface IState {
     /**
      * Whether the tooltip is currently visible.
      */
     readonly visible: boolean;
 }
 
-export default class Tooltip extends React.Component<ILocalProps, ILocalState> {
-    public static readonly defaultProps: Partial<ILocalProps> = {
+export default class Tooltip extends React.Component<IProps, IState> {
+    public static readonly defaultProps: Partial<IProps> = {
         position: TooltipPosition.Top,
         visible: true
     };
 
     protected readonly $tooltip: React.RefObject<any>;
 
-    public constructor(props: ILocalProps) {
+    public constructor(props: IProps) {
         super(props);
 
         // Bindings.

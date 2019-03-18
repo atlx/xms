@@ -14,10 +14,28 @@ interface IProps {
 
 interface IState {
     readonly offset: number;
+    readonly status: string | undefined;
 }
 
 class ChatContainer extends Component<IProps, IState> {
     private readonly $container: RefObject<any> = React.createRef();
+
+    public state: IState = {
+        offset: 0,
+        status: undefined
+    };
+
+    public componentDidUpdate(prevProps: IProps, prevState: IState): void {
+		// Scroll messages when messages prop changes, and when status is shown/hidden
+		// TODO: isScrolled() will not work on this position, since it has already been scrolled automatically.
+		if (this.isScrolled() && prevProps.messages && this.props.messages.length !== prevProps.messages.length
+			|| (prevState.status !== this.state.status && (!prevState.status || !this.state.status))) {
+			this.scrollMessages();
+		}
+
+		// TODO: Possibly messing up stuff.
+		//this.$messages.current.scrollTop = this.$messages.current.scrollHeight;
+	}
 
     protected scrollMessages(): void {
         if (!this.isScrolled()) {

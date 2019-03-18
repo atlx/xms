@@ -5,13 +5,13 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import Tooltip from "../tooltip";
 import {Callback} from "../../core/app";
 
-interface ILocalProps {
+interface IProps {
     readonly icon: IconProp;
     readonly tooltip: string;
     readonly onClick?: Callback;
 }
 
-export default class UserBarAction extends React.Component<ILocalProps> {
+export default class UserBarAction extends React.Component<IProps> {
     public render(): JSX.Element {
         return (
             <Tooltip text={this.props.tooltip}>

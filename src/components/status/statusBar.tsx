@@ -12,14 +12,14 @@ import {Language} from "../../core/localisation";
 import Actions from "../../store/actions";
 import App from "../../core/app";
 
-interface ILocalProps {
+interface IProps {
     readonly ping: number;
     readonly connectionState: ConnectionState;
     readonly groupAddress?: string;
     readonly leftPanelVisible?: boolean;
 }
 
-class StatusBar extends React.Component<ILocalProps> {
+class StatusBar extends React.Component<IProps> {
     public renderPing(): string {
         if (this.props.ping < 1) {
             return "<1";

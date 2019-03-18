@@ -8,16 +8,14 @@ import InitPage from "./pages/init";
 import {CSSTransition} from "react-transition-group";
 import Actions from "../store/actions";
 import Modal from "./modal";
-import Tooltip from "./tooltip";
-import Handle from "./handleBar/handleBar";
 
-interface ILocalProps {
+interface IProps {
 	readonly page: Page;
 	readonly modals: IModal[];
 	readonly leftPanelVisible?: boolean;
 }
 
-class Application extends React.Component<ILocalProps> {
+class Application extends React.Component<IProps> {
 	public renderPage(): JSX.Element {
 		switch (this.props.page) {
 			case Page.Default: {

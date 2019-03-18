@@ -8,13 +8,13 @@ import PlaceholderRosterItem from "../placeholder/rosterItem";
 import {Map as ImmutableMap} from "immutable";
 import {User} from "../../models/user";
 
-interface ILocalProps {
+interface IProps {
     readonly title: string;
     readonly users: ImmutableMap<UniqueId, User>;
     readonly meId: UniqueId | null;
 }
 
-class RosterCategory extends React.Component<ILocalProps> {
+class RosterCategory extends React.Component<IProps> {
     public renderUsers(): JSX.Element[] {
         const users: User[] = [];
 

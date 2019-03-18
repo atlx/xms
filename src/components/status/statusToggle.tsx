@@ -4,7 +4,7 @@ import StatusItem, {IStatusItemProps} from "./statusItem";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {IconProp} from "@fortawesome/fontawesome-svg-core";
 
-interface ILocalProps extends IStatusItemProps {
+interface IProps extends IStatusItemProps {
     /**
      * Whether the toggle is toggled. Defaults to true.
      */
@@ -21,14 +21,14 @@ interface ILocalProps extends IStatusItemProps {
     readonly off: IconProp;
 }
 
-interface ILocalState {
+interface IState {
     readonly toggled: boolean;
 }
 
 /**
  * A toggable status bar action.
  */
-export default class StatusToggle extends React.Component<ILocalProps, ILocalState> {
+export default class StatusToggle extends React.Component<IProps, IState> {
     public readonly state = {
         toggled: this.props.toggled !== undefined ? this.props.toggled : true
     };

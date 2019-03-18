@@ -15,13 +15,35 @@ import Actions from "../../store/actions";
 import {MainApp} from "../..";
 
 interface IProps {
-    readonly autoCompleteVisible: boolean;
+	/**
+	 * Callback to invoke upon value being changed.
+	 */
+	readonly onChange: (value: string) => void;
+
+	/**
+	 * The max value length. Defaults to 100.
+	 */
+	readonly maxLength?: number;
+
+	/**
+	 * Provided by Redux. Whether the composer's guide is visible.
+	 */
+	readonly autoCompleteVisible: boolean;
+
+	/**
+	 * Whether the input is locked and not allowing data change. Defaults to false.
+	 */
+	readonly locked?: boolean;
 }
 
-interface ILocalState {
-    readonly filteredAutoCompleteCommands: IGuideItem[];
-    readonly status: string | undefined;
-
+interface IState {
+	readonly filteredAutoCompleteCommands: IGuideItem[];
+	
+	/**
+	 * The current value in the input element.
+	 */
+	readonly value: string;
+    
     /**
      * Whether the input element is currently shaking.
      */
@@ -33,55 +55,54 @@ interface ILocalState {
 	readonly inputLines: number;
 }
 
-class ChatComposer extends Component<IProps, ILocalState> {
-    public state: ILocalState = {
+class ChatComposer extends Component<IProps, IState> {
+	public static defaultProps: Partial<IProps> = {
+		maxLength: 100,
+		locked: false
+	};
+
+    public state: IState = {
         filteredAutoCompleteCommands: this.props.autoCompleteCommands,
         shaking: false,
-        inputLines: 1,
-        status: undefined
+		inputLines: 1,
+		value: ""
     };
 
-    private readonly $input: RefObject<HTMLTextAreaElement> = React.createRef();
+	private readonly $input: RefObject<HTMLTextAreaElement> = React.createRef();
 
-    public handleInputChange(): void {
-		if (!this.inCommand()) {
-			this.setAutoCompleteVisible(false);
-		}
-		else if (this.inCommand() && this.props.autoCompleteVisible) {
-			this.filterAutoCompleteItems();
-		}
-		else if (this.inCommand()) {
-			this.filterAutoCompleteItems();
-			this.setAutoCompleteVisible(true);
-		}
+	private shakeTimeout?: number;
+	
+	public componentDidUpdate() {
+		// TODO: componentDidUpdate() may trigger in unwanted situations, such as on receive message.
+		//this.focus();
 
-		// Create length variables for conviniency.
-		const valueLength: number = this.$input.current!.value.length;
-		const maxLength: number = this.$input.current!.maxLength;
-		const threshold: number = Math.round(maxLength / 5);
+		// Set the pending done timeout if it is not already set. Override if already exists.
+		if (this.state.shaking) {
+			clearTimeout(this.shakeTimeout);
 
-		// Update character counter if threshold is met, and is not at max length.
-		if (valueLength > threshold && valueLength <= maxLength) {
-			this.setState({
-				status: `${maxLength - valueLength} characters left`
-			});
-		}
-		// Length does not exceed threshold, hide counter.
-		else {
-			this.setState({
-				status: undefined
-			});
+			// TODO: Timeout is bound to CSS time value.
+			(this.shakeTimeout as any) = setTimeout(() => {
+				this.setState({
+					shaking: false
+				})
+			}, 90);
 		}
 	}
 
+	public componentWillUnmount(): void {
+		// Clear shake timeout once the component unmounts to prevent leaving garbage behind.
+		clearTimeout(this.shakeTimeout as any);
+	}
+
     protected setInputLines(lines: number): void {
+		// TODO: Might not need with textarea's 'row' attribute.
 		$(this.$input.current!).height((lines * 22) + "px");
 	}
 
 	protected getWrapperClass(): string {
 		const classes: string[] = ["message-wrapper"];
 
-		if (this.props.inputLocked) {
+		if (this.props.locked) {
 			classes.push("disabled");
 		}
 
@@ -93,14 +114,20 @@ class ChatComposer extends Component<IProps, ILocalState> {
 		return classes.join(" ");
 	}
 
+	/**
+	 * Set the input element's value.
+	 */
 	protected setValue(value: string): void {
 		this.$input.current!.value = value;
 
-		// OnChange event won't automatically trigger when manually setting the value.
-		this.handleInputChange();
+		// The OnChange event won't automatically trigger when manually setting the value.
+		this.handleChange();
 	}
 
-	public focus(): void {
+	/**
+	 * Set the window's focus to the input element.
+	 */
+	protected focus(): void {
 		this.$input.current!.focus();
 	}
 
@@ -129,6 +156,9 @@ class ChatComposer extends Component<IProps, ILocalState> {
         this.focus();
     }
 
+	/**
+	 * Play the shake animation on the input element.
+	 */
     protected shakeInput(): void {
 		this.setState({
 			shaking: true
@@ -230,10 +260,20 @@ class ChatComposer extends Component<IProps, ILocalState> {
 		MainApp.actions.handleMessage(message);
 	}
 
-	public getValue(trim: boolean = true): string {
+	public getValue(trim: boolean = false): string {
 		const value: string = this.$input.current!.value;
 
 		return trim ? value : value.trim();
+	}
+
+	protected handleChange(): void {
+		// Update the state's value.
+		this.setState({
+			value: this.getValue()
+		});
+
+		// Invoke the prop listener.
+		this.props.onChange(this.getValue());
 	}
     
     public render(): JSX.Element {
@@ -244,27 +284,23 @@ class ChatComposer extends Component<IProps, ILocalState> {
                     title="Commands"
                     visible={this.props.autoCompleteVisible}
 					items={this.state.filteredAutoCompleteCommands}
-					getValue={this.getValue}
+					value={this.state.value}
                 />
-                <CSSTransition in={this.props.inputLocked} classNames="trans" timeout={300}>
+                <CSSTransition in={this.props.locked} classNames="trans" timeout={300}>
                     <div className={this.getWrapperClass()}>
                         <textarea
                             rows={this.state.inputLines}
-                            onChange={this.handleInputChange}
+                            onChange={() => this.handleChange}
                             ref={this.$input}
                             onKeyDown={(e) => this.handleKeyDown(e)}
                             placeholder="Type a message"
                             className="message"
-                            disabled={this.props.inputLocked}
-                            maxLength={300}
+                            disabled={this.props.locked}
+                            maxLength={this.props.maxLength}
                         />
                         <div onClick={() => this.sendMessage()} className="send"><FontAwesomeIcon icon={faArrowRight} /></div>
                     </div>
                 </CSSTransition>
-                <div className="extra">
-                    <div className="typing"></div>
-                    <div className="status">{this.state.status}</div>
-                </div>
             </div>
         );
     }

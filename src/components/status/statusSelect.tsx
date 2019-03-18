@@ -5,7 +5,7 @@ import $ from "jquery";
 import {Callback} from "../../core/app";
 import {IconProp} from "@fortawesome/fontawesome-svg-core";
 
-interface ILocalProps {
+interface IProps {
     /**
      * The title that will be displayed on top of the options list.
      */
@@ -47,26 +47,26 @@ interface ILocalProps {
     readonly notify?: boolean;
 }
 
-interface ILocalState {
+interface IState {
     /**
      * Whether the option list is visible.
      */
     readonly bodyVisible: boolean;
 }
 
-export default class StatusSelect extends React.Component<ILocalProps, ILocalState> {
-    public static readonly defaultProps: Partial<ILocalProps> = {
+export default class StatusSelect extends React.Component<IProps, IState> {
+    public static readonly defaultProps: Partial<IProps> = {
         notify: false,
         loading: false
     };
 
-    public readonly state: ILocalState = {
+    public readonly state: IState = {
         bodyVisible: false
     };
 
     protected $statusSelect: React.RefObject<any>;
 
-    public constructor(props: ILocalProps) {
+    public constructor(props: IProps) {
         super(props);
 
         // Refs.

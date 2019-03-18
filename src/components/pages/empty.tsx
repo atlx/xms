@@ -1,9 +1,7 @@
 import React, {Component} from "react";
 import "../../styles/pages/empty.scss";
-import Tooltip, {TooltipPosition} from "../tooltip";
-import HandleButton from "../handleBar/handleButton";
 
-interface ILocalProps {
+interface IProps {
     readonly className?: string;
 
     /**
@@ -19,7 +17,7 @@ interface ILocalProps {
     readonly closeTooltip?: string;
 }
 
-export default class EmptyPage extends Component<ILocalProps> {
+export default class EmptyPage extends Component<IProps> {
     public getClass(): string {
         const classes: string[] = ["empty-page"];
 

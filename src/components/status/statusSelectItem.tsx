@@ -4,7 +4,7 @@ import StatusItem from "./statusItem";
 import {IconProp} from "@fortawesome/fontawesome-svg-core";
 import {faDotCircle, faCircle} from "@fortawesome/free-regular-svg-icons";
 
-interface ILocalProps {
+interface IProps {
     /**
      * Whether this item is selected. Defaults to false.
      */
@@ -16,8 +16,8 @@ interface ILocalProps {
     readonly disabled?: boolean;
 }
 
-export default class StatusSelectItem extends React.Component<ILocalProps> {
-    public static defaultProps: ILocalProps = {
+export default class StatusSelectItem extends React.Component<IProps> {
+    public static defaultProps: IProps = {
         disabled: false,
         selected: false
     };

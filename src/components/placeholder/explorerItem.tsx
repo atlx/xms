@@ -5,11 +5,11 @@ import "../../styles/placeholder/explorerItem.scss";
 import {faHashtag} from "@fortawesome/free-solid-svg-icons";
 import Utils from "../../core/utils";
 
-interface ILocalProps {
+interface IProps {
     readonly opacity: number;
 }
 
-export default class PlaceholderExplorerItem extends React.Component<ILocalProps> {
+export default class PlaceholderExplorerItem extends React.Component<IProps> {
     public getStyle(): CSSProperties {
         return {
             opacity: 0.3 / this.props.opacity

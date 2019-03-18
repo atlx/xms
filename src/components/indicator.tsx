@@ -10,7 +10,7 @@ export enum IndicatorColor {
     Red = "#ff4141"
 }
 
-interface ILocalProps {
+interface IProps {
     readonly className?: string;
 
     /**
@@ -29,8 +29,8 @@ interface ILocalProps {
     readonly size?: number;
 }
 
-export default class Indicator extends Component<ILocalProps> {
-    public static defaultProps: Partial<ILocalProps> = {
+export default class Indicator extends Component<IProps> {
+    public static defaultProps: Partial<IProps> = {
         color: IndicatorColor.Gray,
         size: 10,
         visible: false

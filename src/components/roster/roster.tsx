@@ -7,12 +7,12 @@ import RosterCategory from "./rosterCategory";
 import {Map as ImmutableMap} from "immutable";
 import {User} from "../../models/user";
 
-interface ILocalProps {
+interface IProps {
     readonly users: ImmutableMap<UniqueId, User>;
     readonly categories: IRosterCategory[];
 }
 
-class Roster extends React.Component<ILocalProps> {
+class Roster extends React.Component<IProps> {
     public renderCategories(): JSX.Element[] {
         return this.props.categories.map((category: IRosterCategory) => {
             const users: ImmutableMap<UniqueId, User> = ImmutableMap().asMutable() as ImmutableMap<UniqueId, User>;

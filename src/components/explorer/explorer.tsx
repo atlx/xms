@@ -10,13 +10,13 @@ import UserBar from "../userBar/userBar";
 import ExplorerBreak from "./explorerBreak";
 import {IChannel, SpecialChannel, ChannelType} from "../../models/channel";
 
-interface ILocalProps {
+interface IProps {
 	readonly channels: ImmutableMap<UniqueId, IChannel>;
 	readonly activeChannelId: UniqueId | null;
 }
 
-class Explorer extends React.Component<ILocalProps> {
-	public constructor(props: ILocalProps) {
+class Explorer extends React.Component<IProps> {
+	public constructor(props: IProps) {
 		super(props);
 
 		// Bindings
@@ -62,7 +62,7 @@ class Explorer extends React.Component<ILocalProps> {
 	}
 }
 
-const mapStateToProps = (state: IAppState): ILocalProps => {
+const mapStateToProps = (state: IAppState): IProps => {
 	return {
 		channels: state.category.channels,
 		activeChannelId: state.category.activeChannel !== null ? state.category.activeChannel.id : null
