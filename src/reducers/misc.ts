@@ -23,7 +23,7 @@ const miscReducer: Reducer<IAppStateMisc> = (state, action) => {
             };
         }
 
-        case ActionType.SetAutoCompleteVisible: {
+        case ActionType.SetGuideVisible: {
             return {
                 ...state,
                 autoCompleteVisible: action.payload
