@@ -27,14 +27,24 @@ module.exports = {
 				test: /\.scss$/,
 				
 				use: [
+					// Creates style nodes from JS strings.
 					{
-						loader: "style-loader" // Creates style nodes from JS strings
+						loader: "style-loader"
 					},
+
+					// Translates CSS into CommonJS.
 					{
-						loader: "css-loader" // Translates CSS into CommonJS
+						loader: "css-loader",
+
+						options: {
+							// Allows CSS class name isolation.
+							modules: true
+						}
 					},
+
+					// Compiles Sass to CSS.
 					{
-						loader: "sass-loader" // Compiles Sass to CSS
+						loader: "sass-loader"
 					}
 				]
 			},

@@ -1,5 +1,5 @@
 import App from "./core/app";
-import "./styles/lib/global.scss";
+import "./styles/global.scss";
 import {Page} from "./models/misc";
 import Config, {IConfig} from "./core/config";
 import {Provider} from "react-redux";
