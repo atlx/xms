@@ -18,7 +18,7 @@ export default abstract class MessageActions {
     /**
      * Append a message to the general channel.
      */
-    public static appendToGeneral<T extends IGenericMessage>(message: T): void {
+    public static addToGeneral<T extends IGenericMessage>(message: T): void {
         MessageActions.add({
             channelId: GeneralChannel.id,
             ...message

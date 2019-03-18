@@ -258,7 +258,7 @@ class ChatComposer extends Component<IProps, IState> {
 		const message: ITextMessage = Factory.createMessage(this.props.activeChannel.id, value);
 
 		this.clearValue();
-		MessageActions.appendToGeneral(message);
+		MessageActions.addToGeneral(message);
 		MainApp.actions.handleMessage(message);
 	}
 

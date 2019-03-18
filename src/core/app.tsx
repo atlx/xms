@@ -122,7 +122,7 @@ export default class App {
 					description: "Show a success notice",
 
 					handle(): void {
-						MessageActions.appendToGeneral<INotice>(
+						MessageActions.addToGeneral<INotice>(
 							Factory.createNotice(SpecialChannel.General,
 								"This is a success notice",
 								NoticeStyle.Success
@@ -135,7 +135,7 @@ export default class App {
 					description: "Show a warning notice",
 
 					handle(): void {
-						MessageActions.appendToGeneral<INotice>(
+						MessageActions.addToGeneral<INotice>(
 							Factory.createNotice(SpecialChannel.General,
 								"This is a warning notice",
 								NoticeStyle.Warning
@@ -148,7 +148,7 @@ export default class App {
 					description: "Show an error notice",
 
 					handle(): void {
-						MessageActions.appendToGeneral<INotice>(
+						MessageActions.addToGeneral<INotice>(
 							Factory.createNotice(
 								SpecialChannel.General,
 								"This is a error notice",

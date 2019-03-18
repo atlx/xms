@@ -3,6 +3,7 @@ import {UniqueId, IpAddress} from "./misc";
 import UserMention, {IUserMention} from "./userMention";
 import {SpecialChannel} from "./channel";
 import MessageActions from "../actions/message";
+import {getState} from "../store/store";
 
 /**
  * Used to identify a generic message.
@@ -70,6 +71,42 @@ export default class Message extends DbEntity<ITextMessage> {
      */
     public markSent(): void {
         MessageActions.markSent(this.id);
+    }
+
+    /**
+     * Add the message to the message map.
+     * Returns false if message already exists,
+     * otherwise returns true.
+     */
+    public add(): boolean {
+        if (!this.exists) {
+            MessageActions.add(this.model);
+
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Add the message to the general channel.
+     * Returns false if message already exists,
+     * otherwise returns true.
+     */
+    public addToGeneral(): boolean {
+        if (!this.exists) {
+            MessageActions.addToGeneral(this.model);
+        }
+
+        return false;
+    }
+
+    /**
+     * Whether the message has not been deleted and exists
+     * in the messages map.
+     */
+    public get exists(): boolean {
+        return getState().message.messages.has(this.id);
     }
 
     /**

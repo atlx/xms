@@ -21,7 +21,7 @@ export default class DeveloperToolbox {
     }
 
     public emulateBreakMessage(): this {
-        MessageActions.appendToGeneral(Factory.createBreakMessage(GeneralChannel.id, "Requested by user"));
+        MessageActions.addToGeneral(Factory.createBreakMessage(GeneralChannel.id, "Requested by user"));
 
         return this;
     }

@@ -22,7 +22,7 @@ export default class SystemHandlers {
         this.net.authOn(NetPacketType.Message, (packet: INetPacket): void => {
             if (packet.payload.channelId === SpecialChannel.General) {
                 // TODO: Use factory for message creation.
-                MessageActions.appendToGeneral<ITextMessage>({
+                MessageActions.addToGeneral<ITextMessage>({
                     // TODO
                     authorAvatarHash: undefined,
                     authorName: `User at ${packet.sender}`,

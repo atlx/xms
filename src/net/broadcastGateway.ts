@@ -91,7 +91,7 @@ export default class BroadcastGateway implements IDisposable {
         Actions.setInputLocked(true);
         this.dispose();
         console.log("[BroadcastGateway] Disconnected");
-        MessageActions.appendToGeneral<INotice>(Factory.createNotice(SpecialChannel.General, SystemMessages.Disconnected, NoticeStyle.Warning));
+        MessageActions.addToGeneral<INotice>(Factory.createNotice(SpecialChannel.General, SystemMessages.Disconnected, NoticeStyle.Warning));
 
         /**
          * TODO: Changing to page init is OKAY since it's meant to handle
@@ -120,13 +120,13 @@ export default class BroadcastGateway implements IDisposable {
 
             Actions.setConnectionState(ConnectionState.Connected);
 
-            MessageActions.appendToGeneral<INotice>(
+            MessageActions.addToGeneral<INotice>(
                 Factory.createNotice(SpecialChannel.General, SystemMessages.Connected)
             );
 
             // TODO: Is last ping set at the starting point?
             if (this.lastPing >= BroadcastGateway.slowThreshold) {
-                MessageActions.appendToGeneral<INotice>(
+                MessageActions.addToGeneral<INotice>(
                     Factory.createNotice(
                         SpecialChannel.General,
                         SystemMessages.HighLatency,
@@ -191,7 +191,7 @@ export default class BroadcastGateway implements IDisposable {
                     else {
                         // TODO: Fix.
                         // TODO: Verify type and data.
-                        MessageActions.appendToGeneral({
+                        MessageActions.addToGeneral({
                             // TODO: A way to safely identify an unknown sender, or is it not required?
                             authorAvatarHash: "",
                             authorName: "Unknown",
@@ -245,7 +245,7 @@ export default class BroadcastGateway implements IDisposable {
         this.close(() => {
             // TODO: Shouldn't be sent by message, handled by the init page instead.
             // TODO: Hard-coded channel.
-            MessageActions.appendToGeneral<INotice>(Factory.createNotice(SpecialChannel.General, "Attempting to reconnect."));
+            MessageActions.addToGeneral<INotice>(Factory.createNotice(SpecialChannel.General, "Attempting to reconnect."));
             this.connect();
         });
 
