@@ -122,6 +122,7 @@ export default class Message extends DbEntity<ITextMessage> {
      */
     public get mentions(): UserMention[] {
         return this.model.mentions.map((model: IUserMention) =>
-            new UserMention(model));
+            new UserMention(model)
+        );
     }
 }
