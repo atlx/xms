@@ -8,7 +8,7 @@ import Utils from "../core/utils";
 import {IDisposable} from "../core/app";
 import {MainApp} from "../index";
 import SystemMessages from "../core/systemMessages";
-import {INotice, NoticeStyle, IMessage} from "../models/message";
+import {INotice, NoticeStyle, ITextMessage} from "../models/message";
 import {SpecialChannel} from "../models/channel";
 import MessageActions from "../actions/message";
 import UserActions from "../actions/user";
@@ -204,7 +204,7 @@ export default class BroadcastGateway implements IDisposable {
                             time: Date.now(),
                             channelId: SpecialChannel.General,
                             type: payload.type
-                        } as IMessage);
+                        } as ITextMessage);
                     }
                 }
                 else {

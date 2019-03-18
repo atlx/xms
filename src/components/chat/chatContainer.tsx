@@ -1,5 +1,5 @@
 import React, {Component, RefObject} from "react";
-import {IGenericMessage, MessageType, IMessage, INotice, IBreakMessage} from "../../models/message";
+import {IGenericMessage, MessageType, ITextMessage, INotice, IBreakMessage} from "../../models/message";
 import ChatMessage from "./chatMessage";
 import NoticeMessage from "./noticeMessage";
 import BreakMessage from "./breakMessage";
@@ -104,7 +104,7 @@ class ChatContainer extends Component<IProps, IState> {
         return messages.map((message: IGenericMessage) => {
             // Normal text message.
             if (message.type === MessageType.Text) {
-                const textMessage: IMessage = message as IMessage;
+                const textMessage: ITextMessage = message as ITextMessage;
 
                 return <ChatMessage
                     key={message.id}

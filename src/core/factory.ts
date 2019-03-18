@@ -1,10 +1,10 @@
 import Utils from "./utils";
 import {MainApp} from "../index";
 import {UniqueId} from "../models/misc";
-import {IMessage, MessageType, NoticeStyle, INotice, IGenericMessage} from "../models/message";
+import {ITextMessage, MessageType, NoticeStyle, INotice, IGenericMessage} from "../models/message";
 
 export default class Factory {
-    public static createMessage(channelId: UniqueId, text: string): IMessage {
+    public static createMessage(channelId: UniqueId, text: string): ITextMessage {
         // TODO: Fix everything (most is hard-coded)
         return {
             id: Utils.generateId(),

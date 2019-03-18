@@ -1,5 +1,5 @@
 import {Reducer, ActionType, IAppStateMessage, InitialState} from "../store/store";
-import {IGenericMessage, IMessage, MessageType} from "../models/message";
+import {ITextMessage, MessageType} from "../models/message";
 import {Writeable} from "../models/misc";
 
 const messageReducer: Reducer<IAppStateMessage> = (state, action) => {
@@ -10,49 +10,32 @@ const messageReducer: Reducer<IAppStateMessage> = (state, action) => {
 
     switch (action.type) {
         case ActionType.AddMessage: {
-            // Clone existing messages.
-            const messages: IGenericMessage[] = [...state.messages];
-
-            // Append the new message.
-            messages.push(action.payload);
-
             return {
                 ...state,
-                messages
+
+                // Set the new message.
+                messages: state.messages.set(action.payload!.id, action.payload)
             };
         }
 
         case ActionType.MarkMessageSent: {
-            // Clone existing messages. Force cast for type support.
-            const messages: Array<Writeable<IMessage>> = [...state.messages] as Array<Writeable<IMessage>>;
-
-            let messageFound: boolean = false;
-
-            for (let message of messages) {
-                // Only text messages may be marked as sent.
-                if (message.type !== MessageType.Text) {
-                    continue;
-                }
-
-                if (message.id === action.payload && !message.sent) {
-                    // Mark the message as sent.
-                    message.sent = true;
-
-                    // Activate the found flag.
-                    messageFound = true;
-
-                    break;
-                }
+            if (!state.messages.has(action.payload!)) {
+                throw new Error("Cannot mark message that does not exist");
             }
 
-            // The message does not exist.
-            if (!messageFound) {
-                throw new Error(`Message with ID '${action.payload}' was not found`);
+            const message: Writeable<ITextMessage> = Object.assign({}, state.messages.get(action.payload)!) as Writeable<ITextMessage>;
+
+            // Only text messages may be marked as sent.
+            if (message.type !== MessageType.Text) {
+                throw new Error("Cannot mark non-text messages as sent");
             }
+            
+            // Mark message as sent.
+            message.sent = true;
 
             return {
                 ...state,
-                messages
+                messages: state.messages.set(message.id, message)
             };
         }
 

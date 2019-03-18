@@ -9,7 +9,7 @@ import {IAppState} from "../../store/store";
 import Pattern from "../../core/pattern";
 import {List} from "immutable";
 import {User} from "../../models/user";
-import {IMessage} from "../../models/message";
+import {ITextMessage} from "../../models/message";
 import Factory from "../../core/factory";
 import Actions from "../../actions/misc";
 import {MainApp} from "../..";
@@ -255,7 +255,7 @@ class ChatComposer extends Component<IProps, IState> {
 			}
 		}
 
-		const message: IMessage = Factory.createMessage(this.props.activeChannel.id, value);
+		const message: ITextMessage = Factory.createMessage(this.props.activeChannel.id, value);
 
 		this.clearValue();
 		MessageActions.appendToGeneral(message);

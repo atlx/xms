@@ -1,6 +1,6 @@
 import BroadcastGateway from "../net/broadcastGateway";
 import {GatewayMsgType, MessagePayload} from "../net/gateway";
-import {IMessage} from "../models/message";
+import {ITextMessage} from "../models/message";
 import {IpAddress} from "../models/misc";
 import {SpecialChannel} from "../models/channel";
 
@@ -11,7 +11,7 @@ export default class GatewayActions {
         this.gateway = gateway;
     }
 
-    public broadcastMessage(message: IMessage): void {
+    public broadcastMessage(message: ITextMessage): void {
         this.gateway.broadcast<MessagePayload>(GatewayMsgType.Message, {
             id: message.id,
             text: message.text,
@@ -19,11 +19,11 @@ export default class GatewayActions {
         });
     }
 
-    public sendInsecureMessage(message: IMessage, destination: IpAddress): void {
+    public sendInsecureMessage(message: ITextMessage, destination: IpAddress): void {
         // TODO
     }
 
-    public handleMessage(message: IMessage): void {
+    public handleMessage(message: ITextMessage): void {
         if (message.channelId === SpecialChannel.General) {
             this.broadcastMessage(message);
         }

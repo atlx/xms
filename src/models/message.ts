@@ -26,7 +26,7 @@ export interface IGenericMessage {
 /**
  * The standard text message sent in channels by users.
  */
-export interface IMessage extends IGenericMessage {
+export interface ITextMessage extends IGenericMessage {
     readonly authorName: string;
     readonly authorAvatarHash?: string;
     readonly systemMessage: boolean;
@@ -63,7 +63,7 @@ export enum NoticeStyle {
     Error
 }
 
-export default class Message extends DbEntity<IMessage> {
+export default class Message extends DbEntity<ITextMessage> {
     public get mentions(): UserMention[] {
         return this.model.mentions.map((model: IUserMention) => {
             return new UserMention(model);
