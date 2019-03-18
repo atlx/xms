@@ -116,6 +116,10 @@ export default class Message extends DbEntity<ITextMessage> {
         MessageActions.delete(this.id);
     }
 
+    /**
+     * Retrieve the user mention objects present
+     * in this message.
+     */
     public get mentions(): UserMention[] {
         return this.model.mentions.map((model: IUserMention) => {
             return new UserMention(model);
