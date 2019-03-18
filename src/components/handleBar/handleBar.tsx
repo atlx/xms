@@ -1,7 +1,7 @@
 import React from "react";
-import "../styles/misc/handle.scss";
 import HandleButton from "./handleButton";
 import App from "../../core/app";
+import "../../styles/handleBar/handleBar.scss";
 
 export default class Handle extends React.Component {
 	public render(): JSX.Element {

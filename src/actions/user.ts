@@ -1,3 +1,6 @@
+import {User} from "../models/user";
+import {store, ActionType} from "../store/store";
+
 export default abstract class UserActions {
     public static add(user: User): void {
         store.dispatch({

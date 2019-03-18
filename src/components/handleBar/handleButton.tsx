@@ -2,7 +2,7 @@ import React, {Component} from "react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faTimes} from "@fortawesome/free-solid-svg-icons";
 import App from "../../core/app";
-import "../styles/misc/closeButton.scss";
+import "../../styles/handleBar/handleButton.scss";
 
 interface IProps {
     readonly className?: string;
