@@ -26,7 +26,7 @@
             & {
                 border-color: #444;
                 border-style: solid;
-                /* box-shadow: 0 5px 16px 0px #2e2e2e; */
+                // box-shadow: 0 5px 16px 0px #2e2e2e;
                 background-color: #444;
             }
 
@@ -88,7 +88,9 @@
             }
 
             &:hover {
+                // Slightly move the send button to the right on hover for effect.
                 transform: translate(4px);
+
                 opacity: 1;
             }
 

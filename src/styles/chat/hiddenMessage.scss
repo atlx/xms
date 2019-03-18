@@ -1,3 +1,5 @@
+@import "../templates";
+
 .hidden-message {
     & {
         // Use relative position to center text over message.
@@ -22,10 +24,7 @@
     }
 
     > .text {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
+        @extend %absolute-center;
         transition: opacity 0.2s ease;
         color: #aaa;
     }

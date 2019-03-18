@@ -7,13 +7,15 @@
         max-height: -webkit-fill-available;
     }
 
-    > .loader {
-        margin-top: 0;
+    > .loader, > .beginning-of-history {
         margin-bottom: 20px;
     }
 
+    > .loader {
+        margin-top: 0;
+    }
+
     > .beginning-of-history {
-        margin-bottom: 20px;
         text-align: center;
         width: 100%;
         color: #555;
