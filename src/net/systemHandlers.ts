@@ -1,8 +1,10 @@
 import NetworkHub, {NetPacketType, INetPacket} from "../core/networkHub";
 import {store, IAppState} from "../store/store";
-import Actions from "../store/actions";
+import Actions from "../actions/misc";
 import {SpecialChannel, ChannelType} from "../models/channel";
 import {IMessage, MessageType} from "../models/message";
+import MessageActions from "../actions/message";
+import ChannelActions from "../actions/channel";
 
 export default class SystemHandlers {
     private readonly net: NetworkHub;
@@ -20,7 +22,7 @@ export default class SystemHandlers {
         this.net.authOn(NetPacketType.Message, (packet: INetPacket): void => {
             if (packet.payload.channelId === SpecialChannel.General) {
                 // TODO: Use factory for message creation.
-                Actions.appendMessageToGeneral<IMessage>({
+                MessageActions.appendToGeneral<IMessage>({
                     // TODO
                     authorAvatarHash: undefined,
                     authorName: `User at ${packet.sender}`,
@@ -44,7 +46,7 @@ export default class SystemHandlers {
             const state: IAppState = store.getState();
 
             if (!state.category.channels.has(packet.sender)) {
-                Actions.addChannel({
+                ChannelActions.add({
                     id: packet.sender,
                     name: `(DM) User at ${packet.sender}`,
                     topic: "A DM channel",
@@ -54,7 +56,7 @@ export default class SystemHandlers {
             }
 
             // TODO: Use factory for message creation.
-            Actions.appendMessage<IMessage>({
+            MessageActions.add<IMessage>({
                 channelId: packet.sender,
                 id: packet.payload.id,
                 text: packet.payload.content,

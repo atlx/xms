@@ -2,7 +2,7 @@ import React from "react";
 import "../../styles/chat/autoCompleter.scss";
 import {IGuideItem} from "../../models/misc";
 import {CSSTransition} from "react-transition-group";
-import Actions from "../../store/actions";
+import Actions from "../../actions/misc";
 import {connect} from "react-redux";
 import {IAppState} from "../../store/store";
 
@@ -55,7 +55,7 @@ class ComposerGuide extends React.Component<IProps> {
 	 */
 	protected setVisible(visible: boolean): void {
 		if (this.props.visible !== visible) {
-			Actions.setAutoCompleteVisible(visible);
+			Actions.setGuideVisible(visible);
 		}
 	}
 

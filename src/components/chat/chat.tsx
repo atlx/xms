@@ -3,19 +3,18 @@ import "../../styles/chat/chat.scss";
 import {connect} from "react-redux";
 import {IAppState} from "../../store/store";
 import CommandHandler from "../../core/commandHandler";
-import {Map as ImmutableMap} from "immutable";
-import {UniqueId} from "../../models/misc";
 import {User} from "../../models/user";
 import ChatHeader from "./chatHeader";
 import ChatContainer from "./chatContainer";
 import {IChannel} from "../../models/channel";
 import ChatComposer from "./chatComposer";
+import {BasicMap} from "../../core/helpers";
 
 interface IProps {
 	readonly activeChannel: IChannel;
 	readonly inputLocked: boolean;
 	readonly commandHandler: CommandHandler;
-	readonly users: ImmutableMap<UniqueId, User>;
+	readonly users: BasicMap<User>;
 }
 
 interface IState {

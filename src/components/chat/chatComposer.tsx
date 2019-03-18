@@ -11,9 +11,10 @@ import {List} from "immutable";
 import {User} from "../../models/user";
 import {IMessage} from "../../models/message";
 import Factory from "../../core/factory";
-import Actions from "../../store/actions";
+import Actions from "../../actions/misc";
 import {MainApp} from "../..";
 import "../../styles/chat/chatComposer.scss";
+import MessageActions from "../../actions/message";
 
 interface IProps {
 	/**
@@ -257,7 +258,7 @@ class ChatComposer extends Component<IProps, IState> {
 		const message: IMessage = Factory.createMessage(this.props.activeChannel.id, value);
 
 		this.clearValue();
-		Actions.appendMessageToGeneral(message);
+		MessageActions.appendToGeneral(message);
 		MainApp.actions.handleMessage(message);
 	}
 

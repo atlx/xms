@@ -6,8 +6,8 @@ import {connect} from "react-redux";
 import {Page, IModal} from "../models/misc";
 import InitPage from "./pages/init";
 import {CSSTransition} from "react-transition-group";
-import Actions from "../store/actions";
 import Modal from "./modal";
+import ModalActions from "../actions/modal";
 
 interface IProps {
 	readonly page: Page;
@@ -49,7 +49,7 @@ class Application extends React.Component<IProps> {
 	}
 
 	public handleModalClose(modal: IModal): void {
-		Actions.shiftModal();
+		ModalActions.shift();
 
 		if (modal.onClose) {
 			modal.onClose();
@@ -76,7 +76,6 @@ class Application extends React.Component<IProps> {
 	public render(): JSX.Element {
 		return (
 			<div className="application">
-				
 				{this.renderNextModal()}
 				{/* TODO: Not applying rule to EXITING component, just entering one. */}
 				<CSSTransition in={this.props.page !== Page.Init} classNames="page" timeout={600}>

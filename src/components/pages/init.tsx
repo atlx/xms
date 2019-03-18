@@ -2,7 +2,7 @@ import React, {RefObject, CSSProperties} from "react";
 import "../../styles/pages/init.scss";
 import Loader from "../loader";
 import Utils from "../../core/utils";
-import Actions from "../../store/actions";
+import Actions from "../../actions/misc";
 import {Page} from "../../models/misc";
 import {ConnectionState} from "../../store/store";
 

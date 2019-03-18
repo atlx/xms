@@ -1,11 +1,12 @@
 import {ICommand} from "./command";
 import {IGuideItem} from "../models/misc";
 import {Map as ImmutableMap} from "immutable";
+import {BasicMap} from "./helpers";
 
 export type CommandHandle = (args: string[]) => void;
 
 export default class CommandHandler {
-    public commands: ImmutableMap<string, ICommand>;
+    public commands: BasicMap<ICommand>;
 
     public constructor() {
         this.commands = ImmutableMap();

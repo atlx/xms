@@ -1,7 +1,7 @@
 import React from "react";
 import "../../styles/statusBar/statusBar.scss";
 import StatusItem from "../status/statusItem";
-import {faWifi, faSignal, faBell, faBellSlash, faGlobeAmericas, faBullseye, faArrowUp, faArrowDown, faCheck, faToolbox, faComment, faLocationArrow, faTimesCircle, faBookOpen, faUserCircle, faArrowRight, faGripLines} from "@fortawesome/free-solid-svg-icons";
+import {faWifi, faSignal, faBell, faBellSlash, faGlobeAmericas, faBullseye, faArrowUp, faArrowDown, faToolbox, faComment, faLocationArrow, faTimesCircle, faBookOpen, faUserCircle, faArrowRight, faGripLines} from "@fortawesome/free-solid-svg-icons";
 import {IAppState, ConnectionState} from "../../store/store";
 import {connect} from "react-redux";
 import {MainApp} from "../../index";
@@ -9,8 +9,10 @@ import StatusToggle from "../status/statusToggle";
 import StatusSelect from "../status/statusSelect";
 import StatusSelectItem from "./statusSelectItem";
 import {Language} from "../../core/localisation";
-import Actions from "../../store/actions";
+import Actions from "../../actions/misc";
 import App from "../../core/app";
+import ModalActions from "../../actions/modal";
+import MessageActions from "../../actions/message";
 
 interface IProps {
     readonly ping: number;
@@ -48,12 +50,12 @@ class StatusBar extends React.Component<IProps> {
                             <StatusItem onClick={() => MainApp.dev.emulatePublicMessage()} icon={faComment}>General message</StatusItem>
                             <StatusItem icon={faLocationArrow}>Direct message</StatusItem>
                             <StatusItem onClick={() => MainApp.dev.emulateBreakMessage()} icon={faGripLines}>Break Message</StatusItem>
-                            <StatusItem icon={faBookOpen} onClick={() => Actions.showModal({
+                            <StatusItem icon={faBookOpen} onClick={() => ModalActions.show({
                                 title: "This is a modal",
                                 text: "Requested by user"
                             })}>Show a modal</StatusItem>
                             <StatusItem icon={faBell} onClick={() => MainApp.notify()}>Notify</StatusItem>
-                            <StatusItem icon={faTimesCircle} onClick={() => Actions.clearMessages()}>Clear messages</StatusItem>
+                            <StatusItem icon={faTimesCircle} onClick={() => MessageActions.clear()}>Clear messages</StatusItem>
                             <StatusItem icon={faUserCircle} onClick={() => MainApp.dev.addDummyUser()}>Dummy user</StatusItem>
                         </StatusSelect>
                     }

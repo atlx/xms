@@ -1,7 +1,7 @@
 import ReactDOM from "react-dom";
 import BroadcastGateway from "../net/broadcastGateway";
 import GatewayActions from "./gatewayActions";
-import Actions from "../store/actions";
+import Actions from "../actions/misc";
 import CommandHandler from "./commandHandler";
 import Factory from "./factory";
 import {ICommand} from "./command";
@@ -16,6 +16,11 @@ import {User} from "../models/user";
 import {INotice, NoticeStyle} from "../models/message";
 import {SpecialChannel} from "../models/channel";
 import {ContextMenuOptionType, SpecialCategory} from "../models/misc";
+import MessageActions from "../actions/message";
+import ContextMenuActions from "../actions/contextMenu";
+import UserActions from "../actions/user";
+import CategoryActions from "../actions/category";
+import ChannelActions from "../actions/channel";
 
 export type PromiseOr<T = void> = Promise<T> | T;
 
@@ -105,7 +110,7 @@ export default class App {
 				description: "Clear all messages",
 
 				handle(): void {
-					Actions.clearMessages();
+					MessageActions.clear();
 				}
 			}
 		];
@@ -117,8 +122,12 @@ export default class App {
 					description: "Show a success notice",
 
 					handle(): void {
-						// TODO: Channel
-						Actions.appendMessageToGeneral<INotice>(Factory.createNotice(SpecialChannel.General, "This is a success notice", NoticeStyle.Success));
+						MessageActions.appendToGeneral<INotice>(
+							Factory.createNotice(SpecialChannel.General,
+								"This is a success notice",
+								NoticeStyle.Success
+							)
+						);
 					}
 				},
 				{
@@ -126,8 +135,12 @@ export default class App {
 					description: "Show a warning notice",
 
 					handle(): void {
-						// TODO: Channel
-						Actions.appendMessageToGeneral<INotice>(Factory.createNotice(SpecialChannel.General, "This is a warning notice", NoticeStyle.Warning));
+						MessageActions.appendToGeneral<INotice>(
+							Factory.createNotice(SpecialChannel.General,
+								"This is a warning notice",
+								NoticeStyle.Warning
+							)
+						);
 					}
 				},
 				{
@@ -135,8 +148,13 @@ export default class App {
 					description: "Show an error notice",
 
 					handle(): void {
-						// TODO: Channel
-						Actions.appendMessageToGeneral<INotice>(Factory.createNotice(SpecialChannel.General, "This is a error notice", NoticeStyle.Error));
+						MessageActions.appendToGeneral<INotice>(
+							Factory.createNotice(
+								SpecialChannel.General,
+								"This is a error notice",
+								NoticeStyle.Error
+							)
+						);
 					}
 				},
 				{
@@ -144,7 +162,7 @@ export default class App {
 					description: "Display a context menu",
 
 					handle(): void {
-						Actions.showContextMenu({
+						ContextMenuActions.show({
 							title: "Test context menu",
 
 							position: {
@@ -177,18 +195,18 @@ export default class App {
 			this.test();
 		}
 
-		Actions.updateMe(this.me);
+		UserActions.updateMe(this.me);
 
 		// TODO: State is immutable, therefore once me is updated, it will not be reflected upon the users list?
-		Actions.addUser(this.me);
+		UserActions.add(this.me);
 
-		Actions.addCategory({
+		CategoryActions.add({
 			id: SpecialCategory.Connected,
 			name: SpecialCategory.Connected,
 			users: [this.me.id]
 		});
 
-		Actions.setGeneralAsActiveChannel();
+		ChannelActions.setGeneralAsActive();
 		this.registerCommands();
 		this.render();
 		this.gateway.connect();

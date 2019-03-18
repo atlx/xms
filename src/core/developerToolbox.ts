@@ -1,9 +1,11 @@
 import App from "./app";
-import Actions from "../store/actions";
 import {SpecialCategory} from "../models/misc";
 import {GeneralChannel} from "../store/store";
 import Factory from "./factory";
 import {UserState} from "../models/user";
+import MessageActions from "../actions/message";
+import UserActions from "../actions/user";
+import CategoryActions from "../actions/category";
 
 export default class DeveloperToolbox {
     protected app: App;
@@ -19,7 +21,7 @@ export default class DeveloperToolbox {
     }
 
     public emulateBreakMessage(): this {
-        Actions.appendMessageToGeneral(Factory.createBreakMessage(GeneralChannel.id, "Requested by user"));
+        MessageActions.appendToGeneral(Factory.createBreakMessage(GeneralChannel.id, "Requested by user"));
 
         return this;
     }
@@ -27,14 +29,14 @@ export default class DeveloperToolbox {
     public addDummyUser(): this {
         const id: string = "u" + Date.now().toString();
 
-        Actions.addUser({
+        UserActions.add({
             createdTime: Date.now(),
             username: "Dummy",
             id,
             state: UserState.Online
         });
 
-        Actions.addUserToCategory(id, SpecialCategory.Connected);
+        CategoryActions.addUser(id, SpecialCategory.Connected);
 
         return this;
     }

@@ -2,7 +2,7 @@ import dgram, {Socket} from "dgram";
 import {AddressInfo} from "net";
 import {GatewayMsg, GatewayMsgType, HelloPayload, MessagePayload, HeartbeatPayload} from "./gateway";
 import {store, IAppState, ConnectionState} from "../store/store";
-import Actions from "../store/actions";
+import Actions from "../actions/misc";
 import Factory from "../core/factory";
 import Utils from "../core/utils";
 import {IDisposable} from "../core/app";
@@ -10,6 +10,8 @@ import {MainApp} from "../index";
 import SystemMessages from "../core/systemMessages";
 import {INotice, NoticeStyle, IMessage} from "../models/message";
 import {SpecialChannel} from "../models/channel";
+import MessageActions from "../actions/message";
+import UserActions from "../actions/user";
 
 export default class BroadcastGateway implements IDisposable {
     public static slowThreshold: number = 150;
@@ -89,7 +91,7 @@ export default class BroadcastGateway implements IDisposable {
         Actions.setInputLocked(true);
         this.dispose();
         console.log("[BroadcastGateway] Disconnected");
-        Actions.appendMessageToGeneral<INotice>(Factory.createNotice(SpecialChannel.General, SystemMessages.Disconnected, NoticeStyle.Warning));
+        MessageActions.appendToGeneral<INotice>(Factory.createNotice(SpecialChannel.General, SystemMessages.Disconnected, NoticeStyle.Warning));
 
         /**
          * TODO: Changing to page init is OKAY since it's meant to handle
@@ -118,13 +120,13 @@ export default class BroadcastGateway implements IDisposable {
 
             Actions.setConnectionState(ConnectionState.Connected);
 
-            Actions.appendMessageToGeneral<INotice>(
+            MessageActions.appendToGeneral<INotice>(
                 Factory.createNotice(SpecialChannel.General, SystemMessages.Connected)
             );
 
             // TODO: Is last ping set at the starting point?
             if (this.lastPing >= BroadcastGateway.slowThreshold) {
-                Actions.appendMessageToGeneral<INotice>(
+                MessageActions.appendToGeneral<INotice>(
                     Factory.createNotice(
                         SpecialChannel.General,
                         SystemMessages.HighLatency,
@@ -152,7 +154,7 @@ export default class BroadcastGateway implements IDisposable {
                     if (msg.type === GatewayMsgType.Message) {
                         const payload: MessagePayload = msg.payload;
 
-                        Actions.markMessageSent(payload.id);
+                        MessageActions.markSent(payload.id);
                     }
                     else if (msg.type === GatewayMsgType.Heartbeat) {
                         const ping: number = Math.round(performance.now() - this.pingStart);
@@ -176,7 +178,7 @@ export default class BroadcastGateway implements IDisposable {
                     const payload: HelloPayload = msg.payload;
 
                     if (!(store.getState() as IAppState).category.usersMap.has(msg.sender)) {
-                        Actions.addUser(payload.user);
+                        UserActions.add(payload.user);
                     }
                 }
                 // Handle incoming message.
@@ -189,7 +191,7 @@ export default class BroadcastGateway implements IDisposable {
                     else {
                         // TODO: Fix.
                         // TODO: Verify type and data.
-                        Actions.appendMessageToGeneral({
+                        MessageActions.appendToGeneral({
                             // TODO: A way to safely identify an unknown sender, or is it not required?
                             authorAvatarHash: "",
                             authorName: "Unknown",
@@ -243,7 +245,7 @@ export default class BroadcastGateway implements IDisposable {
         this.close(() => {
             // TODO: Shouldn't be sent by message, handled by the init page instead.
             // TODO: Hard-coded channel.
-            Actions.appendMessageToGeneral<INotice>(Factory.createNotice(SpecialChannel.General, "Attempting to reconnect."));
+            MessageActions.appendToGeneral<INotice>(Factory.createNotice(SpecialChannel.General, "Attempting to reconnect."));
             this.connect();
         });
 

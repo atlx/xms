@@ -5,12 +5,12 @@ import {UniqueId} from "../../models/misc";
 import {IAppState} from "../../store/store";
 import {connect} from "react-redux";
 import PlaceholderRosterItem from "../placeholder/rosterItem";
-import {Map as ImmutableMap} from "immutable";
 import {User} from "../../models/user";
+import {BasicMap} from "../../core/helpers";
 
 interface IProps {
     readonly title: string;
-    readonly users: ImmutableMap<UniqueId, User>;
+    readonly users: BasicMap<User>;
     readonly meId: UniqueId | null;
 }
 

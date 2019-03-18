@@ -2,20 +2,21 @@ import React from "react";
 import {connect} from "react-redux";
 import "../../styles/roster/roster.scss";
 import {IAppState} from "../../store/store";
-import {IRosterCategory, UniqueId} from "../../models/misc";
+import {IRosterCategory} from "../../models/misc";
 import RosterCategory from "./rosterCategory";
 import {Map as ImmutableMap} from "immutable";
 import {User} from "../../models/user";
+import {BasicMap} from "../../core/helpers";
 
 interface IProps {
-    readonly users: ImmutableMap<UniqueId, User>;
+    readonly users: BasicMap<User>;
     readonly categories: IRosterCategory[];
 }
 
 class Roster extends React.Component<IProps> {
     public renderCategories(): JSX.Element[] {
         return this.props.categories.map((category: IRosterCategory) => {
-            const users: ImmutableMap<UniqueId, User> = ImmutableMap().asMutable() as ImmutableMap<UniqueId, User>;
+            const users: BasicMap<User> = ImmutableMap().asMutable() as BasicMap<User>;
 
             for (const user of this.props.users.values()) {
                 if (category.users.includes(user.id)) {

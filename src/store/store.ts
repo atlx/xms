@@ -3,17 +3,18 @@ import {IRosterCategory, UniqueId, Page, IModal, IContextMenu} from "../models/m
 import CommandHandler from "../core/commandHandler";
 import {createLogger} from "redux-logger";
 import {Map as ImmutableMap} from "immutable";
-import messageReducer from "./reducers/message";
-import categoryReducer from "./reducers/category";
-import channelReducer from "./reducers/channel";
-import commandReducer from "./reducers/command";
-import contextMenuReducer from "./reducers/context-menu";
-import miscReducer from "./reducers/misc";
-import userReducer from "./reducers/user";
-import netReducer from "./reducers/net";
 import {User} from "../models/user";
 import {IChannel, SpecialChannel, ChannelType} from "../models/channel";
-import Message from "../models/message";
+import {IGenericMessage} from "../models/message";
+import {BasicMap} from "../core/helpers";
+import categoryReducer from "../reducers/category";
+import channelReducer from "../reducers/channel";
+import commandReducer from "../reducers/command";
+import contextMenuReducer from "../reducers/context-menu";
+import messageReducer from "../reducers/message";
+import miscReducer from "../reducers/misc";
+import userReducer from "../reducers/user";
+import netReducer from "../reducers/net";
 
 export enum ActionType {
     MarkMessageSent = "MARK_MESSAGE_SENT",
@@ -22,7 +23,7 @@ export enum ActionType {
     SetGeneralAsActiveChannel = "SET_GENERAL_AS_ACTIVE_CHANNEL",
     SetInputLocked = "SET_INPUT_LOCKED",
     SetPage = "SET_PAGE",
-    SetAutoCompleteVisible = "SET_AUTOCOMPLETE_VISIBLE",
+    SetGuideVisible = "SET_AUTOCOMPLETE_VISIBLE",
     RegisterCommand = "REGISTER_COMMAND",
     ShowModal = "SHOW_MODAL",
     ShiftModal = "SHIFT_MODAL",
@@ -66,7 +67,7 @@ export interface IAppState {
 export interface IAppStateCategory {
     readonly usersMap: Map<UniqueId, User>;
     readonly categories: IRosterCategory[];
-    readonly channels: ImmutableMap<UniqueId, IChannel>;
+    readonly channels: BasicMap<IChannel>;
     readonly activeChannel: IChannel | null;
     readonly commandHandler: CommandHandler;
     readonly contextMenu: IContextMenu | null;
@@ -81,7 +82,7 @@ export interface IAppStateMisc {
 }
 
 export interface IAppStateUser {
-    readonly users: ImmutableMap<UniqueId, User>;
+    readonly users: BasicMap<User>;
     readonly me: User | null;
 }
 
@@ -99,7 +100,7 @@ export interface IAppStateNet {
 }
 
 export interface IAppStateMessage {
-    readonly messages: ImmutableMap<UniqueId, Message>;
+    readonly messages: BasicMap<IGenericMessage>;
 }
 
 const logger = createLogger({

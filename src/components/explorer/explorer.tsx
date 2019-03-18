@@ -9,9 +9,10 @@ import PlaceholderExplorerItem from "../placeholder/explorerItem";
 import UserBar from "../userBar/userBar";
 import ExplorerBreak from "./explorerBreak";
 import {IChannel, SpecialChannel, ChannelType} from "../../models/channel";
+import {BasicMap} from "../../core/helpers";
 
 interface IProps {
-	readonly channels: ImmutableMap<UniqueId, IChannel>;
+	readonly channels: BasicMap<IChannel>;
 	readonly activeChannelId: UniqueId | null;
 }
 
