@@ -4,6 +4,7 @@ import UserMention, {IUserMention} from "./userMention";
 import {SpecialChannel} from "./channel";
 import MessageActions from "../actions/message";
 import {getState} from "../store/store";
+import {Map as ImmutableMap} from "immutable";
 
 /**
  * Used to identify a generic message.

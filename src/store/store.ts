@@ -120,6 +120,7 @@ export const GeneralChannel: IChannel = {
     notify: false
 };
 
+// TODO: Exchange standard arrays for Immutable.js' List.
 export const InitialState: IAppState = {
     category: {
         categories: [],
