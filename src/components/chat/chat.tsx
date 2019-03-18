@@ -1,4 +1,4 @@
-import React from "react";
+import React, {RefObject} from "react";
 import "../../styles/chat/chat.scss";
 import {connect} from "react-redux";
 import {IAppState} from "../../store/store";
@@ -9,79 +9,73 @@ import ChatContainer from "./chatContainer";
 import {IChannel} from "../../models/channel";
 import ChatComposer from "./chatComposer";
 import {BasicMap} from "../../core/helpers";
+import ChatFooter from "./chatFooter";
 
 interface IProps {
 	readonly activeChannel: IChannel;
 	readonly inputLocked: boolean;
-	readonly commandHandler: CommandHandler;
 	readonly users: BasicMap<User>;
 }
 
 interface IState {
+	/**
+	 * The current value of the input element.
+	 * Initially an empty string.
+	 */
 	readonly value: string;
 }
 
 class Chat extends React.Component<IProps, IState> {
 	private static readonly inputMaxLength: number = 100;
 
+	private readonly $footer: RefObject<ChatFooter> = React.createRef();
+
+	public state: IState = {
+		value: ""
+	};
+
 	public componentWillMount(): void {
 		// TODO: Needs to reset once the component unmounts, use componentWillUnmount or componentDidUnmount for that.
 		// Scroll messages when the escape key is pressed.
-		window.onkeydown = (e: any) => {
-			if (e.key === "Escape"
-				&& (document.activeElement === document.body
-					|| document.activeElement === this.$input.current)) {
-				this.scrollMessages();
-				this.focus();
-			}
-		};
+
+		// TODO: Disabled because of error while separating components.
+		// window.onkeydown = (e: any) => {
+		// 	if (e.key === "Escape"
+		// 		&& (document.activeElement === document.body
+		// 			|| document.activeElement === this.$input.current)) {
+		// 		this.scrollMessages();
+		// 		this.focus();
+		// 	}
+		// };
 	}
 
 	protected handleInputChange(value: string): void {
-		if (!this.inCommand()) {
-			this.setAutoCompleteVisible(false);
-		}
-		else if (this.inCommand() && this.props.autoCompleteVisible) {
-			this.filterAutoCompleteItems();
-		}
-		else if (this.inCommand()) {
-			this.filterAutoCompleteItems();
-			this.setAutoCompleteVisible(true);
-		}
+		// Update the state's value.
+		this.setState({
+			value
+		});
 
-		// Create length variables for conviniency.
-		const valueLength: number = value.length;
-		const maxLength: number = Chat.inputMaxLength;
-		const threshold: number = Math.round(maxLength / 5);
-
-		// Update character counter if threshold is met, and is not at max length.
-		if (valueLength > threshold && valueLength <= maxLength) {
-			this.setState({
-				status: `${maxLength - valueLength} characters left`
-			});
-		}
-		// Length does not exceed threshold, hide counter.
-		else {
-			this.setState({
-				status: undefined
-			});
-		}
+		this.$footer.current!.handleValueChange();
 	}
 
 	public render(): JSX.Element {
 		return (
 			<div className="chat">
-				<ChatHeader />
+				<ChatHeader activeChannel={this.props.activeChannel} />
 				<ChatContainer messages={undefined as any} offsetMultiplier={1} />
 
 				{/* TODO: Hard-coded empty values, replaced by redux. */}
-				<ChatComposer locked={this.props.inputLocked} maxLength={Chat.inputMaxLength} autoCompleteVisible={undefined as any} />
+				<ChatComposer
+					users={this.props.users}
+					activeChannel={this.props.activeChannel}
+					locked={this.props.inputLocked}
+					maxLength={Chat.inputMaxLength}
+					autoCompleteVisible={undefined as any}
+					guideItems={this.props.}
+					useGuide={true}
+				/>
 
-				{/* TODO: Moved from 'chatComposer.tsx' but have not changed CSS classes. */}
-				<div className="extra">
-                    <div className="typing"></div>
-                    <div className="status">{this.state.status}</div>
-                </div>
+				<ChatFooter maxLength={Chat.inputMaxLength} value={this.state.value} ref={this.$footer} />
 			</div>
 		);
 	}
@@ -90,7 +84,6 @@ export default connect((state: IAppState): any => {
 	return {
 		activeChannel: state.category.activeChannel,
 		inputLocked: state.misc.inputLocked,
-		commandHandler: state.category.commandHandler,
 		users: state.user.users
 	};
 })(Chat);

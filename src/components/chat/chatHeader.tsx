@@ -3,8 +3,13 @@ import React from "react";
 import "../../styles/chat/chatHeader.scss";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faHashtag} from "@fortawesome/free-solid-svg-icons";
+import {IChannel} from "../../models/channel";
 
-export default class ChatHeader extends Component {
+interface IProps {
+    readonly activeChannel: IChannel;
+}
+
+export default class ChatHeader extends Component<IProps> {
     public render(): JSX.Element {
         return (
             <div className="chat-header">

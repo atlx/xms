@@ -11,12 +11,31 @@ import {List} from "immutable";
 import {User} from "../../models/user";
 import {ITextMessage} from "../../models/message";
 import Factory from "../../core/factory";
-import Actions from "../../actions/misc";
 import {MainApp} from "../..";
 import "../../styles/chat/chatComposer.scss";
 import MessageActions from "../../actions/message";
+import {IChannel} from "../../models/channel";
+import {BasicMap} from "../../core/helpers";
 
 interface IProps {
+	readonly users: BasicMap<User>;
+
+	/**
+	 * The items that the guide will display.
+	 */
+	readonly guideItems?: IGuideItem[];
+
+	/**
+	 * Whether this composer allows the use of a guide.
+	 * Defaults to false.
+	 */
+	readonly useGuide?: boolean;
+
+	/**
+	 * The focused channel that the user is currently browsing.
+	 */
+	readonly activeChannel: IChannel;
+
 	/**
 	 * Callback to invoke upon value being changed.
 	 */
@@ -40,16 +59,16 @@ interface IProps {
 
 interface IState {
 	readonly filteredAutoCompleteCommands: IGuideItem[];
-	
+
 	/**
 	 * The current value in the input element.
 	 */
 	readonly value: string;
-    
+
     /**
      * Whether the input element is currently shaking.
      */
-    readonly shaking: boolean;
+	readonly shaking: boolean;
 
     /**
 	 * The number of lines present in the input textarea. Defaults to 1.
@@ -60,20 +79,22 @@ interface IState {
 class ChatComposer extends Component<IProps, IState> {
 	public static defaultProps: Partial<IProps> = {
 		maxLength: 100,
-		locked: false
+		locked: false,
+		useGuide: false
 	};
 
-    public state: IState = {
-        filteredAutoCompleteCommands: this.props.autoCompleteCommands,
-        shaking: false,
+	public state: IState = {
+		filteredAutoCompleteCommands: this.props.guideItems || [],
+		shaking: false,
 		inputLines: 1,
 		value: ""
-    };
+	};
 
 	private readonly $input: RefObject<HTMLTextAreaElement> = React.createRef();
+	private readonly $guide: RefObject<any> = React.createRef();
 
 	private shakeTimeout?: number;
-	
+
 	public componentDidUpdate() {
 		// TODO: componentDidUpdate() may trigger in unwanted situations, such as on receive message.
 		//this.focus();
@@ -96,7 +117,7 @@ class ChatComposer extends Component<IProps, IState> {
 		clearTimeout(this.shakeTimeout as any);
 	}
 
-    protected setInputLines(lines: number): void {
+	protected setInputLines(lines: number): void {
 		// TODO: Might not need with textarea's 'row' attribute.
 		$(this.$input.current!).height((lines * 22) + "px");
 	}
@@ -151,23 +172,23 @@ class ChatComposer extends Component<IProps, IState> {
 		this.setValue(this.getValue() + value);
 	}
 
-    protected handleAutoCompleteItemClick(item: IGuideItem): void {
+	protected handleAutoCompleteItemClick(item: IGuideItem): void {
 		this.setValue(`/${item.name} `);
 
 		// Focus input after appending data.
-        this.focus();
-    }
+		this.focus();
+	}
 
 	/**
 	 * Play the shake animation on the input element.
 	 */
-    protected shakeInput(): void {
+	protected shakeInput(): void {
 		this.setState({
 			shaking: true
 		});
 	}
 
-    protected handleKeyDown(e: any): void {
+	protected handleKeyDown(e: any): void {
 		// Prevent auto-pressing enter on other appearing components (such as modal open).
 		if (e.key === "Enter" && !e.shiftKey) {
 			e.preventDefault();
@@ -183,7 +204,7 @@ class ChatComposer extends Component<IProps, IState> {
 		else if (e.key === "Enter") {
 			this.sendMessage();
 		}
-		else if (this.inCommand()) {
+		else if (this.$guide.current!.inCommand()) {
 			// TODO: Filter values in auto complete.
 		}
 
@@ -199,13 +220,13 @@ class ChatComposer extends Component<IProps, IState> {
 		if (valueLength === maxLength) {
 			this.shakeInput();
 		}
-    }
-    
-    protected isEmptyValue(): boolean {
+	}
+
+	protected isEmptyValue(): boolean {
 		return this.getValue().length === 0;
-    }
-    
-    protected sendMessage(): void {
+	}
+
+	protected sendMessage(): void {
 		// Stop when there is no active channel.
 		if (this.props.activeChannel.id === null) {
 			return;
@@ -227,7 +248,7 @@ class ChatComposer extends Component<IProps, IState> {
 		// Handle command messages internally.
 		else if (value.startsWith("/")) {
 			// TODO: Pass in arguments.
-			this.props.commandHandler.handle(this.getCommandName());
+			MainApp.commandHandler.handle(this.$guide.current!.getCommandName());
 			this.clearValue();
 
 			return;
@@ -277,39 +298,42 @@ class ChatComposer extends Component<IProps, IState> {
 		// Invoke the prop listener.
 		this.props.onChange(this.getValue());
 	}
-    
-    public render(): JSX.Element {
-        return (
-            <div className="chat-composer">
-                <ComposerGuide
-                    onItemClick={this.handleAutoCompleteItemClick}
-                    title="Commands"
-                    visible={this.props.autoCompleteVisible}
+
+	public render(): JSX.Element {
+		return (
+			<div className="chat-composer">
+				<ComposerGuide
+					ref={this.$guide}
+					onItemClick={this.handleAutoCompleteItemClick}
+					title="Commands"
+					visible={this.props.autoCompleteVisible}
 					items={this.state.filteredAutoCompleteCommands}
 					value={this.state.value}
-                />
-                <CSSTransition in={this.props.locked} classNames="trans" timeout={300}>
-                    <div className={this.getWrapperClass()}>
-                        <textarea
-                            rows={this.state.inputLines}
-                            onChange={() => this.handleChange}
-                            ref={this.$input}
-                            onKeyDown={(e) => this.handleKeyDown(e)}
-                            placeholder="Type a message"
-                            className="input"
-                            disabled={this.props.locked}
-                            maxLength={this.props.maxLength}
-                        />
-                        <div onClick={() => this.sendMessage()} className="send"><FontAwesomeIcon icon={faArrowRight} /></div>
-                    </div>
-                </CSSTransition>
-            </div>
-        );
-    }
+				/>
+				<CSSTransition in={this.props.locked} classNames="trans" timeout={300}>
+					<div className={this.getWrapperClass()}>
+						<textarea
+							rows={this.state.inputLines}
+							onChange={() => this.handleChange}
+							ref={this.$input}
+							onKeyDown={(e) => this.handleKeyDown(e)}
+							placeholder="Type a message"
+							className="input"
+							disabled={this.props.locked}
+							maxLength={this.props.maxLength}
+						/>
+						<div onClick={() => this.sendMessage()} className="send">
+							<FontAwesomeIcon icon={faArrowRight} />
+						</div>
+					</div>
+				</CSSTransition>
+			</div>
+		);
+	}
 }
 
 export default connect((state: IAppState): any => {
-    return {
+	return {
 		autoCompleteVisible: state.misc.autoCompleteVisible
 	};
 })(ChatComposer);

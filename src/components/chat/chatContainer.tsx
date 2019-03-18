@@ -7,9 +7,10 @@ import Loader from "../loader";
 import {connect} from "react-redux";
 import {IAppState} from "../../store/store";
 import "../../styles/chat/chatContainer.scss";
+import {BasicMap} from "../../core/helpers";
 
 interface IProps {
-    readonly messages: IGenericMessage[];
+    readonly messages: BasicMap<IGenericMessage>;
     readonly offsetMultiplier: number;
 }
 
@@ -29,7 +30,7 @@ class ChatContainer extends Component<IProps, IState> {
     public componentDidUpdate(prevProps: IProps, prevState: IState): void {
 		// Scroll messages when messages prop changes, and when status is shown/hidden
 		// TODO: isScrolled() will not work on this position, since it has already been scrolled automatically.
-		if (this.isScrolled() && prevProps.messages && this.props.messages.length !== prevProps.messages.length
+		if (this.isScrolled() && prevProps.messages && this.props.messages.size !== prevProps.messages.size
 			|| (prevState.status !== this.state.status && (!prevState.status || !this.state.status))) {
 			this.scrollMessages();
 		}
@@ -46,7 +47,7 @@ class ChatContainer extends Component<IProps, IState> {
 
     protected handleScroll(): void {
         // TODO: Hard-coded threshold.
-        if (this.props.messages.length < 15) {
+        if (this.props.messages.size < 15) {
             return;
         }
         else if (this.$container.current.scrollTop === 0) {
@@ -68,10 +69,10 @@ class ChatContainer extends Component<IProps, IState> {
     }
 
     protected renderLoader(): JSX.Element | undefined {
-        // TODO: Hard-coded threshold
-        if (this.props.messages.length >= 15) {
+        // TODO: Hard-coded threshold.
+        if (this.props.messages.size >= 15) {
             if (this.$container.current && this.$container.current.scrollTop === 0) {
-                if (this.props.offsetMultiplier * this.state.offset > this.props.messages.length) {
+                if (this.props.offsetMultiplier * this.state.offset > this.props.messages.size) {
                     return <div className="beginning-of-history">Beginning of history</div>;
                 }
 
@@ -83,7 +84,22 @@ class ChatContainer extends Component<IProps, IState> {
     }
 
     protected renderMessages(): JSX.Element[] {
-        let messages: IGenericMessage[] = this.props.messages;
+        const messageMap: BasicMap<IGenericMessage> = this.props.messages;
+        
+        let messages: IGenericMessage[] = [];
+
+        // TODO: Hard-coded cut value.
+        const threshold: number = 100;
+
+        for (const message of messageMap.values()) {
+            // Stop if threshold has been met.
+            if (messages.length >= threshold) {
+                break;
+            }
+
+            // Otherwise, append the message.
+            messages.push(message);
+        }
 
         //console.log(messages);
 
@@ -93,13 +109,6 @@ class ChatContainer extends Component<IProps, IState> {
 		} */
 
         //console.log(messages);
-
-        // TODO: Hard-coded cut value.
-        const cut: number = 100;
-
-        if (messages.length >= cut) {
-            messages = messages.slice(messages.length - cut, messages.length);
-        }
 
         return messages.map((message: IGenericMessage) => {
             // Normal text message.

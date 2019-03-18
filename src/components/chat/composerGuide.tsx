@@ -11,6 +11,10 @@ interface IProps {
 	readonly visible: boolean;
 	readonly items: IGuideItem[];
 	readonly title: string;
+
+	/**
+	 * The callback to invoke once an item has been clicked.
+	 */
 	readonly onItemClick?: (item: IGuideItem) => void;
 
 	/**
@@ -51,7 +55,7 @@ class ComposerGuide extends React.Component<IProps> {
 	}
 
 	/**
-	 * Change visibility state.
+	 * Change the visibility state.
 	 */
 	protected setVisible(visible: boolean): void {
 		if (this.props.visible !== visible) {
@@ -62,7 +66,7 @@ class ComposerGuide extends React.Component<IProps> {
 	/**
 	 * Whether the command name is empty, with no characters.
 	 */
-	protected isEmptyCommand(): boolean {
+	protected get isEmptyCommand(): boolean {
 		// TODO: Debugging.
 		console.log("command name", this.getCommandName(), `(${this.getCommandName().length})`);
 
@@ -70,7 +74,7 @@ class ComposerGuide extends React.Component<IProps> {
 	}
 
 	protected filterAutoCompleteItems(): void {
-		if (this.isEmptyCommand()) {
+		if (this.isEmptyCommand) {
 			this.setState({
 				filteredAutoCompleteCommands: this.props.autoCompleteCommands
 			});
@@ -100,6 +104,19 @@ class ComposerGuide extends React.Component<IProps> {
 		const value: string = this.props.value;
 
 		return value.startsWith("/") && !value.includes(" ");
+	}
+
+	public handleChange(): void {
+		if (!this.inCommand()) {
+			this.setVisible(false);
+		}
+		else if (this.inCommand() && this.props.visible) {
+			this.filterAutoCompleteItems();
+		}
+		else if (this.inCommand()) {
+			this.filterAutoCompleteItems();
+			this.setVisible(true);
+		}
 	}
 
 	public render(): JSX.Element {
