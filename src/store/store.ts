@@ -10,7 +10,7 @@ import {BasicMap} from "../core/helpers";
 import categoryReducer from "../reducers/category";
 import channelReducer from "../reducers/channel";
 import commandReducer from "../reducers/command";
-import contextMenuReducer from "../reducers/context-menu";
+import contextMenuReducer from "../reducers/contextMenu";
 import messageReducer from "../reducers/message";
 import miscReducer from "../reducers/misc";
 import userReducer from "../reducers/user";
