@@ -80,6 +80,9 @@ export default class App {
 		return this;
 	}
 
+	/**
+	 * Play the notification sound.
+	 */
 	public notify(): this {
 		if (!this.notifications) {
 			return this;
@@ -90,6 +93,9 @@ export default class App {
 		return this;
 	}
 
+	/**
+	 * Create and render the root component.
+	 */
 	public render(): void {
 		console.log("[App] Rendering");
 
@@ -190,11 +196,16 @@ export default class App {
 		MiscActions.registerCommands(commands);
 	}
 
+	/**
+	 * Initialize the application and its
+	 * entities.
+	 */
 	public init(): void {
 		if (App.devMode) {
 			this.test();
 		}
 
+		// Register the local user in the state.
 		UserActions.updateMe(this.me);
 
 		// TODO: State is immutable, therefore once me is updated, it will not be reflected upon the users list?
