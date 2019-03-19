@@ -1,6 +1,6 @@
 import React from "react";
 import "../../styles/roster/rosterCategory.scss";
-import RosterItem from "./rosterItem";
+import Contact from "./contact";
 import {UniqueId} from "../../models/misc";
 import {IAppState} from "../../store/store";
 import {connect} from "react-redux";
@@ -14,7 +14,7 @@ interface IProps {
     readonly meId: UniqueId | null;
 }
 
-class RosterCategory extends React.Component<IProps> {
+class ContactsCategory extends React.Component<IProps> {
     public renderUsers(): JSX.Element[] {
         const users: User[] = [];
 
@@ -24,7 +24,7 @@ class RosterCategory extends React.Component<IProps> {
         }
 
         return users.map((user: User) => {
-            return <RosterItem
+            return <Contact
                 key={user.id}
                 me={this.props.meId !== null && user.id === this.props.meId}
                 username={user.username}
@@ -55,4 +55,4 @@ const mapStateToProps = (state: IAppState): any => {
     };
 };
 
-export default connect(mapStateToProps)(RosterCategory);
+export default connect(mapStateToProps)(ContactsCategory);

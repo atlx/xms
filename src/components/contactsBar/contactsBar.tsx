@@ -3,7 +3,7 @@ import {connect} from "react-redux";
 import "../../styles/roster/roster.scss";
 import {IAppState} from "../../store/store";
 import {IRosterCategory} from "../../models/misc";
-import RosterCategory from "./rosterCategory";
+import ContactsCategory from "./contactsCategory";
 import {Map as ImmutableMap} from "immutable";
 import {User} from "../../models/user";
 import {BasicMap} from "../../core/helpers";
@@ -13,7 +13,7 @@ interface IProps {
     readonly categories: IRosterCategory[];
 }
 
-class Roster extends React.Component<IProps> {
+class ContactsBar extends React.Component<IProps> {
     public renderCategories(): JSX.Element[] {
         return this.props.categories.map((category: IRosterCategory) => {
             const users: BasicMap<User> = ImmutableMap().asMutable() as BasicMap<User>;
@@ -25,7 +25,7 @@ class Roster extends React.Component<IProps> {
             }
 
             // TODO: Hard-coded meId for redux connect.
-            return <RosterCategory meId={null as any} key={category.id} title={category.name} users={users} />
+            return <ContactsCategory meId={null as any} key={category.id} title={category.name} users={users} />
         });
     }
 
@@ -45,4 +45,4 @@ const mapStateToProps = (state: IAppState): any => {
     };
 };
 
-export default connect(mapStateToProps)(Roster);
+export default connect(mapStateToProps)(ContactsBar);

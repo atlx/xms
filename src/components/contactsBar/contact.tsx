@@ -10,7 +10,7 @@ interface IProps {
     readonly me?: boolean;
 }
 
-export default class RosterItem extends React.Component<IProps> {
+export default class Contact extends React.Component<IProps> {
     public getComponentStyle(): string {
         const classes: string[] = ["roster-item"];
 

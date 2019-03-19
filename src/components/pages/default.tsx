@@ -1,13 +1,10 @@
 import React from "react";
 import "../../styles/pages/default.scss";
-import Explorer from "../explorer/explorer";
 import Chat from "../chat/chat";
-import Roster from "../roster/roster";
+import ContactsBar from "../roster/roster";
 import StatusBar from "../status/statusBar";
 import {connect} from "react-redux";
 import {IAppState} from "../../store/store";
-import Sidebar from "../sidebar/sidebar";
-import ContactsBar from "../contacts/contactsBar";
 
 interface IProps {
 	readonly leftPanelVisible?: boolean;
@@ -27,12 +24,8 @@ class DefaultPage extends React.Component<IProps, IState> {
 	public render(): JSX.Element {
 		return (
 			<div className="default-page">
-				<ContactsBar>
-					Contacts
-				</ContactsBar>
-				{this.props.leftPanelVisible &&
-					<Explorer />
-				}
+				<ContactsBar categories={null as any} users={null as any} />
+
 				{/* TODO: Props are hard-coded */}
 				<Chat
 					autoCompleteCommands={null as any}
@@ -44,7 +37,7 @@ class DefaultPage extends React.Component<IProps, IState> {
 					activeChannel={null as any}
 					users={undefined as any}
 				/>
-				<Roster categories={null as any} users={null as any} />
+				
 				<StatusBar {...undefined as any} />
 			</div>
 		);
