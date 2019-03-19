@@ -1,7 +1,7 @@
 import React from "react";
 import "../../styles/pages/default.scss";
 import Chat from "../chat/chat";
-import ContactsBar from "../roster/roster";
+import ContactsBar from "../contactsBar/contactsBar";
 import StatusBar from "../status/statusBar";
 import {connect} from "react-redux";
 import {IAppState} from "../../store/store";
@@ -37,7 +37,7 @@ class DefaultPage extends React.Component<IProps, IState> {
 					activeChannel={null as any}
 					users={undefined as any}
 				/>
-				
+
 				<StatusBar {...undefined as any} />
 			</div>
 		);
