@@ -7,6 +7,7 @@ import StatusBar from "../status/statusBar";
 import {connect} from "react-redux";
 import {IAppState} from "../../store/store";
 import Sidebar from "../sidebar/sidebar";
+import ContactsBar from "../contacts/contactsBar";
 
 interface IProps {
 	readonly leftPanelVisible?: boolean;
@@ -26,7 +27,9 @@ class DefaultPage extends React.Component<IProps, IState> {
 	public render(): JSX.Element {
 		return (
 			<div className="default-page">
-				<Sidebar />
+				<ContactsBar>
+					Contacts
+				</ContactsBar>
 				{this.props.leftPanelVisible &&
 					<Explorer />
 				}
