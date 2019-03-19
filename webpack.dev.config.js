@@ -38,7 +38,8 @@ module.exports = {
 
 						options: {
 							// Allows CSS class name isolation.
-							modules: true
+							// TODO: Messing up styles.
+							// modules: true
 						}
 					},
 

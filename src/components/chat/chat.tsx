@@ -2,7 +2,6 @@ import React, {RefObject} from "react";
 import "../../styles/chat/chat.scss";
 import {connect} from "react-redux";
 import {IAppState} from "../../store/store";
-import CommandHandler from "../../core/commandHandler";
 import {User} from "../../models/user";
 import ChatHeader from "./chatHeader";
 import ChatContainer from "./chatContainer";
@@ -10,8 +9,10 @@ import {IChannel} from "../../models/channel";
 import ChatComposer from "./chatComposer";
 import {BasicMap} from "../../core/helpers";
 import ChatFooter from "./chatFooter";
+import {IGuideItem} from "../../models/misc";
 
 interface IProps {
+	readonly guideItems: IGuideItem[];
 	readonly activeChannel: IChannel;
 	readonly inputLocked: boolean;
 	readonly users: BasicMap<User>;
@@ -70,8 +71,8 @@ class Chat extends React.Component<IProps, IState> {
 					activeChannel={this.props.activeChannel}
 					locked={this.props.inputLocked}
 					maxLength={Chat.inputMaxLength}
-					autoCompleteVisible={undefined as any}
-					guideItems={this.props.}
+					guideVisible={undefined as any}
+					guideItems={this.props.guideItems}
 					useGuide={true}
 				/>
 
@@ -82,6 +83,7 @@ class Chat extends React.Component<IProps, IState> {
 }
 export default connect((state: IAppState): any => {
 	return {
+		guideItems: state.category.commandHandler.getAllAsAutoCompleteCommands(),
 		activeChannel: state.category.activeChannel,
 		inputLocked: state.misc.inputLocked,
 		users: state.user.users

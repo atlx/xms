@@ -9,9 +9,9 @@ const url = require("url");
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow;
 
-// Keep a reference for dev mode
+// Keep a reference for dev mode.
 
-// TODO: Not working
+// TODO: Not working.
 const dev = true;//process.env.NODE_ENV === "development";
 
 console.log(`Development mode: ${dev}`);
@@ -27,6 +27,7 @@ function createWindow() {
 		title: "XMS",
 		hasShadow: true,
 		minWidth: 1024,
+		transparent: true,
 
 		webPreferences: {
 			// Explicitly set node integration.

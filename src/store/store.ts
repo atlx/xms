@@ -78,7 +78,7 @@ export interface IAppStateMisc {
     readonly modals: IModal[];
     readonly page: Page;
     readonly inputLocked: boolean;
-    readonly autoCompleteVisible: boolean;
+    readonly guideVisible: boolean;
     readonly leftPanelVisible: boolean;
 }
 
@@ -135,7 +135,7 @@ export const InitialState: IAppState = {
         modals: [],
         inputLocked: true,
         page: Page.Init,
-        autoCompleteVisible: false,
+        guideVisible: false,
         leftPanelVisible: true
     },
 

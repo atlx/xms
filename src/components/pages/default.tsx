@@ -6,6 +6,7 @@ import Roster from "../roster/roster";
 import StatusBar from "../status/statusBar";
 import {connect} from "react-redux";
 import {IAppState} from "../../store/store";
+import Sidebar from "../sidebar/sidebar";
 
 interface IProps {
 	readonly leftPanelVisible?: boolean;
@@ -24,7 +25,8 @@ class DefaultPage extends React.Component<IProps, IState> {
 
 	public render(): JSX.Element {
 		return (
-			<React.Fragment>
+			<div className="default-page">
+				<Sidebar />
 				{this.props.leftPanelVisible &&
 					<Explorer />
 				}
@@ -41,7 +43,7 @@ class DefaultPage extends React.Component<IProps, IState> {
 				/>
 				<Roster categories={null as any} users={null as any} />
 				<StatusBar {...undefined as any} />
-			</React.Fragment>
+			</div>
 		);
 	}
 }

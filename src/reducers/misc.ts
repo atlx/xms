@@ -26,7 +26,7 @@ const miscReducer: Reducer<IAppStateMisc> = (state, action) => {
         case ActionType.SetGuideVisible: {
             return {
                 ...state,
-                autoCompleteVisible: action.payload
+                guideVisible: action.payload
             };
         }
 

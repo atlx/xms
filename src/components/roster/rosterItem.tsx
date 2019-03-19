@@ -1,9 +1,10 @@
 import React from "react";
 import "../../styles/roster/rosterItem.scss";
 import Tooltip, {TooltipPosition} from "../tooltip";
+import PlaceholderAvatar from "../placeholder/avatar";
 
 interface IProps {
-    readonly name: string;
+    readonly username: string;
     readonly avatarUrl?: string;
     readonly status?: string;
     readonly me?: boolean;
@@ -21,13 +22,21 @@ export default class RosterItem extends React.Component<IProps> {
         return classes.join(" ");
     }
 
+    public renderAvatar(): JSX.Element {
+        if (this.props.avatarUrl !== undefined) {
+            return <img className="avatar" src={this.props.avatarUrl} />;
+        }
+
+        return <PlaceholderAvatar username={this.props.username} />;
+    }
+
     public renderContent(): JSX.Element {
         return (
             <div className={this.getComponentStyle()}>
                 {/* TODO: Temp. unknown avatar image */}
-                <img className="avatar" src={this.props.avatarUrl || "https://upload.wikimedia.org/wikipedia/commons/thumb/7/75/Antu_face-sad.svg/1024px-Antu_face-sad.svg.png"} />
+                {this.renderAvatar()}
                 <div className="info-wrapper">
-                    <div className="name">{this.props.name}</div>
+                    <div className="name">{this.props.username}</div>
                     <div className="status">{this.props.status}</div>
                 </div>
             </div>

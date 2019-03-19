@@ -35,7 +35,7 @@ export default abstract class MessageActions {
 
             // Ensure a message has been previously sent.
             if (messages.size > 0) {
-                const lastMessage: IGenericMessage = messages[getState().message.messages.length - 1];
+                const lastMessage: IGenericMessage = messages[getState().message.messages.size - 1];
 
                 // Append separator message beforehand if applicable.
                 if (Time.isDayOlder(lastMessage.time, message.time)) {

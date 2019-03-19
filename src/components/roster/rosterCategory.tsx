@@ -27,7 +27,7 @@ class RosterCategory extends React.Component<IProps> {
             return <RosterItem
                 key={user.id}
                 me={this.props.meId !== null && user.id === this.props.meId}
-                name={user.username}
+                username={user.username}
                 avatarUrl={user.avatarUrl}
                 status={user.status} />;
         });

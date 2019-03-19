@@ -1,0 +1,24 @@
+@import "../templates";
+
+.placeholder-avatar {
+    & {
+        // Bound to roster item.
+        border-radius: 4px;
+
+        position: relative;
+    }
+
+    > .background {
+        width: 100%;
+        height: 100%;
+        filter: contrast(50%);
+        background-color: inherit;
+        border-radius: inherit;
+    }
+
+    > .initial {
+        @extend %absolute-center;
+        text-transform: uppercase;
+        color: #fff;
+    }
+}

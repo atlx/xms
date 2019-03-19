@@ -7,11 +7,16 @@
     }
 }
 
+$color-bg-me: #2ecc71;
+
 .roster-item {
     & {
         display: grid;
         grid-template-columns: auto 1fr;
-        padding: 5px 11px; /* Bound to roster category title */
+        
+        // Bound to roster category title.
+        padding: 6px 6px;
+        
         font-size: 16px;
         border-radius: 4px;
         cursor: pointer;
@@ -30,7 +35,13 @@
     }
 
     &.me {
-        background: #2ecc71;
+        & {
+            background-color: $color-bg-me;
+        }
+
+        > .avatar, .placeholder-avatar {
+            background-color: $color-bg-me;
+        }
     }
 
     &:not(.me) {
@@ -43,10 +54,10 @@
         }
     }
 
-    > .avatar {
-        width: 30px;
-        height: 30px;
-        margin-right: 6px;
+    > .avatar, .placeholder-avatar {
+        width: 25px;
+        height: 25px;
         border-radius: 50%;
+        background-color: $color-dark-contrast-light;
     }
 }

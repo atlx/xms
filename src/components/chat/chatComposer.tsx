@@ -49,7 +49,7 @@ interface IProps {
 	/**
 	 * Provided by Redux. Whether the composer's guide is visible.
 	 */
-	readonly autoCompleteVisible: boolean;
+	readonly guideVisible: boolean;
 
 	/**
 	 * Whether the input is locked and not allowing data change. Defaults to false.
@@ -306,7 +306,7 @@ class ChatComposer extends Component<IProps, IState> {
 					ref={this.$guide}
 					onItemClick={this.handleAutoCompleteItemClick}
 					title="Commands"
-					visible={this.props.autoCompleteVisible}
+					visible={this.props.guideVisible}
 					items={this.state.filteredAutoCompleteCommands}
 					value={this.state.value}
 				/>
@@ -334,6 +334,6 @@ class ChatComposer extends Component<IProps, IState> {
 
 export default connect((state: IAppState): any => {
 	return {
-		autoCompleteVisible: state.misc.autoCompleteVisible
+		autoCompleteVisible: state.misc.guideVisible
 	};
 })(ChatComposer);

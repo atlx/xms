@@ -14,10 +14,12 @@ $bg-color: #2a2a2a;
         align-items: center;
         border-bottom: 1px solid $color-dark-contrast-dark;
         z-index: 100;
+        border-radius: 3px;
     }
 
     > .title {
-        padding: 6px 12px; /* Same as button */
+        // Same as button.
+        padding: 6px 12px;
     }
 
     > .buttons {
@@ -28,9 +30,8 @@ $bg-color: #2a2a2a;
         }
         
         > .dev-mode {
-            border-radius: 4px;
             margin-right: 8px;
-            border: 1px solid #505050;
+            border-bottom: 1px solid #505050;
             color: #505050;
             padding: 0px 4px;
         }
@@ -40,7 +41,10 @@ $bg-color: #2a2a2a;
                 & {
                     -webkit-app-region: no-drag;
                     cursor: pointer;
-                    padding: 6px 12px; /* Same as title */
+
+                    // Same as title.
+                    padding: 6px 12px;
+
                     opacity: 0.4;
                     border-radius: 3px;
                 }
