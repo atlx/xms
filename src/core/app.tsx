@@ -1,7 +1,7 @@
 import ReactDOM from "react-dom";
-import BroadcastGateway from "../net/broadcastGateway";
+import Gateway from "../net/gateway";
 import GatewayActions from "./gatewayActions";
-import Actions from "../actions/misc";
+import MiscActions from "../actions/misc";
 import CommandHandler from "./commandHandler";
 import Factory from "./factory";
 import {ICommand} from "./command";
@@ -46,7 +46,7 @@ export default class App {
 		remote.getCurrentWindow().close();
 	}
 
-	public readonly gateway: BroadcastGateway;
+	public readonly gateway: Gateway;
 	public readonly me: User;
 	public readonly actions: GatewayActions;
 	public readonly commandHandler: CommandHandler;
@@ -60,7 +60,7 @@ export default class App {
 
 	public constructor(me: User, renderer: AppRenderer) {
 		this.renderer = renderer;
-		this.gateway = new BroadcastGateway(Constants.primaryGroupAddress, Constants.primaryBroadcastPort);
+		this.gateway = new Gateway(Constants.primaryGroupAddress, Constants.primaryBroadcastPort);
 		this.me = me;
 		this.actions = new GatewayActions(this.gateway);
 		this.commandHandler = new CommandHandler();
@@ -187,7 +187,7 @@ export default class App {
 			]);
 		}
 
-		Actions.registerCommands(commands);
+		MiscActions.registerCommands(commands);
 	}
 
 	public init(): void {

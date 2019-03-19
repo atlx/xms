@@ -3,7 +3,7 @@ import "../../styles/userBar/userBar.scss";
 import UserBarAction from "./userBarAction";
 import {faCog, faArrowLeft} from "@fortawesome/free-solid-svg-icons";
 import {MainApp} from "../..";
-import Actions from "../../actions/misc";
+import MiscActions from "../../actions/misc";
 
 export default class UserBar extends React.Component {
     public render(): JSX.Element {
@@ -15,7 +15,7 @@ export default class UserBar extends React.Component {
                     <div className="status"></div>
                 </div>
                 <div className="actions">
-                    <UserBarAction onClick={() => Actions.setLeftPanelVisible(false)} tooltip="Hide" icon={faArrowLeft} />
+                    <UserBarAction onClick={() => MiscActions.setLeftPanelVisible(false)} tooltip="Hide" icon={faArrowLeft} />
                     <UserBarAction tooltip="Settings" icon={faCog} />
                 </div>
             </div>

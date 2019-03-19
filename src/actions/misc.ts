@@ -2,7 +2,7 @@ import {Page} from "../models/misc";
 import {store, ActionType, ConnectionState} from "../store/store";
 import {ICommand} from "../core/command";
 
-export default abstract class Actions {
+export default abstract class MiscActions {
     public static setInputLocked(locked: boolean): void {
         if (typeof locked !== "boolean") {
             throw new Error("Expected 'locked' parameter to be a boolean");
@@ -53,7 +53,7 @@ export default abstract class Actions {
         }
 
         for (let i = 0; i < commands.length; i++) {
-            Actions.registerCommand(commands[i]);
+            MiscActions.registerCommand(commands[i]);
         }
     }
 

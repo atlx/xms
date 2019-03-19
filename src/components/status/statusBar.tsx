@@ -9,7 +9,7 @@ import StatusToggle from "../status/statusToggle";
 import StatusSelect from "../status/statusSelect";
 import StatusSelectItem from "./statusSelectItem";
 import {Language} from "../../core/localisation";
-import Actions from "../../actions/misc";
+import MiscActions from "../../actions/misc";
 import App from "../../core/app";
 import ModalActions from "../../actions/modal";
 import MessageActions from "../../actions/message";
@@ -39,7 +39,7 @@ class StatusBar extends React.Component<IProps> {
             <div className="status-bar">
                 <div className="left">
                     {!this.props.leftPanelVisible &&
-                        <StatusItem onClick={() => Actions.setLeftPanelVisible(true)} icon={faArrowRight}>Show explorer</StatusItem>
+                        <StatusItem onClick={() => MiscActions.setLeftPanelVisible(true)} icon={faArrowRight}>Show explorer</StatusItem>
                     }
                     <StatusItem tooltip="Upload meter" icon={faArrowUp}>12 KB</StatusItem>
                     <StatusItem tooltip="Download meter" icon={faArrowDown}>53 KB</StatusItem>

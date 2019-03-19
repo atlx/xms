@@ -1,13 +1,13 @@
-import BroadcastGateway from "../net/broadcastGateway";
-import {GatewayMsgType, MessagePayload} from "../net/gateway";
+import Gateway from "../net/gateway";
+import {GatewayMsgType, MessagePayload} from "../net/gatewayEntities";
 import {ITextMessage} from "../models/message";
 import {IpAddress} from "../models/misc";
 import {SpecialChannel} from "../models/channel";
 
 export default class GatewayActions {
-    private readonly gateway: BroadcastGateway;
+    private readonly gateway: Gateway;
 
-    public constructor(gateway: BroadcastGateway) {
+    public constructor(gateway: Gateway) {
         this.gateway = gateway;
     }
 
