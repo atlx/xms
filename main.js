@@ -1,6 +1,6 @@
 "use strict";
 
-// Import parts of electron to use
+// Import parts of electron to use.
 const {app, BrowserWindow} = require("electron");
 const path = require("path");
 const url = require("url");
@@ -45,7 +45,7 @@ function createWindow() {
 		// TODO: Restart window after timeout + check if still unresponsive?
 	});
 
-	// and load the index.html of the app.
+	// .. and load the index.html of the app.
 	let indexPath;
 
 	if (dev && process.argv.indexOf("--noDevServer") === -1) {
@@ -95,14 +95,14 @@ app.on("ready", createWindow);
 // Quit when all windows are closed.
 app.on("window-all-closed", () => {
 	// On macOS it is common for applications and their menu bar
-	// to stay active until the user quits explicitly with Cmd + Q
+	// to stay active until the user quits explicitly with Cmd + Q.
 	if (process.platform !== "darwin") {
 		app.quit();
 	}
 });
 
 app.on("activate", () => {
-	// On macOS it"s common to re-create a window in the app when the
+	// On macOS it is common to re-create a window in the app when the
 	// dock icon is clicked and there are no other windows open.
 	if (mainWindow === null) {
 		createWindow();
