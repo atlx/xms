@@ -9,13 +9,15 @@
 	outline: none;
 	text-decoration: none;
 	user-select: none;
+	box-sizing: border-box;
+}
+
+img {
+	max-width: 100%;
 }
 
 html, body, #root, #root > .application {
 	height: 100%;
-	box-sizing: border-box;
-	background-color: $color-dark;
-	color: #fff;
 }
 
 #root {
@@ -26,10 +28,13 @@ html, body, #root, #root > .application {
 }
 
 body {
+	border-radius: 15px;
+	overflow: hidden;
 	font-family: "Nunito Regular", "Segoe UI", sans-serif;
 	margin: 0;
-	padding: 10px;
 	box-sizing: border-box;
+	background-color: $color-gray;
+	color: $color-neon;
 }
 
 ::-webkit-scrollbar {

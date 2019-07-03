@@ -1,4 +1,7 @@
+@import "../colors.scss";
+
 .sidebar {
     padding: 10px;
-    background-color: black;
+    background-color: $color-purple;
+    color: $color-white;
 }

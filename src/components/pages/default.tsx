@@ -5,6 +5,7 @@ import ContactsBar from "../contactsBar/contactsBar";
 import StatusBar from "../status/statusBar";
 import {connect} from "react-redux";
 import {IAppState} from "../../store/store";
+import Sidebar from "../sidebar/sidebar";
 
 interface IProps {
 	readonly leftPanelVisible?: boolean;
@@ -24,6 +25,7 @@ class DefaultPage extends React.Component<IProps, IState> {
 	public render(): JSX.Element {
 		return (
 			<div className="default-page">
+				<Sidebar />
 				<ContactsBar categories={null as any} users={null as any} />
 
 				{/* TODO: Props are hard-coded */}

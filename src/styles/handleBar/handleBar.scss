@@ -1,13 +1,9 @@
 @import "../colors";
 
-$bg-color: #2a2a2a;
-
 .handle {
     & {
         padding: 6px 12px;
         -webkit-app-region: drag;
-        background-color: $bg-color;
-        color: #bbb;
         display: grid;
         grid-template-columns: 1fr auto;
         justify-content: center;
@@ -51,7 +47,6 @@ $bg-color: #2a2a2a;
     
                 &:hover {
                     opacity: 1;
-                    background-color: lighten($bg-color, 6%);
                 }
             }
         }
