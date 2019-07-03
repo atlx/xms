@@ -1,6 +1,7 @@
 import {Reducer, ActionType, IAppStateMessage, InitialState} from "../store/store";
 import {ITextMessage, MessageType} from "../models/message";
 import {Writeable} from "../models/misc";
+import {Map as ImmutableMap} from "immutable";
 
 const messageReducer: Reducer<IAppStateMessage> = (state, action) => {
     // Return default initial state for this reducer.
@@ -40,7 +41,7 @@ const messageReducer: Reducer<IAppStateMessage> = (state, action) => {
             if (message.type !== MessageType.Text) {
                 throw new Error("Cannot mark non-text messages as sent");
             }
-            
+
             // Mark message as sent.
             message.sent = true;
 
@@ -53,7 +54,7 @@ const messageReducer: Reducer<IAppStateMessage> = (state, action) => {
         case ActionType.ClearMessages: {
             return {
                 ...state,
-                messages: []
+                messages: ImmutableMap()
             };
         }
     }

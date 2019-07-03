@@ -28,14 +28,10 @@ class DefaultPage extends React.Component<IProps, IState> {
 
 				{/* TODO: Props are hard-coded */}
 				<Chat
-					autoCompleteCommands={null as any}
-					commandHandler={null as any}
-					autoCompleteVisible={false}
-					offsetMultiplier={10}
-					messages={[]}
 					inputLocked={true}
 					activeChannel={null as any}
 					users={undefined as any}
+					guideItems={undefined as any}
 				/>
 
 				<StatusBar {...undefined as any} />

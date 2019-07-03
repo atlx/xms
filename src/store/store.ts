@@ -50,12 +50,13 @@ export enum ActionType {
 
 export type StatePart = IAppStateCategory | IAppStateMisc | IAppStateMessage | IAppStateNet | IAppStateUser;
 
-export type Reducer<T extends StatePart = any> = (state: T | null | undefined, action: Action<any>) => T | null;
+export type Reducer<T extends StatePart = any> = (state: T | null | undefined, action: Action) => T | null;
 
-export type Action<T extends object> = {
+export type Action<T extends object = any> = {
     readonly type: ActionType;
     readonly payload?: T;
 }
+
 
 export interface IAppState {
     readonly category: IAppStateCategory;
