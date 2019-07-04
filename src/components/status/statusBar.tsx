@@ -66,7 +66,6 @@ class StatusBar extends React.Component<IProps> {
                         <StatusSelectItem disabled>Away</StatusSelectItem>
                         <StatusSelectItem disabled>Offline</StatusSelectItem>
                     </StatusSelect>
-                    <StatusToggle onClick={() => MainApp.toggleNotifications()} on={faBell} off={faBellSlash}>Notifications</StatusToggle>
                     <StatusSelect icon={faGlobeAmericas} text={MainApp.i18n.activeLanguage} title="Select Language">
                         {/* TODO: Languages */}
                         <StatusSelectItem selected>{Language.English}</StatusSelectItem>

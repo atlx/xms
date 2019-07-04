@@ -123,8 +123,8 @@ export default class StatusSelect extends React.Component<IProps, IState> {
                     <div className="select-body">
                         {this.renderTitle()}
                         <div className="body-wrapper">
-                            {this.props.children}
                             <div className="arrow" />
+                            {this.props.children}
                         </div>
                     </div>
                 }

@@ -1,7 +1,9 @@
+@import "../colors";
+
 .application {
     & {
+        background: $color-gray;
         display: grid;
-        overflow: hidden;
-        background: inherit;
+        grid-template-rows: 1fr auto;
     }
 }

@@ -1,10 +1,13 @@
 import React from "react";
 import "../styles/misc/slimButton.scss";
+import {Callback} from "../core/app";
 
 interface IProps {
 	readonly text: string;
 
 	readonly main?: boolean;
+
+	readonly onClick?: Callback;
 }
 
 export default class SlimButton extends React.Component<IProps> {
@@ -18,9 +21,18 @@ export default class SlimButton extends React.Component<IProps> {
 		return classes.join(" ");
 	}
 
+	protected handleClick(): void {
+		if (this.props.onClick) {
+			this.props.onClick();
+		}
+	}
+
+	public close(): void {
+	}
+
 	public render(): JSX.Element {
 		return (
-			<div className={this.getClasses()}>
+			<div onClick={() => this.handleClick()} className={this.getClasses()}>
                 {this.props.text}
 			</div>
 		);

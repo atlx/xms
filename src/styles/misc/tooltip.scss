@@ -9,6 +9,7 @@
 
     > .tooltip {
         & {
+            color: $color-white;
             opacity: 0;
             position: absolute;
             background-color: #191919;
@@ -22,7 +23,6 @@
             transform: translate(-50%, 0);
             animation: appear-top $appear-anim-time ease;
             white-space: nowrap;
-            color: #aaa;
             font-size: 14px;
             border: 1px solid $border-dark;
         }

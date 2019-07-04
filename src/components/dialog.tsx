@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import "../styles/misc/dialog.scss";
 import QuestionSVG from "../resources/img/question.svg";
-import Button from "./slimButton";
+import SlimButton from "./slimButton";
 
 interface IProps {
     readonly className?: string;
@@ -9,9 +9,18 @@ interface IProps {
     readonly text: string;
 
     readonly title: string;
+
+    readonly options?: JSX.Element[];
 }
 
 export default class Dialog extends Component<IProps> {
+    public static defaultProps: Partial<IProps> = {
+        options: [
+            <SlimButton text="Close" />,
+            <SlimButton main text="Accept" />
+        ]
+    };
+
     public render(): JSX.Element {
         return (
             <div className="dialog">
@@ -20,8 +29,7 @@ export default class Dialog extends Component<IProps> {
                     <div className="title">{this.props.title}</div>
                     <div className="text">{this.props.text}</div>
                     <div className="options">
-                        <Button text="Decline" />
-                        <Button main text="Accept" />
+                        {this.props.options}
                     </div>
                 </div>
             </div>

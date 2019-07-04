@@ -3,9 +3,9 @@ import "../../styles/pages/default.scss";
 import Chat from "../chat/chat";
 import ContactsBar from "../contactsBar/contactsBar";
 import {connect} from "react-redux";
-import {IAppState} from "../../store/store";
+import {IAppState, ConnectionState} from "../../store/store";
 import Sidebar from "../sidebar/sidebar";
-import Dialog from "../dialog";
+import StatusBar from "../status/statusBar";
 
 interface IProps {
 	readonly leftPanelVisible?: boolean;
@@ -36,6 +36,7 @@ class DefaultPage extends React.Component<IProps, IState> {
 				/>
 				
 				<ContactsBar categories={null as any} users={null as any} />
+				<StatusBar connectionState={ConnectionState.Connected} ping={0} key="status" />
 			</div>
 		);
 	}

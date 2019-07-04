@@ -2,6 +2,7 @@
     & {
         display: grid;
         grid-template-columns: auto minmax(400px, 1fr) 300px;
+        grid-template-rows: 1fr auto;
         width: 100%;
         height: 100%;
         box-sizing: border-box;
@@ -10,9 +11,5 @@
 
     &.page-enter {
         animation: page-enter 0.3s ease;
-    }
-
-    > div:not(.handle):not(.chat):not(.modal):not(.overlay):not(.sidebar) {
-        padding: 20px;
     }
 }

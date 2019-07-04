@@ -4,13 +4,14 @@
     & {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
-        padding: 0 6px !important;
-        grid-column: 1 / 4;
-        background-color: #252525;
-        color: #888;
-        border-radius: 3px;
+        padding: 3px 6px;
+        background-color: $color-white;
+        border-radius: 20px;
         font-size: 14px;
-        border: 1px solid $border-dark;
+        border: 1px solid $color-barely;
+        margin: 20px;
+        margin-left: 40px;
+        margin-top: 10px;
     }
 
     > div {

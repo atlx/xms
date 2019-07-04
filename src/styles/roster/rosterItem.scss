@@ -18,7 +18,7 @@ $color-bg-me: #2ecc71;
         // Bound to roster category title.
         padding: 6px 6px;
         
-        font-size: 16px;
+        font-size: 17px;
         cursor: pointer;
         justify-content: center;
         align-items: center;
@@ -54,9 +54,13 @@ $color-bg-me: #2ecc71;
         }
     }
 
+    > .avatar {
+
+    }
+
     > .avatar, .placeholder-avatar {
-        width: 25px;
-        height: 25px;
+        width: 30px;
+        height: 30px;
         border-radius: 50%;
         background-color: $color-dark-contrast-light;
     }

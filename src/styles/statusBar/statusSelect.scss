@@ -1,4 +1,5 @@
 @import "../colors";
+@import "../templates";
 
 .status-select {
     & {
@@ -7,14 +8,16 @@
 
     > .select-body {
         & {
+            @extend %box-shadow-std;
+            background-color: $color-white;
             position: absolute;
-            background-color: #222;
-            padding: 6px 0;
+            padding: 20px 5px;
+            padding-top: 15px;
             bottom: calc(100% + 23px);
             min-width: 200px;
-            border: 1px solid $border-dark;
             transform: translate(-50%);
             left: 50%;
+            border-radius: 8px;
         }
 
         > .title {
@@ -27,6 +30,7 @@
         > .body-wrapper {
             & {
                 max-height: 200px;
+                overflow-y: auto;
 
                 // TODO: Causes the arrow the freak out and be contained within parent.
                 /*min-height: auto;
@@ -35,25 +39,22 @@
                 position: relative;
             }
 
-            &::-webkit-scrollbar-thumb {
-                background-color: #2b2b2b;
-            }
-            
-            &::-webkit-scrollbar-track {
-                background: none;
-            }
-
             > .status-item {
                 & {
-                    padding: 3px 20px;
+                    border-radius: 5px;
+                    padding: 7px 20px;
                     width: 100%;
                     box-sizing: border-box;
                     cursor: pointer;
                     justify-content: flex-start;
+                    transition: transform 0.1s ease;
                 }
 
                 &:hover:not(.disabled) {
-                    background-color: #333;
+                    background-color: $color-purple;
+                    color: $color-white;
+                    box-shadow: 0 0 20px -5px $color-purple;
+                    transform: translateY(-1px);
                 }
 
                 &:not(:last-child) {
@@ -69,7 +70,6 @@
             > .arrow {
                 position: absolute;
                 border: 13px solid transparent;
-                border-top-color: #222;
                 width: 0;
                 height: 0;
                 left: 50%;
