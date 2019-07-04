@@ -47,11 +47,17 @@ export default class App {
 	}
 
 	public readonly gateway: Gateway;
+
 	public readonly me: User;
+
 	public readonly actions: GatewayActions;
+
 	public readonly commandHandler: CommandHandler;
+
 	public readonly net: NetworkHub;
+
 	public readonly i18n: Localisation;
+	
 	public readonly dev: DeveloperToolbox;
 
 	public notifications: boolean;

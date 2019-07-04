@@ -1,0 +1,81 @@
+@import "../colors";
+@import "../templates";
+
+@keyframes slide-down {
+    from {
+        transform: translate(-50%, -100%);
+    }
+}
+
+.dialog {
+    & {
+        z-index: 1;
+        display: flex;
+        justify-content: space-between;
+        align-items: stretch;
+        padding: 20px 40px;
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        border-bottom-left-radius: 8px;
+        border-bottom-right-radius: 8px;
+        background: inherit;
+        min-width: 450px;
+        min-height: 200px;
+        text-align: center;
+        box-shadow: 0 0 1rem 0 rgba(0, 0, 0, 0.2);
+        overflow: hidden;
+        animation: slide-down 0.3s ease;
+    }
+
+    &:before {
+        content: "";
+        position: absolute;
+        background: inherit;
+        z-index: -1;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        box-shadow: inset 0 0 2000px rgba(255, 255, 255, 0.5);
+        filter: blur(10px);
+        margin: -20px;
+    }
+
+    > .figure {
+        max-height: 100px;
+        margin-right: 30px;
+    }
+
+    > .content {
+        & {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            flex-direction: column;
+            max-width: 300px;
+            text-align: left;
+        }
+
+        > .title {
+            font-weight: bold;
+            margin-bottom: 3px;
+        }
+
+        > .text {
+            flex: 1;
+            color: $color-neon-dark;
+        }
+
+        > .options {
+            & {
+                width: 100%;
+                text-align: right;
+            }
+
+            > :not(:last-child) {
+                margin-right: 10px;
+            }
+        }
+    }
+}

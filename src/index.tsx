@@ -26,7 +26,6 @@ const me: User = {
 
 export const MainApp: App = new App(me, () => (
     <Provider store={store}>
-        <HandleBar />
         <HashRouter>
             <Switch>
                 {/* TODO: Hard-coded prop as null (required to pass in). */}

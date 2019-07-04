@@ -1,0 +1,63 @@
+@import "../colors.scss";
+
+.sidebar-item {
+    & {
+        position: relative;
+        padding: 0 11px;
+    }
+
+    &:not(:last-child) {
+        margin-bottom: 20px;
+    }
+
+    &.active {
+        > .item-wrap {
+            > .active-indicator {
+                background-color: #fff;
+            }
+
+            > svg {
+                color: #fff;
+                background-color: $color-purple-dim;
+            }
+        }
+    }
+
+    > .item-wrap {
+        & {
+            //
+        }
+
+        > .active-indicator {
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            background-color: transparent;
+            width: 3px;
+            border-top-right-radius: 3px;
+            border-bottom-right-radius: 3px;
+        }
+
+        > svg {
+            & {
+                transition: background-color 0.2s;
+                cursor: pointer;
+                padding: 12px;
+                border-radius: 50%;
+                font-size: 20px;
+                color: $color-purple-inactive;
+                width: 45px;
+                height: 45px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+        
+            &:hover {
+                background-color: $color-purple-dim;
+                color: $color-white;
+            }
+        }
+    }
+}

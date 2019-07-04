@@ -8,6 +8,12 @@ $shake-magnitude: 8px;
     }
 }
 
+@keyframes expand {
+    from {
+        width: 300px;
+    }
+}
+
 @keyframes shake {
     from {
         transform: translate(-$shake-magnitude);

@@ -2,7 +2,7 @@ import React, {Component, RefObject} from "react";
 import ComposerGuide from "./composerGuide";
 import {CSSTransition} from "react-transition-group";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faArrowRight} from "@fortawesome/free-solid-svg-icons";
+import {faArrowRight, faPlusCircle, faPlus, faPaperPlane} from "@fortawesome/free-solid-svg-icons";
 import {IGuideItem} from "../../models/misc";
 import {connect} from "react-redux";
 import {IAppState} from "../../store/store";
@@ -312,18 +312,23 @@ class ChatComposer extends Component<IProps, IState> {
 				/>
 				<CSSTransition in={this.props.locked} classNames="trans" timeout={300}>
 					<div className={this.getWrapperClass()}>
-						<textarea
-							rows={this.state.inputLines}
-							onChange={() => this.handleChange}
-							ref={this.$input}
-							onKeyDown={(e) => this.handleKeyDown(e)}
-							placeholder="Type a message"
-							className="input"
-							disabled={this.props.locked}
-							maxLength={this.props.maxLength}
-						/>
+						<div className="padding-wrap">
+							<div className="add">
+								<FontAwesomeIcon icon={faPlus} />
+							</div>
+							<textarea
+								rows={this.state.inputLines}
+								onChange={() => this.handleChange}
+								ref={this.$input}
+								onKeyDown={(e) => this.handleKeyDown(e)}
+								placeholder="Type a message"
+								className="input"
+								disabled={this.props.locked}
+								maxLength={this.props.maxLength}
+							/>
+						</div>
 						<div onClick={() => this.sendMessage()} className="send">
-							<FontAwesomeIcon icon={faArrowRight} />
+							<FontAwesomeIcon icon={faPaperPlane} />
 						</div>
 					</div>
 				</CSSTransition>

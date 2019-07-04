@@ -5,10 +5,10 @@
         display: grid;
         grid-template-columns: auto 1fr;
         grid-column-gap: 10px;
-        border-bottom: 1px solid $color-dark-contrast-dark;
         padding: 15px 20px;
         align-items: center;
         justify-content: center;
+        border-bottom: 1px solid $color-barely;
     }
 
     > .channel-title {
@@ -16,7 +16,7 @@
     }
 
     > .channel-topic {
-        opacity: 0.5;
+        opacity: 0.7;
         font-size: 14px;
         user-select: text;
     }

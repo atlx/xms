@@ -4,3 +4,18 @@
     left: 50%;
     transform: translate(-50%, -50%);
 }
+
+%box-shadow-std {
+    box-shadow: 0 0 20px 0px #e4e4e4;
+}
+
+%flex-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+%margin-center {
+    margin-left: auto;
+    margin-right: auto;
+}

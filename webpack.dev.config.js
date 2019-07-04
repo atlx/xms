@@ -8,8 +8,10 @@ const {CheckerPlugin} = require("awesome-typescript-loader");
 const SRC_DIR = path.resolve(__dirname, "src");
 const OUTPUT_DIR = path.resolve(__dirname, "dist");
 
-// Any directories you will be adding code/files into, need to be added to this array so webpack will pick them up
+// Any directories you will be adding code/files into, need to be added to this array so webpack will pick them up.
 const defaultInclude = [SRC_DIR];
+
+const resourcesPath = path.resolve(SRC_DIR, "resources");
 
 module.exports = {
 	entry: SRC_DIR + "/index.tsx",
@@ -83,22 +85,30 @@ module.exports = {
 			{
 				test: /\.(jpe?g|png|gif)$/,
 				use: [{loader: "file-loader?name=img/[name]__[hash:base64:5].[ext]"}],
-				include: defaultInclude
+				include: path.resolve(resourcesPath, "img")
 			},
 
 			// Load fonts.
 			{
 				test: /\.(eot|svg|ttf|woff|woff2)$/,
 				use: [{loader: "file-loader?name=font/[name]__[hash:base64:5].[ext]"}],
-				include: defaultInclude
+				include: path.resolve(resourcesPath, "fonts")
 			},
 
 			// Load sound files.
 			{
 				test: /\.wav$|\.mp3$/,
 				exclude: /node_modules/,
-				use: [{loader: "file-loader?name=sound/[name]__[hash:base64:5].[ext]"}],
-				include: defaultInclude
+				use: [{loader: "file-loader?name=sounds/[name]__[hash:base64:5].[ext]"}],
+				include: path.resolve(resourcesPath, "sounds")
+			},
+
+			// Load other assets.
+			{
+				test: /\.svg$/,
+				exclude: /node_modules/,
+				use: [{loader: "file-loader?name=assets/[name]__[hash:base64:5].[ext]"}],
+				include: resourcesPath
 			}
 		]
 	},

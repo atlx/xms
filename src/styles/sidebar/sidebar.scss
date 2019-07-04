@@ -1,7 +1,15 @@
 @import "../colors.scss";
 
 .sidebar {
-    padding: 10px;
-    background-color: $color-purple;
-    color: $color-white;
+    & {
+        display: flex;
+        flex-direction: column;
+        padding: 10px 0;
+        background-color: $color-purple;
+        color: $color-white;
+    }
+
+    > div:first-child {
+        height: 100%;
+    }
 }

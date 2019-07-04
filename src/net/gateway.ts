@@ -25,12 +25,17 @@ export default class Gateway implements IDisposable {
     public readonly port: number;
 
     private readonly heartbeatInterval: number;
+
     private readonly intervals: number[];
+
     private readonly pingHistory: number[];
 
     private socket!: Socket;
+
     private pingStart: number;
+
     private connectionVerified: boolean;
+    
     private socketConnected: boolean;
 
     public constructor(groupAddress: string, port: number, heartbeatInterval: number = 10_000) {

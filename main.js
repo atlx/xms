@@ -22,11 +22,11 @@ function createWindow() {
 		width: 1250,
 		height: 768,
 		show: false,
-		frame: false,
+		//frame: false,
 		center: true,
 		title: "XMS",
 		hasShadow: true,
-		minWidth: 1024,
+		minWidth: 1140,
 		transparent: true,
 
 		webPreferences: {

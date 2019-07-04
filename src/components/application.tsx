@@ -8,6 +8,7 @@ import InitPage from "./pages/init";
 import {CSSTransition} from "react-transition-group";
 import Modal from "./modal";
 import ModalActions from "../actions/modal";
+import Dialog from "./dialog";
 
 interface IProps {
 	readonly page: Page;
@@ -76,6 +77,7 @@ class Application extends React.Component<IProps> {
 	public render(): JSX.Element {
 		return (
 			<div className="application">
+				<Dialog title="Are you sure you want to continue?" text="This is a dialog box with a message and options." />
 				{this.renderNextModal()}
 				{/* TODO: Not applying rule to EXITING component, just entering one. */}
 				<CSSTransition in={this.props.page !== Page.Init} classNames="page" timeout={600}>

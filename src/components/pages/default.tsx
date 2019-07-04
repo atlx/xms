@@ -2,10 +2,10 @@ import React from "react";
 import "../../styles/pages/default.scss";
 import Chat from "../chat/chat";
 import ContactsBar from "../contactsBar/contactsBar";
-import StatusBar from "../status/statusBar";
 import {connect} from "react-redux";
 import {IAppState} from "../../store/store";
 import Sidebar from "../sidebar/sidebar";
+import Dialog from "../dialog";
 
 interface IProps {
 	readonly leftPanelVisible?: boolean;
@@ -26,7 +26,6 @@ class DefaultPage extends React.Component<IProps, IState> {
 		return (
 			<div className="default-page">
 				<Sidebar />
-				<ContactsBar categories={null as any} users={null as any} />
 
 				{/* TODO: Props are hard-coded */}
 				<Chat
@@ -35,8 +34,8 @@ class DefaultPage extends React.Component<IProps, IState> {
 					users={undefined as any}
 					guideItems={undefined as any}
 				/>
-
-				<StatusBar {...undefined as any} />
+				
+				<ContactsBar categories={null as any} users={null as any} />
 			</div>
 		);
 	}

@@ -1,7 +1,10 @@
 @import "../colors";
+@import "../templates";
+@import "../animations";
 
 .chat-composer {
     & {
+        @extend %flex-center;
         padding: 20px;
         padding-bottom: 0;
         position: relative;
@@ -9,32 +12,23 @@
 
     > .message-wrapper {
         & {
-            display: grid;
-            grid-template-columns: 1fr auto;
+            @extend %box-shadow-std;
+            display: flex;
+            align-items: stretch;
             justify-content: center;
-            align-items: flex-start;
-            border: 2px dashed $color-dark-contrast-dark;
+            border-radius: 20px;
+            margin-left: 20px;
+            position: relative;
+            background-color: $color-white;
             width: 100%;
             box-sizing: border-box;
-            background: none;
-            color: #aaa;
-            padding: 14px 20px;
-            border-radius: 4px;
+            color: $color-neon;
             font-size: 17px;
-            transition: border-color 0.2s ease, opacity 0.2s ease, background-color 0.2s ease;
+            animation: expand 0.8s ease;
         }
 
         &:focus-within {
-            & {
-                border-color: #444;
-                border-style: solid;
-                // box-shadow: 0 5px 16px 0px #2e2e2e;
-                background-color: #444;
-            }
-
-            > .send {
-                background-color: #333;
-            }
+            //
         }
 
         &.shaking {
@@ -54,46 +48,70 @@
             }
         }
 
-        > .input {
+        > .padding-wrap {
             & {
-                // Hard-code starting height for textarea (must match send arrow's height).
-                height: 25px;
-
-                // Disable resize, as will be handled by JS.
-                resize: none;
-
-                max-height: 100px;
-                margin: 0;
-                background: none;
-                border: none;
-                font-size: inherit;
-                color: inherit;
-                margin-right: 20px;
-                font-family: inherit !important;
+                width: 100%;
+                padding: 14px 20px;
             }
 
-            &.trans-exit-done {
-                opacity: 1;
+            > .add {
+                @extend %flex-center;
+                position: absolute;
+                box-shadow: 0 0 20px 0 $color-purple-slight;
+                border-radius: 50%;
+                color: #fff;
+                width: 35px;
+                height: 35px;
+                background-color: $color-purple-slight;
+                cursor: pointer;
+                left: 0;
+                top: 10px;
+                transform: translateX(-50%);
+            }
+    
+            > .input {
+                & {
+                    width: 100%;
+                    padding-left: 12px;
+    
+                    // Hard-code starting height for textarea (must match send arrow's height).
+                    height: 26px;
+    
+                    // Disable resize, as will be handled by JS.
+                    resize: none;
+    
+                    max-height: 100px;
+                    margin: 0;
+                    background: none;
+                    border: none;
+                    font-size: inherit;
+                    color: inherit;
+                    margin-right: 20px;
+                    font-family: inherit !important;
+                }
+    
+                &.trans-exit-done {
+                    opacity: 1;
+                }
+            }
+
+            > .input::placeholder {
+                color: lighten($color-neon, 40%);
             }
         }
 
         > .send {
             & {
+                @extend %flex-center;
                 cursor: pointer;
-                background-color: #404040;
+                border-top-right-radius: 20px;
+                border-bottom-right-radius: 20px;
                 padding: 3px 15px;
-                border-radius: 6px;
-                font-size: 17px;
-                color: #999;
-                opacity: 0.8;
+                color: $color-white;
                 transition: transform 0.15s ease;
-            }
-
-            &:hover {
-                // Slightly move the send button to the right on hover for effect.
-                transform: translate(4px);
-
-                opacity: 1;
+                background-color: $color-purple-slight;
+                clip-path: polygon(20% 0, 100% 0, 100% 100%, 0 100%);
+                padding: 0 25px;
             }
 
             > svg {

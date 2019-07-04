@@ -1,0 +1,16 @@
+@import "../colors";
+
+.slim-button {
+    & {
+        color: #000;
+        display: inline;
+        padding: 2px 20px;
+        border-radius: 4px;
+        background-color: #fff;
+    }
+
+    &.main {
+        color: #fff;
+        background-color: $color-purple;
+    }
+}

@@ -2,7 +2,7 @@
 
 @font-face {
 	font-family: "Nunito Regular";
-	src: url("../resources/fonts/Nunito-Regular.ttf");
+	src: url("../resources/fonts/nunito-regular.ttf");
 }
 
 * {
@@ -21,16 +21,15 @@ html, body, #root, #root > .application {
 }
 
 #root {
-	display: grid;
-
-	// HandleBar | Page.
-	grid-template-rows: auto 1fr;
+	//
+	background-image: url(http://bit.ly/2gPLxZ4); //add "" if you want
+ background-repeat: no-repeat;
+ background-attachment: fixed;
+ background-size: cover;
 }
 
 body {
-	border-radius: 15px;
-	overflow: hidden;
-	font-family: "Nunito Regular", "Segoe UI", sans-serif;
+	font-family: "Segoe UI", sans-serif;
 	margin: 0;
 	box-sizing: border-box;
 	background-color: $color-gray;

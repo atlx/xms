@@ -11,6 +11,7 @@ $color-bg-me: #2ecc71;
 
 .roster-item {
     & {
+        border-radius: 20px;
         display: grid;
         grid-template-columns: auto 1fr;
         
@@ -18,7 +19,6 @@ $color-bg-me: #2ecc71;
         padding: 6px 6px;
         
         font-size: 16px;
-        border-radius: 4px;
         cursor: pointer;
         justify-content: center;
         align-items: center;

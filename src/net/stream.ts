@@ -6,10 +6,13 @@ export type StreamHandler<T = any> = (data: T) => void;
 
 export default class Stream {
     private readonly destination: IpAddress;
+
     private readonly localPort: number;
 
     private receiver: Server | null;
+
     private remote: Socket | null;
+    
     private dispatcher: Socket | null;
 
     public constructor(localPort: number, destination: IpAddress) {
