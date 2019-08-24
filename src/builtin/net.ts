@@ -5,6 +5,7 @@ import {GatewayMsg, GatewayMsgType, MessagePayload} from "../net/gatewayEntities
 import MessageActions from "../actions/message";
 import {AddressInfo} from "net";
 import MessageEvent from "../net/messageEvent";
+import App from "../core/app";
 
 export default class Net extends Plugin {
     public constructor() {
@@ -35,7 +36,7 @@ export default class Net extends Plugin {
                     context.eventRouter!.emit(MessageEvent.Receive, message);
 
                     // If the message was sent by the local client.
-                    if (message.sender === MainApp.me.id) {
+                    if (message.sender === App.me.id) {
                         if (message.type === GatewayMsgType.Message) {
                             const payload: MessagePayload = message.payload;
 

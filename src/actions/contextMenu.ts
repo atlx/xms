@@ -4,7 +4,7 @@ import App from "../core/app";
 
 export default abstract class ContextMenuActions {
     public static show(menu: IContextMenu): void {
-        App.getStore().dispatch({
+        App.store.dispatch({
             type: ActionType.ShowContextMenu,
             payload: menu
         });
@@ -14,7 +14,7 @@ export default abstract class ContextMenuActions {
      * Hide visible context menu if applicable.
      */
     public static hide(): void {
-        App.getStore().dispatch({
+        App.store.dispatch({
             type: ActionType.HideContextMenu
         });
     }

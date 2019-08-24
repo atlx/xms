@@ -1,12 +1,11 @@
 import dgram, {Socket} from "dgram";
 import {AddressInfo} from "net";
-import {GatewayMsg, GatewayMsgType, MessagePayload} from "./gatewayEntities";
+import {GatewayMsg, GatewayMsgType} from "./gatewayEntities";
 import {ConnectionState} from "../store/store";
 import MiscActions from "../actions/misc";
 import Factory from "../core/factory";
 import Utils from "../core/utils";
-import {IDisposable} from "../core/app";
-import {MainApp} from "../index";
+import App, {IDisposable} from "../core/app";
 import SystemMessages from "../core/systemMessages";
 import {INotice, NoticeStyle} from "../models/message";
 import {SpecialChannel} from "../models/channel";
@@ -18,7 +17,7 @@ import NetworkEvent from "./networkEvent";
 export default class Gateway extends EventEmitter implements IDisposable {
     public static slowThreshold: number = 150;
 
-    private readonly options: IGatewayOptions;
+    private readonly _options: IGatewayOptions;
 
     private readonly intervals: number[];
 
@@ -35,7 +34,7 @@ export default class Gateway extends EventEmitter implements IDisposable {
     public constructor(options: IGatewayOptions) {
         super();
 
-        this.options = options;
+        this._options = options;
         this.intervals = [];
         this.connectionVerified = false;
         this.pingStart = 0;
@@ -44,6 +43,10 @@ export default class Gateway extends EventEmitter implements IDisposable {
 
         // Bindings.
         this.handleSocketClose = this.handleSocketClose.bind(this);
+    }
+
+    public get options(): IGatewayOptions {
+        return this._options;
     }
 
     /**
@@ -111,12 +114,12 @@ export default class Gateway extends EventEmitter implements IDisposable {
 
     private setupEvents(): this {
         this.socket.on("listening", () => {
-            this.socket.addMembership(this.options.address);
+            this.socket.addMembership(this._options.address);
             this.socketConnected = true;
-            console.log(`[BroadcastGateway] Listening on ${this.options.address}@${this.options.port}`);
+            console.log(`[BroadcastGateway] Listening on ${this._options.address}@${this._options.port}`);
 
             // Start the heartbeat loop.
-            this.setInterval(this.heartbeat, this.options.heartbeatInterval);
+            this.setInterval(this.heartbeat, this._options.heartbeatInterval);
 
             // Start the network interface availability loop.
             this.setInterval(() => {
@@ -207,10 +210,10 @@ export default class Gateway extends EventEmitter implements IDisposable {
             type,
             time: Date.now(),
             payload,
-            sender: MainApp.me.id
+            sender: App.me.id
         } as GatewayMsg<T>));
 
-        this.socket.send(data, 0, data.length, this.options.port, this.options.address, (error: Error | null) => {
+        this.socket.send(data, 0, data.length, this._options.port, this._options.address, (error: Error | null) => {
             if (error !== null) {
                 console.log(`[BroadcastGateway.emit] Failed to emit message: ${error.message}`);
 
@@ -239,7 +242,7 @@ export default class Gateway extends EventEmitter implements IDisposable {
         });
 
         this.setupEvents();
-        this.socket.bind(this.options.port);
+        this.socket.bind(this._options.port);
 
         return this;
     }

@@ -11,7 +11,7 @@ export default abstract class MessageActions {
      * Clear all messages from the state.
      */
     public static clear(): void {
-        App.getStore().dispatch({
+        App.store.dispatch({
             type: ActionType.ClearMessages
         });
     }
@@ -32,11 +32,11 @@ export default abstract class MessageActions {
     public static add<T extends IGenericMessage>(message: T): void {
         // A separator message indicating time may come before a normal message.
         if (message.type === MessageType.Text) {
-            const messages: BasicMap<IGenericMessage> = getState().message.messages;
+            const messages: BasicMap<IGenericMessage> = App.store.state.message.messages;
 
             // Ensure a message has been previously sent.
             if (messages.size > 0) {
-                const lastMessage: IGenericMessage = messages[getState().message.messages.size - 1];
+                const lastMessage: IGenericMessage = messages[App.store.state.message.messages.size - 1];
 
                 // Append separator message beforehand if applicable.
                 if (Time.isDayOlder(lastMessage.time, message.time)) {
@@ -45,21 +45,21 @@ export default abstract class MessageActions {
             }
         }
 
-        App.getStore().dispatch({
+        App.store.dispatch({
             type: ActionType.AddMessage,
             payload: message
         });
     }
 
     public static markSent(id: UniqueId): void {
-        App.getStore().dispatch({
+        App.store.dispatch({
             type: ActionType.MarkMessageSent,
             payload: id
         });
     }
 
     public static delete(id: UniqueId): void {
-        App.getStore().dispatch({
+        App.store.dispatch({
             type: ActionType.DeleteMessage,
             payload: id
         })

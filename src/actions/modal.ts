@@ -8,14 +8,14 @@ export default abstract class ModalActions {
             throw new Error("Expected 'modal' parameter to be an object");
         }
 
-        App.getStore().dispatch({
+        App.store.dispatch({
             type: ActionType.ShowModal,
             payload: modal
         });
     }
 
     public static shift(): void {
-        App.getStore().dispatch({
+        App.store.dispatch({
             type: ActionType.ShiftModal
         });
     }

@@ -1,11 +1,9 @@
 import React from "react";
 import "../../styles/statusBar/statusBar.scss";
 import StatusItem from "../status/statusItem";
-import {faWifi, faSignal, faBell, faBellSlash, faGlobeAmericas, faBullseye, faArrowUp, faArrowDown, faToolbox, faComment, faLocationArrow, faTimesCircle, faBookOpen, faUserCircle, faArrowRight, faGripLines} from "@fortawesome/free-solid-svg-icons";
+import {faWifi, faSignal, faBell, faGlobeAmericas, faBullseye, faArrowUp, faArrowDown, faToolbox, faComment, faLocationArrow, faTimesCircle, faBookOpen, faUserCircle, faArrowRight, faGripLines} from "@fortawesome/free-solid-svg-icons";
 import {IAppState, ConnectionState} from "../../store/store";
 import {connect} from "react-redux";
-import {MainApp} from "../../index";
-import StatusToggle from "../status/statusToggle";
 import StatusSelect from "../status/statusSelect";
 import StatusSelectItem from "./statusSelectItem";
 import {Language} from "../../core/localisation";
@@ -47,16 +45,16 @@ class StatusBar extends React.Component<IProps> {
                 <div className="right">
                     {App.devMode &&
                         <StatusSelect notify icon={faToolbox} text="Developer Tools" title="Select Action">
-                            <StatusItem onClick={() => MainApp.dev.emulatePublicMessage()} icon={faComment}>General message</StatusItem>
+                            <StatusItem onClick={() => App.dev.emulatePublicMessage()} icon={faComment}>General message</StatusItem>
                             <StatusItem icon={faLocationArrow}>Direct message</StatusItem>
-                            <StatusItem onClick={() => MainApp.dev.emulateBreakMessage()} icon={faGripLines}>Break Message</StatusItem>
+                            <StatusItem onClick={() => App.dev.emulateBreakMessage()} icon={faGripLines}>Break Message</StatusItem>
                             <StatusItem icon={faBookOpen} onClick={() => ModalActions.show({
                                 title: "This is a modal",
                                 text: "Requested by user"
                             })}>Show a modal</StatusItem>
-                            <StatusItem icon={faBell} onClick={() => MainApp.notify()}>Notify</StatusItem>
+                            <StatusItem icon={faBell} onClick={() => App.notify()}>Notify</StatusItem>
                             <StatusItem icon={faTimesCircle} onClick={() => MessageActions.clear()}>Clear messages</StatusItem>
-                            <StatusItem icon={faUserCircle} onClick={() => MainApp.dev.addDummyUser()}>Dummy user</StatusItem>
+                            <StatusItem icon={faUserCircle} onClick={() => App.dev.addDummyUser()}>Dummy user</StatusItem>
                         </StatusSelect>
                     }
                     <StatusSelect icon={faBullseye} text="State" title="Select State">
@@ -66,7 +64,7 @@ class StatusBar extends React.Component<IProps> {
                         <StatusSelectItem disabled>Away</StatusSelectItem>
                         <StatusSelectItem disabled>Offline</StatusSelectItem>
                     </StatusSelect>
-                    <StatusSelect icon={faGlobeAmericas} text={MainApp.i18n.activeLanguage} title="Select Language">
+                    <StatusSelect icon={faGlobeAmericas} text={App.i18n.activeLanguage} title="Select Language">
                         {/* TODO: Languages */}
                         <StatusSelectItem selected>{Language.English}</StatusSelectItem>
                         <StatusSelectItem disabled>{Language.Spanish}</StatusSelectItem>
@@ -77,8 +75,8 @@ class StatusBar extends React.Component<IProps> {
                     <StatusItem
                         icon={faWifi}
                         loading={this.props.connectionState === ConnectionState.Connecting}
-                        tooltip={`Connected to ${MainApp.gateway.groupAddress}`}
-                        onClick={() => MainApp.gateway.toggleConnected()}>{this.renderConnectionState()}</StatusItem>
+                        tooltip={`Connected to ${App.gateway.options.address}`}
+                        onClick={() => App.gateway.toggleConnected()}>{this.renderConnectionState()}</StatusItem>
                 </div>
             </div>
         );

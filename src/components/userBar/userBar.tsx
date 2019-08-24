@@ -2,7 +2,6 @@ import React from "react";
 import "../../styles/userBar/userBar.scss";
 import UserBarAction from "./userBarAction";
 import {faCog, faArrowLeft} from "@fortawesome/free-solid-svg-icons";
-import {MainApp} from "../..";
 import MiscActions from "../../actions/misc";
 
 export default class UserBar extends React.Component {
@@ -11,7 +10,7 @@ export default class UserBar extends React.Component {
             <div className="user-bar">
                 <div className="avatar"></div>
                 <div className="info">
-                    <div className="name">{MainApp.me.username}</div>
+                    <div className="name">{App.me.username}</div>
                     <div className="status"></div>
                 </div>
                 <div className="actions">

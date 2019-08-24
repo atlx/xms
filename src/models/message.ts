@@ -106,7 +106,7 @@ export default class Message extends DbEntity<ITextMessage> {
      * in the messages map.
      */
     public get exists(): boolean {
-        return App.getStore().state.message.messages.has(this.id);
+        return App.store.state.message.messages.has(this.id);
     }
 
     /**

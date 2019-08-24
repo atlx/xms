@@ -23,7 +23,7 @@ const me: User = {
 };
 
 App.init(() => (
-    <Provider store={App.getStore().unwrap()}>
+    <Provider store={App.store.unwrap()}>
         <HashRouter>
             <Switch>
                 {/* TODO: Hard-coded prop as null (required to pass in). */}

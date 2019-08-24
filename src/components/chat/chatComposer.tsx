@@ -2,7 +2,7 @@ import React, {Component, RefObject} from "react";
 import ComposerGuide from "./composerGuide";
 import {CSSTransition} from "react-transition-group";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faArrowRight, faPlusCircle, faPlus, faPaperPlane} from "@fortawesome/free-solid-svg-icons";
+import {faPlus, faPaperPlane} from "@fortawesome/free-solid-svg-icons";
 import {IGuideItem} from "../../models/misc";
 import {connect} from "react-redux";
 import {IAppState} from "../../store/store";
@@ -11,11 +11,11 @@ import {List} from "immutable";
 import {User} from "../../models/user";
 import {ITextMessage} from "../../models/message";
 import Factory from "../../core/factory";
-import {MainApp} from "../..";
 import "../../styles/chat/chatComposer.scss";
 import MessageActions from "../../actions/message";
 import {IChannel} from "../../models/channel";
 import {BasicMap} from "../../core/helpers";
+import App from "../../core/app";
 
 interface IProps {
 	readonly users: BasicMap<User>;
@@ -248,7 +248,7 @@ class ChatComposer extends Component<IProps, IState> {
 		// Handle command messages internally.
 		else if (value.startsWith("/")) {
 			// TODO: Pass in arguments.
-			MainApp.commandHandler.handle(this.$guide.current!.getCommandName());
+			App.commandHandler.handle(this.$guide.current!.getCommandName());
 			this.clearValue();
 
 			return;
@@ -280,7 +280,7 @@ class ChatComposer extends Component<IProps, IState> {
 
 		this.clearValue();
 		MessageActions.addToGeneral(message);
-		MainApp.actions.handleMessage(message);
+		App.actions.handleMessage(message);
 	}
 
 	public getValue(trim: boolean = false): string {

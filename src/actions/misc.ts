@@ -9,7 +9,7 @@ export default abstract class MiscActions {
             throw new Error("Expected 'locked' parameter to be a boolean");
         }
 
-        App.getStore().dispatch({
+        App.store.dispatch({
             type: ActionType.SetInputLocked,
             payload: locked
         });
@@ -20,7 +20,7 @@ export default abstract class MiscActions {
             throw new Error("An invalid 'page' parameter was provided");
         }
 
-        App.getStore().dispatch({
+        App.store.dispatch({
             type: ActionType.SetPage,
             payload: page
         });
@@ -31,7 +31,7 @@ export default abstract class MiscActions {
             throw new Error("Expected 'visible' parameter to be a boolean");
         }
 
-        App.getStore().dispatch({
+        App.store.dispatch({
             type: ActionType.SetGuideVisible,
             payload: visible
         });
@@ -42,7 +42,7 @@ export default abstract class MiscActions {
             throw new Error("Expected 'command' parameter to be an object");
         }
 
-        App.getStore().dispatch({
+        App.store.dispatch({
             type: ActionType.RegisterCommand,
             payload: command
         });
@@ -63,7 +63,7 @@ export default abstract class MiscActions {
             throw new Error("Expected 'ping' parameter to be a number higher or equal to 0");
         }
 
-        App.getStore().dispatch({
+        App.store.dispatch({
             type: ActionType.AddPing,
             payload: ping
         });
@@ -74,7 +74,7 @@ export default abstract class MiscActions {
             throw new Error("An invalid 'state' parameter was provided");
         }
 
-        App.getStore().dispatch({
+        App.store.dispatch({
             type: ActionType.SetConnectionState,
             payload: state
         });
@@ -85,7 +85,7 @@ export default abstract class MiscActions {
             throw new Error("Expected 'visible' parameter to be a boolean");
         }
 
-        App.getStore().dispatch({
+        App.store.dispatch({
             type: ActionType.SetLeftPanelVisible,
             payload: visible
         });

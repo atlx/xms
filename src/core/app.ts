@@ -10,10 +10,10 @@ import DeveloperToolbox from "./developerToolbox";
 import Config from "./config";
 import {remote} from "electron";
 import {SpecialCategory} from "../models/misc";
-import UserActions from "../actions/user";
 import CategoryActions from "../actions/category";
 import ChannelActions from "../actions/channel";
 import AppStore from "../store/store";
+import {User} from "../models/user";
 
 export type PromiseOr<T = void> = Promise<T> | T;
 
@@ -39,56 +39,56 @@ export default class App {
 		remote.getCurrentWindow().close();
 	}
 
-	private static gateway: Gateway;
+	private static _gateway: Gateway;
 
-	private static actions: GatewayActions;
+	private static _actions: GatewayActions;
 
 	private static commandHandler: CommandHandler;
 
-	private static net: NetworkHub;
+	private static _net: NetworkHub;
 
-	private static i18n: Localisation;
+	private static _i18n: Localisation;
 
-	private static devToolbox: DeveloperToolbox;
+	private static _developerToolbox: DeveloperToolbox;
 
 	private static notifications: boolean;
 
 	private static renderer: AppRenderer;
 
-	private static store: AppStore;
+	private static _store: AppStore;
 
 	public static init(renderer: AppRenderer): void {
-		App.store = AppStore.createDefault();
+		App._store = AppStore.createDefault();
 		App.renderer = renderer;
 
-		App.gateway = new Gateway({
+		App._gateway = new Gateway({
 			port: Constants.primaryBroadcastPort,
 			address: Constants.primaryGroupAddress,
 			heartbeatInterval: 10_000
 		});
 
-		App.actions = new GatewayActions(App.gateway);
+		App._actions = new GatewayActions(App._gateway);
 		App.commandHandler = new CommandHandler();
-		App.net = new NetworkHub(Constants.primaryNetPort);
-		App.i18n = new Localisation();
+		App._net = new NetworkHub(Constants.primaryNetPort);
+		App._i18n = new Localisation();
 		App.notifications = true;
-		App.devToolbox = new DeveloperToolbox();
+		App._developerToolbox = new DeveloperToolbox();
 
 		// Register the local user in the state.
-		UserActions.updateMe(App.me);
+		// UserActions.updateMe(App.me);
 
 		// TODO: State is immutable, therefore once me is updated, it will not be reflected upon the users list?
-		UserActions.add(App.me);
+		// UserActions.add(App.me);
 
 		CategoryActions.add({
 			id: SpecialCategory.Connected,
 			name: SpecialCategory.Connected,
-			users: [App.me.id]
+			users: [/*App.me.id*/]
 		});
 
 		ChannelActions.setGeneralAsActive();
 		App.render();
-		App.gateway.connect();
+		App._gateway.connect();
 	}
 
 	public toggleNotifications(): this {
@@ -132,7 +132,27 @@ export default class App {
 		//
 	}
 
-	public static getStore(): AppStore {
-		return App.store;
+	public static get me(): User | undefined {
+		return this._store.state.user.me;
+	}
+
+	public static get gateway(): Gateway {
+		return App._gateway;
+	}
+
+	public static get store(): AppStore {
+		return App._store;
+	}
+
+	public static get i18n(): Localisation {
+		return App._i18n;
+	}
+
+	public static get dev(): DeveloperToolbox {
+		return App._developerToolbox;
+	}
+
+	public static get actions(): GatewayActions {
+		return App._actions;
 	}
 }

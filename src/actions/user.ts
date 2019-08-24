@@ -8,7 +8,7 @@ export default abstract class UserActions {
             throw new Error("Expected 'user' parameter to be an object");
         }
 
-        App.getStore().dispatch({
+        App.store.dispatch({
             type: ActionType.AddUser,
             payload: user
         });
@@ -19,7 +19,7 @@ export default abstract class UserActions {
             throw new Error("Expected 'me' parameter to be an object");
         }
 
-        App.getStore().dispatch({
+        App.store.dispatch({
             type: ActionType.UpdateMe,
             payload: me
         });
