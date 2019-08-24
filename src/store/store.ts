@@ -85,7 +85,7 @@ export interface IAppStateMisc {
 
 export interface IAppStateUser {
     readonly users: BasicMap<User>;
-    readonly me: User | null;
+    readonly me?: User;
 }
 
 export enum ConnectionState {
@@ -108,10 +108,6 @@ export interface IAppStateMessage {
 const logger = createLogger({
     //
 });
-
-export function getState(): IAppState {
-    return store.getState();
-}
 
 export const GeneralChannel: IChannel = {
     id: SpecialChannel.General,
@@ -150,18 +146,22 @@ export const InitialState: IAppState = {
     },
 
     user: {
-        me: null,
+        me: undefined,
         users: ImmutableMap()
     }
 };
 
-export const store: Store = createStore(combineReducers({
-    category: categoryReducer,
-    channel: channelReducer,
-    command: commandReducer,
-    contextMenu: contextMenuReducer,
-    message: messageReducer,
-    misc: miscReducer,
-    user: userReducer,
-    net: netReducer
-}), applyMiddleware(logger));
+export default abstract class AppStore {
+    public static createDefault(): Store {
+        return createStore(combineReducers({
+            category: categoryReducer,
+            channel: channelReducer,
+            command: commandReducer,
+            contextMenu: contextMenuReducer,
+            message: messageReducer,
+            misc: miscReducer,
+            user: userReducer,
+            net: netReducer
+        }), applyMiddleware(logger));
+    }
+}

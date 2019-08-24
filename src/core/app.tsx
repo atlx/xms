@@ -1,10 +1,7 @@
 import ReactDOM from "react-dom";
 import Gateway from "../net/gateway";
 import GatewayActions from "./gatewayActions";
-import MiscActions from "../actions/misc";
 import CommandHandler from "./commandHandler";
-import Factory from "./factory";
-import {ICommand} from "./command";
 import NetworkHub from "./networkHub";
 import Sounds from "./sounds";
 import Constants from "./constants";
@@ -12,15 +9,12 @@ import Localisation from "./localisation";
 import DeveloperToolbox from "./developerToolbox";
 import Config from "./config";
 import {remote} from "electron";
-import {User} from "../models/user";
-import {INotice, NoticeStyle} from "../models/message";
-import {SpecialChannel} from "../models/channel";
-import {ContextMenuOptionType, SpecialCategory} from "../models/misc";
-import MessageActions from "../actions/message";
-import ContextMenuActions from "../actions/contextMenu";
+import {SpecialCategory} from "../models/misc";
 import UserActions from "../actions/user";
 import CategoryActions from "../actions/category";
 import ChannelActions from "../actions/channel";
+import {Store} from "redux";
+import AppStore from "../store/store";
 
 export type PromiseOr<T = void> = Promise<T> | T;
 
@@ -46,41 +40,57 @@ export default class App {
 		remote.getCurrentWindow().close();
 	}
 
-	public readonly gateway: Gateway;
+	private static gateway: Gateway;
 
-	public readonly me: User;
+	private static actions: GatewayActions;
 
-	public readonly actions: GatewayActions;
+	private static commandHandler: CommandHandler;
 
-	public readonly commandHandler: CommandHandler;
+	private static net: NetworkHub;
 
-	public readonly net: NetworkHub;
+	private static i18n: Localisation;
 
-	public readonly i18n: Localisation;
-	
-	public readonly dev: DeveloperToolbox;
+	private static devToolbox: DeveloperToolbox;
 
-	public notifications: boolean;
+	private static notifications: boolean;
 
-	protected readonly renderer: AppRenderer;
+	private static renderer: AppRenderer;
 
-	public constructor(me: User, renderer: AppRenderer) {
-		this.renderer = renderer;
-		this.gateway = new Gateway(Constants.primaryGroupAddress, Constants.primaryBroadcastPort);
-		this.me = me;
-		this.actions = new GatewayActions(this.gateway);
-		this.commandHandler = new CommandHandler();
-		this.net = new NetworkHub(Constants.primaryNetPort);
-		this.i18n = new Localisation();
-		this.notifications = true;
-		this.dev = new DeveloperToolbox(this);
+	private static store: Store;
+
+	public static init(renderer: AppRenderer): void {
+		App.store = AppStore.createDefault();
+		App.renderer = renderer;
+		App.gateway = new Gateway(Constants.primaryGroupAddress, Constants.primaryBroadcastPort);
+		App.actions = new GatewayActions(App.gateway);
+		App.commandHandler = new CommandHandler();
+		App.net = new NetworkHub(Constants.primaryNetPort);
+		App.i18n = new Localisation();
+		App.notifications = true;
+		App.devToolbox = new DeveloperToolbox();
+
+		// Register the local user in the state.
+		UserActions.updateMe(App.me);
+
+		// TODO: State is immutable, therefore once me is updated, it will not be reflected upon the users list?
+		UserActions.add(App.me);
+
+		CategoryActions.add({
+			id: SpecialCategory.Connected,
+			name: SpecialCategory.Connected,
+			users: [App.me.id]
+		});
+
+		ChannelActions.setGeneralAsActive();
+		App.render();
+		App.gateway.connect();
 	}
 
 	public toggleNotifications(): this {
-		this.notifications = !this.notifications;
+		App.notifications = !App.notifications;
 
-		if (this.notifications) {
-			this.notify();
+		if (App.notifications) {
+			App.notify();
 		}
 
 		return this;
@@ -89,20 +99,18 @@ export default class App {
 	/**
 	 * Play the notification sound.
 	 */
-	public notify(): this {
-		if (!this.notifications) {
-			return this;
+	public static notify(): void {
+		if (!App.notifications) {
+			return;
 		}
 
 		Sounds.notification();
-
-		return this;
 	}
 
 	/**
 	 * Create and render the root component.
 	 */
-	public render(): void {
+	public static render(): void {
 		console.log("[App] Rendering");
 
 		if (document.getElementById("root") == null) {
@@ -112,124 +120,14 @@ export default class App {
 			document.body.appendChild(root);
 		}
 
-		ReactDOM.render(this.renderer(), document.getElementById("root"));
-	}
-
-	public registerCommands(): void {
-		const commands: ICommand[] = [
-			{
-				name: "clear",
-				description: "Clear all messages",
-
-				handle(): void {
-					MessageActions.clear();
-				}
-			}
-		];
-
-		if (App.devMode) {
-			commands.push(...[
-				{
-					name: "notice",
-					description: "Show a success notice",
-
-					handle(): void {
-						MessageActions.addToGeneral<INotice>(
-							Factory.createNotice(SpecialChannel.General,
-								"This is a success notice",
-								NoticeStyle.Success
-							)
-						);
-					}
-				},
-				{
-					name: "n-warn",
-					description: "Show a warning notice",
-
-					handle(): void {
-						MessageActions.addToGeneral<INotice>(
-							Factory.createNotice(SpecialChannel.General,
-								"This is a warning notice",
-								NoticeStyle.Warning
-							)
-						);
-					}
-				},
-				{
-					name: "n-error",
-					description: "Show an error notice",
-
-					handle(): void {
-						MessageActions.addToGeneral<INotice>(
-							Factory.createNotice(
-								SpecialChannel.General,
-								"This is a error notice",
-								NoticeStyle.Error
-							)
-						);
-					}
-				},
-				{
-					name: "menu",
-					description: "Display a context menu",
-
-					handle(): void {
-						ContextMenuActions.show({
-							title: "Test context menu",
-
-							position: {
-								x: 50,
-								y: 50
-							},
-
-							options: [
-								{
-									text: "Button",
-									disabled: false,
-									type: ContextMenuOptionType.Button,
-
-									onClick(): void {
-										alert("Context menu option click!");
-									}
-								}
-							]
-						});
-					}
-				}
-			]);
-		}
-
-		MiscActions.registerCommands(commands);
-	}
-
-	/**
-	 * Initialize the application and its
-	 * entities.
-	 */
-	public init(): void {
-		if (App.devMode) {
-			this.test();
-		}
-
-		// Register the local user in the state.
-		UserActions.updateMe(this.me);
-
-		// TODO: State is immutable, therefore once me is updated, it will not be reflected upon the users list?
-		UserActions.add(this.me);
-
-		CategoryActions.add({
-			id: SpecialCategory.Connected,
-			name: SpecialCategory.Connected,
-			users: [this.me.id]
-		});
-
-		ChannelActions.setGeneralAsActive();
-		this.registerCommands();
-		this.render();
-		this.gateway.connect();
+		ReactDOM.render(App.renderer(), document.getElementById("root"));
 	}
 
 	public test(): void {
 		//
+	}
+
+	public static getStore(): Store {
+		return App.store;
 	}
 }

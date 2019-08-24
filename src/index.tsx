@@ -4,11 +4,9 @@ import {Page} from "./models/misc";
 import Config, {IConfig} from "./core/config";
 import {Provider} from "react-redux";
 import React from "react";
-import {store} from "./store/store";
 import {HashRouter, Switch, Route} from "react-router-dom";
 import ErrorPage from "./components/pages/error";
 import AuthPage from "./components/pages/auth";
-import HandleBar from "./components/handleBar/handleBar";
 import Application from "./components/application";
 import {User} from "./models/user";
 
@@ -24,8 +22,8 @@ const me: User = {
     status: config.status
 };
 
-export const MainApp: App = new App(me, () => (
-    <Provider store={store}>
+App.init(() => (
+    <Provider store={App.getStore()}>
         <HashRouter>
             <Switch>
                 {/* TODO: Hard-coded prop as null (required to pass in). */}
@@ -38,5 +36,3 @@ export const MainApp: App = new App(me, () => (
         </HashRouter>
     </Provider>
 ));
-
-MainApp.init();

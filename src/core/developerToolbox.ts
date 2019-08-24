@@ -8,12 +8,6 @@ import UserActions from "../actions/user";
 import CategoryActions from "../actions/category";
 
 export default class DeveloperToolbox {
-    protected app: App;
-
-    public constructor(app: App) {
-        this.app = app;
-    }
-
     public emulatePublicMessage(): this {
         // TODO
 
