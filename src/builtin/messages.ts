@@ -15,7 +15,7 @@ export default class Messages extends Plugin {
     }
 
     public install(): void {
-
+        //
     }
 
     public enable(context: IPluginContext): void {

@@ -18,7 +18,7 @@ export default class Net extends Plugin {
     }
 
     public install(): void {
-
+        //
     }
 
     public enable(context: IPluginContext): void {
