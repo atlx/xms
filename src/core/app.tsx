@@ -13,7 +13,6 @@ import {SpecialCategory} from "../models/misc";
 import UserActions from "../actions/user";
 import CategoryActions from "../actions/category";
 import ChannelActions from "../actions/channel";
-import {Store} from "redux";
 import AppStore from "../store/store";
 
 export type PromiseOr<T = void> = Promise<T> | T;
@@ -56,7 +55,7 @@ export default class App {
 
 	private static renderer: AppRenderer;
 
-	private static store: Store;
+	private static store: AppStore;
 
 	public static init(renderer: AppRenderer): void {
 		App.store = AppStore.createDefault();
@@ -127,7 +126,7 @@ export default class App {
 		//
 	}
 
-	public static getStore(): Store {
+	public static getStore(): AppStore {
 		return App.store;
 	}
 }

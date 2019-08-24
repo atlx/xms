@@ -151,9 +151,15 @@ export const InitialState: IAppState = {
     }
 };
 
-export default abstract class AppStore {
-    public static createDefault(): Store {
-        return createStore(combineReducers({
+export interface IStoreAction {
+    readonly type: any;
+
+    readonly payload: any;
+}
+
+export default class AppStore {
+    public static createDefault(): AppStore {
+        return new AppStore(createStore(combineReducers({
             category: categoryReducer,
             channel: channelReducer,
             command: commandReducer,
@@ -162,6 +168,24 @@ export default abstract class AppStore {
             misc: miscReducer,
             user: userReducer,
             net: netReducer
-        }), applyMiddleware(logger));
+        }), applyMiddleware(logger)));
+    }
+
+    protected readonly store: Store;
+
+    public constructor(store: Store) {
+        this.store = store;
+    }
+
+    public unwrap(): Store {
+        return this.store;
+    }
+
+    public dispatch(action: IStoreAction): void {
+        this.store.dispatch(action);
+    }
+
+    public get state(): IAppState {
+        return this.store.getState();
     }
 }
