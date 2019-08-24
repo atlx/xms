@@ -1,16 +1,17 @@
 import {IGenericMessage, MessageType} from "../models/message";
-import {GeneralChannel, getState, store, ActionType} from "../store/store";
+import {GeneralChannel, ActionType} from "../store/store";
 import Time from "../core/time";
 import Factory from "../core/factory";
 import {BasicMap} from "../core/helpers";
 import {UniqueId} from "../models/misc";
+import App from "../core/app";
 
 export default abstract class MessageActions {
     /**
      * Clear all messages from the state.
      */
     public static clear(): void {
-        store.dispatch({
+        App.getStore().dispatch({
             type: ActionType.ClearMessages
         });
     }
@@ -44,21 +45,21 @@ export default abstract class MessageActions {
             }
         }
 
-        store.dispatch({
+        App.getStore().dispatch({
             type: ActionType.AddMessage,
             payload: message
         });
     }
 
     public static markSent(id: UniqueId): void {
-        store.dispatch({
+        App.getStore().dispatch({
             type: ActionType.MarkMessageSent,
             payload: id
         });
     }
 
     public static delete(id: UniqueId): void {
-        store.dispatch({
+        App.getStore().dispatch({
             type: ActionType.DeleteMessage,
             payload: id
         })

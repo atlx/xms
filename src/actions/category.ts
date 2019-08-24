@@ -1,16 +1,17 @@
 import {IRosterCategory, UniqueId, SpecialCategory} from "../models/misc";
-import {store, ActionType} from "../store/store";
+import {ActionType} from "../store/store";
+import App from "../core/app";
 
 export default abstract class CategoryActions {
     public static add(category: IRosterCategory): void {
-        store.dispatch({
+        App.getStore().dispatch({
             type: ActionType.AddCategory,
             payload: category
         });
     }
 
     public static addUser(userId: UniqueId, category: string | SpecialCategory): void {
-        store.dispatch({
+        App.getStore().dispatch({
             type: ActionType.AddUserToCategory,
 
             payload: {

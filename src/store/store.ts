@@ -154,7 +154,7 @@ export const InitialState: IAppState = {
 export interface IStoreAction {
     readonly type: any;
 
-    readonly payload: any;
+    readonly payload?: any;
 }
 
 export default class AppStore {

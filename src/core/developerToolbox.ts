@@ -1,4 +1,3 @@
-import App from "./app";
 import {SpecialCategory} from "../models/misc";
 import {GeneralChannel} from "../store/store";
 import Factory from "./factory";

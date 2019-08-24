@@ -3,7 +3,7 @@ import {UniqueId, IpAddress} from "./misc";
 import UserMention, {IUserMention} from "./userMention";
 import {SpecialChannel} from "./channel";
 import MessageActions from "../actions/message";
-import {getState} from "../store/store";
+import App from "../core/app";
 
 /**
  * Used to identify a generic message.
@@ -106,7 +106,7 @@ export default class Message extends DbEntity<ITextMessage> {
      * in the messages map.
      */
     public get exists(): boolean {
-        return getState().message.messages.has(this.id);
+        return App.getStore().state.message.messages.has(this.id);
     }
 
     /**

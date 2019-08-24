@@ -1,6 +1,7 @@
 import {Page} from "../models/misc";
-import {store, ActionType, ConnectionState} from "../store/store";
+import {ActionType, ConnectionState} from "../store/store";
 import {ICommand} from "../core/command";
+import App from "../core/app";
 
 export default abstract class MiscActions {
     public static setInputLocked(locked: boolean): void {
@@ -8,7 +9,7 @@ export default abstract class MiscActions {
             throw new Error("Expected 'locked' parameter to be a boolean");
         }
 
-        store.dispatch({
+        App.getStore().dispatch({
             type: ActionType.SetInputLocked,
             payload: locked
         });
@@ -19,7 +20,7 @@ export default abstract class MiscActions {
             throw new Error("An invalid 'page' parameter was provided");
         }
 
-        store.dispatch({
+        App.getStore().dispatch({
             type: ActionType.SetPage,
             payload: page
         });
@@ -30,7 +31,7 @@ export default abstract class MiscActions {
             throw new Error("Expected 'visible' parameter to be a boolean");
         }
 
-        store.dispatch({
+        App.getStore().dispatch({
             type: ActionType.SetGuideVisible,
             payload: visible
         });
@@ -41,7 +42,7 @@ export default abstract class MiscActions {
             throw new Error("Expected 'command' parameter to be an object");
         }
 
-        store.dispatch({
+        App.getStore().dispatch({
             type: ActionType.RegisterCommand,
             payload: command
         });
@@ -62,7 +63,7 @@ export default abstract class MiscActions {
             throw new Error("Expected 'ping' parameter to be a number higher or equal to 0");
         }
 
-        store.dispatch({
+        App.getStore().dispatch({
             type: ActionType.AddPing,
             payload: ping
         });
@@ -73,7 +74,7 @@ export default abstract class MiscActions {
             throw new Error("An invalid 'state' parameter was provided");
         }
 
-        store.dispatch({
+        App.getStore().dispatch({
             type: ActionType.SetConnectionState,
             payload: state
         });
@@ -84,7 +85,7 @@ export default abstract class MiscActions {
             throw new Error("Expected 'visible' parameter to be a boolean");
         }
 
-        store.dispatch({
+        App.getStore().dispatch({
             type: ActionType.SetLeftPanelVisible,
             payload: visible
         });

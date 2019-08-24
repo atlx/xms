@@ -60,7 +60,13 @@ export default class App {
 	public static init(renderer: AppRenderer): void {
 		App.store = AppStore.createDefault();
 		App.renderer = renderer;
-		App.gateway = new Gateway(Constants.primaryGroupAddress, Constants.primaryBroadcastPort);
+
+		App.gateway = new Gateway({
+			port: Constants.primaryBroadcastPort,
+			address: Constants.primaryGroupAddress,
+			heartbeatInterval: 10_000
+		});
+
 		App.actions = new GatewayActions(App.gateway);
 		App.commandHandler = new CommandHandler();
 		App.net = new NetworkHub(Constants.primaryNetPort);

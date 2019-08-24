@@ -1,5 +1,4 @@
 import Utils from "./utils";
-import {MainApp} from "../index";
 import {UniqueId} from "../models/misc";
 import {ITextMessage, MessageType, NoticeStyle, INotice, IGenericMessage} from "../models/message";
 
@@ -21,7 +20,7 @@ export default class Factory {
             channelId,
             type: MessageType.Text,
             senderAddress: "unknown",
-            
+
             // TODO: Computed from text.
             mentions: []
         };

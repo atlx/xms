@@ -1,10 +1,11 @@
 import {IChannel} from "../models/channel";
-import {store, ActionType} from "../store/store";
+import {ActionType} from "../store/store";
 import {UniqueId} from "../models/misc";
+import App from "../core/app";
 
 export default abstract class ChannelActions {
     public static add(channel: IChannel): void {
-        store.dispatch({
+        App.getStore().dispatch({
             type: ActionType.AddChannel,
             payload: channel
         });
@@ -14,7 +15,7 @@ export default abstract class ChannelActions {
      * Rename a private channel.
      */
     public static rename(channelId: UniqueId, name: string): void {
-        store.dispatch({
+        App.getStore().dispatch({
             type: ActionType.RenameChannel,
 
             payload: {
@@ -25,7 +26,7 @@ export default abstract class ChannelActions {
     }
 
     public static setTopic(channelId: UniqueId, topic: string): void {
-        store.dispatch({
+        App.getStore().dispatch({
             type: ActionType.SetChannelTopic,
 
             payload: {
@@ -36,21 +37,21 @@ export default abstract class ChannelActions {
     }
 
     public static remove(channelId: UniqueId): void {
-        store.dispatch({
+        App.getStore().dispatch({
             type: ActionType.RemoveChannel,
             payload: channelId
         });
     }
 
     public static setActive(channelId: UniqueId): void {
-        store.dispatch({
+        App.getStore().dispatch({
             type: ActionType.SetActiveChannel,
             payload: channelId
         });
     }
 
     public static setGeneralAsActive(): void {
-        store.dispatch({
+        App.getStore().dispatch({
             type: ActionType.SetGeneralAsActiveChannel
         });
     }
