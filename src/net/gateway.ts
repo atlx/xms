@@ -1,30 +1,24 @@
 import dgram, {Socket} from "dgram";
 import {AddressInfo} from "net";
-import {GatewayMsg, GatewayMsgType, HelloPayload, MessagePayload, HeartbeatPayload} from "./gatewayEntities";
-import {store, IAppState, ConnectionState} from "../store/store";
+import {GatewayMsg, GatewayMsgType, MessagePayload} from "./gatewayEntities";
+import {ConnectionState} from "../store/store";
 import MiscActions from "../actions/misc";
 import Factory from "../core/factory";
 import Utils from "../core/utils";
 import {IDisposable} from "../core/app";
 import {MainApp} from "../index";
 import SystemMessages from "../core/systemMessages";
-import {INotice, NoticeStyle, ITextMessage} from "../models/message";
+import {INotice, NoticeStyle} from "../models/message";
 import {SpecialChannel} from "../models/channel";
 import MessageActions from "../actions/message";
-import UserActions from "../actions/user";
+import {IGatewayOptions} from "./gatewayOptions";
+import {EventEmitter} from "events";
+import NetworkEvent from "./networkEvent";
 
-export default class Gateway implements IDisposable {
+export default class Gateway extends EventEmitter implements IDisposable {
     public static slowThreshold: number = 150;
 
-    /**
-     * The Multicast group address that
-     * the socket is connected to.
-     */
-    public readonly groupAddress: string;
-
-    public readonly port: number;
-
-    private readonly heartbeatInterval: number;
+    private readonly options: IGatewayOptions;
 
     private readonly intervals: number[];
 
@@ -35,13 +29,13 @@ export default class Gateway implements IDisposable {
     private pingStart: number;
 
     private connectionVerified: boolean;
-    
+
     private socketConnected: boolean;
 
-    public constructor(groupAddress: string, port: number, heartbeatInterval: number = 10_000) {
-        this.groupAddress = groupAddress;
-        this.port = port;
-        this.heartbeatInterval = heartbeatInterval;
+    public constructor(options: IGatewayOptions) {
+        super();
+
+        this.options = options;
         this.intervals = [];
         this.connectionVerified = false;
         this.pingStart = 0;
@@ -117,12 +111,12 @@ export default class Gateway implements IDisposable {
 
     private setupEvents(): this {
         this.socket.on("listening", () => {
-            this.socket.addMembership(this.groupAddress);
+            this.socket.addMembership(this.options.address);
             this.socketConnected = true;
-            console.log(`[BroadcastGateway] Listening on ${this.groupAddress}@${this.port}`);
+            console.log(`[BroadcastGateway] Listening on ${this.options.address}@${this.options.port}`);
 
             // Start the heartbeat loop.
-            this.setInterval(this.heartbeat, this.heartbeatInterval);
+            this.setInterval(this.heartbeat, this.options.heartbeatInterval);
 
             // Start the network interface availability loop.
             this.setInterval(() => {
@@ -154,76 +148,10 @@ export default class Gateway implements IDisposable {
         this.socket.on("close", this.handleSocketClose);
 
         this.socket.on("message", (data: Buffer, sender: AddressInfo) => {
-            const messageString: string = data.toString();
-
-            // TODO: Debugging.
-            console.log(`[BroadcastGateway.setupEvents] Received message string: ${messageString}`);
-
-            if (messageString.startsWith("{") && messageString.endsWith("}")) {
-                const msg: GatewayMsg<any> = JSON.parse(messageString);
-
-                // If the message was sent by the local client.
-                if (msg.sender === MainApp.me.id) {
-                    if (msg.type === GatewayMsgType.Message) {
-                        const payload: MessagePayload = msg.payload;
-
-                        MessageActions.markSent(payload.id);
-                    }
-                    else if (msg.type === GatewayMsgType.Heartbeat) {
-                        const ping: number = Math.round(performance.now() - this.pingStart);
-
-                        this.registerPing(ping);
-
-                        if (!this.connectionVerified) {
-                            this.connectionVerified = true;
-                        }
-                    }
-                    else {
-                        console.log(`[BroadcastGateway:Message] Unknown message type from self: ${msg.type}`);
-                    }
-
-                    return;
-                }
-
-                // TODO: Use handlers instead.
-                if (msg.type === GatewayMsgType.Hello) {
-                    // TODO: Make use of the time difference & adjust time proxy for this user.
-                    const payload: HelloPayload = msg.payload;
-
-                    if (!(store.getState() as IAppState).category.usersMap.has(msg.sender)) {
-                        UserActions.add(payload.user);
-                    }
-                }
-                // Handle incoming message.
-                else if (msg.type === GatewayMsgType.Message) {
-                    const payload: MessagePayload = msg.payload;
-
-                    if ((store.getState() as IAppState).category.usersMap.has(msg.sender)) {
-                        // TODO
-                    }
-                    else {
-                        // TODO: Fix.
-                        // TODO: Verify type and data.
-                        MessageActions.addToGeneral({
-                            // TODO: A way to safely identify an unknown sender, or is it not required?
-                            authorAvatarHash: "",
-                            authorName: "Unknown",
-                            id: "unknown",
-                            systemMessage: false,
-                            text: payload.text,
-                            sent: true,
-
-                            // TODO: Time should be provided by sender.
-                            time: Date.now(),
-                            channelId: SpecialChannel.General,
-                            type: payload.type
-                        } as ITextMessage);
-                    }
-                }
-                else {
-                    console.log(`[BroadcastGateway] Received an invalid message from '${sender.address}' with type '${msg.type}'`)
-                }
-            }
+            this.emit(NetworkEvent.Data, {
+                data,
+                sender
+            });
         });
 
         this.socket.on("error", (error: Error) => {
@@ -235,10 +163,7 @@ export default class Gateway implements IDisposable {
 
     private heartbeat(): this {
         this.startPingTimer();
-
-        this.broadcast<HeartbeatPayload>(GatewayMsgType.Heartbeat, {
-            //
-        });
+        this.broadcast(GatewayMsgType.Heartbeat, {});
 
         return this;
     }
@@ -285,7 +210,7 @@ export default class Gateway implements IDisposable {
             sender: MainApp.me.id
         } as GatewayMsg<T>));
 
-        this.socket.send(data, 0, data.length, this.port, this.groupAddress, (error: Error | null) => {
+        this.socket.send(data, 0, data.length, this.options.port, this.options.address, (error: Error | null) => {
             if (error !== null) {
                 console.log(`[BroadcastGateway.emit] Failed to emit message: ${error.message}`);
 
@@ -303,6 +228,10 @@ export default class Gateway implements IDisposable {
     }
 
     public connect(): this {
+        if (this.connected) {
+            this.dispose();
+        }
+
         // Create the socket.
         this.socket = dgram.createSocket({
             type: "udp4",
@@ -310,7 +239,7 @@ export default class Gateway implements IDisposable {
         });
 
         this.setupEvents();
-        this.socket.bind(this.port);
+        this.socket.bind(this.options.port);
 
         return this;
     }

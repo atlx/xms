@@ -5,7 +5,7 @@ import {MessageType} from "../models/message";
 // Generic
 export enum GatewayMsgType {
     Hello,
-    
+
     HelloAck,
 
     Goodbye,
@@ -15,7 +15,7 @@ export enum GatewayMsgType {
     Heartbeat
 }
 
-export type GatewayMsg<T> = {
+export type GatewayMsg<T = any> = {
     readonly type: GatewayMsgType;
 
     readonly payload: T;
