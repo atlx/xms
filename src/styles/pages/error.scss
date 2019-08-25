@@ -1,3 +1,8 @@
+body {
+    background: linear-gradient(to bottom, #222, #252525) !important;
+    color: #fff !important;
+}
+
 .error-page {
     & {
         display: grid !important;
@@ -45,19 +50,61 @@
             margin-top: 3px;
         }
 
+        > .message-wrap {
+            & {
+                margin-top: 30px;
+                user-select: text;
+                background-color: #191919;
+                border-radius: 6px;
+                padding: 10px 15px;
+                max-width: 500px;
+                color: #777;
+                text-align: left;
+                line-height: 150%;
+                font-size: 15px;
+                max-height: 200px;
+                overflow: auto;
+            }
+
+            > .location {
+                & {
+                    opacity: 0.5;
+                }
+
+                > span {
+                    user-select: text;
+                }
+            }
+
+            > .open-devtools {
+                & {
+                    float: right;
+                    border: 1px solid #555;
+                    width: 30px;
+                    height: 30px;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    border-radius: 4px;
+                    margin-left: 0.5em;
+                    margin-bottom: 0.5em;
+                    cursor: pointer;
+                }
+
+                &:hover {
+                    border-color: #fff;
+                    color: #fff;
+                }
+            }
+        }
+
         > .reload {
             & {
                 display: inline-block;
-                padding: 3px 10px;
-                border-radius: 4px;
-                border: 1px solid #fff;
                 margin-top: 30px;
+                padding-bottom: 2px;
                 cursor: pointer;
-            }
-
-            &:hover {
-                background-color: #fff;
-                color: #000;
+                border-bottom: 1px solid #fff;
             }
 
             > .icon {

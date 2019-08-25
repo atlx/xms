@@ -224,10 +224,8 @@ export default class Gateway extends EventEmitter implements IDisposable {
         });
     }
 
-    public dispose(): this {
+    public dispose(): void {
         this.clearIntervals();
-
-        return this;
     }
 
     public connect(): this {

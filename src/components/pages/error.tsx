@@ -2,19 +2,33 @@ import {Component} from "react";
 import "../../styles/pages/error.scss";
 import React from "react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faSyncAlt} from "@fortawesome/free-solid-svg-icons";
-import HandleButton from "../handleBar/handleButton";
-import Tooltip, {TooltipPosition} from "../tooltip";
+import {faSyncAlt, faExternalLinkAlt} from "@fortawesome/free-solid-svg-icons";
 import EmptyPage from "./empty";
+import App from "../../core/app";
 
-export default class ErrorPage extends Component {
+export type Props = {
+    readonly message: string;
+
+    readonly fileName: string;
+
+    readonly lineNumber: number;
+};
+
+export default class ErrorPage extends Component<Props> {
     public render(): JSX.Element {
         return (
             <EmptyPage className="error-page">
                 <div className="header">
                     <img className="image" src={require("../../resources/img/think.png")} />
-                    <div className="title">Something's not right</div>
+                    <div className="title">Something's wrong</div>
                     <div className="sub-title">Might be missing a bolt or two</div>
+                    <div className="message-wrap">
+                        <div title="Open Chrome developer tools" onClick={() => App.openDevTools()} className="open-devtools">
+                            <FontAwesomeIcon icon={faExternalLinkAlt} />
+                        </div>
+                        <span className="location"><span>{this.props.fileName}</span>:<span>{this.props.lineNumber}</span> &mdash; </span>
+                        {this.props.message}
+                    </div>
                     <div
                         onClick={() => window.location.reload()}
                         className="reload">

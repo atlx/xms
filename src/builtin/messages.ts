@@ -19,8 +19,8 @@ export default class Messages extends Plugin {
     }
 
     public enable(context: IPluginContext): void {
-        if (context.msg !== undefined) {
-            context.msg.on(MessageEvent.Receive, (message: Message) => {
+        if (context.messages !== undefined) {
+            context.messages.on(MessageEvent.Receive, (message: Message) => {
                 if (message.type === GatewayMsgType.Hello) {
                     // TODO: Make use of the time difference & adjust time proxy for this user.
                     const payload: HelloPayload = message.payload;

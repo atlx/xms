@@ -45,7 +45,10 @@ export enum ActionType {
     AddPing = "ADD_PING",
     SetConnectionState = "SET_CONNECTION_STATE",
     SetGroupAddress = "SET_GROUP_ADDRESS",
-    SetLeftPanelVisible = "SET_LEFT_PANEL_VISIBLE"
+    SetLeftPanelVisible = "SET_LEFT_PANEL_VISIBLE",
+    AddSidebarItem = "ADD_SIDEBAR_ITEM",
+    SetSidebarItemActive = "SET_SIDEBAR_ITEM_ACTIVE",
+    RemoveSidebarItem = "REMOVE_SIDEBAR_ITEM"
 }
 
 export type StatePart = IAppStateCategory | IAppStateMisc | IAppStateMessage | IAppStateNet | IAppStateUser;
@@ -85,7 +88,7 @@ export interface IAppStateMisc {
 
 export interface IAppStateUser {
     readonly users: BasicMap<User>;
-    readonly me?: User;
+    readonly me: User;
 }
 
 export enum ConnectionState {
@@ -118,37 +121,39 @@ export const GeneralChannel: IChannel = {
 };
 
 // TODO: Exchange standard arrays for Immutable.js' List.
-export const InitialState: IAppState = {
-    category: {
-        categories: [],
-        usersMap: new Map(),
-        channels: ImmutableMap(),
-        activeChannel: GeneralChannel,
-        commandHandler: new CommandHandler(),
-        contextMenu: null
-    },
+export const InitialState = (user: User): IAppState => {
+    return {
+        category: {
+            categories: [],
+            usersMap: new Map(),
+            channels: ImmutableMap(),
+            activeChannel: GeneralChannel,
+            commandHandler: new CommandHandler(),
+            contextMenu: null
+        },
 
-    misc: {
-        modals: [],
-        inputLocked: true,
-        page: Page.Init,
-        guideVisible: false,
-        leftPanelVisible: true
-    },
+        misc: {
+            modals: [],
+            inputLocked: true,
+            page: Page.Init,
+            guideVisible: false,
+            leftPanelVisible: true
+        },
 
-    message: {
-        messages: ImmutableMap(),
-    },
+        message: {
+            messages: ImmutableMap(),
+        },
 
-    net: {
-        lastPing: -1,
-        connectionState: ConnectionState.Disconnected
-    },
+        net: {
+            lastPing: -1,
+            connectionState: ConnectionState.Disconnected
+        },
 
-    user: {
-        me: undefined,
-        users: ImmutableMap()
-    }
+        user: {
+            me: user,
+            users: ImmutableMap()
+        }
+    };
 };
 
 export interface IStoreAction {

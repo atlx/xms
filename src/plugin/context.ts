@@ -2,16 +2,16 @@ import PluginNetwork from "./network";
 import PluginFileSystem from "./fileSystem";
 import PluginMessages from "./messages";
 import PluginEventRouter from "./router";
-import PluginPublic from "./public";
+import PluginBasic from "./basic";
 
 export default interface IPluginContext {
-    readonly public: PluginPublic;
+    readonly basic: PluginBasic;
 
     readonly net?: PluginNetwork;
 
     readonly fs?: PluginFileSystem;
 
-    readonly msg?: PluginMessages;
+    readonly messages?: PluginMessages;
 
     readonly eventRouter?: PluginEventRouter;
 }

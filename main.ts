@@ -1,22 +1,22 @@
 "use strict";
 
 // Import parts of electron to use.
-const {app, BrowserWindow} = require("electron");
-const path = require("path");
-const url = require("url");
+import {app, BrowserWindow} from "electron";
+import path from "path";
+import url from "url";
 
 // Keep a global reference of the window object, if you don"t, the window will
 // be closed automatically when the JavaScript object is garbage collected.
-let mainWindow;
+let mainWindow: BrowserWindow | null = null;
 
 // Keep a reference for dev mode.
 
 // TODO: Not working.
-const dev = true;//process.env.NODE_ENV === "development";
+const dev: boolean = true;//process.env.NODE_ENV === "development";
 
 console.log(`Development mode: ${dev}`);
 
-function createWindow() {
+function createWindow(): void {
 	// Create the browser window.
 	mainWindow = new BrowserWindow({
 		width: 1250,
@@ -28,6 +28,7 @@ function createWindow() {
 		hasShadow: true,
 		minWidth: 1140,
 		transparent: true,
+		resizable: true,
 
 		webPreferences: {
 			// Explicitly set node integration.
@@ -46,7 +47,7 @@ function createWindow() {
 	});
 
 	// .. and load the index.html of the app.
-	let indexPath;
+	let indexPath: string;
 
 	if (dev && process.argv.indexOf("--noDevServer") === -1) {
 		indexPath = url.format({
@@ -70,11 +71,11 @@ function createWindow() {
 
 	// Don"t show until we are ready and loaded
 	mainWindow.once("ready-to-show", () => {
-		mainWindow.show();
+		mainWindow!.show();
 
 		// Open the DevTools automatically if developing
 		if (dev) {
-			mainWindow.webContents.openDevTools();
+			mainWindow!.webContents.openDevTools();
 		}
 	});
 

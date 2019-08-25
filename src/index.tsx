@@ -22,7 +22,7 @@ const me: User = {
     status: config.status
 };
 
-App.init(() => (
+App.boot(() => (
     <Provider store={App.store.unwrap()}>
         <HashRouter>
             <Switch>

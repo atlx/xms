@@ -4,11 +4,12 @@
 	"description": "Serverless LAN messenger application",
 	"author": "CloudRex <cloudrex@outlook.com>",
 	"license": "MIT",
-	"main": "main.js",
+	"main": "dist/main.js",
 	"scripts": {
 		"prod": "webpack --config webpack.build.config.js && electron --noDevServer .",
 		"dev": "webpack-dev-server --hot --host 0.0.0.0 --config webpack.dev.config.js",
-		"build": "webpack --config webpack.dev.config.js",
+		"build-main": "tsc main.ts --outDir dist",
+		"build": "npm run build-main && typescript webpack --config webpack.dev.config.js",
 		"package": "webpack --config webpack.build.config.js",
 		"postpackage": "electron-packager ./ --out=./builds",
 		"storybook": "start-storybook"
@@ -31,6 +32,7 @@
 		"css-loader": "^3.2.0",
 		"devtron": "^1.4.0",
 		"electron": "^6.0.4",
+		"electron-devtools-installer": "^2.2.4",
 		"electron-packager": "^14.0.4",
 		"eslint": "^6.2.2",
 		"eslint-config-airbnb": "^18.0.1",

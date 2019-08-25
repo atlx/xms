@@ -14,11 +14,13 @@ import CategoryActions from "../actions/category";
 import ChannelActions from "../actions/channel";
 import AppStore from "../store/store";
 import {User} from "../models/user";
+import React from "react";
+import ErrorPage from "../components/pages/error";
 
 export type PromiseOr<T = void> = Promise<T> | T;
 
 export interface IDisposable {
-	dispose(): any;
+	dispose(): void;
 }
 
 export type Callback<T = void> = (...args: any[]) => T;
@@ -57,38 +59,53 @@ export default class App {
 
 	private static _store: AppStore;
 
-	public static init(renderer: AppRenderer): void {
-		App._store = AppStore.createDefault();
-		App.renderer = renderer;
+	public static boot(renderer: AppRenderer): void {
+		try {
+			App._store = AppStore.createDefault();
+			App.renderer = renderer;
 
-		App._gateway = new Gateway({
-			port: Constants.primaryBroadcastPort,
-			address: Constants.primaryGroupAddress,
-			heartbeatInterval: 10_000
-		});
+			App._gateway = new Gateway({
+				port: Constants.primaryBroadcastPort,
+				address: Constants.primaryGroupAddress,
+				heartbeatInterval: 10_000
+			});
 
-		App._actions = new GatewayActions(App._gateway);
-		App.commandHandler = new CommandHandler();
-		App._net = new NetworkHub(Constants.primaryNetPort);
-		App._i18n = new Localisation();
-		App.notifications = true;
-		App._developerToolbox = new DeveloperToolbox();
+			App._actions = new GatewayActions(App._gateway);
+			App.commandHandler = new CommandHandler();
+			App._net = new NetworkHub(Constants.primaryNetPort);
+			App._i18n = new Localisation();
+			App.notifications = true;
+			App._developerToolbox = new DeveloperToolbox();
 
-		// Register the local user in the state.
-		// UserActions.updateMe(App.me);
+			// Register the local user in the state.
+			// UserActions.updateMe(App.me);
 
-		// TODO: State is immutable, therefore once me is updated, it will not be reflected upon the users list?
-		// UserActions.add(App.me);
+			// TODO: State is immutable, therefore once me is updated, it will not be reflected upon the users list?
+			// UserActions.add(App.me);
 
-		CategoryActions.add({
-			id: SpecialCategory.Connected,
-			name: SpecialCategory.Connected,
-			users: [/*App.me.id*/]
-		});
+			CategoryActions.add({
+				id: SpecialCategory.Connected,
+				name: SpecialCategory.Connected,
+				users: [/*App.me.id*/]
+			});
 
-		ChannelActions.setGeneralAsActive();
-		App.render();
-		App._gateway.connect();
+			ChannelActions.setGeneralAsActive();
+			App.render();
+			App._gateway.connect();
+		}
+		catch (error) {
+			App.render(() => (
+				<ErrorPage
+					message={error.message}
+					fileName={error.fileName || "Unnamed"}
+					lineNumber={error.lineNumber || "Unknown"}
+				/>
+			));
+
+			console.log(error);
+
+			throw error;
+		}
 	}
 
 	public toggleNotifications(): this {
@@ -112,10 +129,14 @@ export default class App {
 		Sounds.notification();
 	}
 
+	public static openDevTools(): void {
+		remote.getCurrentWebContents().openDevTools();
+	}
+
 	/**
 	 * Create and render the root component.
 	 */
-	public static render(): void {
+	public static render(view: () => JSX.Element = App.renderer): void {
 		console.log("[App] Rendering");
 
 		if (document.getElementById("root") == null) {
@@ -125,14 +146,14 @@ export default class App {
 			document.body.appendChild(root);
 		}
 
-		ReactDOM.render(App.renderer(), document.getElementById("root"));
+		ReactDOM.render(view(), document.getElementById("root"));
 	}
 
 	public test(): void {
 		//
 	}
 
-	public static get me(): User | undefined {
+	public static get me(): User {
 		return this._store.state.user.me;
 	}
 

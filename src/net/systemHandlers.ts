@@ -1,9 +1,10 @@
 import NetworkHub, {NetPacketType, INetPacket} from "../core/networkHub";
-import {store, IAppState} from "../store/store";
+import {IAppState} from "../store/store";
 import {SpecialChannel, ChannelType} from "../models/channel";
 import {ITextMessage, MessageType} from "../models/message";
 import MessageActions from "../actions/message";
 import ChannelActions from "../actions/channel";
+import App from "../core/app";
 
 export default class SystemHandlers {
     private readonly net: NetworkHub;
@@ -34,7 +35,7 @@ export default class SystemHandlers {
                     text: packet.payload.content,
                     time: packet.payload.time,
                     type: MessageType.Text,
-                    
+
                     // TODO
                     mentions: []
                 });
@@ -42,9 +43,7 @@ export default class SystemHandlers {
                 return;
             }
 
-            const state: IAppState = store.getState();
-
-            if (!state.category.channels.has(packet.sender)) {
+            if (!App.store.state.category.channels.has(packet.sender)) {
                 ChannelActions.add({
                     id: packet.sender,
                     name: `(DM) User at ${packet.sender}`,
