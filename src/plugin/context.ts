@@ -7,11 +7,11 @@ import PluginBasic from "./basic";
 export default interface IPluginContext {
     readonly basic: PluginBasic;
 
-    readonly net?: PluginNetwork;
+    readonly net: PluginNetwork;
 
-    readonly fs?: PluginFileSystem;
+    readonly fs: PluginFileSystem;
 
-    readonly messages?: PluginMessages;
+    readonly messages: PluginMessages;
 
-    readonly eventRouter?: PluginEventRouter;
+    readonly eventRouter: PluginEventRouter;
 }
