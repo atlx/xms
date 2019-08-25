@@ -1,12 +1,13 @@
-import {Reducer, ActionType, IAppStateMessage, InitialState} from "../store/store";
+import {Reducer, ActionType, IAppStateMessage} from "../store/store";
 import {ITextMessage, MessageType} from "../models/message";
 import {Writeable} from "../models/misc";
 import {Map as ImmutableMap} from "immutable";
+import App from "../core/app";
 
 const messageReducer: Reducer<IAppStateMessage> = (state, action) => {
     // Return default initial state for this reducer.
     if (!state) {
-        return InitialState.message;
+        return App.initialState.message;
     }
 
     switch (action.type) {

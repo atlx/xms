@@ -1,10 +1,11 @@
-import {Reducer, ActionType, InitialState, IAppStateMisc} from "../store/store";
+import {Reducer, ActionType, IAppStateMisc} from "../store/store";
 import {IModal} from "../models/misc";
+import App from "../core/app";
 
 const miscReducer: Reducer<IAppStateMisc> = (state, action) => {
     // Return default initial state for this reducer.
     if (!state) {
-        return InitialState.misc;
+        return App.initialState.misc;
     }
 
     switch (action.type) {

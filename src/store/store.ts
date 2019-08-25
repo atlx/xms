@@ -121,7 +121,7 @@ export const GeneralChannel: IChannel = {
 };
 
 // TODO: Exchange standard arrays for Immutable.js' List.
-export const InitialState = (user: User): IAppState => {
+export const createInitialState = (user: User): IAppState => {
     return {
         category: {
             categories: [],

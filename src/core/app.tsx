@@ -12,7 +12,7 @@ import {remote} from "electron";
 import {SpecialCategory} from "../models/misc";
 import CategoryActions from "../actions/category";
 import ChannelActions from "../actions/channel";
-import AppStore from "../store/store";
+import AppStore, {createInitialState, IAppState} from "../store/store";
 import {User} from "../models/user";
 import React from "react";
 import ErrorPage from "../components/pages/error";
@@ -41,6 +41,12 @@ export default class App {
 		remote.getCurrentWindow().close();
 	}
 
+	public static get initialState(): IAppState {
+		return App._initialState;
+	}
+
+	private static _initialState: IAppState;
+
 	private static _gateway: Gateway;
 
 	private static _actions: GatewayActions;
@@ -61,6 +67,11 @@ export default class App {
 
 	public static boot(renderer: AppRenderer): void {
 		try {
+			// TODO
+			App._initialState = createInitialState({
+
+			} as any);
+
 			App._store = AppStore.createDefault();
 			App.renderer = renderer;
 
