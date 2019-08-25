@@ -1,11 +1,5 @@
-.empty-page {
+.page {
     & {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        padding: 0 150px;
-        text-align: center;
         height: 100%;
     }
 

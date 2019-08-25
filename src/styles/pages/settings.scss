@@ -1,0 +1,54 @@
+@import "../colors";
+@import "../templates";
+
+.settings-page {
+    & {
+        color: $color-black;
+        display: grid;
+        grid-template-columns: 0.4fr 1fr;
+    }
+
+    > .sidebar {
+        & {
+            display: flex;
+            align-items: flex-end;
+            justify-content: flex-start;
+            flex-direction: column;
+            padding: 1em 0;
+            text-align: right;
+            border-right: 1px solid $color-dark;
+            padding-right: 1em;
+            font-size: 1.1em;
+            height: 100%;
+            background-color: $color-barely;
+        }
+
+        > .item {
+            & {
+                display: inline-block;
+                padding: 0.5em;
+                width: 10em;
+                cursor: pointer;
+                border-radius: 6px;
+                text-align: left;
+            }
+
+            &:hover {
+                background-color: $color-barely;
+            }
+
+            &:not(:last-child) {
+                margin-bottom: 0.3em;
+            }
+
+            &.active {
+                background-color: $color-purple;
+                color: $color-white;
+            }
+        }
+    }
+
+    > .content {
+        width: 600px;
+    }
+}

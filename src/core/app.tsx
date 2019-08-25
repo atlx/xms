@@ -65,13 +65,9 @@ export default class App {
 
 	private static _store: AppStore;
 
-	public static boot(renderer: AppRenderer): void {
+	public static boot(user: User, renderer: AppRenderer): void {
 		try {
-			// TODO
-			App._initialState = createInitialState({
-
-			} as any);
-
+			App._initialState = createInitialState(user);
 			App._store = AppStore.createDefault();
 			App.renderer = renderer;
 

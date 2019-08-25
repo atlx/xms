@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import "../../styles/pages/empty.scss";
+import "../../styles/pages/page.scss";
 
 interface IProps {
     readonly className?: string;
@@ -17,9 +17,9 @@ interface IProps {
     readonly closeTooltip?: string;
 }
 
-export default class EmptyPage extends Component<IProps> {
+export default class Page extends Component<IProps> {
     public getClass(): string {
-        const classes: string[] = ["empty-page"];
+        const classes: string[] = ["page"];
 
         if (this.props.className !== undefined) {
             classes.unshift(this.props.className);

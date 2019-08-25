@@ -45,7 +45,8 @@ export interface IGuideItem {
 
 export enum Page {
     Init,
-    Default
+    Default,
+    Settings
 }
 
 export type IpAddress = string;

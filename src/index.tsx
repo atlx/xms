@@ -9,6 +9,7 @@ import ErrorPage from "./components/pages/error";
 import AuthPage from "./components/pages/auth";
 import Application from "./components/application";
 import {User} from "./models/user";
+import SettingsPage from "./components/pages/settings";
 
 // Prepare config.
 const config: IConfig = Config.loadOrCreate();
@@ -22,13 +23,13 @@ const me: User = {
     status: config.status
 };
 
-App.boot(() => (
+App.boot(me, () => (
     <Provider store={App.store.unwrap()}>
         <HashRouter>
             <Switch>
                 {/* TODO: Hard-coded prop as null (required to pass in). */}
                 <Route path="/" exact render={() =>
-                    <Application modals={[] as any} page={Page.Init} />
+                    <Application modals={[] as any} content={<SettingsPage />} />
                 } />
                 <Route path="/" exact component={AuthPage} />
                 <Route component={ErrorPage} />

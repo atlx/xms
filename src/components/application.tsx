@@ -1,37 +1,21 @@
 import React, {CSSProperties} from "react";
 import "../styles/misc/application.scss";
-import DefaultPage from "./pages/default";
 import {IAppState} from "../store/store";
 import {connect} from "react-redux";
 import {Page, IModal} from "../models/misc";
-import InitPage from "./pages/init";
 import {CSSTransition} from "react-transition-group";
 import Modal from "./modal";
 import ModalActions from "../actions/modal";
 
 interface IProps {
-	readonly page: Page;
 	readonly modals: IModal[];
+
 	readonly leftPanelVisible?: boolean;
+
+	readonly content: JSX.Element;
 }
 
 class Application extends React.Component<IProps> {
-	public renderPage(): JSX.Element {
-		switch (this.props.page) {
-			case Page.Default: {
-				return <DefaultPage key={Page.Default} />;
-			}
-
-			case Page.Init: {
-				return <InitPage key={Page.Init} />;
-			}
-
-			default: {
-				throw new Error(`Unable to render unknown page: ${this.props.page}`);
-			}
-		}
-	}
-
 	public getAppContentStyle(): CSSProperties {
 		const properties: CSSProperties = {};
 
@@ -81,9 +65,9 @@ class Application extends React.Component<IProps> {
 				]} title="Are you sure you want to continue?" text="This is a dialog box with a message and options." /> */}
 				{this.renderNextModal()}
 				{/* TODO: Not applying rule to EXITING component, just entering one. */}
-				<CSSTransition in={this.props.page !== Page.Init} classNames="page" timeout={600}>
+				<CSSTransition classNames="page" timeout={600}>
 					<div style={this.getAppContentStyle()} className="content">
-						{this.renderPage()}
+						{this.props.content}
 					</div>
 				</CSSTransition>
 			</div>

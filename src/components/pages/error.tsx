@@ -3,7 +3,7 @@ import "../../styles/pages/error.scss";
 import React from "react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faSyncAlt, faExternalLinkAlt} from "@fortawesome/free-solid-svg-icons";
-import EmptyPage from "./empty";
+import Page from "./page";
 import App from "../../core/app";
 
 export type Props = {
@@ -17,7 +17,7 @@ export type Props = {
 export default class ErrorPage extends Component<Props> {
     public render(): JSX.Element {
         return (
-            <EmptyPage className="error-page">
+            <Page className="error-page">
                 <div className="header">
                     <img className="image" src={require("../../resources/img/think.png")} />
                     <div className="title">Something's wrong</div>
@@ -39,7 +39,7 @@ export default class ErrorPage extends Component<Props> {
                     <div className="title">User ID</div>
                     <div className="id">2aae6c35c94fcfb415</div>
                 </div>
-            </EmptyPage>
+            </Page>
         );
     }
 }
