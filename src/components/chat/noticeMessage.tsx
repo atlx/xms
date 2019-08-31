@@ -4,44 +4,15 @@ import {NoticeStyle} from "../../models/message";
 
 interface IProps {
 	readonly text: string;
+
 	readonly style: NoticeStyle;
 }
 
 // TODO: Be able to specify color.
 export default class NoticeMessage extends React.Component<IProps> {
-	public getClasses(): string {
-		const classes = ["notice-message"];
-
-		switch (this.props.style) {
-			case NoticeStyle.Success: {
-				classes.push("success");
-
-				break;
-			}
-
-			case NoticeStyle.Warning: {
-				classes.push("warning");
-
-				break;
-			}
-
-			case NoticeStyle.Error: {
-				classes.push("error");
-
-				break;
-			}
-
-			default: {
-				throw new Error(`[NoticeMessage] Unknown/invalid notice style: ${this.props.style}`);
-			}
-		}
-
-		return classes.join(" ");
-	}
-
 	public render(): JSX.Element {
 		return (
-			<div className={this.getClasses()}>
+			<div data-style={this.props.style} className="notice-message">
 				{this.props.text}
 			</div>
 		);

@@ -8,6 +8,4 @@ export default interface IPluginManifest {
     readonly author?: string;
 
     readonly description?: string;
-
-    readonly permissions?: PluginPermission[];
 }

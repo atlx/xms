@@ -17,7 +17,7 @@
     }
 
     > .initial {
-        @extend %absolute-center;
+        @include absolute-center;
         text-transform: uppercase;
         color: #fff;
     }

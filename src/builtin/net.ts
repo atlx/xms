@@ -13,7 +13,6 @@ export default class Net extends Plugin {
             name: "Network",
             author: "Atlas",
             description: "Internal network handler.",
-            permissions: [PluginPermission.Network, PluginPermission.EventRouter],
             version: "1.0.0"
         });
     }

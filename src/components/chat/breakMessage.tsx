@@ -11,19 +11,9 @@ export default class BreakMessage extends React.Component<IProps> {
         important: false
     };
 
-    public getClass(): any {
-        const classes: string[] = ["break-message"];
-
-        if (this.props.important) {
-            classes.push("important");
-        }
-
-        return classes.join(" ");
-    }
-
     public render(): JSX.Element {
         return (
-            <div className={this.getClass()}>
+            <div data-important={this.props.important} className="break-message">
                 {this.props.content}
                 <div className="line"></div>
             </div>

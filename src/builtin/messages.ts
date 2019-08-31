@@ -1,7 +1,12 @@
 import Plugin from "../plugin/plugin";
 import IPluginContext from "../plugin/context";
-import Message from "../models/message";
+import Message, {ITextMessage} from "../models/message";
 import MessageEvent from "../net/messageEvent";
+import {GatewayMsgType, HelloPayload, MessagePayload} from "../net/gatewayEntities";
+import {IAppState} from "../store/store";
+import UserActions from "../actions/user";
+import MessageActions from "../actions/message";
+import {SpecialChannel} from "../models/channel";
 
 export default class Messages extends Plugin {
     public constructor() {
@@ -9,7 +14,6 @@ export default class Messages extends Plugin {
             name: "Messages",
             author: "Atlas",
             description: "Internal messages handler.",
-            permissions: [PluginPermission.Messages],
             version: "1.0.0"
         });
     }

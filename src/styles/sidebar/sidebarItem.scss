@@ -10,7 +10,7 @@
         margin-bottom: 20px;
     }
 
-    &.active {
+    &[data-active='true'] {
         > .item-wrap {
             > .active-indicator {
                 background-color: #fff;

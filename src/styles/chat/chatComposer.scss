@@ -4,7 +4,7 @@
 
 .chat-composer {
     & {
-        @extend %flex-center;
+        @include flex-center;
         padding: 20px;
         padding-bottom: 0;
         position: relative;
@@ -12,7 +12,7 @@
 
     > .message-wrapper {
         & {
-            @extend %box-shadow-std;
+            @include box-shadow-std;
             display: flex;
             align-items: stretch;
             justify-content: center;
@@ -55,7 +55,7 @@
             }
 
             > .add {
-                @extend %flex-center;
+                @include flex-center;
                 position: absolute;
                 box-shadow: 0 0 20px 0 $color-purple-slight;
                 border-radius: 50%;
@@ -102,7 +102,7 @@
 
         > .send {
             & {
-                @extend %flex-center;
+                @include flex-center;
                 cursor: pointer;
                 border-top-right-radius: 20px;
                 border-bottom-right-radius: 20px;

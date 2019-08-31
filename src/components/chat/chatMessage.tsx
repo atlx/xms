@@ -52,6 +52,7 @@ export default class ChatMessage extends React.Component<IProps> {
 
                 // Append the user mention.
                 content.push(
+                    // TODO
                     <UserMention key={"f"} id="atlas" />
                 );
 

@@ -52,17 +52,17 @@ export enum NoticeStyle {
     /**
      * A success notice, colored green.
      */
-    Success,
+    Success = "success",
 
     /**
      * A warning notice, colored yellow.
      */
-    Warning,
+    Warning = "warning",
 
     /**
      * An error notice, colored red.
      */
-    Error
+    Error = "error"
 }
 
 export default class Message extends DbEntity<ITextMessage> {

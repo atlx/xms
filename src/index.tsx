@@ -1,6 +1,5 @@
 import App from "./core/app";
 import "./styles/global.scss";
-import {Page} from "./models/misc";
 import Config, {IConfig} from "./core/config";
 import {Provider} from "react-redux";
 import React from "react";
@@ -9,7 +8,7 @@ import ErrorPage from "./components/pages/error";
 import AuthPage from "./components/pages/auth";
 import Application from "./components/application";
 import {User} from "./models/user";
-import SettingsPage from "./components/pages/settings";
+import DefaultPage from "./components/pages/default";
 
 // Prepare config.
 const config: IConfig = Config.loadOrCreate();
@@ -29,7 +28,7 @@ App.boot(me, () => (
             <Switch>
                 {/* TODO: Hard-coded prop as null (required to pass in). */}
                 <Route path="/" exact render={() =>
-                    <Application modals={[] as any} content={<SettingsPage />} />
+                    <Application modals={[] as any} content={<DefaultPage />} />
                 } />
                 <Route path="/" exact component={AuthPage} />
                 <Route component={ErrorPage} />
