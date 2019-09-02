@@ -91,6 +91,7 @@ class ChatComposer extends Component<IProps, IState> {
 	};
 
 	private readonly $input: RefObject<HTMLTextAreaElement> = React.createRef();
+
 	private readonly $guide: RefObject<any> = React.createRef();
 
 	private shakeTimeout?: number;
@@ -296,7 +297,9 @@ class ChatComposer extends Component<IProps, IState> {
 		});
 
 		// Invoke the prop listener.
-		this.props.onChange(this.getValue());
+		if (this.props.onChange) {
+			this.props.onChange(this.getValue());
+		}
 	}
 
 	public render(): JSX.Element {

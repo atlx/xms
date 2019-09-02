@@ -1,12 +1,9 @@
-body {
-    background: linear-gradient(to bottom, #222, #252525) !important;
-    color: #fff !important;
-}
-
-.error-page {
+[data-page="error"] {
     & {
         display: grid !important;
         grid-template-rows: 1fr auto;
+        background: linear-gradient(to bottom, #222, #252525) !important;
+        color: #fff !important;
     }
 
     > .tooltip-container {

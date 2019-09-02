@@ -2,6 +2,8 @@ import React, {Component} from "react";
 import "../../styles/pages/page.scss";
 
 interface IProps {
+    readonly pageId: string;
+
     readonly className?: string;
 
     /**
@@ -30,7 +32,7 @@ export default class Page extends Component<IProps> {
 
     public render(): JSX.Element {
         return (
-            <div className={this.getClass()}>
+            <div data-page={this.props.pageId} className={this.getClass()}>
                 {this.props.children}
             </div>
         );

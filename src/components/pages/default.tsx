@@ -6,6 +6,7 @@ import {connect} from "react-redux";
 import {IAppState, ConnectionState} from "../../store/store";
 import Sidebar from "../sidebar/sidebar";
 import StatusBar from "../status/statusBar";
+import Page from "./page";
 
 interface IProps {
 	readonly leftPanelVisible?: boolean;
@@ -24,7 +25,7 @@ class DefaultPage extends React.Component<IProps, IState> {
 
 	public render(): JSX.Element {
 		return (
-			<div className="default-page">
+			<Page pageId={PageId.Default}>
 				<Sidebar />
 
 				{/* TODO: Props are hard-coded */}
@@ -34,10 +35,10 @@ class DefaultPage extends React.Component<IProps, IState> {
 					users={undefined as any}
 					guideItems={undefined as any}
 				/>
-				
+
 				<ContactsBar categories={null as any} users={null as any} />
 				<StatusBar connectionState={ConnectionState.Connected} ping={0} key="status" />
-			</div>
+			</Page>
 		);
 	}
 }

@@ -43,12 +43,6 @@ export interface IGuideItem {
     readonly subtext?: string;
 }
 
-export enum Page {
-    Init,
-    Default,
-    Settings
-}
-
 export type IpAddress = string;
 
 export type Writeable<T> = {

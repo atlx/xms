@@ -5,7 +5,7 @@ import "../../styles/pages/settings.scss";
 export default class SettingsPage extends Component {
     public render(): JSX.Element {
         return (
-            <Page className="settings-page" closeTooltip="Close">
+            <Page pageId={PageId.Settings} className="settings-page" closeTooltip="Close">
                 <div className="sidebar">
                     <div className="item active">General</div>
                     <div className="item">Network</div>

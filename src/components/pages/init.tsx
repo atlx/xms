@@ -3,8 +3,8 @@ import "../../styles/pages/init.scss";
 import Loader from "../loader";
 import Utils from "../../core/utils";
 import MiscActions from "../../actions/misc";
-import {Page} from "../../models/misc";
 import {ConnectionState} from "../../store/store";
+import Page from "./page";
 
 type InitPageState = {
 	readonly progressVisible: boolean;
@@ -80,11 +80,11 @@ export default class InitPage extends React.Component<any, InitPageState> {
 		this.step();
 
 		// Change the page with a delay for effect.
-		setTimeout(() => MiscActions.setPage(Page.Default), 1000);
+		setTimeout(() => MiscActions.setPage(PageId.Default), 1000);
 	}
 
 	public finish(): void {
-		MiscActions.setPage(Page.Default);
+		MiscActions.setPage(PageId.Default);
 	}
 
 	public setSteps(steps: number): void {
@@ -129,12 +129,12 @@ export default class InitPage extends React.Component<any, InitPageState> {
 
 	public render(): JSX.Element {
 		return (
-			<div className="init-page">
+			<Page pageId={PageId.Init}>
 				<Loader size={3} text={this.state.progressText} />
 				<div style={this.getLoadingBarStyle()} className="loading-bar">
 					<div style={this.getProgressStyle()} ref={this.$progress} className="progress"></div>
 				</div>
-			</div>
+			</Page>
 		);
 	}
 }

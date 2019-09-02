@@ -1,29 +1,28 @@
 @import "../colors.scss";
 
+$border-radius-transform: 10px;
+
 .sidebar-item {
     & {
         position: relative;
         padding: 0 11px;
     }
 
-    &:not(:last-child) {
-        margin-bottom: 20px;
-    }
-
     &[data-active='true'] {
         > .item-wrap {
             > .active-indicator {
-                background-color: #fff;
+                background-color: $color-white;
             }
 
             > svg {
-                color: #fff;
+                color: $color-white;
                 background-color: $color-purple-dim;
+                border-radius: $border-radius-transform;
             }
         }
     }
 
-    > .item-wrap {
+    .item-wrap {
         & {
             //
         }
@@ -41,12 +40,12 @@
 
         > svg {
             & {
-                transition: background-color 0.2s;
+                transition: background-color 0.2s, border-radius 0.3s;
                 cursor: pointer;
                 padding: 12px;
-                border-radius: 50%;
+                border-radius: 45%;
                 font-size: 20px;
-                color: $color-purple-inactive;
+                color: $color-dark-light;
                 width: 45px;
                 height: 45px;
                 display: flex;
@@ -57,6 +56,7 @@
             &:hover {
                 background-color: $color-purple-dim;
                 color: $color-white;
+                border-radius: $border-radius-transform;
             }
         }
     }

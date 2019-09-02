@@ -1,4 +1,3 @@
-import {Page} from "../models/misc";
 import {ActionType, ConnectionState} from "../store/store";
 import {ICommand} from "../core/command";
 import App from "../core/app";
@@ -15,14 +14,14 @@ export default abstract class MiscActions {
         });
     }
 
-    public static setPage(page: Page): void {
-        if (Page[page] === undefined) {
+    public static setPage(pageId: PageId): void {
+        if (PageId[pageId] === undefined) {
             throw new Error("An invalid 'page' parameter was provided");
         }
 
         App.store.dispatch({
             type: ActionType.SetPage,
-            payload: page
+            payload: pageId
         });
     }
 

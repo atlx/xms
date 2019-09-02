@@ -1,7 +1,7 @@
 @import "../colors";
 @import "../templates";
 
-.settings-page {
+[data-page="settings"] {
     & {
         color: $color-black;
         display: grid;

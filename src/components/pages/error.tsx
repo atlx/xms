@@ -17,7 +17,7 @@ export type Props = {
 export default class ErrorPage extends Component<Props> {
     public render(): JSX.Element {
         return (
-            <Page className="error-page">
+            <Page pageId={PageId.Error}>
                 <div className="header">
                     <img className="image" src={require("../../resources/img/think.png")} />
                     <div className="title">Something's wrong</div>

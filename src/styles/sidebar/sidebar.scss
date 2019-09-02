@@ -5,12 +5,16 @@
         display: flex;
         flex-direction: column;
         padding: 10px 0;
-        background-color: $color-purple;
+        background-color: $color-dark;
         color: $color-white;
         grid-row: 1 / 3;
     }
 
     > div:first-child {
         height: 100%;
+    }
+
+    > div > *:not(:last-child) {
+        margin-bottom: 0.5em;
     }
 }

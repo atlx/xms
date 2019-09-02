@@ -1,4 +1,4 @@
-.default-page {
+[data-page='default'] {
     & {
         display: grid;
         grid-template-columns: auto minmax(400px, 1fr) 300px;

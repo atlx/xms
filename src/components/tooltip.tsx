@@ -93,7 +93,7 @@ export default class Tooltip extends React.Component<IProps, IState> {
         // TODO: Finish implementing.
         let move: number = 0;
 
-        console.log(Object.keys(this.$tooltip.current));
+        //console.log(Object.keys(this.$tooltip.current));
 
         return undefined;
     }

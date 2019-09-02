@@ -15,14 +15,14 @@ interface IProps {
 export default class SidebarItem extends Component<IProps> {
     public render(): JSX.Element {
         return (
-            <Tooltip text={this.props.name} position={TooltipPosition.Right}>
-                <div data-active={this.props.active} className="sidebar-item">
+            <div data-active={this.props.active} className="sidebar-item">
+                <Tooltip text={this.props.name} position={TooltipPosition.Right}>
                     <div className="item-wrap">
                         <div className="active-indicator"></div>
                         <FontAwesomeIcon icon={this.props.icon} />
                     </div>
-                </div>
-            </Tooltip>
+                </Tooltip >
+            </div >
         );
     }
 }

@@ -31,19 +31,24 @@ export default abstract class MessageActions {
      */
     public static add<T extends IGenericMessage>(message: T): void {
         // A separator message indicating time may come before a normal message.
-        if (message.type === MessageType.Text) {
-            const messages: BasicMap<IGenericMessage> = App.store.state.message.messages;
+        // TODO
+        // if (message.type === MessageType.Text) {
+        //     const messages: BasicMap<IGenericMessage> = App.store.state.message.messages;
 
-            // Ensure a message has been previously sent.
-            if (messages.size > 0) {
-                const lastMessage: IGenericMessage = messages[App.store.state.message.messages.size - 1];
+        //     // Ensure a message has been previously sent.
+        //     if (messages.size > 0) {
+        //         const lastMessage: IGenericMessage = messages.values[messages.size - 1];
 
-                // Append separator message beforehand if applicable.
-                if (Time.isDayOlder(lastMessage.time, message.time)) {
-                    this.add(Factory.createBreakMessage(message.channelId, Time.timeAgo(lastMessage.time)));
-                }
-            }
-        }
+        //         console.log(messages.values);
+
+        //         console.log("last message:", lastMessage);
+
+        //         // Append separator message beforehand if applicable.
+        //         if (Time.isDayOlder(lastMessage.time, message.time)) {
+        //             this.add(Factory.createBreakMessage(message.channelId, Time.timeAgo(lastMessage.time)));
+        //         }
+        //     }
+        // }
 
         App.store.dispatch({
             type: ActionType.AddMessage,

@@ -8,7 +8,7 @@ import "../../styles/pages/auth.scss";
 export default class AuthPage extends Component {
     public render(): JSX.Element {
         return (
-            <Page className="auth-page" closeTooltip="Exit application">
+            <Page pageId={PageId.Auth} className="auth-page" closeTooltip="Exit application">
                 <FontAwesomeIcon className="lock" icon={faKey} />
                 <div className="title">Enter passcode to continue</div>
                 <Passcode />
