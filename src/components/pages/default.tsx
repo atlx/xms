@@ -1,5 +1,4 @@
 import React from "react";
-import "../../styles/pages/default.scss";
 import Chat from "../chat/chat";
 import ContactsBar from "../contactsBar/contactsBar";
 import {connect} from "react-redux";
@@ -7,6 +6,7 @@ import {IAppState, ConnectionState} from "../../store/store";
 import Sidebar from "../sidebar/sidebar";
 import StatusBar from "../status/statusBar";
 import Page from "./page";
+import "../../styles/pages/default.scss";
 
 interface IProps {
 	readonly leftPanelVisible?: boolean;

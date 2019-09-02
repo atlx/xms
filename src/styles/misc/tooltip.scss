@@ -41,25 +41,25 @@ $margin: 8px;
             display: none;
         }
 
-        &[data-position='top'] {
+        &[data-position="top"] {
             bottom: 100%;
             margin-bottom: $margin;
         }
 
-        &[data-position='left'],
-        &[data-position='right'] {
+        &[data-position="left"],
+        &[data-position="right"] {
             top: 50%;
             transform: translateY(-50%);
         }
 
-        &[data-position='left'] {
+        &[data-position="left"] {
             animation-name: appear-left;
             right: 0%;
             margin-right: $margin;
             transform: translate(-100%, -50%);
         }
         
-        &[data-position='right'] {
+        &[data-position="right"] {
             // TODO
             // animation-name: appear-right;
             left: 100%;

@@ -16,7 +16,7 @@
         margin-top: 10px;
     }
 
-    &[data-important='true'] {
+    &[data-important="true"] {
         & {
             color: $color-notify-red;
         }

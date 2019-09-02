@@ -8,7 +8,7 @@ $border-radius-transform: 10px;
         padding: 0 11px;
     }
 
-    &[data-active='true'] {
+    &[data-active="true"] {
         > .item-wrap {
             > .active-indicator {
                 background-color: $color-white;

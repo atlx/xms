@@ -16,15 +16,15 @@
         margin-top: 15px;
     }
 
-    &[data-style='success'] {
+    &[data-style="success"] {
         background-color: $color-success;
     }
 
-    &[data-style='warning'] {
+    &[data-style="warning"] {
         background-color: $color-warn;
     }
 
-    &[data-style='error'] {
+    &[data-style="error"] {
         background-color: $color-error;
     }
 }
