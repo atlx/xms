@@ -2,10 +2,11 @@ import React, {CSSProperties} from "react";
 import "../styles/misc/application.scss";
 import {IAppState} from "../store/store";
 import {connect} from "react-redux";
-import {Page, IModal} from "../models/misc";
+import {IModal} from "../models/misc";
 import {CSSTransition} from "react-transition-group";
 import Modal from "./modal";
 import ModalActions from "../actions/modal";
+import PageId from "../core/pageId";
 
 interface IProps {
 	readonly modals: IModal[];
@@ -19,7 +20,7 @@ class Application extends React.Component<IProps> {
 	public getAppContentStyle(): CSSProperties {
 		const properties: CSSProperties = {};
 
-		if (this.props.page !== Page.Default) {
+		if (this.props.page !== PageId.Default) {
 			properties.display = "initial";
 		}
 

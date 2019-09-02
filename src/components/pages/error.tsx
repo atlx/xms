@@ -5,6 +5,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faSyncAlt, faExternalLinkAlt} from "@fortawesome/free-solid-svg-icons";
 import Page from "./page";
 import App from "../../core/app";
+import PageId from "../../core/pageId";
 
 export type Props = {
     readonly message: string;

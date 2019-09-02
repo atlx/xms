@@ -7,6 +7,7 @@ import Sidebar from "../sidebar/sidebar";
 import StatusBar from "../status/statusBar";
 import Page from "./page";
 import "../../styles/pages/default.scss";
+import PageId from "../../core/pageId";
 
 interface IProps {
 	readonly leftPanelVisible?: boolean;

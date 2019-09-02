@@ -1,5 +1,5 @@
 import {createStore, Store, applyMiddleware, combineReducers} from "redux";
-import {IRosterCategory, UniqueId, Page, IModal, IContextMenu} from "../models/misc";
+import {IRosterCategory, UniqueId, IModal, IContextMenu} from "../models/misc";
 import CommandHandler from "../core/commandHandler";
 import {createLogger} from "redux-logger";
 import {Map as ImmutableMap} from "immutable";
@@ -15,6 +15,7 @@ import messageReducer from "../reducers/message";
 import miscReducer from "../reducers/misc";
 import userReducer from "../reducers/user";
 import netReducer from "../reducers/net";
+import PageId from "../core/pageId";
 
 export enum ActionType {
     MarkMessageSent = "MARK_MESSAGE_SENT",
@@ -80,7 +81,7 @@ export interface IAppStateCategory {
 
 export interface IAppStateMisc {
     readonly modals: IModal[];
-    readonly page: Page;
+    readonly page: PageId;
     readonly inputLocked: boolean;
     readonly guideVisible: boolean;
     readonly leftPanelVisible: boolean;
@@ -135,7 +136,7 @@ export const createInitialState = (user: User): IAppState => {
         misc: {
             modals: [],
             inputLocked: true,
-            page: Page.Init,
+            page: PageId.Init,
             guideVisible: false,
             leftPanelVisible: true
         },
