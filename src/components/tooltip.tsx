@@ -3,10 +3,13 @@ import "../styles/misc/tooltip.scss";
 import {CSSTransition} from "react-transition-group";
 
 export enum TooltipPosition {
-    Top,
-    Right,
-    Left,
-    Bottom
+    Top = "top",
+
+    Right = "right",
+
+    Left = "left",
+
+    Bottom = "bottom"
 }
 
 interface IProps {
@@ -103,38 +106,6 @@ export default class Tooltip extends React.Component<IProps, IState> {
         this.setVisibility(false);
     }
 
-    public getTooltipClasses(): string {
-        const classes: string[] = ["tooltip"];
-
-        if (this.props.position !== TooltipPosition.Top) {
-            switch (this.props.position) {
-                case TooltipPosition.Left: {
-                    classes.push("pos-left");
-
-                    break;
-                }
-
-                case TooltipPosition.Right: {
-                    classes.push("pos-right");
-
-                    break;
-                }
-
-                case TooltipPosition.Bottom: {
-                    classes.push("pos-bottom");
-
-                    break;
-                }
-
-                default: {
-                    throw new Error(`[Tooltip] Unknown/invalid tooltip position: ${this.props.position}`);
-                }
-            }
-        }
-
-        return classes.join(" ");
-    }
-
     public getStyle(): CSSProperties {
         return {
             display: this.props.visible === true ? "block" : "none",
@@ -146,7 +117,7 @@ export default class Tooltip extends React.Component<IProps, IState> {
         return (
             <div style={this.getStyle()} onMouseOver={this.show} onMouseLeave={this.hide} className="tooltip-container">
                 <CSSTransition in={this.state.visible} classNames="trans" timeout={200}>
-                    <div ref={this.$tooltip} style={this.positionFix()} className={this.getTooltipClasses()}>{this.props.text}</div>
+                    <div ref={this.$tooltip} style={this.positionFix()} data-position={this.props.position} className="tooltip">{this.props.text}</div>
                 </CSSTransition>
                 {this.props.children}
             </div>

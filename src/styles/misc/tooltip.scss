@@ -1,6 +1,8 @@
 @import "../colors";
 @import "../animations";
 
+$margin: 8px;
+
 .tooltip-container {
     & {
         position: relative;
@@ -9,6 +11,7 @@
 
     > .tooltip {
         & {
+            z-index: 2;
             color: $color-white;
             opacity: 0;
             position: absolute;
@@ -16,11 +19,8 @@
             padding: 5px 10px;
             border-radius: 3px;
             text-align: center;
-            bottom: calc(100% + 8px);
             max-width: 250px;
             min-width: 70px;
-            left: 50%;
-            transform: translate(-50%, 0);
             animation: appear-top $appear-anim-time ease;
             white-space: nowrap;
             font-size: 14px;
@@ -41,12 +41,29 @@
             display: none;
         }
 
-        &.pos-left {
-            animation-name: appear-left;
-            bottom: initial;
-            left: calc(0% - #{$appear-offset});
+        &[data-position='top'] {
+            bottom: 100%;
+            margin-bottom: $margin;
+        }
+
+        &[data-position='left'],
+        &[data-position='right'] {
             top: 50%;
+            transform: translateY(-50%);
+        }
+
+        &[data-position='left'] {
+            animation-name: appear-left;
+            right: 0%;
+            margin-right: $margin;
             transform: translate(-100%, -50%);
+        }
+        
+        &[data-position='right'] {
+            // TODO
+            // animation-name: appear-right;
+            left: 100%;
+            margin-left: $margin;
         }
     }
 }
