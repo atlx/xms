@@ -1,12 +1,13 @@
 @import "../colors";
+@import "../templates";
 
 .chat-message {
     & {
+        @include box-shadow-std;
         padding: 13px 15px;
         border-radius: 4px;
-        background-color: $color-dark-contrast-lighter;
+        background-color: $color-white;
         opacity: 0.4;
-        color: #aaa;
         animation: message-appear 0.2s ease;
         word-wrap: break-word;
         position: relative;

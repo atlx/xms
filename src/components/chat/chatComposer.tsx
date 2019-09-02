@@ -330,9 +330,6 @@ class ChatComposer extends Component<IProps, IState> {
 								maxLength={this.props.maxLength}
 							/>
 						</div>
-						<div onClick={() => this.sendMessage()} className="send">
-							<FontAwesomeIcon icon={faPaperPlane} />
-						</div>
 					</div>
 				</CSSTransition>
 			</div>

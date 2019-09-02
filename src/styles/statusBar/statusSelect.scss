@@ -8,7 +8,7 @@
 
     > .select-body {
         & {
-            @include box-shadow-std;
+            box-shadow: 0 0 8px rgba(0, 0, 0, 0.15);
             background-color: $color-white;
             position: absolute;
             padding: 20px 5px;

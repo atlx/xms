@@ -6,7 +6,6 @@ $margin: 8px;
 .tooltip-container {
     & {
         position: relative;
-        display: inline-block;
     }
 
     > .tooltip {
@@ -15,7 +14,7 @@ $margin: 8px;
             color: $color-white;
             opacity: 0;
             position: absolute;
-            background-color: #191919;
+            background-color: $color-near-black;
             padding: 5px 10px;
             border-radius: 3px;
             text-align: center;
@@ -41,29 +40,66 @@ $margin: 8px;
             display: none;
         }
 
-        &[data-position="top"] {
-            bottom: 100%;
-            margin-bottom: $margin;
-        }
-
         &[data-position="left"],
         &[data-position="right"] {
-            top: 50%;
-            transform: translateY(-50%);
+            & {
+                top: 50%;
+                transform: translateY(-50%);
+            }
+
+            > .arrow {
+                top: 50%;
+                transform: translateY(-50%);
+            }
+        }
+
+        &[data-position="top"] {
+            & {
+                bottom: 100%;
+                margin-bottom: $margin;
+                transform: translateX(-50%);
+                left: 50%;
+            }
+
+            > .arrow {
+                border-top-color: $color-near-black;
+                left: 50%;
+                top: 100%;
+                transform: translateX(-50%);
+            }
         }
 
         &[data-position="left"] {
-            animation-name: appear-left;
-            right: 0%;
-            margin-right: $margin;
-            transform: translate(-100%, -50%);
+            & {
+                animation-name: appear-left;
+                right: 0%;
+                margin-right: $margin;
+                transform: translate(-100%, -50%);
+            }
+            
+            > .arrow {
+                border-left-color: $color-near-black;
+                left: 100%;
+            }
         }
         
         &[data-position="right"] {
-            // TODO
-            // animation-name: appear-right;
-            left: 100%;
-            margin-left: $margin;
+            & {
+                // TODO
+                // animation-name: appear-right;
+                left: 100%;
+                margin-left: $margin;
+            }
+
+            > .arrow {
+                right: 100%;
+                border-right-color: $color-near-black;
+            }
+        }
+
+        > .arrow {
+            position: absolute;
+            border: 6px solid transparent;
         }
     }
 }

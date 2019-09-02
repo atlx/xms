@@ -24,11 +24,6 @@ interface IProps {
      * The position in which the tooltip will be displayed. Default to top.
      */
     readonly position?: TooltipPosition;
-
-    /**
-     * Whether the tooltip element is visible. Defaults to true.
-     */
-    readonly visible?: boolean;
 }
 
 interface IState {
@@ -40,8 +35,7 @@ interface IState {
 
 export default class Tooltip extends React.Component<IProps, IState> {
     public static readonly defaultProps: Partial<IProps> = {
-        position: TooltipPosition.Top,
-        visible: true
+        position: TooltipPosition.Top
     };
 
     protected readonly $tooltip: React.RefObject<any>;
@@ -106,18 +100,13 @@ export default class Tooltip extends React.Component<IProps, IState> {
         this.setVisibility(false);
     }
 
-    public getStyle(): CSSProperties {
-        return {
-            display: this.props.visible === true ? "block" : "none",
-            ...this.props.style
-        };
-    }
-
     public render(): JSX.Element {
         return (
-            <div style={this.getStyle()} onMouseOver={this.show} onMouseLeave={this.hide} className="tooltip-container">
+            <div onMouseOver={this.show} onMouseLeave={this.hide} className="tooltip-container">
                 <CSSTransition in={this.state.visible} classNames="trans" timeout={200}>
-                    <div ref={this.$tooltip} style={this.positionFix()} data-position={this.props.position} className="tooltip">{this.props.text}</div>
+                    <div ref={this.$tooltip} style={this.positionFix()} data-position={this.props.position} className="tooltip trans-exit-done">{this.props.text}
+                        <div className="arrow"></div>
+                    </div>
                 </CSSTransition>
                 {this.props.children}
             </div>
