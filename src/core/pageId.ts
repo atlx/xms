@@ -9,3 +9,5 @@ enum PageId {
 
     Init = "init"
 }
+
+export default PageId;

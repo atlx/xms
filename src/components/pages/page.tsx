@@ -1,8 +1,9 @@
 import React, {Component} from "react";
 import "../../styles/pages/page.scss";
+import PageId from "../../core/pageId";
 
-interface IProps {
-    readonly pageId: string;
+type Props = {
+    readonly pageId: PageId;
 
     readonly className?: string;
 
@@ -17,10 +18,10 @@ interface IProps {
      * Defaults to omitting tooltip.
      */
     readonly closeTooltip?: string;
-}
+};
 
-export default class Page extends Component<IProps> {
-    public getClass(): string {
+export default class Page extends Component<Props> {
+    protected getClass(): string {
         const classes: string[] = ["page"];
 
         if (this.props.className !== undefined) {

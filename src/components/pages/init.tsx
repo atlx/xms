@@ -6,14 +6,14 @@ import MiscActions from "../../actions/misc";
 import {ConnectionState} from "../../store/store";
 import Page from "./page";
 
-type InitPageState = {
+type State = {
 	readonly progressVisible: boolean;
 	readonly progressText: string;
 	readonly steps: number;
 	readonly maxSteps: number;
 }
 
-export default class InitPage extends React.Component<any, InitPageState> {
+export default class InitPage extends React.Component<any, State> {
 	private readonly $progress: RefObject<any>;
 
 	private interfaceCheck: NodeJS.Timeout | null;

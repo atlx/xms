@@ -28,7 +28,9 @@ App.boot(me, () => (
             <Switch>
                 {/* TODO: Hard-coded prop as null (required to pass in). */}
                 <Route path="/" exact render={() =>
-                    <Application modals={[] as any} content={<DefaultPage />} />
+                    <Application modals={[] as any}>
+                        <DefaultPage />
+                    </Application>
                 } />
                 <Route path="/" exact component={AuthPage} />
                 <Route component={ErrorPage} />

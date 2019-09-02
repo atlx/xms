@@ -12,8 +12,6 @@ interface IProps {
 	readonly modals: IModal[];
 
 	readonly leftPanelVisible?: boolean;
-
-	readonly content: JSX.Element;
 }
 
 class Application extends React.Component<IProps> {
@@ -68,7 +66,7 @@ class Application extends React.Component<IProps> {
 				{/* TODO: Not applying rule to EXITING component, just entering one. */}
 				<CSSTransition classNames="page" timeout={600}>
 					<div style={this.getAppContentStyle()} className="content">
-						{this.props.content}
+						{this.props.children}
 					</div>
 				</CSSTransition>
 			</div>

@@ -9,15 +9,15 @@ import Page from "./page";
 import "../../styles/pages/default.scss";
 import PageId from "../../core/pageId";
 
-interface IProps {
+type Props = {
 	readonly leftPanelVisible?: boolean;
-}
+};
 
-interface IState {
+type State = {
 	readonly showTestModal: boolean;
-}
+};
 
-class DefaultPage extends React.Component<IProps, IState> {
+class DefaultPage extends React.Component<Props, State> {
 	public componentWillMount(): void {
 		this.setState({
 			showTestModal: true
@@ -26,7 +26,7 @@ class DefaultPage extends React.Component<IProps, IState> {
 
 	public render(): JSX.Element {
 		return (
-			<Page pageId={PageId.Default}>
+			<Page pageId={PageId.Default || "unknown"}>
 				<Sidebar />
 
 				{/* TODO: Props are hard-coded */}
