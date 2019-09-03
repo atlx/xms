@@ -3,7 +3,7 @@ import "../styles/misc/dialog.scss";
 import QuestionSVG from "../resources/img/question.svg";
 import SlimButton from "./slimButton";
 
-interface IProps {
+type Props = {
     readonly className?: string;
 
     readonly text: string;
@@ -11,10 +11,10 @@ interface IProps {
     readonly title: string;
 
     readonly options?: JSX.Element[];
-}
+};
 
-export default class Dialog extends Component<IProps> {
-    public static defaultProps: Partial<IProps> = {
+export default class Dialog extends Component<Props> {
+    public static defaultProps: Partial<Props> = {
         options: [
             <SlimButton text="Close" />,
             <SlimButton main text="Accept" />

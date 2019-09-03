@@ -1,13 +1,14 @@
 @import "../colors";
 @import "../templates";
 
+$send-opacity: 0.4;
+
 .chat-message {
     & {
         @include box-shadow-std;
         padding: 13px 15px;
         border-radius: 4px;
-        background-color: $color-white;
-        opacity: 0.4;
+        background-color: rgba(255, 255, 255, $send-opacity);
         animation: message-appear 0.2s ease;
         word-wrap: break-word;
         position: relative;
@@ -18,7 +19,7 @@
     }
 
     &.sent {
-        opacity: 1;
+        background-color: $color-white;
     }
 
     // Customize the Tooltip.

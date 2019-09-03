@@ -10,7 +10,7 @@ export enum IndicatorColor {
     Red = "#ff4141"
 }
 
-interface IProps {
+type Props = {
     readonly className?: string;
 
     /**
@@ -27,10 +27,10 @@ interface IProps {
      * The indicator size in pixels. Defaults to '10px'.
      */
     readonly size?: number;
-}
+};
 
-export default class Indicator extends Component<IProps> {
-    public static defaultProps: Partial<IProps> = {
+export default class Indicator extends Component<Props> {
+    public static defaultProps: Partial<Props> = {
         color: IndicatorColor.Gray,
         size: 10,
         visible: false

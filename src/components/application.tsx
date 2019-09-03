@@ -8,13 +8,13 @@ import Modal from "./modal";
 import ModalActions from "../actions/modal";
 import PageId from "../core/pageId";
 
-interface IProps {
+type Props = {
 	readonly modals: IModal[];
 
 	readonly leftPanelVisible?: boolean;
-}
+};
 
-class Application extends React.Component<IProps> {
+class Application extends React.Component<Props> {
 	public getAppContentStyle(): CSSProperties {
 		const properties: CSSProperties = {};
 

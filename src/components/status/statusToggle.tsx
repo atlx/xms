@@ -1,10 +1,10 @@
 import React from "react";
 import "../../styles/statusBar/statusItem.scss";
-import StatusItem, {IStatusItemProps} from "./statusItem";
+import StatusItem, {StatusItemProps} from "./statusItem";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {IconProp} from "@fortawesome/fontawesome-svg-core";
 
-interface IProps extends IStatusItemProps {
+interface IProps extends StatusItemProps {
     /**
      * Whether the toggle is toggled. Defaults to true.
      */
@@ -21,14 +21,14 @@ interface IProps extends IStatusItemProps {
     readonly off: IconProp;
 }
 
-interface IState {
+type State = {
     readonly toggled: boolean;
-}
+};
 
 /**
  * A toggable status bar action.
  */
-export default class StatusToggle extends React.Component<IProps, IState> {
+export default class StatusToggle extends React.Component<IProps, State> {
     public readonly state = {
         toggled: this.props.toggled !== undefined ? this.props.toggled : true
     };

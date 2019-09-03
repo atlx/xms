@@ -1,13 +1,13 @@
 import React, {CSSProperties} from "react";
 import "../styles/misc/loader.scss";
 
-interface IProps {
+type Props = {
     readonly text?: string;
     readonly size?: number;
 }
 
-export default class Loader extends React.Component<IProps> {
-    public constructor(props: IProps) {
+export default class Loader extends React.Component<Props> {
+    public constructor(props: Props) {
         super(props);
 
         // Bindings

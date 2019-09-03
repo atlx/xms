@@ -12,7 +12,7 @@ export enum TooltipPosition {
     Bottom = "bottom"
 }
 
-interface IProps {
+type Props = {
     readonly style?: CSSProperties;
 
     /**
@@ -24,23 +24,23 @@ interface IProps {
      * The position in which the tooltip will be displayed. Default to top.
      */
     readonly position?: TooltipPosition;
-}
+};
 
-interface IState {
+type State = {
     /**
      * Whether the tooltip is currently visible.
      */
     readonly visible: boolean;
-}
+};
 
-export default class Tooltip extends React.Component<IProps, IState> {
-    public static readonly defaultProps: Partial<IProps> = {
+export default class Tooltip extends React.Component<Props, State> {
+    public static readonly defaultProps: Partial<Props> = {
         position: TooltipPosition.Top
     };
 
     protected readonly $tooltip: React.RefObject<any>;
 
-    public constructor(props: IProps) {
+    public constructor(props: Props) {
         super(props);
 
         // Bindings.

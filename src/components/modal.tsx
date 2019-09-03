@@ -2,20 +2,22 @@ import React, {RefObject} from "react";
 import "../styles/misc/modal.scss";
 import {CSSTransition} from "react-transition-group";
 
-interface IProps {
+type Props = {
     readonly title: string;
+
     readonly text: string;
+
     readonly onClose?: () => void;
-}
+};
 
-interface IState {
+type State = {
     readonly visible: boolean;
-}
+};
 
-export default class Modal extends React.Component<IProps, IState> {
+export default class Modal extends React.Component<Props, State> {
     private $okayBtn: RefObject<any>;
 
-    public constructor(props: IProps) {
+    public constructor(props: Props) {
         super(props);
 
         // Bindings.

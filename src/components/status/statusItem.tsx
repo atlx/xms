@@ -6,7 +6,7 @@ import {faCircleNotch} from "@fortawesome/free-solid-svg-icons";
 import {IconProp} from "@fortawesome/fontawesome-svg-core";
 import Tooltip from "../tooltip";
 
-export interface IStatusItemProps {
+export type StatusItemProps = {
     readonly tooltip?: string;
     readonly onClick?: Callback;
     readonly loading?: boolean;
@@ -24,7 +24,7 @@ export interface IStatusItemProps {
     readonly className?: string;
 }
 
-export default class StatusItem extends React.Component<IStatusItemProps> {
+export default class StatusItem extends React.Component<StatusItemProps> {
     public computeClassNames(): string {
         const classes: string[] = ["status-item"];
 

@@ -12,14 +12,17 @@ import App from "../../core/app";
 import ModalActions from "../../actions/modal";
 import MessageActions from "../../actions/message";
 
-interface IProps {
+type Props = {
     readonly ping: number;
-    readonly connectionState: ConnectionState;
-    readonly groupAddress?: string;
-    readonly leftPanelVisible?: boolean;
-}
 
-class StatusBar extends React.Component<IProps> {
+    readonly connectionState: ConnectionState;
+
+    readonly groupAddress?: string;
+
+    readonly leftPanelVisible?: boolean;
+};
+
+class StatusBar extends React.Component<Props> {
     public renderPing(): string {
         if (this.props.ping < 1) {
             return "<1";

@@ -71,10 +71,11 @@ $margin: 8px;
 
         &[data-position="left"] {
             & {
-                animation-name: appear-left;
-                right: 0%;
+                // TODO
+                //animation-name: appear-left;
+                right: 100%;
                 margin-right: $margin;
-                transform: translate(-100%, -50%);
+                transform: translateY(-50%);
             }
             
             > .arrow {

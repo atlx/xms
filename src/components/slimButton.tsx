@@ -2,15 +2,15 @@ import React from "react";
 import "../styles/misc/slimButton.scss";
 import {Callback} from "../core/app";
 
-interface IProps {
+type Props = {
 	readonly text: string;
 
 	readonly main?: boolean;
 
 	readonly onClick?: Callback;
-}
+};
 
-export default class SlimButton extends React.Component<IProps> {
+export default class SlimButton extends React.Component<Props> {
 	protected handleClick(): void {
 		if (this.props.onClick) {
 			this.props.onClick();

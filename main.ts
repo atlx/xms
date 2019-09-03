@@ -19,8 +19,6 @@ console.log(`Development mode: ${dev}`);
 function createWindow(): void {
 	// Create the browser window.
 	mainWindow = new BrowserWindow({
-		width: 1250,
-		height: 768,
 		show: false,
 		//frame: false,
 		center: true,
