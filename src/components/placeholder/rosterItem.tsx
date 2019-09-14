@@ -1,7 +1,7 @@
 import React, {CSSProperties} from "react";
 import "@/styles/roster/rosterItem.scss";
 import "@/styles/placeholder/rosterItem.scss";
-import Util from "../../core/util";
+import Util from "@/core/util";
 
 type Props = {
     readonly opacity: number;

@@ -1,6 +1,6 @@
 import React from "react";
 import "@/styles/chat/noticeMessage.scss";
-import {NoticeStyle} from "../../models/message";
+import {NoticeStyle} from "@/models/message";
 
 type Props = {
 	readonly text: string;

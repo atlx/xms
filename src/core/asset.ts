@@ -1,11 +1,11 @@
 import path from "path";
 
-type IPaths = {
+type AssetPaths = {
     readonly resources: string[];
-}
+};
 
 export default class Asset {
-    private static basePaths: IPaths = {
+    private static basePaths: AssetPaths = {
         resources: ["resources"]
     };
 
