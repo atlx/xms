@@ -3,15 +3,17 @@ import "@/styles/userBar/userBarAction.scss";
 import {IconProp} from "@fortawesome/fontawesome-svg-core";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import Tooltip from "../tooltip";
-import {Callback} from "../../core/app";
+import {Callback} from "@/core/app";
 
-interface IProps {
+type Props = {
     readonly icon: IconProp;
-    readonly tooltip: string;
-    readonly onClick?: Callback;
-}
 
-export default class UserBarAction extends React.Component<IProps> {
+    readonly tooltip: string;
+
+    readonly onClick?: Callback;
+};
+
+export default class UserBarAction extends React.Component<Props> {
     public render(): JSX.Element {
         return (
             <Tooltip text={this.props.tooltip}>

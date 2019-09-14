@@ -1,11 +1,11 @@
 import React, {Component} from "react";
 import "@/styles/placeholder/avatar.scss";
 
-interface IProps {
+type Props = {
     readonly username: string;
-}
+};
 
-export default class PlaceholderAvatar extends Component<IProps> {
+export default class PlaceholderAvatar extends Component<Props> {
     protected getInitial(): string {
         return this.props.username.substring(0, 1);
     }

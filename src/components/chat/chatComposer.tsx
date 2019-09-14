@@ -17,7 +17,7 @@ import {IChannel} from "../../models/channel";
 import {BasicMap} from "../../core/helper";
 import app from "../../index";
 
-interface IProps {
+type Props = {
 	readonly users: BasicMap<User>;
 
 	/**
@@ -55,9 +55,9 @@ interface IProps {
 	 * Whether the input is locked and not allowing data change. Defaults to false.
 	 */
 	readonly locked?: boolean;
-}
+};
 
-interface IState {
+type State = {
 	readonly filteredAutoCompleteCommands: IGuideItem[];
 
 	/**
@@ -74,16 +74,16 @@ interface IState {
 	 * The number of lines present in the input textarea. Defaults to 1.
 	 */
 	readonly inputLines: number;
-}
+};
 
-class ChatComposer extends Component<IProps, IState> {
-	public static defaultProps: Partial<IProps> = {
+class ChatComposer extends Component<Props, State> {
+	public static defaultProps: Partial<Props> = {
 		maxLength: 100,
 		locked: false,
 		useGuide: false
 	};
 
-	public state: IState = {
+	public state: State = {
 		filteredAutoCompleteCommands: this.props.guideItems || [],
 		shaking: false,
 		inputLines: 1,

@@ -3,8 +3,11 @@ import "../styles/misc/passcode.scss";
 
 export default class Passcode extends Component {
     protected readonly $box1: RefObject<HTMLInputElement>;
+
     protected readonly $box2: RefObject<HTMLInputElement>;
+
     protected readonly $box3: RefObject<HTMLInputElement>;
+
     protected readonly $box4: RefObject<HTMLInputElement>;
 
     public constructor(props: any) {
@@ -43,7 +46,7 @@ export default class Passcode extends Component {
     public cycle2(): void {
         this.$box3.current!.focus();
     }
-    
+
     public cycle3(): void {
         this.$box4.current!.focus();
     }
@@ -52,7 +55,7 @@ export default class Passcode extends Component {
      * Attempt to authenticate the provided passcode.
      */
     public finish(): void {
-        
+
     }
 
     public render(): JSX.Element {

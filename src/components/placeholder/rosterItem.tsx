@@ -3,11 +3,11 @@ import "@/styles/roster/rosterItem.scss";
 import "@/styles/placeholder/rosterItem.scss";
 import Util from "../../core/util";
 
-interface IProps {
+type Props = {
     readonly opacity: number;
-}
+};
 
-export default class PlaceholderRosterItem extends React.Component<IProps> {
+export default class PlaceholderRosterItem extends React.Component<Props> {
     public static readonly widthFrom: number = 90;
     public static readonly widthTo: number = 140;
 

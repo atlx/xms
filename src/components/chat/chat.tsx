@@ -11,27 +11,30 @@ import {BasicMap} from "@/core/helper";
 import ChatFooter from "./chatFooter";
 import {IGuideItem} from "@/models/misc";
 
-interface IProps {
+type Props = {
 	readonly guideItems: IGuideItem[];
-	readonly activeChannel: IChannel;
-	readonly inputLocked: boolean;
-	readonly users: BasicMap<User>;
-}
 
-interface IState {
+	readonly activeChannel: IChannel;
+
+	readonly inputLocked: boolean;
+
+	readonly users: BasicMap<User>;
+};
+
+type State = {
 	/**
 	 * The current value of the input element.
 	 * Initially an empty string.
 	 */
 	readonly value: string;
-}
+};
 
-class Chat extends React.Component<IProps, IState> {
+class Chat extends React.Component<Props, State> {
 	private static readonly inputMaxLength: number = 100;
 
 	private readonly $footer: RefObject<ChatFooter> = React.createRef();
 
-	public state: IState = {
+	public state: State = {
 		value: ""
 	};
 

@@ -6,10 +6,13 @@ import MiscActions from "@/actions/misc";
 import {connect} from "react-redux";
 import {IAppState} from "@/store/store";
 
-interface IProps {
+type Props = {
 	readonly value: string;
+
 	readonly visible: boolean;
+
 	readonly items: IGuideItem[];
+
 	readonly title: string;
 
 	/**
@@ -21,10 +24,10 @@ interface IProps {
 	 * Provided by Redux.
 	 */
 	readonly autoCompleteCommands?: IGuideItem[];
-}
+};
 
-class ComposerGuide extends React.Component<IProps> {
-	public constructor(props: IProps) {
+class ComposerGuide extends React.Component<Props> {
+	public constructor(props: Props) {
 		super(props);
 
 		// Bindings

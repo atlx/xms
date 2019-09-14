@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import "@/styles/chat/chatFooter.scss";
 
-interface IProps {
+type Props = {
     /**
      * The current value of the input element.
      */
@@ -11,14 +11,14 @@ interface IProps {
      * The max value length of the input element.
      */
     readonly maxLength: number;
-}
+};
 
-interface IState {
+type State = {
     readonly status?: string;
-}
+};
 
-export default class ChatFooter extends Component<IProps, IState> {
-    public state: IState = {
+export default class ChatFooter extends Component<Props, State> {
+    public state: State = {
         status: undefined
     };
 

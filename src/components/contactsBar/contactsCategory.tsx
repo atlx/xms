@@ -8,13 +8,15 @@ import PlaceholderRosterItem from "../placeholder/rosterItem";
 import {User} from "@/models/user";
 import {BasicMap} from "@/core/helper";
 
-interface IProps {
+type Props = {
     readonly title: string;
-    readonly users: BasicMap<User>;
-    readonly meId: UniqueId | null;
-}
 
-class ContactsCategory extends React.Component<IProps> {
+    readonly users: BasicMap<User>;
+
+    readonly meId: UniqueId | null;
+};
+
+class ContactsCategory extends React.Component<Props> {
     public renderUsers(): JSX.Element[] {
         const users: User[] = [];
 

@@ -3,12 +3,12 @@ import {UniqueId} from "@/models/misc";
 import React from "react";
 import "@/styles/chat/userMention.scss";
 
-interface IProps {
+type Props = {
     readonly id: UniqueId;
     readonly username?: string;
-}
+};
 
-export default class UserMention extends Component<IProps> {
+export default class UserMention extends Component<Props> {
     protected renderContent(): string {
         return this.props.username || this.props.id;
     }

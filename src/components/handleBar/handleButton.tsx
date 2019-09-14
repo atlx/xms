@@ -4,7 +4,7 @@ import {faTimes} from "@fortawesome/free-solid-svg-icons";
 import App from "@/core/app";
 import "@/styles/handleBar/handleButton.scss";
 
-interface IProps {
+type Props = {
     readonly className?: string;
 
     /**
@@ -12,10 +12,10 @@ interface IProps {
      * Defaults to closing the application.
      */
     readonly onClick?: () => void;
-}
+};
 
-export default class HandleButton extends Component<IProps> {
-    public static defaultProps: Partial<IProps> = {
+export default class HandleButton extends Component<Props> {
+    public static defaultProps: Partial<Props> = {
         // TODO: Doesn't want to accept directly.
         onClick: () => {
             App.close()

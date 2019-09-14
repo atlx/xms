@@ -5,11 +5,11 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faHashtag} from "@fortawesome/free-solid-svg-icons";
 import {IChannel} from "@/models/channel";
 
-interface IProps {
+type Props = {
     readonly activeChannel: IChannel;
-}
+};
 
-export default class ChatHeader extends Component<IProps> {
+export default class ChatHeader extends Component<Props> {
     public render(): JSX.Element {
         return (
             <div className="chat-header">

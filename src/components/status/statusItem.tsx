@@ -8,9 +8,13 @@ import Tooltip from "../tooltip";
 
 export type StatusItemProps = {
     readonly tooltip?: string;
+
     readonly onClick?: Callback;
+
     readonly loading?: boolean;
+
     readonly icon?: IconProp;
+
     readonly style?: CSSProperties;
 
     /**

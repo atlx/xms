@@ -9,8 +9,11 @@ import PageId from "@/core/pageId";
 
 type State = {
 	readonly progressVisible: boolean;
+
 	readonly progressText: string;
+
 	readonly steps: number;
+
 	readonly maxSteps: number;
 }
 

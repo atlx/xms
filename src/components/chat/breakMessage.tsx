@@ -1,13 +1,14 @@
 import React from "react";
 import "@/styles/chat/breakMessage.scss";
 
-interface IProps {
+type Props = {
     readonly content: string;
-    readonly important: boolean;
-}
 
-export default class BreakMessage extends React.Component<IProps> {
-    public static defaultPropts: Partial<IProps> = {
+    readonly important: boolean;
+};
+
+export default class BreakMessage extends React.Component<Props> {
+    public static defaultPropts: Partial<Props> = {
         important: false
     };
 

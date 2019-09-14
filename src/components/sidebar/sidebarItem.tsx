@@ -4,15 +4,15 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {IconProp} from "@fortawesome/fontawesome-svg-core";
 import Tooltip, {TooltipPosition} from "../tooltip";
 
-interface IProps {
+type Props = {
     readonly icon: IconProp;
 
     readonly name: string;
 
     readonly active?: boolean;
-}
+};
 
-export default class SidebarItem extends Component<IProps> {
+export default class SidebarItem extends Component<Props> {
     public render(): JSX.Element {
         return (
             <div data-active={this.props.active} className="sidebar-item">

@@ -3,14 +3,17 @@ import "@/styles/roster/rosterItem.scss";
 import Tooltip, {TooltipPosition} from "../tooltip";
 import PlaceholderAvatar from "../placeholder/avatar";
 
-interface IProps {
+type Props = {
     readonly username: string;
-    readonly avatarUrl?: string;
-    readonly status?: string;
-    readonly me?: boolean;
-}
 
-export default class Contact extends React.Component<IProps> {
+    readonly avatarUrl?: string;
+
+    readonly status?: string;
+
+    readonly me?: boolean;
+};
+
+export default class Contact extends React.Component<Props> {
     public getComponentStyle(): string {
         const classes: string[] = ["roster-item"];
 

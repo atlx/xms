@@ -9,25 +9,27 @@ import {IAppState} from "@/store/store";
 import "@/styles/chat/chatContainer.scss";
 import {BasicMap} from "@/core/helper";
 
-interface IProps {
+type Props = {
     readonly messages: BasicMap<IGenericMessage>;
+
     readonly offsetMultiplier: number;
-}
+};
 
-interface IState {
+type State = {
     readonly offset: number;
-    readonly status: string | undefined;
-}
 
-class ChatContainer extends Component<IProps, IState> {
+    readonly status: string | undefined;
+};
+
+class ChatContainer extends Component<Props, State> {
     private readonly $container: RefObject<any> = React.createRef();
 
-    public state: IState = {
+    public state: State = {
         offset: 0,
         status: undefined
     };
 
-    public componentDidUpdate(prevProps: IProps, prevState: IState): void {
+    public componentDidUpdate(prevProps: Props, prevState: State): void {
         // Scroll messages when messages prop changes, and when status is shown/hidden
         // TODO: isScrolled() will not work on this position, since it has already been scrolled automatically.
         if (this.isScrolled() && prevProps.messages && this.props.messages.size !== prevProps.messages.size

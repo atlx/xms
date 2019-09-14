@@ -8,12 +8,13 @@ import {Map as ImmutableMap} from "immutable";
 import {User} from "@/models/user";
 import {BasicMap} from "@/core/helper";
 
-interface IProps {
+type Props = {
     readonly users: BasicMap<User>;
-    readonly categories: IRosterCategory[];
-}
 
-class ContactsBar extends React.Component<IProps> {
+    readonly categories: IRosterCategory[];
+};
+
+class ContactsBar extends React.Component<Props> {
     public renderCategories(): JSX.Element[] {
         return this.props.categories.map((category: IRosterCategory) => {
             const users: BasicMap<User> = ImmutableMap().asMutable() as BasicMap<User>;
