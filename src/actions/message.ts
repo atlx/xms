@@ -2,7 +2,7 @@ import {IGenericMessage, MessageType} from "../models/message";
 import {GeneralChannel, ActionType} from "../store/store";
 import Time from "../core/time";
 import Factory from "../core/factory";
-import {BasicMap} from "../core/helpers";
+import {BasicMap} from "../core/helper";
 import {UniqueId} from "../models/misc";
 import App from "../core/app";
 

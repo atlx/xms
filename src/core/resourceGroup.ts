@@ -1,5 +1,6 @@
 enum ResourceGroup {
     Fonts = "fonts",
+
     Sounds = "sounds"
 }
 

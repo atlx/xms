@@ -1,15 +1,13 @@
 import {createStore, Store, applyMiddleware, combineReducers} from "redux";
 import {IRosterCategory, UniqueId, IModal, IContextMenu} from "../models/misc";
-import CommandHandler from "../core/commandHandler";
 import {createLogger} from "redux-logger";
 import {Map as ImmutableMap} from "immutable";
 import {User} from "../models/user";
 import {IChannel, SpecialChannel, ChannelType} from "../models/channel";
 import {IGenericMessage} from "../models/message";
-import {BasicMap} from "../core/helpers";
+import {BasicMap} from "../core/helper";
 import categoryReducer from "../reducers/category";
 import channelReducer from "../reducers/channel";
-import commandReducer from "../reducers/command";
 import contextMenuReducer from "../reducers/contextMenu";
 import messageReducer from "../reducers/message";
 import miscReducer from "../reducers/misc";
@@ -75,7 +73,6 @@ export interface IAppStateCategory {
     readonly categories: IRosterCategory[];
     readonly channels: BasicMap<IChannel>;
     readonly activeChannel: IChannel | null;
-    readonly commandHandler: CommandHandler;
     readonly contextMenu: IContextMenu | null;
 }
 
@@ -129,7 +126,6 @@ export const createInitialState = (user: User): IAppState => {
             usersMap: new Map(),
             channels: ImmutableMap(),
             activeChannel: GeneralChannel,
-            commandHandler: new CommandHandler(),
             contextMenu: null
         },
 
@@ -168,7 +164,6 @@ export default class AppStore {
         return new AppStore(createStore(combineReducers({
             category: categoryReducer,
             channel: channelReducer,
-            command: commandReducer,
             contextMenu: contextMenuReducer,
             message: messageReducer,
             misc: miscReducer,

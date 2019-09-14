@@ -1,10 +1,11 @@
 import React, {RefObject, CSSProperties} from "react";
 import "../../styles/pages/init.scss";
 import Loader from "../loader";
-import Utils from "../../core/utils";
+import Util from "../../core/util";
 import MiscActions from "../../actions/misc";
 import {ConnectionState} from "../../store/store";
 import Page from "./page";
+import PageId from "../../core/pageId";
 
 type State = {
 	readonly progressVisible: boolean;
@@ -56,13 +57,13 @@ export default class InitPage extends React.Component<any, State> {
 			progressText: "Initializing"
 		});
 
-		if (!Utils.isNetworkAvailable()) {
+		if (!Util.isNetworkAvailable()) {
 			this.setState({
 				progressText: "Waiting for a network interface"
 			});
 
 			this.interfaceCheck = setInterval(() => {
-				if (Utils.isNetworkAvailable()) {
+				if (Util.isNetworkAvailable()) {
 					if (this.interfaceCheck !== null) {
 						clearInterval(this.interfaceCheck);
 					}

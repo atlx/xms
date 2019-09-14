@@ -6,7 +6,7 @@ import {IRosterCategory} from "../../models/misc";
 import ContactsCategory from "./contactsCategory";
 import {Map as ImmutableMap} from "immutable";
 import {User} from "../../models/user";
-import {BasicMap} from "../../core/helpers";
+import {BasicMap} from "../../core/helper";
 
 interface IProps {
     readonly users: BasicMap<User>;

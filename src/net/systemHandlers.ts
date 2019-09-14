@@ -1,5 +1,4 @@
-import NetworkHub, {NetPacketType, INetPacket} from "../core/networkHub";
-import {IAppState} from "../store/store";
+import NetworkHub, {NetPacketType, INetPacket} from "./networkHub";
 import {SpecialChannel, ChannelType} from "../models/channel";
 import {ITextMessage, MessageType} from "../models/message";
 import MessageActions from "../actions/message";

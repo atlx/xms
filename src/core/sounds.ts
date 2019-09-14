@@ -1,5 +1,6 @@
 interface ISounds {
     readonly notificationsOn: HTMLAudioElement;
+    
     readonly notification: HTMLAudioElement;
 }
 

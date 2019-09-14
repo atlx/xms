@@ -1,12 +1,7 @@
 import ReactDOM from "react-dom";
 import Gateway from "../net/gateway";
-import GatewayActions from "./gatewayActions";
-import CommandHandler from "./commandHandler";
-import NetworkHub from "./networkHub";
-import Sounds from "./sounds";
-import Constants from "./constants";
-import Localisation from "./localisation";
-import DeveloperToolbox from "./developerToolbox";
+import NetworkHub from "../net/networkHub";
+import Constant from "./constant";
 import Config from "./config";
 import {remote} from "electron";
 import {SpecialCategory} from "../models/misc";
@@ -49,17 +44,7 @@ export default class App {
 
 	private static _gateway: Gateway;
 
-	private static _actions: GatewayActions;
-
-	private static commandHandler: CommandHandler;
-
 	private static _net: NetworkHub;
-
-	private static _i18n: Localisation;
-
-	private static _developerToolbox: DeveloperToolbox;
-
-	private static notifications: boolean;
 
 	private static renderer: AppRenderer;
 
@@ -72,17 +57,12 @@ export default class App {
 			App.renderer = renderer;
 
 			App._gateway = new Gateway({
-				port: Constants.primaryBroadcastPort,
-				address: Constants.primaryGroupAddress,
+				port: Constant.primaryBroadcastPort,
+				address: Constant.primaryGroupAddress,
 				heartbeatInterval: 10_000
 			});
 
-			App._actions = new GatewayActions(App._gateway);
-			App.commandHandler = new CommandHandler();
-			App._net = new NetworkHub(Constants.primaryNetPort);
-			App._i18n = new Localisation();
-			App.notifications = true;
-			App._developerToolbox = new DeveloperToolbox();
+			App._net = new NetworkHub(Constant.primaryNetPort);
 
 			// Register the local user in the state.
 			// UserActions.updateMe(App.me);
@@ -115,27 +95,6 @@ export default class App {
 		}
 	}
 
-	public toggleNotifications(): this {
-		App.notifications = !App.notifications;
-
-		if (App.notifications) {
-			App.notify();
-		}
-
-		return this;
-	}
-
-	/**
-	 * Play the notification sound.
-	 */
-	public static notify(): void {
-		if (!App.notifications) {
-			return;
-		}
-
-		Sounds.notification();
-	}
-
 	public static openDevTools(): void {
 		remote.getCurrentWebContents().openDevTools();
 	}
@@ -147,7 +106,7 @@ export default class App {
 		console.log("[App] Rendering");
 
 		if (document.getElementById("root") == null) {
-			const root: any = document.createElement("div");
+			const root: HTMLDivElement = document.createElement("div");
 
 			root.id = "root";
 			document.body.appendChild(root);
@@ -156,31 +115,11 @@ export default class App {
 		ReactDOM.render(view(), document.getElementById("root"));
 	}
 
-	public test(): void {
-		//
-	}
-
-	public static get me(): User {
-		return this._store.state.user.me;
-	}
-
-	public static get gateway(): Gateway {
-		return App._gateway;
+	public static get net(): NetworkHub {
+		return App._net;
 	}
 
 	public static get store(): AppStore {
 		return App._store;
-	}
-
-	public static get i18n(): Localisation {
-		return App._i18n;
-	}
-
-	public static get dev(): DeveloperToolbox {
-		return App._developerToolbox;
-	}
-
-	public static get actions(): GatewayActions {
-		return App._actions;
 	}
 }

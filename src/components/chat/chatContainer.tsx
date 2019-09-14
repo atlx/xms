@@ -7,7 +7,7 @@ import Loader from "../loader";
 import {connect} from "react-redux";
 import {IAppState} from "../../store/store";
 import "../../styles/chat/chatContainer.scss";
-import {BasicMap} from "../../core/helpers";
+import {BasicMap} from "../../core/helper";
 
 interface IProps {
     readonly messages: BasicMap<IGenericMessage>;

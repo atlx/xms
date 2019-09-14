@@ -6,7 +6,7 @@ import {IAppState} from "../../store/store";
 import {connect} from "react-redux";
 import PlaceholderRosterItem from "../placeholder/rosterItem";
 import {User} from "../../models/user";
-import {BasicMap} from "../../core/helpers";
+import {BasicMap} from "../../core/helper";
 
 interface IProps {
     readonly title: string;

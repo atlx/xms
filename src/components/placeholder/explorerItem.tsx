@@ -3,7 +3,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import "../../styles/explorer/explorerItem.scss";
 import "../../styles/placeholder/explorerItem.scss";
 import {faHashtag} from "@fortawesome/free-solid-svg-icons";
-import Utils from "../../core/utils";
+import Util from "../../core/util";
 
 interface IProps {
     readonly opacity: number;
@@ -20,7 +20,7 @@ export default class PlaceholderExplorerItem extends React.Component<IProps> {
         return (
             <div style={this.getStyle()} className="explorer-item placeholder-explorer-item">
                 <FontAwesomeIcon className="icon" icon={faHashtag} />
-                <div style={Utils.getRandomPlaceholderStyle()} className="name" />
+                <div style={Util.getRandomPlaceholderStyle()} className="name" />
                 <div className="indicator" />
             </div>
         );

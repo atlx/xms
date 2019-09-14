@@ -4,9 +4,9 @@ import {GatewayMsg, GatewayMsgType} from "./gatewayEntities";
 import {ConnectionState} from "../store/store";
 import MiscActions from "../actions/misc";
 import Factory from "../core/factory";
-import Utils from "../core/utils";
+import Util from "../core/util";
 import App, {IDisposable} from "../core/app";
-import SystemMessages from "../core/systemMessages";
+import SystemMessage from "../core/systemMessage";
 import {INotice, NoticeStyle} from "../models/message";
 import {SpecialChannel} from "../models/channel";
 import MessageActions from "../actions/message";
@@ -101,7 +101,7 @@ export default class Gateway extends EventEmitter implements IDisposable {
         MiscActions.setInputLocked(true);
         this.dispose();
         console.log("[BroadcastGateway] Disconnected");
-        MessageActions.addToGeneral<INotice>(Factory.createNotice(SpecialChannel.General, SystemMessages.Disconnected, NoticeStyle.Warning));
+        MessageActions.addToGeneral<INotice>(Factory.createNotice(SpecialChannel.General, SystemMessage.Disconnected, NoticeStyle.Warning));
 
         /**
          * TODO: Changing to page init is OKAY since it's meant to handle
@@ -123,7 +123,7 @@ export default class Gateway extends EventEmitter implements IDisposable {
 
             // Start the network interface availability loop.
             this.setInterval(() => {
-                if (!Utils.isNetworkAvailable()) {
+                if (!Util.isNetworkAvailable()) {
                     this.close(this.handleSocketClose);
                 }
             }, 3000);
@@ -131,7 +131,7 @@ export default class Gateway extends EventEmitter implements IDisposable {
             MiscActions.setConnectionState(ConnectionState.Connected);
 
             MessageActions.addToGeneral<INotice>(
-                Factory.createNotice(SpecialChannel.General, SystemMessages.Connected)
+                Factory.createNotice(SpecialChannel.General, SystemMessage.Connected)
             );
 
             // TODO: Is last ping set at the starting point?
@@ -139,7 +139,7 @@ export default class Gateway extends EventEmitter implements IDisposable {
                 MessageActions.addToGeneral<INotice>(
                     Factory.createNotice(
                         SpecialChannel.General,
-                        SystemMessages.HighLatency,
+                        SystemMessage.HighLatency,
                         NoticeStyle.Warning
                     )
                 );

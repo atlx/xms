@@ -30,10 +30,15 @@ export interface IGenericMessage {
  */
 export interface ITextMessage extends IGenericMessage {
     readonly authorName: string;
+
     readonly authorAvatarHash?: string;
+
     readonly systemMessage: boolean;
+
     readonly sent: boolean;
+    
     readonly senderAddress: IpAddress;
+
     readonly mentions: IUserMention[];
 }
 

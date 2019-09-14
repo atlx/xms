@@ -4,13 +4,13 @@ type IPaths = {
     readonly resources: string[];
 }
 
-export default class Paths {
+export default class Asset {
     private static basePaths: IPaths = {
         resources: ["resources"]
     };
 
     public static resource(name: string, baseDirectory: string, ext: string): string {
-        return Paths.join(...Paths.basePaths.resources, baseDirectory, `${name}.${ext}`);
+        return Asset.join(...Asset.basePaths.resources, baseDirectory, `${name}.${ext}`);
     }
 
     private static join(...args: string[]): string {

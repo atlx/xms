@@ -2,7 +2,7 @@ import fs from "fs";
 import os from "os";
 import Auth, {IKeyPair} from "./auth";
 import {UniqueId} from "../models/misc";
-import Utils from "./utils";
+import Util from "./util";
 import {UserState} from "../models/user";
 
 export interface IConfig {
@@ -85,7 +85,7 @@ export default abstract class Config {
         const username: string = os.userInfo().username;
 
         return {
-            id: Utils.generateId(),
+            id: Util.generateId(),
             keyPair: Auth.generateKeyPairSync(),
             username,
             createdTime: Date.now(),

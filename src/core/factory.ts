@@ -1,4 +1,4 @@
-import Utils from "./utils";
+import Util from "./util";
 import {UniqueId} from "../models/misc";
 import {ITextMessage, MessageType, NoticeStyle, INotice, IGenericMessage} from "../models/message";
 import App from "./app";
@@ -7,7 +7,7 @@ export default class Factory {
     public static createMessage(channelId: UniqueId, text: string): ITextMessage {
         // TODO: Fix everything (most is hard-coded)
         return {
-            id: Utils.generateId(),
+            id: Util.generateId(),
 
             // TODO
             authorAvatarHash: "",
@@ -30,7 +30,7 @@ export default class Factory {
     public static createNotice(channelId: UniqueId, text: string, style: NoticeStyle = NoticeStyle.Success): INotice {
         return {
             channelId,
-            id: Utils.generateId(),
+            id: Util.generateId(),
             text,
             time: Date.now(),
             type: MessageType.Notice,
@@ -41,7 +41,7 @@ export default class Factory {
     public static createBreakMessage(channelId: UniqueId, text: string): IGenericMessage {
         return {
             channelId,
-            id: Utils.generateId(),
+            id: Util.generateId(),
             text,
             type: MessageType.Break,
             time: Date.now()

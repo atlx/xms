@@ -1,6 +1,6 @@
 import {IpAddress} from "../models/misc";
 import net, {Socket, Server} from "net";
-import Utils from "../core/utils";
+import Util from "../core/util";
 
 export type StreamHandler<T = any> = (data: T) => void;
 
@@ -12,7 +12,7 @@ export default class Stream {
     private receiver: Server | null;
 
     private remote: Socket | null;
-    
+
     private dispatcher: Socket | null;
 
     public constructor(localPort: number, destination: IpAddress) {
@@ -23,7 +23,7 @@ export default class Stream {
         this.dispatcher = null;
     }
 
-    public open(handler: StreamHandler): this {
+    public open(handler: StreamHandler): void {
         // Create receiver
         this.receiver = net.createServer((client: Socket) => {
             if (client.remoteAddress && client.remoteAddress === this.destination) {
@@ -32,7 +32,7 @@ export default class Stream {
                 this.remote.on("data", (rawData: Buffer) => {
                     const data: string = rawData.toString();
 
-                    if (Utils.isJson(data)) {
+                    if (Util.isJson(data)) {
                         handler(JSON.parse(data));
                     }
                 });
@@ -44,20 +44,16 @@ export default class Stream {
         // Create dispatcher
         this.dispatcher = new Socket();
 
-        this.dispatcher.on("data", () => {})
-
-        return this;
+        this.dispatcher.on("data", () => {});
     }
 
-    public write(data: any): this {
+    public write(data: any): void {
         if (this.remote === null) {
             throw new Error("[Stream] Cannot write while remote socket is null");
         }
-
-        return this;
     }
 
-    public close(): this {
-        return this;
+    public close(): void {
+        // TODO
     }
 }

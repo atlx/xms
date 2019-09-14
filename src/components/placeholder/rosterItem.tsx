@@ -1,7 +1,7 @@
 import React, {CSSProperties} from "react";
 import "../../styles/roster/rosterItem.scss";
 import "../../styles/placeholder/rosterItem.scss";
-import Utils from "../../core/utils";
+import Util from "../../core/util";
 
 interface IProps {
     readonly opacity: number;
@@ -23,7 +23,7 @@ export default class PlaceholderRosterItem extends React.Component<IProps> {
                 {/* TODO: Temp. unknown avatar image */}
                 <div className="avatar" />
                 <div className="info-wrapper">
-                    <div style={Utils.getRandomPlaceholderStyle()} className="name" />
+                    <div style={Util.getRandomPlaceholderStyle()} className="name" />
                     <div className="status" />
                 </div>
             </div>

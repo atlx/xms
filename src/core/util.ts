@@ -1,10 +1,9 @@
 import os from "os";
 import {UniqueId} from "../models/misc";
 import {CSSProperties} from "react";
-import Constants from "./constants";
-import {remote} from "electron";
+import Constant from "./constant";
 
-export default abstract class Utils {
+export default abstract class Util {
     public static getLocalAddresses() {
         const interfaces = os.networkInterfaces();
         const result: any[] = [];
@@ -40,7 +39,7 @@ export default abstract class Utils {
         return Math.random().toString().replace(".", "");
     }
 
-    public static determinePingState(ping: number): string {
+    public static classifyPing(ping: number): string {
         if (ping <= 50) {
             return "Excellent";
         }
@@ -52,7 +51,7 @@ export default abstract class Utils {
     }
 
     public static isNetworkAvailable(): boolean {
-        return Utils.getLocalAddresses().length > 0;
+        return Util.getLocalAddresses().length > 0;
     }
 
     public static capitalize(string: string): string {
@@ -72,11 +71,11 @@ export default abstract class Utils {
 
     public static getWidthStyle(min: number, max: number): CSSProperties {
         return {
-            width: `${Utils.getRandomInt(min, max)}px`
+            width: `${Util.getRandomInt(min, max)}px`
         };
     }
 
     public static getRandomPlaceholderStyle(): CSSProperties {
-        return Utils.getWidthStyle(Constants.minPlaceholderNameWidth, Constants.maxPlaceholderNameWidth);
+        return Util.getWidthStyle(Constant.minPlaceholderNameWidth, Constant.maxPlaceholderNameWidth);
     }
 }

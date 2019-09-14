@@ -1,6 +1,6 @@
 import {IpAddress} from "../models/misc";
 
-export default abstract class Constants {
+export default abstract class Constant {
     public static minPlaceholderNameWidth: number = 60;
 
     public static maxPlaceholderNameWidth: number = 160;

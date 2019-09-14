@@ -7,7 +7,7 @@ import ChatHeader from "./chatHeader";
 import ChatContainer from "./chatContainer";
 import {IChannel} from "../../models/channel";
 import ChatComposer from "./chatComposer";
-import {BasicMap} from "../../core/helpers";
+import {BasicMap} from "../../core/helper";
 import ChatFooter from "./chatFooter";
 import {IGuideItem} from "../../models/misc";
 

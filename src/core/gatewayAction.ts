@@ -4,7 +4,7 @@ import {ITextMessage} from "../models/message";
 import {IpAddress} from "../models/misc";
 import {SpecialChannel} from "../models/channel";
 
-export default class GatewayActions {
+export default class GatewayAction {
     private readonly gateway: Gateway;
 
     public constructor(gateway: Gateway) {

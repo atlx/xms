@@ -14,7 +14,7 @@ import Factory from "../../core/factory";
 import "../../styles/chat/chatComposer.scss";
 import MessageActions from "../../actions/message";
 import {IChannel} from "../../models/channel";
-import {BasicMap} from "../../core/helpers";
+import {BasicMap} from "../../core/helper";
 import App from "../../core/app";
 
 interface IProps {
