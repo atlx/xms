@@ -14,39 +14,71 @@ import miscReducer from "../reducers/misc";
 import userReducer from "../reducers/user";
 import netReducer from "../reducers/net";
 import PageId from "../core/pageId";
+import Tag from "../core/tag";
 
 export enum ActionType {
     MarkMessageSent = "MARK_MESSAGE_SENT",
+
     DeleteMessage = "DELETE_MESSAGE",
+
     AddUser = "ADD_USER",
+
     SetActiveChannel = "SET_ACTIVE_CHANNEL",
+
     SetGeneralAsActiveChannel = "SET_GENERAL_AS_ACTIVE_CHANNEL",
+
     SetInputLocked = "SET_INPUT_LOCKED",
+
     SetPage = "SET_PAGE",
+
     SetGuideVisible = "SET_AUTOCOMPLETE_VISIBLE",
+
     RegisterCommand = "REGISTER_COMMAND",
+
     ShowModal = "SHOW_MODAL",
+
     ShiftModal = "SHIFT_MODAL",
+
     ClearMessages = "CLEAR_MESSAGES",
+
     UpdateMe = "UPDATE_ME",
+
     AddCategory = "ADD_CATEGORY",
+
     AddUserToCategory = "ADD_USER_TO_CATEGORY",
+
     ShowContextMenu = "SHOW_CONTEXT_MENU",
+
     HideContextMenu = "HIDE_CONTEXT_MENU",
+
     AddChannel = "ADD_CHANNEL",
+
     AddMessage = "ADD_MESSAGE",
+
     RemoveChannel = "REMOVE_CHANNEL",
+
     RenameChannel = "RENAME_CHANNEL",
+
     SetChannelNotify = "SET_CHANNEL_NOTIFY",
+
     SetChannelTopic = "SET_CHANNEL_TOPIC",
+
     RenameCategory = "RENAME_CATEGORY",
+
     UpdateUser = "UPDATE_USER",
+
     AddPing = "ADD_PING",
+
     SetConnectionState = "SET_CONNECTION_STATE",
+
     SetGroupAddress = "SET_GROUP_ADDRESS",
+
     SetLeftPanelVisible = "SET_LEFT_PANEL_VISIBLE",
+
     AddSidebarItem = "ADD_SIDEBAR_ITEM",
+
     SetSidebarItemActive = "SET_SIDEBAR_ITEM_ACTIVE",
+
     RemoveSidebarItem = "REMOVE_SIDEBAR_ITEM"
 }
 
@@ -56,49 +88,68 @@ export type Reducer<T extends StatePart = any> = (state: T | null | undefined, a
 
 export type Action<T extends object = any> = {
     readonly type: ActionType;
+
     readonly payload?: T;
 }
 
 
 export interface IAppState {
     readonly category: IAppStateCategory;
+
     readonly misc: IAppStateMisc;
+
     readonly message: IAppStateMessage;
+
     readonly net: IAppStateNet;
+
     readonly user: IAppStateUser;
 }
 
 export interface IAppStateCategory {
     readonly usersMap: Map<UniqueId, User>;
+
     readonly categories: IRosterCategory[];
+
     readonly channels: BasicMap<IChannel>;
+
     readonly activeChannel: IChannel | null;
+
     readonly contextMenu: IContextMenu | null;
 }
 
 export interface IAppStateMisc {
     readonly modals: IModal[];
+
     readonly page: PageId;
+
     readonly inputLocked: boolean;
+
     readonly guideVisible: boolean;
+
     readonly leftPanelVisible: boolean;
 }
 
 export interface IAppStateUser {
     readonly users: BasicMap<User>;
+
     readonly me: User;
 }
 
 export enum ConnectionState {
     Connected,
+
     Disconnected,
+
     Connecting,
+
     Reconnecting
 }
 
 export interface IAppStateNet {
     readonly lastPing: number;
+
     readonly connectionState: ConnectionState;
+
     readonly groupAddress?: string;
 }
 
@@ -137,19 +188,19 @@ export const createInitialState = (user: User): IAppState => {
             leftPanelVisible: true
         },
 
-        message: {
+        message: Tag.dbSyncable({
             messages: ImmutableMap(),
-        },
+        }),
 
         net: {
             lastPing: -1,
             connectionState: ConnectionState.Disconnected
         },
 
-        user: {
+        user: Tag.dbSyncable({
             me: user,
             users: ImmutableMap()
-        }
+        })
     };
 };
 
