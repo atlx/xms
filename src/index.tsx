@@ -9,6 +9,7 @@ import AuthPage from "./components/pages/auth";
 import Application from "./components/application";
 import {User} from "./models/user";
 import DefaultPage from "./components/pages/default";
+import AppStore from "./store/store";
 
 // Prepare config.
 const config: IConfig = Config.loadOrCreate();
@@ -22,8 +23,10 @@ const me: User = {
     status: config.status
 };
 
-App.boot(me, () => (
-    <Provider store={App.store.unwrap()}>
+const store: AppStore = AppStore.createDefault();
+
+export const app: App = new App(store, me, () => (
+    <Provider store={store.unwrap()}>
         <HashRouter>
             <Switch>
                 {/* TODO: Hard-coded prop as null (required to pass in). */}

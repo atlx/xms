@@ -36,33 +36,29 @@ export default class App {
 		remote.getCurrentWindow().close();
 	}
 
-	public static get initialState(): IAppState {
-		return App._initialState;
-	}
+	public readonly gateway: Gateway;
 
-	private static _initialState: IAppState;
+	public readonly net: NetworkHub;
 
-	private static _gateway: Gateway;
+	public readonly store: AppStore;
 
-	private static _net: NetworkHub;
+	protected readonly renderer: AppRenderer;
 
-	private static renderer: AppRenderer;
+	protected readonly initialState: IAppState;
 
-	private static _store: AppStore;
-
-	public static boot(user: User, renderer: AppRenderer): void {
+	public constructor(store: AppStore, user: User, renderer: AppRenderer) {
 		try {
-			App._initialState = createInitialState(user);
-			App._store = AppStore.createDefault();
-			App.renderer = renderer;
+			this.initialState = createInitialState(user);
+			this.store = store;
+			this.renderer = renderer;
 
-			App._gateway = new Gateway({
+			this.gateway = new Gateway({
 				port: Constant.primaryBroadcastPort,
 				address: Constant.primaryGroupAddress,
 				heartbeatInterval: 10_000
 			});
 
-			App._net = new NetworkHub(Constant.primaryNetPort);
+			this.net = new NetworkHub(Constant.primaryNetPort);
 
 			// Register the local user in the state.
 			// UserActions.updateMe(App.me);
@@ -77,11 +73,11 @@ export default class App {
 			});
 
 			ChannelActions.setGeneralAsActive();
-			App.render();
-			App._gateway.connect();
+			this.render();
+			this.gateway.connect();
 		}
 		catch (error) {
-			App.render(() => (
+			this.render(() => (
 				<ErrorPage
 					message={error.message}
 					fileName={error.fileName || "Unnamed"}
@@ -102,7 +98,7 @@ export default class App {
 	/**
 	 * Create and render the root component.
 	 */
-	public static render(view: () => JSX.Element = App.renderer): void {
+	public render(view: () => JSX.Element = this.renderer): void {
 		console.log("[App] Rendering");
 
 		if (document.getElementById("root") == null) {
@@ -113,13 +109,5 @@ export default class App {
 		}
 
 		ReactDOM.render(view(), document.getElementById("root"));
-	}
-
-	public static get net(): NetworkHub {
-		return App._net;
-	}
-
-	public static get store(): AppStore {
-		return App._store;
 	}
 }

@@ -6,7 +6,6 @@ import {IAppState, ConnectionState} from "../../store/store";
 import {connect} from "react-redux";
 import StatusSelect from "../status/statusSelect";
 import StatusSelectItem from "./statusSelectItem";
-import {Language} from "../../core/localisation";
 import MiscActions from "../../actions/misc";
 import App from "../../core/app";
 import ModalActions from "../../actions/modal";

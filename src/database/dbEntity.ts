@@ -22,7 +22,7 @@ export interface IDocModel {
  * A database entity, used to be inherited for
  * active directory support.
  */
-export default abstract class DbEntity<T extends IDbModel> {
+export default abstract class DbEntity<T extends IDbModel = IDbModel> {
     protected model: T;
 
     public constructor(model: T) {

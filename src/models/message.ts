@@ -4,13 +4,16 @@ import UserMention, {IUserMention} from "./userMention";
 import {SpecialChannel} from "./channel";
 import MessageActions from "../actions/message";
 import App from "../core/app";
+import {Sync} from "../core/decorator";
 
 /**
  * Used to identify a generic message.
  */
 export enum MessageType {
     Text,
+
     Notice,
+
     Break
 }
 
@@ -19,9 +22,13 @@ export enum MessageType {
  */
 export interface IGenericMessage {
     readonly type: MessageType;
+
     readonly id: UniqueId;
+
     readonly channelId: UniqueId | SpecialChannel;
+
     readonly text: string;
+
     readonly time: number;
 }
 
@@ -36,7 +43,7 @@ export interface ITextMessage extends IGenericMessage {
     readonly systemMessage: boolean;
 
     readonly sent: boolean;
-    
+
     readonly senderAddress: IpAddress;
 
     readonly mentions: IUserMention[];
