@@ -11,7 +11,7 @@ import {List} from "immutable";
 import {User} from "../../models/user";
 import {ITextMessage} from "../../models/message";
 import Factory from "../../core/factory";
-import "../../styles/chat/chatComposer.scss";
+import "@/styles/chat/chatComposer.scss";
 import MessageActions from "../../actions/message";
 import {IChannel} from "../../models/channel";
 import {BasicMap} from "../../core/helper";

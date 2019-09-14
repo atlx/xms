@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import "../../styles/sidebar/sidebar.scss";
+import "@/styles/sidebar/sidebar.scss";
 import SidebarItem from "./sidebarItem";
 import {faInbox, faBell, faCompass, faCog, faBug, faChartPie} from "@fortawesome/free-solid-svg-icons";
 

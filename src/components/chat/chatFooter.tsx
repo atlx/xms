@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import "../../styles/chat/chatFooter.scss";
+import "@/styles/chat/chatFooter.scss";
 
 interface IProps {
     /**
@@ -27,21 +27,21 @@ export default class ChatFooter extends Component<IProps, IState> {
      */
     public handleValueChange(): void {
         // Create length variables for conviniency.
-		const valueLength: number = this.props.value.length;
-		const threshold: number = Math.round(this.props.maxLength / 5);
+        const valueLength: number = this.props.value.length;
+        const threshold: number = Math.round(this.props.maxLength / 5);
 
-		// Update/show character counter if threshold is met, and is not at max length.
-		if (valueLength > threshold && valueLength <= this.props.maxLength) {
-			this.setState({
-				status: `${this.props.maxLength - valueLength} characters left`
-			});
-		}
-		// Length does not exceed threshold, hide the counter.
-		else {
-			this.setState({
-				status: undefined
-			});
-		}
+        // Update/show character counter if threshold is met, and is not at max length.
+        if (valueLength > threshold && valueLength <= this.props.maxLength) {
+            this.setState({
+                status: `${this.props.maxLength - valueLength} characters left`
+            });
+        }
+        // Length does not exceed threshold, hide the counter.
+        else {
+            this.setState({
+                status: undefined
+            });
+        }
     }
 
     public render(): JSX.Element {

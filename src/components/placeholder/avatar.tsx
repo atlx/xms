@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import "../../styles/placeholder/avatar.scss";
+import "@/styles/placeholder/avatar.scss";
 
 interface IProps {
     readonly username: string;

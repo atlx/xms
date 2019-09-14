@@ -1,5 +1,5 @@
 import React from "react";
-import "../../styles/userBar/userBarAction.scss";
+import "@/styles/userBar/userBarAction.scss";
 import {IconProp} from "@fortawesome/fontawesome-svg-core";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import Tooltip from "../tooltip";

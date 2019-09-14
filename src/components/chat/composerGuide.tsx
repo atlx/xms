@@ -1,10 +1,10 @@
 import React from "react";
-import "../../styles/chat/autoCompleter.scss";
-import {IGuideItem} from "../../models/misc";
+import "@/styles/chat/autoCompleter.scss";
+import {IGuideItem} from "@/models/misc";
 import {CSSTransition} from "react-transition-group";
-import MiscActions from "../../actions/misc";
+import MiscActions from "@/actions/misc";
 import {connect} from "react-redux";
-import {IAppState} from "../../store/store";
+import {IAppState} from "@/store/store";
 
 interface IProps {
 	readonly value: string;

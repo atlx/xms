@@ -3,7 +3,7 @@ import Page from "./page";
 import Passcode from "../passcode";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faKey} from "@fortawesome/free-solid-svg-icons";
-import "../../styles/pages/auth.scss";
+import "@/styles/pages/auth.scss";
 
 export default class AuthPage extends Component {
     public render(): JSX.Element {

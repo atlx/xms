@@ -1,16 +1,16 @@
 import React from "react";
-import "../../styles/statusBar/statusBar.scss";
+import "@/styles/statusBar/statusBar.scss";
 import StatusItem from "../status/statusItem";
 import {faWifi, faSignal, faBell, faGlobeAmericas, faBullseye, faArrowUp, faArrowDown, faToolbox, faComment, faLocationArrow, faTimesCircle, faBookOpen, faUserCircle, faArrowRight, faGripLines} from "@fortawesome/free-solid-svg-icons";
-import {IAppState, ConnectionState} from "../../store/store";
+import {IAppState, ConnectionState} from "@/store/store";
 import {connect} from "react-redux";
 import StatusSelect from "../status/statusSelect";
 import StatusSelectItem from "./statusSelectItem";
-import MiscActions from "../../actions/misc";
-import App from "../../core/app";
-import ModalActions from "../../actions/modal";
-import MessageActions from "../../actions/message";
-import app from "../../index";
+import MiscActions from "@/actions/misc";
+import App from "@/core/app";
+import ModalActions from "@/actions/modal";
+import MessageActions from "@/actions/message";
+import app from "@/index";
 
 type Props = {
     readonly ping: number;

@@ -1,5 +1,5 @@
 import React from "react";
-import "../../styles/chat/noticeMessage.scss";
+import "@/styles/chat/noticeMessage.scss";
 import {NoticeStyle} from "../../models/message";
 
 interface IProps {

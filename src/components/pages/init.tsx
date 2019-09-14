@@ -1,11 +1,11 @@
 import React, {RefObject, CSSProperties} from "react";
-import "../../styles/pages/init.scss";
+import "@/styles/pages/init.scss";
 import Loader from "../loader";
-import Util from "../../core/util";
-import MiscActions from "../../actions/misc";
-import {ConnectionState} from "../../store/store";
+import Util from "@/core/util";
+import MiscActions from "@/actions/misc";
+import {ConnectionState} from "@/store/store";
 import Page from "./page";
-import PageId from "../../core/pageId";
+import PageId from "@/core/pageId";
 
 type State = {
 	readonly progressVisible: boolean;

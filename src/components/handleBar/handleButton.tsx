@@ -1,8 +1,8 @@
 import React, {Component} from "react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faTimes} from "@fortawesome/free-solid-svg-icons";
-import App from "../../core/app";
-import "../../styles/handleBar/handleButton.scss";
+import App from "@/core/app";
+import "@/styles/handleBar/handleButton.scss";
 
 interface IProps {
     readonly className?: string;
@@ -37,7 +37,7 @@ export default class HandleButton extends Component<IProps> {
             this.props.onClick();
         }
     }
-    
+
     public render(): JSX.Element {
         return (
             <div onClick={() => this.invokeCallback()} className={this.getClass()}>

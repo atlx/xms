@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import "../../styles/sidebar/sidebarItem.scss";
+import "@/styles/sidebar/sidebarItem.scss";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {IconProp} from "@fortawesome/fontawesome-svg-core";
 import Tooltip, {TooltipPosition} from "../tooltip";

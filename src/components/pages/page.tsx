@@ -1,6 +1,6 @@
 import React, {Component} from "react";
-import "../../styles/pages/page.scss";
-import PageId from "../../core/pageId";
+import "@/styles/pages/page.scss";
+import PageId from "@/core/pageId";
 
 type Props = {
     readonly pageId: PageId;
