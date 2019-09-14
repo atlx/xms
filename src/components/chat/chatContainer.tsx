@@ -1,13 +1,13 @@
 import React, {Component, RefObject} from "react";
-import {IGenericMessage, MessageType, ITextMessage, INotice, IBreakMessage} from "../../models/message";
+import {IGenericMessage, MessageType, ITextMessage, INotice, IBreakMessage} from "@/models/message";
 import ChatMessage from "./chatMessage";
 import NoticeMessage from "./noticeMessage";
 import BreakMessage from "./breakMessage";
 import Loader from "../loader";
 import {connect} from "react-redux";
-import {IAppState} from "../../store/store";
-import "../../styles/chat/chatContainer.scss";
-import {BasicMap} from "../../core/helper";
+import {IAppState} from "@/store/store";
+import "@/styles/chat/chatContainer.scss";
+import {BasicMap} from "@/core/helper";
 
 interface IProps {
     readonly messages: BasicMap<IGenericMessage>;
@@ -28,16 +28,16 @@ class ChatContainer extends Component<IProps, IState> {
     };
 
     public componentDidUpdate(prevProps: IProps, prevState: IState): void {
-		// Scroll messages when messages prop changes, and when status is shown/hidden
-		// TODO: isScrolled() will not work on this position, since it has already been scrolled automatically.
-		if (this.isScrolled() && prevProps.messages && this.props.messages.size !== prevProps.messages.size
-			|| (prevState.status !== this.state.status && (!prevState.status || !this.state.status))) {
-			this.scrollMessages();
-		}
+        // Scroll messages when messages prop changes, and when status is shown/hidden
+        // TODO: isScrolled() will not work on this position, since it has already been scrolled automatically.
+        if (this.isScrolled() && prevProps.messages && this.props.messages.size !== prevProps.messages.size
+            || (prevState.status !== this.state.status && (!prevState.status || !this.state.status))) {
+            this.scrollMessages();
+        }
 
-		// TODO: Possibly messing up stuff.
-		//this.$messages.current.scrollTop = this.$messages.current.scrollHeight;
-	}
+        // TODO: Possibly messing up stuff.
+        //this.$messages.current.scrollTop = this.$messages.current.scrollHeight;
+    }
 
     protected scrollMessages(): void {
         if (!this.isScrolled()) {
@@ -78,14 +78,14 @@ class ChatContainer extends Component<IProps, IState> {
 
                 this.loadOlderMessages();
             }
-            
+
             return <Loader text="Loading messages" />;
         }
     }
 
     protected renderMessages(): JSX.Element[] {
         const messageMap: BasicMap<IGenericMessage> = this.props.messages;
-        
+
         let messages: IGenericMessage[] = [];
 
         // TODO: Hard-coded cut value.

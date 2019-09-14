@@ -2,7 +2,7 @@ import React, {Component, RefObject} from "react";
 import ComposerGuide from "./composerGuide";
 import {CSSTransition} from "react-transition-group";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faPlus, faPaperPlane} from "@fortawesome/free-solid-svg-icons";
+import {faPlus} from "@fortawesome/free-solid-svg-icons";
 import {IGuideItem} from "../../models/misc";
 import {connect} from "react-redux";
 import {IAppState} from "../../store/store";
@@ -15,7 +15,7 @@ import "../../styles/chat/chatComposer.scss";
 import MessageActions from "../../actions/message";
 import {IChannel} from "../../models/channel";
 import {BasicMap} from "../../core/helper";
-import App from "../../core/app";
+import app from "../../index";
 
 interface IProps {
 	readonly users: BasicMap<User>;
@@ -281,7 +281,7 @@ class ChatComposer extends Component<IProps, IState> {
 
 		this.clearValue();
 		MessageActions.addToGeneral(message);
-		App.actions.handleMessage(message);
+		app.actions.handleMessage(message);
 	}
 
 	public getValue(trim: boolean = false): string {

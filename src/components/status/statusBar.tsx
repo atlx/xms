@@ -10,6 +10,7 @@ import MiscActions from "../../actions/misc";
 import App from "../../core/app";
 import ModalActions from "../../actions/modal";
 import MessageActions from "../../actions/message";
+import app from "../../index";
 
 type Props = {
     readonly ping: number;
@@ -66,7 +67,7 @@ class StatusBar extends React.Component<Props> {
                         <StatusSelectItem disabled>Away</StatusSelectItem>
                         <StatusSelectItem disabled>Offline</StatusSelectItem>
                     </StatusSelect>
-                    <StatusSelect icon={faGlobeAmericas} text={App.i18n.activeLanguage} title="Select Language">
+                    <StatusSelect icon={faGlobeAmericas} text={app.i18n.activeLanguage} title="Select Language">
                         {/* TODO: Languages */}
                         <StatusSelectItem selected>{Language.English}</StatusSelectItem>
                         <StatusSelectItem disabled>{Language.Spanish}</StatusSelectItem>
@@ -77,8 +78,8 @@ class StatusBar extends React.Component<Props> {
                     <StatusItem
                         icon={faWifi}
                         loading={this.props.connectionState === ConnectionState.Connecting}
-                        tooltip={`Connected to ${App.gateway.options.address}`}
-                        onClick={() => App.gateway.toggleConnected()}>{this.renderConnectionState()}</StatusItem>
+                        tooltip={`Connected to ${app.gateway.options.address}`}
+                        onClick={() => app.gateway.toggleConnected()}>{this.renderConnectionState()}</StatusItem>
                 </div>
             </div>
         );

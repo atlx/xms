@@ -4,7 +4,7 @@ import Message, {ITextMessage} from "../models/message";
 import MessageEvent from "../net/messageEvent";
 import {GatewayMsgType, HelloPayload, MessagePayload} from "../net/gatewayEntities";
 import {IAppState} from "../store/store";
-import UserActions from "../actions/user";
+import UserAction from "../actions/user";
 import MessageActions from "../actions/message";
 import {SpecialChannel} from "../models/channel";
 
@@ -30,7 +30,7 @@ export default class Messages extends Plugin {
                     const payload: HelloPayload = message.payload;
 
                     if (!(store.getState() as IAppState).category.usersMap.has(message.sender)) {
-                        UserActions.add(payload.user);
+                        UserAction.add(payload.user);
                     }
                 }
                 // Handle incoming message.

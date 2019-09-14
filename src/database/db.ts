@@ -15,7 +15,7 @@ export default abstract class Db {
      * Create the database. This should be done
      * before using the database for the first time.
      */
-    public static create(): void {
+    public static createDefault(): void {
         Db.db = new PouchDB(Db.dbName);
     }
 

@@ -23,9 +23,11 @@ const me: User = {
     status: config.status
 };
 
+// Create the initial store.
 const store: AppStore = AppStore.createDefault();
 
-export const app: App = new App(store, me, () => (
+// Create the app global. This will also boot the application.
+const app: App = new App(store, me, () => (
     <Provider store={store.unwrap()}>
         <HashRouter>
             <Switch>
@@ -41,3 +43,5 @@ export const app: App = new App(store, me, () => (
         </HashRouter>
     </Provider>
 ));
+
+export default app;

@@ -1,5 +1,5 @@
 import React from "react";
-import "../../styles/chat/breakMessage.scss";
+import "@/styles/chat/breakMessage.scss";
 
 interface IProps {
     readonly content: string;

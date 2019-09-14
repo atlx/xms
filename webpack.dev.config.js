@@ -27,7 +27,7 @@ module.exports = {
 			// Load SCSS + Sass files.
 			{
 				test: /\.scss$/,
-				
+
 				use: [
 					// Creates style nodes from JS strings.
 					{

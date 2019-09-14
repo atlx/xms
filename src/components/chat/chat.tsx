@@ -1,15 +1,15 @@
 import React, {RefObject} from "react";
-import "../../styles/chat/chat.scss";
+import "@/styles/chat/chat.scss";
 import {connect} from "react-redux";
-import {IAppState} from "../../store/store";
-import {User} from "../../models/user";
+import {IAppState} from "@/store/store";
+import {User} from "@/models/user";
 import ChatHeader from "./chatHeader";
 import ChatContainer from "./chatContainer";
-import {IChannel} from "../../models/channel";
+import {IChannel} from "@/models/channel";
 import ChatComposer from "./chatComposer";
-import {BasicMap} from "../../core/helper";
+import {BasicMap} from "@/core/helper";
 import ChatFooter from "./chatFooter";
-import {IGuideItem} from "../../models/misc";
+import {IGuideItem} from "@/models/misc";
 
 interface IProps {
 	readonly guideItems: IGuideItem[];

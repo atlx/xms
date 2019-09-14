@@ -1,6 +1,6 @@
 import React from "react";
-import "../../styles/chat/chatMessage.scss";
-import Pattern from "../../core/pattern";
+import "@/styles/chat/chatMessage.scss";
+import Pattern from "@/core/pattern";
 import UserMention from "./userMention";
 import Indicator, {IndicatorColor} from "../indicator";
 import Tooltip, {TooltipPosition} from "../tooltip";
