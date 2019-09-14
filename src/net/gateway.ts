@@ -2,14 +2,14 @@ import dgram, {Socket} from "dgram";
 import {AddressInfo} from "net";
 import {GatewayMsg, GatewayMsgType} from "./gatewayEntities";
 import {ConnectionState} from "../store/store";
-import MiscActions from "../actions/misc";
+import MiscAction from "../actions/misc";
 import Factory from "../core/factory";
 import Util from "../core/util";
 import App, {IDisposable} from "../core/app";
 import SystemMessage from "../core/systemMessage";
 import {INotice, NoticeStyle} from "../models/message";
 import {SpecialChannel} from "../models/channel";
-import MessageActions from "../actions/message";
+import MessageAction from "../actions/message";
 import {IGatewayOptions} from "./gatewayOptions";
 import {EventEmitter} from "events";
 import NetworkEvent from "./networkEvent";
@@ -82,7 +82,7 @@ export default class Gateway extends EventEmitter implements IDisposable {
         this.pingHistory.push(ping);
 
         // Update the store.
-        MiscActions.addPing(ping);
+        MiscAction.addPing(ping);
 
         // Reset time counter.
         this.pingStart = 0;
@@ -98,10 +98,10 @@ export default class Gateway extends EventEmitter implements IDisposable {
 
     protected handleSocketClose(): void {
         this.socketConnected = false;
-        MiscActions.setInputLocked(true);
+        MiscAction.setInputLocked(true);
         this.dispose();
         console.log("[BroadcastGateway] Disconnected");
-        MessageActions.addToGeneral<INotice>(Factory.createNotice(SpecialChannel.General, SystemMessage.Disconnected, NoticeStyle.Warning));
+        MessageAction.addToGeneral<INotice>(Factory.createNotice(SpecialChannel.General, SystemMessage.Disconnected, NoticeStyle.Warning));
 
         /**
          * TODO: Changing to page init is OKAY since it's meant to handle
@@ -109,7 +109,7 @@ export default class Gateway extends EventEmitter implements IDisposable {
          */
         // Actions.setPage(Page.Init);
 
-        MiscActions.setConnectionState(ConnectionState.Disconnected);
+        MiscAction.setConnectionState(ConnectionState.Disconnected);
     }
 
     private setupEvents(): this {
@@ -128,15 +128,15 @@ export default class Gateway extends EventEmitter implements IDisposable {
                 }
             }, 3000);
 
-            MiscActions.setConnectionState(ConnectionState.Connected);
+            MiscAction.setConnectionState(ConnectionState.Connected);
 
-            MessageActions.addToGeneral<INotice>(
+            MessageAction.addToGeneral<INotice>(
                 Factory.createNotice(SpecialChannel.General, SystemMessage.Connected)
             );
 
             // TODO: Is last ping set at the starting point?
             if (this.lastPing >= Gateway.slowThreshold) {
-                MessageActions.addToGeneral<INotice>(
+                MessageAction.addToGeneral<INotice>(
                     Factory.createNotice(
                         SpecialChannel.General,
                         SystemMessage.HighLatency,
@@ -145,7 +145,7 @@ export default class Gateway extends EventEmitter implements IDisposable {
                 );
             }
 
-            MiscActions.setInputLocked(false);
+            MiscAction.setInputLocked(false);
         });
 
         this.socket.on("close", this.handleSocketClose);
@@ -186,7 +186,7 @@ export default class Gateway extends EventEmitter implements IDisposable {
         this.close(() => {
             // TODO: Shouldn't be sent by message, handled by the init page instead.
             // TODO: Hard-coded channel.
-            MessageActions.addToGeneral<INotice>(Factory.createNotice(SpecialChannel.General, "Attempting to reconnect."));
+            MessageAction.addToGeneral<INotice>(Factory.createNotice(SpecialChannel.General, "Attempting to reconnect."));
             this.connect();
         });
 

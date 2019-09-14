@@ -6,7 +6,7 @@ import Config from "./config";
 import {remote} from "electron";
 import {SpecialCategory} from "../models/misc";
 import CategoryActions from "../actions/category";
-import ChannelActions from "../actions/channel";
+import ChannelAction from "../actions/channel";
 import AppStore, {createInitialState, IAppState} from "../store/store";
 import {User} from "../models/user";
 import React from "react";
@@ -72,7 +72,7 @@ export default class App {
 				users: [/*App.me.id*/]
 			});
 
-			ChannelActions.setGeneralAsActive();
+			ChannelAction.setGeneralAsActive();
 			this.render();
 			this.gateway.connect();
 		}

@@ -12,7 +12,7 @@ import {User} from "@/models/user";
 import {ITextMessage} from "@/models/message";
 import Factory from "@/core/factory";
 import "@/styles/chat/chatComposer.scss";
-import MessageActions from "@/actions/message";
+import MessageAction from "@/actions/message";
 import {IChannel} from "@/models/channel";
 import {BasicMap} from "@/core/helper";
 import app from "@/index";
@@ -280,7 +280,7 @@ class ChatComposer extends Component<Props, State> {
 		const message: ITextMessage = Factory.createMessage(this.props.activeChannel.id, value);
 
 		this.clearValue();
-		MessageActions.addToGeneral(message);
+		MessageAction.addToGeneral(message);
 		app.actions.handleMessage(message);
 	}
 

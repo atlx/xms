@@ -2,7 +2,7 @@ import React, {RefObject, CSSProperties} from "react";
 import "@/styles/pages/init.scss";
 import Loader from "../loader";
 import Util from "@/core/util";
-import MiscActions from "@/actions/misc";
+import MiscAction from "@/actions/misc";
 import {ConnectionState} from "@/store/store";
 import Page from "./page";
 import PageId from "@/core/pageId";
@@ -78,17 +78,17 @@ export default class InitPage extends React.Component<any, State> {
 			return;
 		}
 
-		MiscActions.setConnectionState(ConnectionState.Connecting);
+		MiscAction.setConnectionState(ConnectionState.Connecting);
 
 		// TODO: Setup/do some stuff here, then increment steps, then finish.
 		this.step();
 
 		// Change the page with a delay for effect.
-		setTimeout(() => MiscActions.setPage(PageId.Default), 1000);
+		setTimeout(() => MiscAction.setPage(PageId.Default), 1000);
 	}
 
 	public finish(): void {
-		MiscActions.setPage(PageId.Default);
+		MiscAction.setPage(PageId.Default);
 	}
 
 	public setSteps(steps: number): void {

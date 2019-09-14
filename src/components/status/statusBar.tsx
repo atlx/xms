@@ -6,10 +6,10 @@ import {IAppState, ConnectionState} from "@/store/store";
 import {connect} from "react-redux";
 import StatusSelect from "../status/statusSelect";
 import StatusSelectItem from "./statusSelectItem";
-import MiscActions from "@/actions/misc";
+import MiscAction from "@/actions/misc";
 import App from "@/core/app";
-import ModalActions from "@/actions/modal";
-import MessageActions from "@/actions/message";
+import ModalAction from "@/actions/modal";
+import MessageAction from "@/actions/message";
 import app from "@/index";
 
 type Props = {
@@ -40,7 +40,7 @@ class StatusBar extends React.Component<Props> {
             <div className="status-bar">
                 <div className="left">
                     {!this.props.leftPanelVisible &&
-                        <StatusItem onClick={() => MiscActions.setLeftPanelVisible(true)} icon={faArrowRight}>Show explorer</StatusItem>
+                        <StatusItem onClick={() => MiscAction.setLeftPanelVisible(true)} icon={faArrowRight}>Show explorer</StatusItem>
                     }
                     <StatusItem tooltip="Upload meter" icon={faArrowUp}>12 KB</StatusItem>
                     <StatusItem tooltip="Download meter" icon={faArrowDown}>53 KB</StatusItem>
@@ -51,12 +51,12 @@ class StatusBar extends React.Component<Props> {
                             <StatusItem onClick={() => App.dev.emulatePublicMessage()} icon={faComment}>General message</StatusItem>
                             <StatusItem icon={faLocationArrow}>Direct message</StatusItem>
                             <StatusItem onClick={() => App.dev.emulateBreakMessage()} icon={faGripLines}>Break Message</StatusItem>
-                            <StatusItem icon={faBookOpen} onClick={() => ModalActions.show({
+                            <StatusItem icon={faBookOpen} onClick={() => ModalAction.show({
                                 title: "This is a modal",
                                 text: "Requested by user"
                             })}>Show a modal</StatusItem>
                             <StatusItem icon={faBell} onClick={() => App.notify()}>Notify</StatusItem>
-                            <StatusItem icon={faTimesCircle} onClick={() => MessageActions.clear()}>Clear messages</StatusItem>
+                            <StatusItem icon={faTimesCircle} onClick={() => MessageAction.clear()}>Clear messages</StatusItem>
                             <StatusItem icon={faUserCircle} onClick={() => App.dev.addDummyUser()}>Dummy user</StatusItem>
                         </StatusSelect>
                     }

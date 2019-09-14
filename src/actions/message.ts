@@ -3,7 +3,7 @@ import {GeneralChannel, ActionType} from "../store/store";
 import {UniqueId} from "../models/misc";
 import app from "../index";
 
-export default abstract class MessageActions {
+export default abstract class MessageAction {
     /**
      * Clear all messages from the state.
      */
@@ -17,7 +17,7 @@ export default abstract class MessageActions {
      * Append a message to the general channel.
      */
     public static addToGeneral<T extends IGenericMessage>(message: T): void {
-        MessageActions.add({
+        MessageAction.add({
             channelId: GeneralChannel.id,
             ...message
         });

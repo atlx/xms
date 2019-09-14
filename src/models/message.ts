@@ -2,7 +2,7 @@ import DbEntity from "../database/dbEntity";
 import {UniqueId, IpAddress} from "./misc";
 import UserMention, {IUserMention} from "./userMention";
 import {SpecialChannel} from "./channel";
-import MessageActions from "../actions/message";
+import MessageAction from "../actions/message";
 import app from "../index";
 
 /**
@@ -81,7 +81,7 @@ export default class Message extends DbEntity<ITextMessage> {
      * Mark the message as sent.
      */
     public markSent(): void {
-        MessageActions.markSent(this.id);
+        MessageAction.markSent(this.id);
     }
 
     /**
@@ -91,7 +91,7 @@ export default class Message extends DbEntity<ITextMessage> {
      */
     public add(): boolean {
         if (!this.exists) {
-            MessageActions.add(this.model);
+            MessageAction.add(this.model);
 
             return true;
         }
@@ -106,7 +106,7 @@ export default class Message extends DbEntity<ITextMessage> {
      */
     public addToGeneral(): boolean {
         if (!this.exists) {
-            MessageActions.addToGeneral(this.model);
+            MessageAction.addToGeneral(this.model);
         }
 
         return false;
@@ -124,7 +124,7 @@ export default class Message extends DbEntity<ITextMessage> {
      * Delete the message.
      */
     public delete(): void {
-        MessageActions.delete(this.id);
+        MessageAction.delete(this.id);
     }
 
     /**

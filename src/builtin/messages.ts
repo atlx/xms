@@ -5,7 +5,7 @@ import MessageEvent from "../net/messageEvent";
 import {GatewayMsgType, HelloPayload, MessagePayload} from "../net/gatewayEntities";
 import {IAppState} from "../store/store";
 import UserAction from "../actions/user";
-import MessageActions from "../actions/message";
+import MessageAction from "../actions/message";
 import {SpecialChannel} from "../models/channel";
 
 export default class Messages extends Plugin {
@@ -43,7 +43,7 @@ export default class Messages extends Plugin {
                     else {
                         // TODO: Fix.
                         // TODO: Verify type and data.
-                        MessageActions.addToGeneral({
+                        MessageAction.addToGeneral({
                             // TODO: A way to safely identify an unknown sender, or is it not required?
                             authorAvatarHash: "",
                             authorName: "Unknown",

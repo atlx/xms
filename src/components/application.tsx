@@ -5,7 +5,7 @@ import {connect} from "react-redux";
 import {IModal} from "../models/misc";
 import {CSSTransition} from "react-transition-group";
 import Modal from "./modal";
-import ModalActions from "../actions/modal";
+import ModalAction from "../actions/modal";
 import PageId from "../core/pageId";
 
 type Props = {
@@ -32,7 +32,7 @@ class Application extends React.Component<Props> {
 	}
 
 	public handleModalClose(modal: IModal): void {
-		ModalActions.shift();
+		ModalAction.shift();
 
 		if (modal.onClose) {
 			modal.onClose();

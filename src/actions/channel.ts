@@ -3,7 +3,7 @@ import {ActionType} from "../store/store";
 import {UniqueId} from "../models/misc";
 import app from "../index";
 
-export default abstract class ChannelActions {
+export default abstract class ChannelAction {
     public static add(channel: IChannel): void {
         app.store.dispatch({
             type: ActionType.AddChannel,
