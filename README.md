@@ -34,3 +34,15 @@ The technology stack used in this project is as follows:
 
 1. Install packages if you haven't already done so `npm install`.
 2. Run the application using `npm run dev`.
+
+### Developer Note(s)
+
+Rebuilding Node-SASS:
+
+```
+npm update
+npm install
+nodejs node_modules/node-sass/scripts/install.js
+
+npm rebuild node-sass
+```
