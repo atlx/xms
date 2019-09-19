@@ -9,7 +9,7 @@ import AuthPage from "./components/pages/auth";
 import Application from "./components/application";
 import {User} from "./models/user";
 import DefaultPage from "./components/pages/default";
-import AppStore from "./store/store";
+import AppStore, {createInitialState, IAppState} from "./store/store";
 
 // Prepare config.
 const config: IConfig = Config.loadOrCreate();
@@ -23,11 +23,14 @@ const me: User = {
     status: config.status
 };
 
+// Create the initial state before anything else.
+export const initialState: IAppState = createInitialState(me);
+
 // Create the initial store.
-const store: AppStore = AppStore.createDefault();
+export const store: AppStore = AppStore.createDefault();
 
 // Create the app global. This will also boot the application.
-export const app: App = new App(store, me, () => (
+export const app: App = new App(store, () => (
     <Provider store={store.unwrap()}>
         <HashRouter>
             <Switch>

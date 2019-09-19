@@ -7,11 +7,11 @@ import {remote} from "electron";
 import {SpecialCategory} from "@/models/misc";
 import CategoryActions from "../actions/category";
 import ChannelAction from "../actions/channel";
-import AppStore, {createInitialState, IAppState} from "../store/store";
 import {User} from "@/models/user";
 import React from "react";
 import ErrorPage from "../components/pages/error";
 import {AppRenderer} from "./helpers";
+import {store} from "@/index";
 
 export default class App {
 	/**
@@ -31,16 +31,10 @@ export default class App {
 
 	public readonly net: NetworkHub;
 
-	public readonly store: AppStore;
-
 	protected readonly renderer: AppRenderer;
 
-	protected readonly initialState: IAppState;
-
-	public constructor(store: AppStore, user: User, renderer: AppRenderer) {
+	public constructor(renderer: AppRenderer) {
 		try {
-			this.initialState = createInitialState(user);
-			this.store = store;
 			this.renderer = renderer;
 
 			this.gateway = new Gateway({
@@ -103,6 +97,6 @@ export default class App {
 	}
 
 	public get me(): User {
-		return this.store.state.user.me;
+		return store.state.user.me;
 	}
 }

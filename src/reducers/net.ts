@@ -1,10 +1,10 @@
 import {Reducer, ActionType, IAppStateNet} from "../store/store";
-import App from "@/core/app";
+import {initialState} from "@/index";
 
 const netReducer: Reducer<IAppStateNet> = (state, action) => {
     // Return default initial state for this reducer.
     if (!state) {
-        return App.initialState.net;
+        return initialState.net;
     }
 
     switch (action.type) {

@@ -5,7 +5,7 @@ import {ConnectionState} from "../store/store";
 import MiscAction from "../actions/misc";
 import Factory from "@/core/factory";
 import Util from "@/core/util";
-import App, {IDisposable} from "@/core/app";
+import {IDisposable} from "@/core/helpers";
 import SystemMessage from "@/core/systemMessage";
 import {INotice, NoticeStyle} from "@/models/message";
 import {SpecialChannel} from "@/models/channel";
@@ -13,6 +13,7 @@ import MessageAction from "../actions/message";
 import {IGatewayOptions} from "./gatewayOptions";
 import {EventEmitter} from "events";
 import NetworkEvent from "./networkEvent";
+import {app} from "@/index";
 
 export default class Gateway extends EventEmitter implements IDisposable {
     public static slowThreshold: number = 150;
@@ -210,7 +211,7 @@ export default class Gateway extends EventEmitter implements IDisposable {
             type,
             time: Date.now(),
             payload,
-            sender: App.me.id
+            sender: app.me.id
         } as GatewayMsg<T>));
 
         this.socket.send(data, 0, data.length, this._options.port, this._options.address, (error: Error | null) => {

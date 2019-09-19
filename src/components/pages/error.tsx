@@ -20,7 +20,7 @@ export default class ErrorPage extends Component<Props> {
         return (
             <Page pageId={PageId.Error}>
                 <div className="header">
-                    <img className="image" src={require("@resources/img/think.png")} />
+                    <img className="image" src={require("@/resources/img/think.png")} />
                     <div className="title">Something's wrong</div>
                     <div className="sub-title">Might be missing a bolt or two</div>
                     <div className="message-wrap">
@@ -38,6 +38,7 @@ export default class ErrorPage extends Component<Props> {
                 </div>
                 <div className="footer">
                     <div className="title">User ID</div>
+                    {/* TODO */}
                     <div className="id">2aae6c35c94fcfb415</div>
                 </div>
             </Page>
