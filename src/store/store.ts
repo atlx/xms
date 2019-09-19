@@ -5,7 +5,7 @@ import {Map as ImmutableMap} from "immutable";
 import {User} from "../models/user";
 import {IChannel, SpecialChannel, ChannelType} from "../models/channel";
 import {IGenericMessage} from "../models/message";
-import {BasicMap} from "../core/helper";
+import {BasicMap} from "../core/helpers";
 import categoryReducer from "../reducers/category";
 import channelReducer from "../reducers/channel";
 import contextMenuReducer from "../reducers/contextMenu";

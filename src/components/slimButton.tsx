@@ -1,6 +1,6 @@
 import React from "react";
-import "../styles/misc/slimButton.scss";
-import {Callback} from "../core/app";
+import "@/styles/misc/slimButton.scss";
+import {Callback} from "@/core/helpers";
 
 type Props = {
 	readonly text: string;

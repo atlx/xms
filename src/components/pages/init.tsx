@@ -1,5 +1,5 @@
 import React, {RefObject, CSSProperties} from "react";
-import "@/styles/pages/init.scss";
+import "@styles/pages/init.scss";
 import Loader from "../loader";
 import Util from "@/core/util";
 import MiscAction from "@/actions/misc";

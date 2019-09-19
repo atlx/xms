@@ -1,9 +1,9 @@
 import NetworkHub, {NetPacketType, INetPacket} from "./networkHub";
-import {SpecialChannel, ChannelType} from "../models/channel";
-import {ITextMessage, MessageType} from "../models/message";
-import MessageAction from "../actions/message";
-import ChannelAction from "../actions/channel";
-import App from "../core/app";
+import {SpecialChannel, ChannelType} from "@/models/channel";
+import {ITextMessage, MessageType} from "@/models/message";
+import MessageAction from "@/actions/message";
+import ChannelAction from "@/actions/channel";
+import app from "@/index";
 
 export default class SystemHandlers {
     private readonly net: NetworkHub;
@@ -42,7 +42,7 @@ export default class SystemHandlers {
                 return;
             }
 
-            if (!App.store.state.category.channels.has(packet.sender)) {
+            if (!app.store.state.category.channels.has(packet.sender)) {
                 ChannelAction.add({
                     id: packet.sender,
                     name: `(DM) User at ${packet.sender}`,

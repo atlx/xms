@@ -1,7 +1,7 @@
-import {IpAddress} from "../models/misc";
+import {IpAddress} from "@/models/misc";
 import net, {Socket, Server} from "net";
-import Util from "../core/util";
-import Validator from "../core/validator";
+import Util from "@/core/util";
+import Validator from "@/core/validator";
 import {EventEmitter} from "events";
 import NetworkNode from "./networkNode";
 

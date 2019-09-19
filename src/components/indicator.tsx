@@ -1,5 +1,5 @@
 import React, {Component, CSSProperties} from "react";
-import "../styles/misc/indicator.scss";
+import "@/styles/misc/indicator.scss";
 
 export enum IndicatorColor {
     /**

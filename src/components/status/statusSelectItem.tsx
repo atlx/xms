@@ -1,8 +1,8 @@
 import React from "react";
-import "@/styles/statusBar/statusItem.scss";
+import "@styles/statusBar/statusItem.scss";
 import StatusItem from "./statusItem";
-import {IconProp} from "@fortawesome/fontawesome-svg-core";
-import {faDotCircle, faCircle} from "@fortawesome/free-regular-svg-icons";
+import {IconProp} from "@/fortawesome/fontawesome-svg-core";
+import {faDotCircle, faCircle} from "@/fortawesome/free-regular-svg-icons";
 
 type Props = {
     /**

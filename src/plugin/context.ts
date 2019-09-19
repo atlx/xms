@@ -1,7 +1,7 @@
 import PluginNetwork from "./network";
 import PluginFileSystem from "./fileSystem";
 import PluginMessages from "./messages";
-import PluginEventRouter from "./router";
+import PluginEventBroker from "./eventBroker";
 import PluginBasic from "./basic";
 
 export default interface IPluginContext {
@@ -13,5 +13,5 @@ export default interface IPluginContext {
 
     readonly messages: PluginMessages;
 
-    readonly eventRouter: PluginEventRouter;
+    readonly eventRouter: PluginEventBroker;
 }

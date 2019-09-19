@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 import Page from "./page";
-import "@/styles/pages/settings.scss";
+import "@styles/pages/settings.scss";
 import PageId from "@/core/pageId";
 
 export default class SettingsPage extends Component {

@@ -1,11 +1,11 @@
-import Plugin from "../plugin/plugin";
-import IPluginContext from "../plugin/context";
-import NetworkEvent from "../net/networkEvent";
-import {GatewayMsg, GatewayMsgType, MessagePayload} from "../net/gatewayEntities";
-import MessageAction from "../actions/message";
+import Plugin from "@/plugin/plugin";
+import IPluginContext from "@/plugin/context";
+import NetworkEvent from "@/net/networkEvent";
+import {GatewayMsg, GatewayMsgType, MessagePayload} from "@/net/gatewayEntities";
+import MessageAction from "@/actions/message";
 import {AddressInfo} from "net";
-import MessageEvent from "../net/messageEvent";
-import App from "../core/app";
+import MessageEvent from "@/net/messageEvent";
+import App from "@/core/app";
 
 export default class Net extends Plugin {
     public constructor() {

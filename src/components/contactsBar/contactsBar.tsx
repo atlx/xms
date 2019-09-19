@@ -1,6 +1,6 @@
 import React from "react";
 import {connect} from "react-redux";
-import "@/styles/roster/roster.scss";
+import "@styles/roster/roster.scss";
 import {IAppState} from "@/store/store";
 import {IRosterCategory} from "@/models/misc";
 import ContactsCategory from "./contactsCategory";

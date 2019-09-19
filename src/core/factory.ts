@@ -1,7 +1,7 @@
 import Util from "./util";
-import {UniqueId} from "../models/misc";
-import {ITextMessage, MessageType, NoticeStyle, INotice, IGenericMessage} from "../models/message";
-import App from "./app";
+import {UniqueId} from "@/models/misc";
+import {ITextMessage, MessageType, NoticeStyle, INotice, IGenericMessage} from "@/models/message";
+import {app} from "@/index";
 
 export default class Factory {
     public static createMessage(channelId: UniqueId, text: string): ITextMessage {
@@ -11,7 +11,7 @@ export default class Factory {
 
             // TODO
             authorAvatarHash: "",
-            authorName: App.me.username,
+            authorName: app.me.username,
             sent: false,
 
             // TODO

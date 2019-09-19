@@ -1,5 +1,5 @@
 import React, {Component, RefObject} from "react";
-import "../styles/misc/passcode.scss";
+import "@/styles/misc/passcode.scss";
 
 export default class Passcode extends Component {
     protected readonly $box1: RefObject<HTMLInputElement>;

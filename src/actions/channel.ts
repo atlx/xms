@@ -1,7 +1,7 @@
-import {IChannel} from "../models/channel";
-import {ActionType} from "../store/store";
-import {UniqueId} from "../models/misc";
-import app from "../index";
+import {IChannel} from "@/models/channel";
+import {ActionType} from "@/store/store";
+import {UniqueId} from "@/models/misc";
+import app from "@/index";
 
 export default abstract class ChannelAction {
     public static add(channel: IChannel): void {

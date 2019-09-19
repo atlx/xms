@@ -1,10 +1,11 @@
 import React, {CSSProperties} from "react";
-import "../styles/misc/loader.scss";
+import "@/styles/misc/loader.scss";
 
 type Props = {
     readonly text?: string;
+
     readonly size?: number;
-}
+};
 
 export default class Loader extends React.Component<Props> {
     public constructor(props: Props) {

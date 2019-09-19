@@ -1,6 +1,6 @@
 import {EventEmitter} from "events";
 
-export default class PluginEventRouter extends EventEmitter {
+export default class PluginEventBroker extends EventEmitter {
     public constructor() {
         super();
     }

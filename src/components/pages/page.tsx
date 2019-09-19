@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import "@/styles/pages/page.scss";
+import "@styles/pages/page.scss";
 import PageId from "@/core/pageId";
 
 type Props = {

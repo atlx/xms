@@ -1,7 +1,7 @@
 import {Component} from "react";
 import {UniqueId} from "@/models/misc";
 import React from "react";
-import "@/styles/chat/userMention.scss";
+import "@styles/chat/userMention.scss";
 
 type Props = {
     readonly id: UniqueId;

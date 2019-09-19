@@ -1,9 +1,9 @@
 import React, {CSSProperties} from "react";
-import "@/styles/statusBar/statusSelect.scss";
+import "@styles/statusBar/statusSelect.scss";
 import StatusItem from "./statusItem";
 import $ from "jquery";
-import {Callback} from "@/core/app";
-import {IconProp} from "@fortawesome/fontawesome-svg-core";
+import {Callback} from "@/core/helpers";
+import {IconProp} from "@/fortawesome/fontawesome-svg-core";
 
 type Props = {
     /**

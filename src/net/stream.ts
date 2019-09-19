@@ -1,6 +1,6 @@
-import {IpAddress} from "../models/misc";
+import {IpAddress} from "@/models/misc";
 import net, {Socket, Server} from "net";
-import Util from "../core/util";
+import Util from "@/core/util";
 
 export type StreamHandler<T = any> = (data: T) => void;
 

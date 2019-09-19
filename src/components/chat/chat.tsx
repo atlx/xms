@@ -1,5 +1,5 @@
 import React, {RefObject} from "react";
-import "@/styles/chat/chat.scss";
+import "@styles/chat/chat.scss";
 import {connect} from "react-redux";
 import {IAppState} from "@/store/store";
 import {User} from "@/models/user";
@@ -86,7 +86,7 @@ class Chat extends React.Component<Props, State> {
 }
 export default connect((state: IAppState): any => {
 	return {
-		guideItems: state.category.commandHandler.getAllAsAutoCompleteCommands(),
+		// guideItems: state.category.commandHandler.getAllAsAutoCompleteCommands(),
 		activeChannel: state.category.activeChannel,
 		inputLocked: state.misc.inputLocked,
 		users: state.user.users

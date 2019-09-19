@@ -1,12 +1,12 @@
-import Plugin from "../plugin/plugin";
-import IPluginContext from "../plugin/context";
-import Message, {ITextMessage} from "../models/message";
-import MessageEvent from "../net/messageEvent";
-import {GatewayMsgType, HelloPayload, MessagePayload} from "../net/gatewayEntities";
-import {IAppState} from "../store/store";
-import UserAction from "../actions/user";
-import MessageAction from "../actions/message";
-import {SpecialChannel} from "../models/channel";
+import Plugin from "@/plugin/plugin";
+import IPluginContext from "@/plugin/context";
+import Message, {ITextMessage} from "@/models/message";
+import MessageEvent from "@/net/messageEvent";
+import {GatewayMsgType, HelloPayload, MessagePayload} from "@/net/gatewayEntities";
+import {IAppState} from "@/store/store";
+import UserAction from "@/actions/user";
+import MessageAction from "@/actions/message";
+import {SpecialChannel} from "@/models/channel";
 
 export default class Messages extends Plugin {
     public constructor() {

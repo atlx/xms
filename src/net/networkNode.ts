@@ -1,5 +1,5 @@
 import {Socket} from "net";
-import {IpAddress} from "../models/misc";
+import {IpAddress} from "@/models/misc";
 
 export interface INetworkNodeOptions {
     readonly socket: Socket;

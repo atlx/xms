@@ -11,16 +11,7 @@ import AppStore, {createInitialState, IAppState} from "../store/store";
 import {User} from "../models/user";
 import React from "react";
 import ErrorPage from "../components/pages/error";
-
-export type PromiseOr<T = void> = Promise<T> | T;
-
-export interface IDisposable {
-	dispose(): void;
-}
-
-export type Callback<T = void> = (...args: any[]) => T;
-
-export type AppRenderer = () => JSX.Element;
+import {AppRenderer} from "./helpers";
 
 export default class App {
 	/**
@@ -109,5 +100,9 @@ export default class App {
 		}
 
 		ReactDOM.render(view(), document.getElementById("root"));
+	}
+
+	public get me(): User {
+		return this.store.state.user.me;
 	}
 }

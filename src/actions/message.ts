@@ -1,7 +1,7 @@
-import {IGenericMessage} from "../models/message";
-import {GeneralChannel, ActionType} from "../store/store";
-import {UniqueId} from "../models/misc";
-import app from "../index";
+import {IGenericMessage} from "@/models/message";
+import {GeneralChannel, ActionType} from "@/store/store";
+import {UniqueId} from "@/models/misc";
+import app from "@/index";
 
 export default abstract class MessageAction {
     /**

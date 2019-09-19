@@ -1,8 +1,8 @@
 import {Component} from "react";
-import "@/styles/pages/error.scss";
+import "@styles/pages/error.scss";
 import React from "react";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faSyncAlt, faExternalLinkAlt} from "@fortawesome/free-solid-svg-icons";
+import {FontAwesomeIcon} from "@/fortawesome/react-fontawesome";
+import {faSyncAlt, faExternalLinkAlt} from "@/fortawesome/free-solid-svg-icons";
 import Page from "./page";
 import App from "@/core/app";
 import PageId from "@/core/pageId";
@@ -20,7 +20,7 @@ export default class ErrorPage extends Component<Props> {
         return (
             <Page pageId={PageId.Error}>
                 <div className="header">
-                    <img className="image" src={require("@/resources/img/think.png")} />
+                    <img className="image" src={require("@resources/img/think.png")} />
                     <div className="title">Something's wrong</div>
                     <div className="sub-title">Might be missing a bolt or two</div>
                     <div className="message-wrap">

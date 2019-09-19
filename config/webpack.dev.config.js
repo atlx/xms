@@ -4,9 +4,13 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const {spawn} = require("child_process");
 const {CheckerPlugin} = require("awesome-typescript-loader");
 
-// Config directories
-const SRC_DIR = path.resolve(__dirname, "src");
-const OUTPUT_DIR = path.resolve(__dirname, "dist");
+// Config directories.
+const BASE_DIR = path.resolve(__dirname, "..");
+
+const resolve = (pathString) => path.resolve(BASE_DIR, pathString);
+
+const SRC_DIR = resolve("src");
+const OUTPUT_DIR = resolve("dist");
 
 // Any directories you will be adding code/files into, need to be added to this array so webpack will pick them up.
 const defaultInclude = [SRC_DIR];
@@ -147,7 +151,11 @@ module.exports = {
 	},
 
 	resolve: {
-		extensions: [".ts", ".tsx", ".js", ".jsx"]
+		extensions: [".ts", ".tsx", ".js", ".jsx"],
+
+		alias: {
+			"@": SRC_DIR
+		}
 	},
 
 	mode: "development"

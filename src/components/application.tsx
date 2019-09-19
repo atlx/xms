@@ -1,12 +1,12 @@
 import React, {CSSProperties} from "react";
-import "../styles/misc/application.scss";
-import {IAppState} from "../store/store";
+import "@styles/misc/application.scss";
+import {IAppState} from "@/store/store";
 import {connect} from "react-redux";
-import {IModal} from "../models/misc";
+import {IModal} from "@/models/misc";
 import {CSSTransition} from "react-transition-group";
 import Modal from "./modal";
-import ModalAction from "../actions/modal";
-import PageId from "../core/pageId";
+import ModalAction from "@/actions/modal";
+import PageId from "@/core/pageId";
 
 type Props = {
 	readonly modals: IModal[];

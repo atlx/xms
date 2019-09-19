@@ -1,6 +1,6 @@
-import {ActionType, ConnectionState} from "../store/store";
-import app from "../index";
-import PageId from "../core/pageId";
+import {ActionType, ConnectionState} from "@/store/store";
+import app from "@/index";
+import PageId from "@/core/pageId";
 
 export default abstract class MiscAction {
     public static setInputLocked(locked: boolean): void {

@@ -1,5 +1,5 @@
 import React from "react";
-import "@/styles/chat/chatMessage.scss";
+import "@styles/chat/chatMessage.scss";
 import Pattern from "@/core/pattern";
 import UserMention from "./userMention";
 import Indicator, {IndicatorColor} from "../indicator";
@@ -76,9 +76,11 @@ export default class ChatMessage extends React.Component<Props> {
     public render(): JSX.Element {
         return (
             <div className={this.getClass()}>
-                <Tooltip visible={this.props.notify} position={TooltipPosition.Left} text="You were mentioned">
-                    <Indicator visible color={IndicatorColor.Red} />
-                </Tooltip>
+                {this.props.notify &&
+                    <Tooltip position={TooltipPosition.Left} text="You were mentioned">
+                        <Indicator visible color={IndicatorColor.Red} />
+                    </Tooltip>
+                }
                 <div className="header">
                     <div className="author-name">{this.props.authorName}</div>
                 </div>

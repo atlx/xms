@@ -4,11 +4,12 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const BabiliPlugin = require("babili-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
-// Config directories
-const SRC_DIR = path.resolve(__dirname, "src");
-const OUTPUT_DIR = path.resolve(__dirname, "dist");
+// Config directories.
+const BASE_DIR = path.resolve(__dirname, "..");
+const SRC_DIR = path.resolve(BASE_DIR, "src");
+const OUTPUT_DIR = path.resolve(BASE_DIR, "dist");
 
-// Any directories you will be adding code/files into, need to be added to this array so webpack will pick them up
+// Any directories you will be adding code/files into, need to be added to this array so webpack will pick them up.
 const defaultInclude = [SRC_DIR];
 
 module.exports = {
@@ -25,7 +26,7 @@ module.exports = {
 			// Load SCSS + Sass.
 			{
 				test: /\.scss$/,
-				
+
 				use: [{
 					loader: "style-loader" // creates style nodes from JS strings.
 				}, {
@@ -34,7 +35,7 @@ module.exports = {
 					loader: "sass-loader" // Compiles Sass to CSS.
 				}]
 			},
-			
+
 			// Load CSS.
 			{
 				test: /\.css$/,
@@ -66,21 +67,21 @@ module.exports = {
 			// Load JavaScript/React files.
 			{
 				test: /\.jsx?$/,
-				use: [{ loader: "babel-loader" }],
+				use: [{loader: "babel-loader"}],
 				include: defaultInclude
 			},
 
 			// Load image files.
 			{
 				test: /\.(jpe?g|png|gif)$/,
-				use: [{ loader: "file-loader?name=img/[name]__[hash:base64:5].[ext]" }],
+				use: [{loader: "file-loader?name=img/[name]__[hash:base64:5].[ext]"}],
 				include: defaultInclude
 			},
 
 			// Load fonts.
 			{
 				test: /\.(eot|svg|ttf|woff|woff2)$/,
-				use: [{ loader: "file-loader?name=font/[name]__[hash:base64:5].[ext]" }],
+				use: [{loader: "file-loader?name=font/[name]__[hash:base64:5].[ext]"}],
 				include: defaultInclude
 			},
 
@@ -103,7 +104,7 @@ module.exports = {
 		new webpack.DefinePlugin({
 			"process.env.NODE_ENV": JSON.stringify("production")
 		}),
-		
+
 		new BabiliPlugin()
 	],
 
