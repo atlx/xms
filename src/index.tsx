@@ -27,7 +27,7 @@ const me: User = {
 const store: AppStore = AppStore.createDefault();
 
 // Create the app global. This will also boot the application.
-const app: App = new App(store, me, () => (
+export const app: App = new App(store, me, () => (
     <Provider store={store.unwrap()}>
         <HashRouter>
             <Switch>
