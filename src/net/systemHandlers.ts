@@ -3,7 +3,7 @@ import {SpecialChannel, ChannelType} from "@/models/channel";
 import {ITextMessage, MessageType} from "@/models/message";
 import MessageAction from "@/actions/message";
 import ChannelAction from "@/actions/channel";
-import app from "@/index";
+import {app} from "@/index";
 
 export default class SystemHandlers {
     private readonly net: NetworkHub;

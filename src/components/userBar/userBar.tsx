@@ -3,7 +3,7 @@ import "@styles/userBar/userBar.scss";
 import UserBarAction from "./userBarAction";
 import {faCog, faArrowLeft} from "@/fortawesome/free-solid-svg-icons";
 import MiscAction from "@/actions/misc";
-import app from "@/index";
+import {app} from "@/index";
 
 export default class UserBar extends React.Component {
     public render(): JSX.Element {

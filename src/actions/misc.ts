@@ -1,5 +1,5 @@
 import {ActionType, ConnectionState} from "@/store/store";
-import app from "@/index";
+import {app} from "@/index";
 import PageId from "@/core/pageId";
 
 export default abstract class MiscAction {

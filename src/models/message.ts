@@ -3,7 +3,7 @@ import {UniqueId, IpAddress} from "./misc";
 import UserMention, {IUserMention} from "./userMention";
 import {SpecialChannel} from "./channel";
 import MessageAction from "../actions/message";
-import app from "../index";
+import {app} from "../index";
 
 /**
  * Used to identify a generic message.

@@ -43,5 +43,3 @@ const app: App = new App(store, me, () => (
         </HashRouter>
     </Provider>
 ));
-
-export default app;

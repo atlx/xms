@@ -10,7 +10,7 @@ import MiscAction from "@/actions/misc";
 import App from "@/core/app";
 import ModalAction from "@/actions/modal";
 import MessageAction from "@/actions/message";
-import app from "@/index";
+import {app} from "@/index";
 
 type Props = {
     readonly ping: number;

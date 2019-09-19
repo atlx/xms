@@ -1,6 +1,6 @@
 import {IModal} from "@/models/misc";
 import {ActionType} from "@/store/store";
-import app from "@/index";
+import {app} from "@/index";
 
 export default abstract class ModalAction {
     public static show(modal: IModal): void {

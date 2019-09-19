@@ -1,6 +1,6 @@
 import {User} from "@/models/user";
 import {ActionType} from "@/store/store";
-import app from "@/index";
+import {app} from "@/index";
 
 export default abstract class UserAction {
     public static add(user: User): void {

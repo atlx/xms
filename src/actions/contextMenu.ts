@@ -1,6 +1,6 @@
 import {IContextMenu} from "@/models/misc";
 import {ActionType} from "@/store/store";
-import app from "@/index";
+import {app} from "@/index";
 
 export default abstract class ContextMenuAction {
     public static show(menu: IContextMenu): void {

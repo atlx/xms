@@ -1,6 +1,6 @@
 import {IRosterCategory, UniqueId, SpecialCategory} from "@/models/misc";
 import {ActionType} from "@/store/store";
-import app from "@/index";
+import {app} from "@/index";
 
 export default abstract class CategoryActions {
     public static add(category: IRosterCategory): void {
