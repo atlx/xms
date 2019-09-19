@@ -1,5 +1,5 @@
 import React from "react";
-import "@styles/chat/autoCompleter.scss";
+import "@/styles/chat/autoCompleter.scss";
 import {IGuideItem} from "@/models/misc";
 import {CSSTransition} from "react-transition-group";
 import MiscAction from "@/actions/misc";

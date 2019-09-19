@@ -1,5 +1,5 @@
 import os from "os";
-import {UniqueId} from "../models/misc";
+import {UniqueId} from "@/models/misc";
 import {CSSProperties} from "react";
 import Constant from "./constant";
 

@@ -1,8 +1,8 @@
-import Gateway from "../net/gateway";
-import {GatewayMsgType, MessagePayload} from "../net/gatewayEntities";
-import {ITextMessage} from "../models/message";
-import {IpAddress} from "../models/misc";
-import {SpecialChannel} from "../models/channel";
+import Gateway from "@/net/gateway";
+import {GatewayMsgType, MessagePayload} from "@/net/gatewayEntities";
+import {ITextMessage} from "@/models/message";
+import {IpAddress} from "@/models/misc";
+import {SpecialChannel} from "@/models/channel";
 
 export default class GatewayAction {
     private readonly gateway: Gateway;

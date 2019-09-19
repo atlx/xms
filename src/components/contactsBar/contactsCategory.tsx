@@ -1,12 +1,12 @@
 import React from "react";
-import "@styles/roster/rosterCategory.scss";
+import "@/styles/roster/rosterCategory.scss";
 import Contact from "./contact";
 import {UniqueId} from "@/models/misc";
 import {IAppState} from "@/store/store";
 import {connect} from "react-redux";
 import PlaceholderRosterItem from "../placeholder/rosterItem";
 import {User} from "@/models/user";
-import {BasicMap} from "@/core/helper";
+import {BasicMap} from "@/core/helpers";
 
 type Props = {
     readonly title: string;

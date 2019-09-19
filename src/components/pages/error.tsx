@@ -1,8 +1,8 @@
 import {Component} from "react";
-import "@styles/pages/error.scss";
+import "@/styles/pages/error.scss";
 import React from "react";
-import {FontAwesomeIcon} from "@/fortawesome/react-fontawesome";
-import {faSyncAlt, faExternalLinkAlt} from "@/fortawesome/free-solid-svg-icons";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faSyncAlt, faExternalLinkAlt} from "@fortawesome/free-solid-svg-icons";
 import Page from "./page";
 import App from "@/core/app";
 import PageId from "@/core/pageId";

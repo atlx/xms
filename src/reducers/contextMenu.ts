@@ -1,4 +1,4 @@
-import {Reducer, ActionType} from "../store/store";
+import {Reducer, ActionType} from "@/store/store";
 
 const contextMenuReducer: Reducer = (state, action) => {
     // Return default initial state for this reducer.

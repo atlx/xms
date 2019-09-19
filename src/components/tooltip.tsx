@@ -1,5 +1,5 @@
 import React, {CSSProperties} from "react";
-import "@styles/misc/tooltip.scss";
+import "@/styles/misc/tooltip.scss";
 import {CSSTransition} from "react-transition-group";
 
 export enum TooltipPosition {

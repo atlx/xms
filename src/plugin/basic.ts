@@ -1,5 +1,5 @@
-import {User} from "../models/user";
-import App from "../core/app";
+import {User} from "@/models/user";
+import App from "@/core/app";
 import {EventEmitter} from "events";
 
 export default class PluginBasic extends EventEmitter {

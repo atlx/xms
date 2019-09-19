@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import "@styles/misc/dialog.scss";
+import "@/styles/misc/dialog.scss";
 import QuestionSVG from "@/resources/img/question.svg";
 import SlimButton from "./slimButton";
 

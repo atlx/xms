@@ -1,11 +1,11 @@
 import {createStore, Store, applyMiddleware, combineReducers} from "redux";
-import {IRosterCategory, UniqueId, IModal, IContextMenu} from "../models/misc";
+import {IRosterCategory, UniqueId, IModal, IContextMenu} from "@/models/misc";
 import {createLogger} from "redux-logger";
 import {Map as ImmutableMap} from "immutable";
-import {User} from "../models/user";
-import {IChannel, SpecialChannel, ChannelType} from "../models/channel";
-import {IGenericMessage} from "../models/message";
-import {BasicMap} from "../core/helpers";
+import {User} from "@/models/user";
+import {IChannel, SpecialChannel, ChannelType} from "@/models/channel";
+import {IGenericMessage} from "@/models/message";
+import {BasicMap} from "@/core/helpers";
 import categoryReducer from "../reducers/category";
 import channelReducer from "../reducers/channel";
 import contextMenuReducer from "../reducers/contextMenu";
@@ -13,8 +13,8 @@ import messageReducer from "../reducers/message";
 import miscReducer from "../reducers/misc";
 import userReducer from "../reducers/user";
 import netReducer from "../reducers/net";
-import PageId from "../core/pageId";
-import Tag from "../core/tag";
+import PageId from "@/core/pageId";
+import Tag from "@/core/tag";
 
 export enum ActionType {
     MarkMessageSent = "MARK_MESSAGE_SENT",

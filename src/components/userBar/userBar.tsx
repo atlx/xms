@@ -1,7 +1,7 @@
 import React from "react";
-import "@styles/userBar/userBar.scss";
+import "@/styles/userBar/userBar.scss";
 import UserBarAction from "./userBarAction";
-import {faCog, faArrowLeft} from "@/fortawesome/free-solid-svg-icons";
+import {faCog, faArrowLeft} from "@fortawesome/free-solid-svg-icons";
 import MiscAction from "@/actions/misc";
 import {app} from "@/index";
 

@@ -1,8 +1,8 @@
 import React, {Component, RefObject} from "react";
 import ComposerGuide from "./composerGuide";
 import {CSSTransition} from "react-transition-group";
-import {FontAwesomeIcon} from "@/fortawesome/react-fontawesome";
-import {faPlus} from "@/fortawesome/free-solid-svg-icons";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faPlus} from "@fortawesome/free-solid-svg-icons";
 import {IGuideItem} from "@/models/misc";
 import {connect} from "react-redux";
 import {IAppState} from "@/store/store";
@@ -11,10 +11,10 @@ import {List} from "immutable";
 import {User} from "@/models/user";
 import {ITextMessage} from "@/models/message";
 import Factory from "@/core/factory";
-import "@styles/chat/chatComposer.scss";
+import "@/styles/chat/chatComposer.scss";
 import MessageAction from "@/actions/message";
 import {IChannel} from "@/models/channel";
-import {BasicMap} from "@/core/helper";
+import {BasicMap} from "@/core/helpers";
 
 type Props = {
 	readonly users: BasicMap<User>;

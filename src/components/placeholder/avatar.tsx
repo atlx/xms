@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import "@styles/placeholder/avatar.scss";
+import "@/styles/placeholder/avatar.scss";
 
 type Props = {
     readonly username: string;

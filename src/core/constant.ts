@@ -1,4 +1,4 @@
-import {IpAddress} from "../models/misc";
+import {IpAddress} from "@/models/misc";
 
 export default abstract class Constant {
     public static minPlaceholderNameWidth: number = 60;

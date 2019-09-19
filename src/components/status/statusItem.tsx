@@ -1,9 +1,9 @@
 import React, {CSSProperties} from "react";
-import "@styles/statusBar/statusItem.scss";
-import {Callback} from "@/core/helper";
-import {FontAwesomeIcon} from "@/fortawesome/react-fontawesome";
-import {faCircleNotch} from "@/fortawesome/free-solid-svg-icons";
-import {IconProp} from "@/fortawesome/fontawesome-svg-core";
+import "@/styles/statusBar/statusItem.scss";
+import {Callback} from "@/core/helpers";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faCircleNotch} from "@fortawesome/free-solid-svg-icons";
+import {IconProp} from "@fortawesome/fontawesome-svg-core";
 import Tooltip from "../tooltip";
 
 export type StatusItemProps = {

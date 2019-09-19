@@ -1,5 +1,5 @@
 import Db from "./db";
-import {UniqueId} from "../models/misc";
+import {UniqueId} from "@/models/misc";
 
 export interface IDbModel {
     /**

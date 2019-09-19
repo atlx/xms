@@ -1,16 +1,16 @@
 import fs from "fs";
 import os from "os";
 import Auth, {IKeyPair} from "./auth";
-import {UniqueId} from "../models/misc";
+import {UniqueId} from "@/models/misc";
 import Util from "./util";
-import {UserState} from "../models/user";
+import {UserState} from "@/models/user";
 
 export interface IConfig {
     /**
      * A unique id to identify the user.
      */
     readonly id: UniqueId;
-    
+
     /**
      * The desired username of the user.
      */
@@ -20,7 +20,7 @@ export interface IConfig {
      * The user's RSA key-pair used for encryption and security.
      */
     readonly keyPair: IKeyPair;
-    
+
     /**
      * A timestamp representing the exact user creation time.
      */

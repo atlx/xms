@@ -1,8 +1,8 @@
 import React from "react";
-import "@styles/statusBar/statusItem.scss";
+import "@/styles/statusBar/statusItem.scss";
 import StatusItem, {StatusItemProps} from "./statusItem";
-import {FontAwesomeIcon} from "@/fortawesome/react-fontawesome";
-import {IconProp} from "@/fortawesome/fontawesome-svg-core";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {IconProp} from "@fortawesome/fontawesome-svg-core";
 
 interface IProps extends StatusItemProps {
     /**

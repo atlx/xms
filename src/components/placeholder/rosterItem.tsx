@@ -1,6 +1,6 @@
 import React, {CSSProperties} from "react";
-import "@styles/roster/rosterItem.scss";
-import "@styles/placeholder/rosterItem.scss";
+import "@/styles/roster/rosterItem.scss";
+import "@/styles/placeholder/rosterItem.scss";
 import Util from "@/core/util";
 
 type Props = {

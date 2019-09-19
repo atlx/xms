@@ -1,8 +1,8 @@
 import React, {CSSProperties} from "react";
-import {FontAwesomeIcon} from "@/fortawesome/react-fontawesome";
-import "@styles/explorer/explorerItem.scss";
-import "@styles/placeholder/explorerItem.scss";
-import {faHashtag} from "@/fortawesome/free-solid-svg-icons";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import "@/styles/explorer/explorerItem.scss";
+import "@/styles/placeholder/explorerItem.scss";
+import {faHashtag} from "@fortawesome/free-solid-svg-icons";
 import Util from "@/core/util";
 
 type Props = {

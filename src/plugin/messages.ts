@@ -1,4 +1,4 @@
-import Message from "../models/message";
+import Message from "@/models/message";
 import {EventEmitter} from "events";
 
 export interface IMessageOptions {

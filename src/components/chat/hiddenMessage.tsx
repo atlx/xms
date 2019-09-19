@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 import ChatMessage from "./chatMessage";
-import "@styles/chat/hiddenMessage.scss";
+import "@/styles/chat/hiddenMessage.scss";
 
 export default class HiddenMessage extends Component {
     public render(): JSX.Element {

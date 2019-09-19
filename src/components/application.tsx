@@ -1,5 +1,5 @@
 import React, {CSSProperties} from "react";
-import "@styles/misc/application.scss";
+import "@/styles/misc/application.scss";
 import {IAppState} from "@/store/store";
 import {connect} from "react-redux";
 import {IModal} from "@/models/misc";

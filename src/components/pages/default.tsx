@@ -6,7 +6,7 @@ import {IAppState, ConnectionState} from "@/store/store";
 import Sidebar from "../sidebar/sidebar";
 import StatusBar from "../status/statusBar";
 import Page from "./page";
-import "@styles/pages/default.scss";
+import "@/styles/pages/default.scss";
 import PageId from "@/core/pageId";
 
 type Props = {

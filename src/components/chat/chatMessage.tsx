@@ -1,5 +1,5 @@
 import React from "react";
-import "@styles/chat/chatMessage.scss";
+import "@/styles/chat/chatMessage.scss";
 import Pattern from "@/core/pattern";
 import UserMention from "./userMention";
 import Indicator, {IndicatorColor} from "../indicator";

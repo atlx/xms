@@ -1,8 +1,8 @@
 import {Component} from "react";
 import React from "react";
-import "@styles/chat/chatHeader.scss";
-import {FontAwesomeIcon} from "@/fortawesome/react-fontawesome";
-import {faHashtag} from "@/fortawesome/free-solid-svg-icons";
+import "@/styles/chat/chatHeader.scss";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faHashtag} from "@fortawesome/free-solid-svg-icons";
 import {IChannel} from "@/models/channel";
 
 type Props = {
