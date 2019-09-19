@@ -1,14 +1,14 @@
 import {IGenericMessage} from "@/models/message";
 import {GeneralChannel, ActionType} from "@/store/store";
 import {UniqueId} from "@/models/misc";
-import {app} from "@/index";
+import {store} from "@/index";
 
 export default abstract class MessageAction {
     /**
      * Clear all messages from the state.
      */
     public static clear(): void {
-        app.store.dispatch({
+        store.dispatch({
             type: ActionType.ClearMessages
         });
     }
@@ -47,21 +47,21 @@ export default abstract class MessageAction {
         //     }
         // }
 
-        app.store.dispatch({
+        store.dispatch({
             type: ActionType.AddMessage,
             payload: message
         });
     }
 
     public static markSent(id: UniqueId): void {
-        app.store.dispatch({
+        store.dispatch({
             type: ActionType.MarkMessageSent,
             payload: id
         });
     }
 
     public static delete(id: UniqueId): void {
-        app.store.dispatch({
+        store.dispatch({
             type: ActionType.DeleteMessage,
             payload: id
         })

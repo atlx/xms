@@ -1,6 +1,6 @@
 import {ModelBased, UniqueId} from "./misc";
 import {User} from "./user";
-import {app} from "@/index";
+import {store} from "@/index";
 
 export interface IUserMention {
     readonly id: UniqueId;
@@ -10,6 +10,6 @@ export interface IUserMention {
 
 export default class UserMention extends ModelBased<IUserMention> {
     public get user(): User {
-        return app.store.state.user.users.get(this.model.id)!;
+        return store.state.user.users.get(this.model.id)!;
     }
 }

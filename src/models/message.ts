@@ -1,9 +1,9 @@
-import DbEntity from "../database/dbEntity";
+import DbEntity from "@/database/dbEntity";
 import {UniqueId, IpAddress} from "./misc";
 import UserMention, {IUserMention} from "./userMention";
 import {SpecialChannel} from "./channel";
 import MessageAction from "../actions/message";
-import {app} from "../index";
+import {store} from "@/index";
 
 /**
  * Used to identify a generic message.
@@ -117,7 +117,7 @@ export default class Message extends DbEntity<ITextMessage> {
      * in the messages map.
      */
     public get exists(): boolean {
-        return app.store.state.message.messages.has(this.id);
+        return store.state.message.messages.has(this.id);
     }
 
     /**

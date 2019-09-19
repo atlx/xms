@@ -30,7 +30,7 @@ export const initialState: IAppState = createInitialState(me);
 export const store: AppStore = AppStore.createDefault();
 
 // Create the app global. This will also boot the application.
-export const app: App = new App(store, () => (
+export const app: App = new App(() => (
     <Provider store={store.unwrap()}>
         <HashRouter>
             <Switch>

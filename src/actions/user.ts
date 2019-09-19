@@ -1,6 +1,6 @@
 import {User} from "@/models/user";
 import {ActionType} from "@/store/store";
-import {app} from "@/index";
+import {store} from "@/index";
 
 export default abstract class UserAction {
     public static add(user: User): void {
@@ -8,7 +8,7 @@ export default abstract class UserAction {
             throw new Error("Expected 'user' parameter to be an object");
         }
 
-        app.store.dispatch({
+        store.dispatch({
             type: ActionType.AddUser,
             payload: user
         });
@@ -19,7 +19,7 @@ export default abstract class UserAction {
             throw new Error("Expected 'me' parameter to be an object");
         }
 
-        app.store.dispatch({
+        store.dispatch({
             type: ActionType.UpdateMe,
             payload: me
         });

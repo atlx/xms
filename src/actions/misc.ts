@@ -1,5 +1,5 @@
 import {ActionType, ConnectionState} from "@/store/store";
-import {app} from "@/index";
+import {store} from "@/index";
 import PageId from "@/core/pageId";
 
 export default abstract class MiscAction {
@@ -8,7 +8,7 @@ export default abstract class MiscAction {
             throw new Error("Expected 'locked' parameter to be a boolean");
         }
 
-        app.store.dispatch({
+        store.dispatch({
             type: ActionType.SetInputLocked,
             payload: locked
         });
@@ -19,7 +19,7 @@ export default abstract class MiscAction {
             throw new Error("An invalid 'page' parameter was provided");
         }
 
-        app.store.dispatch({
+        store.dispatch({
             type: ActionType.SetPage,
             payload: pageId
         });
@@ -30,7 +30,7 @@ export default abstract class MiscAction {
             throw new Error("Expected 'visible' parameter to be a boolean");
         }
 
-        app.store.dispatch({
+        store.dispatch({
             type: ActionType.SetGuideVisible,
             payload: visible
         });
@@ -41,7 +41,7 @@ export default abstract class MiscAction {
             throw new Error("Expected 'ping' parameter to be a number higher or equal to 0");
         }
 
-        app.store.dispatch({
+        store.dispatch({
             type: ActionType.AddPing,
             payload: ping
         });
@@ -52,7 +52,7 @@ export default abstract class MiscAction {
             throw new Error("An invalid 'state' parameter was provided");
         }
 
-        app.store.dispatch({
+        store.dispatch({
             type: ActionType.SetConnectionState,
             payload: state
         });
@@ -63,7 +63,7 @@ export default abstract class MiscAction {
             throw new Error("Expected 'visible' parameter to be a boolean");
         }
 
-        app.store.dispatch({
+        store.dispatch({
             type: ActionType.SetLeftPanelVisible,
             payload: visible
         });

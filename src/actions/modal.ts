@@ -1,6 +1,6 @@
 import {IModal} from "@/models/misc";
 import {ActionType} from "@/store/store";
-import {app} from "@/index";
+import {store} from "@/index";
 
 export default abstract class ModalAction {
     public static show(modal: IModal): void {
@@ -8,14 +8,14 @@ export default abstract class ModalAction {
             throw new Error("Expected 'modal' parameter to be an object");
         }
 
-        app.store.dispatch({
+        store.dispatch({
             type: ActionType.ShowModal,
             payload: modal
         });
     }
 
     public static shift(): void {
-        app.store.dispatch({
+        store.dispatch({
             type: ActionType.ShiftModal
         });
     }
