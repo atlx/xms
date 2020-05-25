@@ -36,7 +36,7 @@ export const app: App = new App(() => (
             <Switch>
                 {/* TODO: Hard-coded prop as null (required to pass in). */}
                 <Route path="/" exact render={() =>
-                    <Application modals={[] as any}>
+                    <Application modals={[]}>
                         <DefaultPage />
                     </Application>
                 } />
